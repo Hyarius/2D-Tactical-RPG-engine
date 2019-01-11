@@ -2,7 +2,7 @@
 
 /*
 TODO :
-struct game_engine qui prend le board, et qui controle le tour etc. 
+struct game_engine qui prend le board, et qui controle le tour etc.
 
 Faudra donc deplacer l'actor list du game_board au game_engine
 */
@@ -20,11 +20,12 @@ typedef struct			s_game_engine
 	void				insert_actor(t_actor *new_actor);
 	void				delete_actor(t_actor *old_actor);
 	void				handle_control_camera(SDL_Event *event);
+	void				handle_control_game(SDL_Event *event);
 }						t_game_engine;
 
 s_game_engine::s_game_engine()
 {
-	
+
 }
 
 void				s_game_engine::insert_actor(t_actor *new_actor)
@@ -81,6 +82,12 @@ void				s_game_engine::handle_control_camera(SDL_Event *event)
 	board.handle_zoom(event);
 }
 
+void				s_game_engine::handle_control_game(SDL_Event *event)
+{
+	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_SPACE)
+		next_turn();
+}
+
 int main(int argc, char **argv)
 {
 	SDL_Event event;
@@ -102,6 +109,7 @@ int main(int argc, char **argv)
 			if (event.type == SDL_QUIT)
 				exit(0);
 			game.handle_control_camera(&event);
+			game.handle_control_game(&event);
 		}
 	}
 

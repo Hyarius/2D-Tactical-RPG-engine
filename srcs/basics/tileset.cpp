@@ -9,7 +9,11 @@ s_tileset::s_tileset(string p_path, t_vect p_size)
 {
 	surface = IMG_Load(p_path.c_str());
 	if (surface == NULL)
-		error_exit("Can't charge a surface into an image", 245);
+	{
+		printf("IMG_Load: %s\n", IMG_GetError());
+			error_exit("Can't charge a surface into an image : " + p_path, 245);
+
+	}
 
 	if (surface->format->BytesPerPixel == 3)
 	{
