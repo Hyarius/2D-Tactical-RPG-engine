@@ -1,0 +1,6 @@
+name:Rock on grass tile
+tileset:simple_tile
+sprite:0:3
+cost:1
+m_obstacle:1
+v_obstacle:0

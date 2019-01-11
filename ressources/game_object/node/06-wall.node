@@ -1,0 +1,6 @@
+name:Dirt wall
+tileset:simple_tile
+sprite:2:1
+cost:1
+m_obstacle:1
+v_obstacle:1

@@ -1,0 +1,6 @@
+name:Stone wall
+tileset:simple_tile
+sprite:1:1
+cost:1
+m_obstacle:1
+v_obstacle:1

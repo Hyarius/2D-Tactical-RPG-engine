@@ -1,0 +1,6 @@
+name:Rock on stone tile
+tileset:simple_tile
+sprite:3:3
+cost:1
+m_obstacle:1
+v_obstacle:0

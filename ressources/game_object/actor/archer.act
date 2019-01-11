@@ -1,0 +1,7 @@
+name:Archer
+tileset:simple_actor
+sprite:8:0
+hp:25
+pa:6
+pm:4
+init:6

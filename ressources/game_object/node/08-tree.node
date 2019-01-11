@@ -1,0 +1,6 @@
+name:Tree tile
+tileset:simple_tile
+sprite:0:2
+cost:1
+m_obstacle:1
+v_obstacle:1
