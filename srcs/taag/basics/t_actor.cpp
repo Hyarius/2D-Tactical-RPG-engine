@@ -53,3 +53,9 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	sprite = p_sprite;
 	stat = p_stat;
 }
+
+void			s_actor::reset_value()
+{
+	stat.pa.value = stat.pa.max;
+	stat.pm.value = stat.pm.max;
+}

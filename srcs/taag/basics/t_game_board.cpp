@@ -50,7 +50,7 @@ s_game_board::s_game_board(string p_path)
 		}
 		if (cell_layer[(size_t)(coord.x)].size() < (size_t)(board_size.y))
 			cell_layer[(size_t)(coord.x)].resize((size_t)(board_size.y + 1));
-		if (index >= 0 && index < node_list.size())
+		if (index < node_list.size())
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)] = t_cell(coord, &(node_list[index]));
 		if (tab.size() >= 5)
 		{
@@ -67,6 +67,15 @@ s_game_board::s_game_board(string p_path)
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);
 	cursor_tile = &tileset_map["simple_cursor"];
+}
+
+t_cell				*s_game_board::get_cell(int x, int y)
+{
+	if (x < 0 || x >= board_size.x || y < 0 || y >= board_size.y)
+		return (NULL);
+	if (cell_layer[x][y].node == NULL)
+		return (NULL);
+	return (&(cell_layer[x][y]));
 }
 
 t_vect				s_game_board::get_mouse_pos()
@@ -142,11 +151,28 @@ void				s_game_board::draw_cursor_layer()
 	}
 }
 
+void				s_game_board::reset_board()
+{
+	int i = 0;
+
+	while ((size_t)i < board_size.x)
+	{
+		int j = 0;
+		while ((size_t)j < board_size.y)
+		{
+			cell_layer[i][j].m_dist = 999;
+			cell_layer[i][j].cursor = t_vect(0, 0);
+			j++;
+		}
+		i++;
+	}
+}
+
 void				s_game_board::draw_actor_list()
 {
 	size_t i = 0;
 	t_vect size = sprite_unit * zoom;
-	
+
 	while (i < actor_list.size())
 	{
 		actor_list[i]->draw_self(target, offset, size);

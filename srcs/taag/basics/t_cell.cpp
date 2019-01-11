@@ -6,6 +6,7 @@ s_cell::s_cell()
 	node = NULL;
 	actor = NULL;
 	cursor = t_vect(0, 0);
+	m_dist = 999;
 }
 
 s_cell::s_cell(t_vect p_coord, t_node *p_node)
@@ -14,6 +15,7 @@ s_cell::s_cell(t_vect p_coord, t_node *p_node)
 	node = p_node;
 	actor = NULL;
 	cursor = t_vect(0, 0);
+	m_dist = 999;
 }
 
 void					s_cell::draw_cell(t_vect target, t_vect offset, t_vect size)

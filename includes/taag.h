@@ -45,15 +45,18 @@ typedef struct          s_actor
 	t_vect				sprite;		//the sprite to use in a x/y axis
 	t_stat				stat;		//stat of the actor
 	t_vect				coord;		//position of the actor in game_space
+	vector<t_vect>		destination;//list of coord the actor will take while moving
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
+	void				reset_value();
 	void				draw_self(t_vect target, t_vect offset, t_vect size);
 }						t_actor;
 
 typedef struct			s_cell
 {
 	t_vect				coord;		//coord of the cell in the game_space
+	int					m_dist;		//utils for pathfinding - mouvement distance
 	t_actor				*actor;		//is there an actor here ?
 	t_node				*node;		//what node this cell is
 	t_vect				cursor;		//the sprite of the cursor to print up the cell
@@ -79,6 +82,7 @@ typedef struct			s_game_board
 
 						s_game_board();
 						s_game_board(string p_path);
+	t_cell				*get_cell(int x, int y);
 	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
 	void				draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite);
 									//draw a cursor on a certain coord
@@ -87,6 +91,7 @@ typedef struct			s_game_board
 	void				draw_mouse_cursor();//draw the mouse up the cell
 	void				draw_cursor_layer();//draw only the cursor on the screen
 	void				draw_actor_list();//draw every actor on the screen
+	void				reset_board();
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
 }						t_game_board;
