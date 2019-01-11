@@ -43,6 +43,7 @@ typedef struct          s_actor
 	bool				selected;
 	t_tileset			*tile;		//tile used by the actor, describe in the .act file
 	t_vect				sprite;		//the sprite to use in a x/y axis
+	int					dir;		//direction where the actor look
 	t_stat				stat;		//stat of the actor
 	t_vect				coord;		//position of the actor in game_space
 	vector<t_vect>		destination;//list of coord the actor will take while moving

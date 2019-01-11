@@ -150,11 +150,11 @@ vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
 		actual = to_look;
 		if (board.get_cell(actual.x + 1, actual.y) && board.get_cell(actual.x + 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
 			to_look = t_vect(actual.x + 1, actual.y);
-		if (board.get_cell(actual.x - 1, actual.y) && board.get_cell(actual.x - 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+		else if (board.get_cell(actual.x - 1, actual.y) && board.get_cell(actual.x - 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
 			to_look = t_vect(actual.x - 1, actual.y);
-		if (board.get_cell(actual.x, actual.y + 1) && board.get_cell(actual.x, actual.y + 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+		else if (board.get_cell(actual.x, actual.y + 1) && board.get_cell(actual.x, actual.y + 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
 			to_look = t_vect(actual.x, actual.y + 1);
-		if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+		else if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
 			to_look = t_vect(actual.x, actual.y - 1);
 		int i = 0;
 		t_vect delta = ((to_look - actual) / 15);
@@ -176,6 +176,7 @@ void				s_game_engine::move_actor(t_vect dest)
 		turn_order[turn_index % turn_order.size()]->stat.pm.value -= board.get_cell(dest.x, dest.y)->m_dist;
 		board.get_cell(dest.x, dest.y)->actor = turn_order[turn_index % turn_order.size()];
 		board.get_cell(turn_order[turn_index % turn_order.size()]->coord.x, turn_order[turn_index % turn_order.size()]->coord.y)->actor = NULL;
+		board.reset_board();
 	}
 }
 
@@ -187,6 +188,14 @@ void				s_game_engine::update_board()
 	{
 		if (turn_order[i]->destination.size() != 0)
 		{
+			if (turn_order[i]->destination[0].x > turn_order[i]->coord.x)
+				turn_order[i]->dir = 1;
+			else if (turn_order[i]->destination[0].x < turn_order[i]->coord.x)
+				turn_order[i]->dir = 3;
+			else if (turn_order[i]->destination[0].y < turn_order[i]->coord.y)
+				turn_order[i]->dir = 2;
+			else if (turn_order[i]->destination[0].y > turn_order[i]->coord.y)
+				turn_order[i]->dir = 0;
 			turn_order[i]->coord = turn_order[i]->destination[0];
 			turn_order[i]->destination.erase(turn_order[i]->destination.begin());
 		}

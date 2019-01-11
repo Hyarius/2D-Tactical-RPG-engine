@@ -3,7 +3,7 @@
 void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 {
 	if (tile != NULL)
-		tile->draw_self((coord + target) * size + offset, size, sprite + t_vect(get_frame_state(4), 0));
+		tile->draw_self((coord + target) * size + offset, size, sprite + t_vect(get_frame_state(4), dir));
 	if (selected == false && team >= 0 && team < 4)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
 	else if (selected == true)
