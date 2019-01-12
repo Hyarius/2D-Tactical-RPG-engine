@@ -21,7 +21,9 @@ void			s_button::draw_self()
 	this->button->draw_self();
 }
 
-void			s_button::click(t_vect mouse)
+bool			s_button::click(t_vect mouse)
 {
-	this->button->click(mouse);
+	if (this->button->click(mouse) == true)
+		return (true);
+	return (false);
 }

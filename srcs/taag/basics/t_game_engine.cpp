@@ -21,12 +21,18 @@ void				s_game_engine::delete_actor(t_actor *new_actor)
 	turn_order.erase(turn_order.begin() + count);
 }
 
+static void test(t_data data)
+{
+
+}
+
 s_game_engine::s_game_engine(string p_path)
 {
 	read_tileset();
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));
+	gui.add(new s_button(new t_text_button("", BLACK, gui.unit * t_vect(22, 0), gui.unit * t_vect(8, 5), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6)), &test, NULL));
 	initiate_turn_order();
 }
 
@@ -59,6 +65,60 @@ void				s_game_engine::draw_board()
 	board.draw_self();
 }
 
+void				s_game_engine::draw_actor_info_on_gui()
+{
+	t_actor *player = turn_order[turn_index % turn_order.size()];
+	string text = to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
+	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(15, 19), BLACK);
+	text = to_string(player->stat.pa.value);
+	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(13, 19), BLACK);
+	text = to_string(player->stat.pm.value);
+	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(17, 19), BLACK);
+}
+
+void				s_game_engine::draw_cell_info_on_gui()
+{
+	t_vect mouse = board.get_mouse_pos();
+	int i = 0;
+
+	if (mouse != t_vect(-1, -1))
+	{
+		t_cell *cell = board.get_cell(mouse.x, mouse.y);
+		string text = "Coord : " + to_string((int)(mouse.x)) + " / " + to_string((int)(mouse.y)) + " - " + (cell ? cell->node->name : "Empty tile");
+		draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+		if (cell == NULL || cell->node->m_obs == true)
+			text = "Cost to pass : ";
+		else
+			text = "Cost to pass : " + to_string(cell->node->cost);
+		draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i + 0.5), BLACK);
+		if (cell == NULL || cell->m_dist == 999)
+			text = "Cost to reach : ";
+		else
+			text = "Cost to reach : " + to_string(cell->m_dist);
+		draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(25.75, 0.5 * i++ + 0.5), BLACK);
+		if (cell && cell->actor != NULL)
+		{
+
+			t_actor *player = cell->actor;
+			text = "Actor : " + player->name;
+			draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			string text = "Health : " + to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
+			draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			text = "Action points : " + to_string(player->stat.pa.value);
+			draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			text = "Mouvement points : " + to_string(player->stat.pm.value);
+			draw_lined_text(text, calc_text_max_size(text, gui.unit * t_vect(7, 0.5)), gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+		}
+	}
+}
+
+void				s_game_engine::draw_gui()
+{
+	gui.draw_self();
+	draw_actor_info_on_gui();
+	draw_cell_info_on_gui();
+}
+
 void				s_game_engine::calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y)
 {
 	if (board.get_cell(i + x, j + y) != NULL && board.get_cell(i + x, j + y)->node->m_obs == false && board.get_cell(i + x, j + y)->actor == NULL &&
@@ -70,20 +130,6 @@ void				s_game_engine::calc_cell(vector<t_vect> *to_calc, int i, int x, int j, i
 	}
 }
 
-void				s_game_engine::draw_gui()
-{
-	t_actor *player = turn_order[turn_index % turn_order.size()];
-	gui.draw_self();
-	string text = to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
-	int text_size = calc_text_max_size(text, gui.unit * t_vect(2, 1));
-	draw_centred_text(text, text_size, gui.unit * t_vect(15, 19), BLACK);
-	text = to_string(player->stat.pa.value) + "/" + to_string(player->stat.pa.max);
-	text_size = calc_text_max_size(text, gui.unit * t_vect(1, 1));
-	draw_centred_text(text, text_size, gui.unit * t_vect(13, 19), BLACK);
-	text = to_string(player->stat.pm.value) + "/" + to_string(player->stat.pm.max);
-	text_size = calc_text_max_size(text, gui.unit * t_vect(1, 1));
-	draw_centred_text(text, text_size, gui.unit * t_vect(17, 19), BLACK);
-}
 
 void				s_game_engine::calculate_distance()
 {
@@ -110,7 +156,6 @@ void				s_game_engine::calculate_distance()
 		board.get_cell(to_calc[i].x, to_calc[i].y)->cursor = t_vect(1, 2);
 		i++;
 	}
-
 }
 
 void				s_game_engine::handle_control_camera(SDL_Event *event)
@@ -124,7 +169,10 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_SPACE)
 		next_turn();
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
-		move_actor(board.get_mouse_pos());
+	{
+		if (gui.click() == false)
+			move_actor(board.get_mouse_pos());
+	}
 }
 
 vector<t_vect>		s_game_engine::pathfinding(t_vect dest)

@@ -109,6 +109,8 @@ typedef struct			s_game_engine
 						s_game_engine(string p_path);
 	void				draw_board();	//draw the board at the center of the screen
 	void				draw_gui(); 	//draw the gui, and the multiples value/image to print on it
+	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
+	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player
 	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative

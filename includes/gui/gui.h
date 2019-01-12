@@ -23,7 +23,7 @@ typedef struct		s_gui_comp
 {
 	virtual void	set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct) = 0;
 	virtual void	draw_self() = 0;
-	virtual void	click(t_vect mouse) = 0;
+	virtual bool	click(t_vect mouse) = 0;
 }					t_gui_comp;
 
 typedef struct 		s_button_comp : t_gui_comp
@@ -41,7 +41,7 @@ typedef struct 		s_button_comp : t_gui_comp
 	void			set_funct_param(gui_funct p_funct, t_data p_data);
 	void			set_text(string text);
 	virtual void	draw_self() = 0;
-	void			click(t_vect mouse);
+	bool			click(t_vect mouse);
 }					t_button_comp;
 
 
@@ -97,7 +97,7 @@ typedef struct		s_entry_comp : t_gui_comp
 	void			add_text(string new_text);
 	void			delete_text();
 	virtual void	draw_self() = 0; // draw the button
-	void			click(t_vect mouse); // test if the mouse is in the button and start the funct if yes
+	bool			click(t_vect mouse); // test if the mouse is in the button and start the funct if yes
 }					t_entry_comp;
 
 typedef struct		s_text_entry : t_entry_comp
@@ -122,7 +122,7 @@ typedef struct		s_image_entry : t_entry_comp
 typedef struct		s_gui_obj
 {
 	virtual void	draw_self() = 0;
-	virtual void	click(t_vect mouse) = 0;
+	virtual bool	click(t_vect mouse) = 0;
 	virtual 		~s_gui_obj() {}
 }					t_gui_obj;
 
@@ -133,7 +133,7 @@ typedef struct		s_button : t_gui_obj
 					s_button(t_button_comp *p_button, gui_funct p_funct, t_data p_data);
 					s_button(t_button_comp *p_button, gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
 	void			draw_self();
-	void			click(t_vect mouse);
+	bool			click(t_vect mouse);
 }					t_button;
 
 typedef struct		s_entry : t_gui_obj
@@ -142,7 +142,7 @@ typedef struct		s_entry : t_gui_obj
 
 					s_entry(t_entry_comp *p_entry);
 	void			draw_self();
-	void			click(t_vect mouse);
+	bool			click(t_vect mouse);
 }					t_entry;
 
 typedef struct		s_gui
@@ -158,7 +158,7 @@ typedef struct		s_gui
 	void			add(t_gui_obj *object);
 	void			add(int rep, t_gui_obj *object);
 	void			draw_self();
-	void			click();
+	bool			click();
 }					t_gui;
 
 #endif

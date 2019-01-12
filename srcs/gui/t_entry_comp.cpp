@@ -13,15 +13,16 @@ void			t_entry_comp::delete_text()
 		text.pop_back();
 }
 
-void			t_entry_comp::click(t_vect mouse)
+bool			t_entry_comp::click(t_vect mouse)
 {
 	if (mouse > coord[0] && mouse < coord[0] + size[0])
 	{
 		selected = true;
 		SDL_StartTextInput();
+		return (true);
 	}
-	else
-		selected = false;
+	selected = false;
+	return (false);
 }
 
 void			t_entry_comp::set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct)

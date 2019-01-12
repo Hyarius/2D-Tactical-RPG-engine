@@ -186,7 +186,10 @@ void				s_game_board::handle_mouvement(SDL_Event *event)
 	{
 		target.x += (double)(event->motion.xrel) / (sprite_unit.x * zoom);
 		target.y += (double)(event->motion.yrel) / (sprite_unit.y * zoom);
+		SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
 	}
+	else
+		SDL_EventState(SDL_MOUSEBUTTONUP, SDL_ENABLE);
 }
 
 void				s_game_board::handle_zoom(SDL_Event *event)

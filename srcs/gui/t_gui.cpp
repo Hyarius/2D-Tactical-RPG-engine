@@ -29,7 +29,7 @@ void		s_gui::draw_self()
 	}
 }
 
-void		s_gui::click()
+bool		s_gui::click()
 {
 	size_t i = 0;
 	size_t j = 0;
@@ -45,11 +45,13 @@ void		s_gui::click()
 		j = 0;
 		while (j < object_list[i].size())
 		{
-			object_list[i].at(j)->click(mouse);
+			if (object_list[i].at(j)->click(mouse) == true)
+				return (true);
 			j++;
 		}
 		i++;
 	}
+	return (false);
 }
 
 void		s_gui::add(int rep, t_gui_obj *object)

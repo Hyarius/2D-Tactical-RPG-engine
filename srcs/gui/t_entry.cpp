@@ -11,7 +11,9 @@ void			s_entry::draw_self()
 	this->entry->draw_self();
 }
 
-void			s_entry::click(t_vect mouse)
+bool			s_entry::click(t_vect mouse)
 {
-	this->entry->click(mouse);
+	if (this->entry->click(mouse) == true)
+		return (true);
+	return (false);
 }
