@@ -3,5 +3,5 @@ tileset:simple_actor
 sprite:0:0
 hp:45
 pa:6
-pm:4
+pm:10
 init:7

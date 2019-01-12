@@ -129,9 +129,9 @@ void				s_game_engine::calc_cell(vector<t_vect> *to_calc, int i, int x, int j, i
 {
 	if (board.get_cell(i + x, j + y) != NULL && board.get_cell(i + x, j + y)->node->m_obs == false && board.get_cell(i + x, j + y)->actor == NULL &&
 		board.get_cell(i + x, j + y)->m_dist > board.get_cell(i, j)->m_dist &&
-		board.get_cell(i, j)->m_dist + board.get_cell(i, j)->node->cost <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
+		board.get_cell(i, j)->m_dist + board.get_cell(i + x, j + y)->node->cost <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
 	{
-		board.get_cell(i + x, j + y)->m_dist = board.get_cell(i, j)->m_dist + board.get_cell(i, j)->node->cost;
+		board.get_cell(i + x, j + y)->m_dist = board.get_cell(i, j)->m_dist + board.get_cell(i + x, j + y)->node->cost;
 		to_calc->push_back(t_vect(i + x, j + y));
 	}
 }
@@ -200,8 +200,8 @@ vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
 		else if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
 			to_look = t_vect(actual.x, actual.y - 1);
 		int i = 0;
-		t_vect delta = ((to_look - actual) / 15);
-		while (i < 15)
+		t_vect delta = ((to_look - actual) / (15 * board.get_cell(actual.x, actual.y)->node->cost));
+		while (i < 15 * board.get_cell(actual.x, actual.y)->node->cost)
 		{
 			path.insert(path.begin(), actual + delta * i);
 			i++;
