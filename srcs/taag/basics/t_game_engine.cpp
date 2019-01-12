@@ -46,17 +46,22 @@ void				s_game_engine::initiate_turn_order()
 		insert_actor(board.actor_list[i]);
 		i++;
 	}
-	turn_order[turn_index % turn_order.size()]->selected = true;
+	if (turn_order.size())
+		turn_order[turn_index % turn_order.size()]->selected = true;
 	board.reset_board();
-	calculate_distance();
+	if (turn_order.size())
+		calculate_distance();
 }
 
 void				s_game_engine::next_turn()
 {
-	turn_order[turn_index % turn_order.size()]->selected = false;
+	if (turn_order.size())
+		turn_order[turn_index % turn_order.size()]->selected = false;
 	turn_index = (turn_index + 1) % turn_order.size();
-	turn_order[turn_index % turn_order.size()]->selected = true;
-	turn_order[turn_index % turn_order.size()]->reset_value();
+	if (turn_order.size())
+		turn_order[turn_index % turn_order.size()]->selected = true;
+	if (turn_order.size())
+		turn_order[turn_index % turn_order.size()]->reset_value();
 	calculate_distance();
 }
 
@@ -115,7 +120,8 @@ void				s_game_engine::draw_cell_info_on_gui()
 void				s_game_engine::draw_gui()
 {
 	gui.draw_self();
-	draw_actor_info_on_gui();
+	if (turn_order.size())
+		draw_actor_info_on_gui();
 	draw_cell_info_on_gui();
 }
 
@@ -170,7 +176,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 		next_turn();
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
-		if (gui.click() == false)
+		if (gui.click() == false && turn_order.size())
 			move_actor(board.get_mouse_pos());
 	}
 }
@@ -238,6 +244,6 @@ void				s_game_engine::update_board()
 		}
 		i++;
 	}
-	if (turn_order[turn_index % turn_order.size()]->destination.size() == 0)
+	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0)
 		calculate_distance();
 }
