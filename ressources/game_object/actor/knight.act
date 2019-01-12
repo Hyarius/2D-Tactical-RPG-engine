@@ -1,7 +1,7 @@
 name:Knight
 tileset:simple_actor
 sprite:0:0
-hp:25
+hp:45
 pa:6
 pm:4
 init:7

@@ -1,7 +1,7 @@
 name:Archer
 tileset:simple_actor
 sprite:8:0
-hp:25
+hp:35
 pa:6
 pm:5
 init:6

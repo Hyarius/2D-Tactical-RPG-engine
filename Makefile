@@ -6,11 +6,12 @@ NAME=		TAAG
 
 OBJ_PATH=	obj
 
-CPPFLAGS=	-Iincludes -Iincludes/template -Iincludes/glm -I$(SDL_MAIN_INCLUDE_PATH) -I$(SDL_IMAGE_INCLUDE_PATH) \
+CPPFLAGS=	-Iincludes -Iincludes/template -Iincludes/gui -I$(SDL_MAIN_INCLUDE_PATH) -I$(SDL_IMAGE_INCLUDE_PATH) \
 			-I$(SDL_MIXER_INCLUDE_PATH) -I$(SDL_TTF_INCLUDE_PATH)
 
 DIR = 			srcs/ \
 				srcs/basics \
+				srcs/gui \
 				srcs/taag/basics \
 				srcs/taag
 
@@ -29,7 +30,7 @@ CFLAGS=		-std=c++11
 
 CC=			g++
 
-vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics
+vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics:./srcs/gui
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(SDL_MAIN_LIBS_PATH):$(SDL_IMAGE_LIBS_PATH):$(SDL_MIXER_LIBS_PATH):$(SDL_TTF_LIBS_PATH)
 

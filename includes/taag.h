@@ -2,6 +2,7 @@
 # define TAAG_H
 
 # include "template.h"
+# include "gui.h"
 
 extern map<string, t_tileset>		tileset_map;	//the dictionnary holding on every
 													//tileset of the prog, in extern to accessibility
@@ -20,8 +21,8 @@ typedef struct			s_node
 
 typedef struct			s_value
 {
-	int					value;
-	int					max;
+	int					value;		//actual value of the stat
+	int					max;		//Maximum value of the stat
 						s_value();
 						s_value(int p_max);
 						s_value(int p_value, int p_max);
@@ -29,10 +30,10 @@ typedef struct			s_value
 
 typedef struct			s_stat
 {
-	t_value				hp;
-	t_value				pa;
-	t_value				pm;
-	int					init;
+	t_value				hp;			//health point
+	t_value				pa;			//action point
+	t_value				pm;			//mouvement point
+	int					init;		//initiative
 						s_stat();
 						s_stat(t_value p_hp, t_value p_pa, t_value p_pm, int p_init);
 }						t_stat;
@@ -40,7 +41,7 @@ typedef struct			s_stat
 typedef struct          s_actor
 {
 	string				name;		//Name of the actor
-	bool				selected;
+	bool				selected;	//is this actor the selected ?
 	t_tileset			*tile;		//tile used by the actor, describe in the .act file
 	t_vect				sprite;		//the sprite to use in a x/y axis
 	int					dir;		//direction where the actor look
@@ -50,8 +51,8 @@ typedef struct          s_actor
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
-	void				reset_value();
-	void				draw_self(t_vect target, t_vect offset, t_vect size);
+	void				reset_value();//reset the value of PA and PM to max
+	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
 }						t_actor;
 
 typedef struct			s_cell
@@ -63,7 +64,7 @@ typedef struct			s_cell
 	t_vect				cursor;		//the sprite of the cursor to print up the cell
 						s_cell();
 						s_cell(t_vect p_coord, t_node *p_node);
-	void				draw_cell(t_vect target, t_vect offset, t_vect size);
+	void				draw_cell(t_vect target, t_vect offset, t_vect size); //draw the cell on her place on the screen
 }						t_cell;
 
 typedef struct			s_game_board
@@ -92,10 +93,34 @@ typedef struct			s_game_board
 	void				draw_mouse_cursor();//draw the mouse up the cell
 	void				draw_cursor_layer();//draw only the cursor on the screen
 	void				draw_actor_list();//draw every actor on the screen
-	void				reset_board();
+	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
 }						t_game_board;
+
+typedef struct			s_game_engine
+{
+	t_game_board		board;		//The board where the game take place
+	vector<t_actor *>	turn_order;	//the list of every actor of the team 1, 2 and 3
+	size_t				turn_index;	//iterator to the turn_order
+	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
+
+						s_game_engine();
+						s_game_engine(string p_path);
+	void				draw_board();	//draw the board at the center of the screen
+	void				draw_gui(); 	//draw the gui, and the multiples value/image to print on it
+	void				initiate_turn_order();	//create the vector for tun order
+	void				next_turn();	//pass to the next player
+	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
+	void				delete_actor(t_actor *old_actor);	//delete an actor
+	void				calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
+	void				calculate_distance();	//calculate what tile the current actor can acces by foot
+	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
+	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
+	void				update_board();			//update the state of the screen, updating the actor_list.destination
+	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
+	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
+}						t_game_engine;
 
 t_node					read_node(string p_path); //read one .node file and return a t_node
 t_actor					read_actor(string p_path);//read one .act file and return a t_actor
