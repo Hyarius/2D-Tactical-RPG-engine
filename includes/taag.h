@@ -104,6 +104,7 @@ typedef struct			s_game_engine
 	vector<t_actor *>	turn_order;	//the list of every actor of the team 1, 2 and 3
 	size_t				turn_index;	//iterator to the turn_order
 	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
+	bool				calculated;	//did we need to calculate something ?
 
 						s_game_engine();
 						s_game_engine(string p_path);
@@ -111,6 +112,7 @@ typedef struct			s_game_engine
 	void				draw_gui(); 	//draw the gui, and the multiples value/image to print on it
 	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
 	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
+	void				draw_path(); //draw the path the actor will follow on screen
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player
 	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
@@ -118,6 +120,7 @@ typedef struct			s_game_engine
 	void				calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
 	void				calculate_distance();	//calculate what tile the current actor can acces by foot
 	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
+	vector<t_vect>		calc_path(t_vect dest);//get the list of tile to go to targeted tile
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion

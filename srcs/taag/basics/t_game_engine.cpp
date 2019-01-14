@@ -28,6 +28,7 @@ static void test(t_data data)
 
 s_game_engine::s_game_engine(string p_path)
 {
+	calculated = false;
 	read_tileset();
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
@@ -65,9 +66,25 @@ void				s_game_engine::next_turn()
 	calculate_distance();
 }
 
+void				s_game_engine::draw_path()
+{
+	vector<t_vect>	path = calc_path(board.get_mouse_pos());
+
+	size_t i = 0;
+	while (i < path.size())
+	{
+		draw_centred_rectangle((path[i] + board.target) * board.sprite_unit * board.zoom + board.offset + board.sprite_unit * board.zoom / 2, board.sprite_unit * board.zoom / 2, t_color(0.5, 0.5, 1.0));
+		i++;
+	}
+}
+
 void				s_game_engine::draw_board()
 {
-	board.draw_self();
+	board.draw_cell_layer();
+	board.draw_cursor_layer();
+	draw_path();
+	board.draw_actor_list();
+	board.draw_mouse_cursor();
 }
 
 void				s_game_engine::draw_actor_info_on_gui()
@@ -162,6 +179,8 @@ void				s_game_engine::calculate_distance()
 		board.get_cell(to_calc[i].x, to_calc[i].y)->cursor = t_vect(1, 2);
 		i++;
 	}
+	calculated = true;
+	printf("\n\n");
 }
 
 void				s_game_engine::handle_control_camera(SDL_Event *event)
@@ -207,6 +226,33 @@ vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
 			i++;
 		}
 	}
+	calculated = false;
+	return (path);
+}
+
+vector<t_vect>		s_game_engine::calc_path(t_vect dest)
+{
+	vector<t_vect>	path;
+	t_vect			actual = dest;
+	t_vect			to_look = actual;
+	t_vect			source = turn_order[turn_index % turn_order.size()]->coord;
+
+	if (board.get_cell(dest.x, dest.y) == NULL || board.get_cell(dest.x, dest.y)->m_dist == 999)
+		return (path);
+	while (actual != source)
+	{
+		actual = to_look;
+		if (board.get_cell(actual.x + 1, actual.y) && board.get_cell(actual.x + 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+			to_look = t_vect(actual.x + 1, actual.y);
+		else if (board.get_cell(actual.x - 1, actual.y) && board.get_cell(actual.x - 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+			to_look = t_vect(actual.x - 1, actual.y);
+		else if (board.get_cell(actual.x, actual.y + 1) && board.get_cell(actual.x, actual.y + 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+			to_look = t_vect(actual.x, actual.y + 1);
+		else if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
+			to_look = t_vect(actual.x, actual.y - 1);
+		path.insert(path.begin(), to_look);
+	}
+	path.insert(path.begin(), dest);
 	return (path);
 }
 
@@ -244,6 +290,6 @@ void				s_game_engine::update_board()
 		}
 		i++;
 	}
-	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0)
+	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0 && calculated == false)
 		calculate_distance();
 }
