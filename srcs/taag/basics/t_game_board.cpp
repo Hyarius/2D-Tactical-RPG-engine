@@ -78,6 +78,15 @@ t_cell				*s_game_board::get_cell(int x, int y)
 	return (&(cell_layer[x][y]));
 }
 
+t_cell				*s_game_board::get_cell(t_vect target)
+{
+	if ((int)(target.x) < 0 || (int)(target.x) >= board_size.x || (int)(target.y) < 0 || (int)(target.y) >= board_size.y)
+		return (NULL);
+	if (cell_layer[(int)(target.x)][(int)(target.y)].node == NULL)
+		return (NULL);
+	return (&(cell_layer[(int)(target.x)][(int)(target.y)]));
+}
+
 t_vect				s_game_board::get_mouse_pos()
 {
 	t_vect mouse = (get_mouse_coord() - offset) / (sprite_unit * zoom) - target;
@@ -161,6 +170,7 @@ void				s_game_board::reset_board()
 		while ((size_t)j < board_size.y)
 		{
 			cell_layer[i][j].m_dist = 999;
+			cell_layer[i][j].v_dist = 999;
 			cell_layer[i][j].cursor = t_vect(0, 0);
 			j++;
 		}

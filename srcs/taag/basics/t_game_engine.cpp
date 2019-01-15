@@ -21,19 +21,16 @@ void				s_game_engine::delete_actor(t_actor *new_actor)
 	turn_order.erase(turn_order.begin() + count);
 }
 
-static void test(t_data data)
-{
-
-}
-
 s_game_engine::s_game_engine(string p_path)
 {
 	calculated = false;
+	s_spell = -1;
 	read_tileset();
+	read_spell();
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
-	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));
-	gui.add(new s_button(new t_text_button("", BLACK, gui.unit * t_vect(22, 0), gui.unit * t_vect(8, 5), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6)), &test, NULL));
+	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), t_vect(0, 0), gui.unit * t_vect(30, 20)), NULL, NULL));
+	gui.add(new s_button(new t_text_button("", BLACK, gui.unit * t_vect(22, 0), gui.unit * t_vect(8, 5), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6)), NULL, NULL));
 	initiate_turn_order();
 }
 
@@ -63,7 +60,8 @@ void				s_game_engine::next_turn()
 		turn_order[turn_index % turn_order.size()]->selected = true;
 	if (turn_order.size())
 		turn_order[turn_index % turn_order.size()]->reset_value();
-	calculate_distance();
+	calculated = false;
+	s_spell = -1;
 }
 
 void				s_game_engine::draw_path()
@@ -96,6 +94,11 @@ void				s_game_engine::draw_actor_info_on_gui()
 	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(13, 19), BLACK);
 	text = to_string(player->stat.pm.value);
 	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(17, 19), BLACK);
+	for (int i = 0; i < 6; i++)
+	{
+		if (player->spell[i]->tile != NULL)
+			player->spell[i]->tile->draw_self(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, player->spell[i]->icon);
+	}
 }
 
 void				s_game_engine::draw_cell_info_on_gui()
@@ -142,47 +145,6 @@ void				s_game_engine::draw_gui()
 	draw_cell_info_on_gui();
 }
 
-void				s_game_engine::calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y)
-{
-	if (board.get_cell(i + x, j + y) != NULL && board.get_cell(i + x, j + y)->node->m_obs == false && board.get_cell(i + x, j + y)->actor == NULL &&
-		board.get_cell(i + x, j + y)->m_dist > board.get_cell(i, j)->m_dist &&
-		board.get_cell(i, j)->m_dist + board.get_cell(i + x, j + y)->node->cost <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
-	{
-		board.get_cell(i + x, j + y)->m_dist = board.get_cell(i, j)->m_dist + board.get_cell(i + x, j + y)->node->cost;
-		to_calc->push_back(t_vect(i + x, j + y));
-	}
-}
-
-
-void				s_game_engine::calculate_distance()
-{
-	board.reset_board();
-	t_actor 		*player = turn_order[turn_index % turn_order.size()];
-	vector<t_vect>	to_calc;
-	size_t i, j;
-
-	to_calc.push_back(player->coord);
-
-	i = 0;
-	board.get_cell(to_calc[i].x, to_calc[i].y)->m_dist = 0;
-	while (i < to_calc.size())
-	{
-		calc_cell(&to_calc, to_calc[i].x, 1, to_calc[i].y, 0);
-		calc_cell(&to_calc, to_calc[i].x, -1, to_calc[i].y, 0);
-		calc_cell(&to_calc, to_calc[i].x, 0, to_calc[i].y, 1);
-		calc_cell(&to_calc, to_calc[i].x, 0, to_calc[i].y, -1);
-		i++;
-	}
-	i = 1;
-	while (i < to_calc.size())
-	{
-		board.get_cell(to_calc[i].x, to_calc[i].y)->cursor = t_vect(1, 2);
-		i++;
-	}
-	calculated = true;
-	printf("\n\n");
-}
-
 void				s_game_engine::handle_control_camera(SDL_Event *event)
 {
 	board.handle_mouvement(event);
@@ -193,67 +155,30 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 {
 	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_SPACE)
 		next_turn();
-	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
+	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT && s_spell == -1)
 	{
 		if (gui.click() == false && turn_order.size())
 			move_actor(board.get_mouse_pos());
 	}
-}
-
-vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
-{
-	vector<t_vect>	path;
-	t_vect			actual = dest;
-	t_vect			to_look = actual;
-	t_vect			source = turn_order[turn_index % turn_order.size()]->coord;
-
-	while (actual != source)
+	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT && s_spell != -1)
 	{
-		actual = to_look;
-		if (board.get_cell(actual.x + 1, actual.y) && board.get_cell(actual.x + 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x + 1, actual.y);
-		else if (board.get_cell(actual.x - 1, actual.y) && board.get_cell(actual.x - 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x - 1, actual.y);
-		else if (board.get_cell(actual.x, actual.y + 1) && board.get_cell(actual.x, actual.y + 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x, actual.y + 1);
-		else if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x, actual.y - 1);
-		int i = 0;
-		t_vect delta = ((to_look - actual) / (15 * board.get_cell(actual.x, actual.y)->node->cost));
-		while (i < 15 * board.get_cell(actual.x, actual.y)->node->cost)
-		{
-			path.insert(path.begin(), actual + delta * i);
-			i++;
-		}
+		s_spell = -1;
+		calculated = false;
 	}
-	calculated = false;
-	return (path);
-}
-
-vector<t_vect>		s_game_engine::calc_path(t_vect dest)
-{
-	vector<t_vect>	path;
-	t_vect			actual = dest;
-	t_vect			to_look = actual;
-	t_vect			source = turn_order[turn_index % turn_order.size()]->coord;
-
-	if (board.get_cell(dest.x, dest.y) == NULL || board.get_cell(dest.x, dest.y)->m_dist == 999)
-		return (path);
-	while (actual != source)
-	{
-		actual = to_look;
-		if (board.get_cell(actual.x + 1, actual.y) && board.get_cell(actual.x + 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x + 1, actual.y);
-		else if (board.get_cell(actual.x - 1, actual.y) && board.get_cell(actual.x - 1, actual.y)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x - 1, actual.y);
-		else if (board.get_cell(actual.x, actual.y + 1) && board.get_cell(actual.x, actual.y + 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x, actual.y + 1);
-		else if (board.get_cell(actual.x, actual.y - 1) && board.get_cell(actual.x, actual.y - 1)->m_dist < board.get_cell(actual.x, actual.y)->m_dist)
-			to_look = t_vect(actual.x, actual.y - 1);
-		path.insert(path.begin(), to_look);
-	}
-	path.insert(path.begin(), dest);
-	return (path);
+	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_q)
+		s_spell = 0;
+	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_w)
+		s_spell = 1;
+	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_e)
+		s_spell = 2;
+	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r)
+		s_spell = 3;
+	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_t)
+		s_spell = 4;
+	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_y)
+		s_spell = 5;
+	if (s_spell != -1)
+		calculated = false;
 }
 
 void				s_game_engine::move_actor(t_vect dest)
@@ -267,6 +192,83 @@ void				s_game_engine::move_actor(t_vect dest)
 		board.get_cell(turn_order[turn_index % turn_order.size()]->coord.x, turn_order[turn_index % turn_order.size()]->coord.y)->actor = NULL;
 		board.reset_board();
 	}
+}
+
+void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist)
+{
+	t_vect 			player_coord = turn_order[turn_index % turn_order.size()]->coord;
+	vector<t_vect>	vision_tl = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.49) * 10, t_vect(target.x + 0.49, target.y + 0.49) * 10);
+	vector<t_vect>	vision_tr = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.49) * 10, t_vect(target.x + 0.51, target.y + 0.49) * 10);
+	vector<t_vect>	vision_dl = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.51) * 10, t_vect(target.x + 0.49, target.y + 0.51) * 10);
+	vector<t_vect>	vision_dr = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.51) * 10, t_vect(target.x + 0.51, target.y + 0.51) * 10);
+
+	if (board.get_cell(target) && board.get_cell(target)->node->v_obs == false && board.get_cell(target)->v_dist >= prev_dist)
+	{
+		size_t i = 0;
+		bool visible = true;
+		while (i < vision_tl.size() && visible == true)
+		{
+			if (board.get_cell(vision_tl[i] / 10)->node->v_obs == true || (board.get_cell(vision_tl[i] / 10)->actor != NULL && board.get_cell(vision_tl[i] / 10)->actor != turn_order[turn_index % turn_order.size()]))
+				if (board.get_cell(vision_tr[i] / 10)->node->v_obs == true || (board.get_cell(vision_tr[i] / 10)->actor != NULL && board.get_cell(vision_tr[i] / 10)->actor != turn_order[turn_index % turn_order.size()]))
+					if (board.get_cell(vision_dl[i] / 10)->node->v_obs == true || (board.get_cell(vision_dl[i] / 10)->actor != NULL && board.get_cell(vision_dl[i] / 10)->actor != turn_order[turn_index % turn_order.size()]))
+						if (board.get_cell(vision_dl[i] / 10)->node->v_obs == true || (board.get_cell(vision_dr[i] / 10)->actor != NULL && board.get_cell(vision_dr[i] / 10)->actor != turn_order[turn_index % turn_order.size()]))
+							visible = false;
+			i++;
+		}
+		if (visible == true)
+		{
+			board.get_cell(target)->v_dist = prev_dist + 1;
+			if (board.get_cell(target)->v_dist <= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[1])
+			{
+				if (board.get_cell(target)->v_dist >= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[0])
+				{
+					board.get_cell(target)->cursor = t_vect(0, 2);
+				}
+				if (to_calc != NULL)
+					to_calc->push_back(target);
+			}
+		}
+	}
+}
+
+void				s_game_engine::calculate_vision_circle()
+{
+	board.reset_board();
+	t_actor 		*player = turn_order[turn_index % turn_order.size()];
+	vector<t_vect>	to_calc;
+	size_t i;
+
+	to_calc.push_back(player->coord);
+	board.get_cell(to_calc[0])->v_dist = 0;
+	i = 0;
+	while (i < to_calc.size())
+	{
+		v_calc_cell(&to_calc, t_vect(to_calc[i].x + 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist);
+		v_calc_cell(&to_calc, t_vect(to_calc[i].x - 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist);
+		v_calc_cell(&to_calc, t_vect(to_calc[i].x, to_calc[i].y + 1), board.get_cell(to_calc[i])->v_dist);
+		v_calc_cell(&to_calc, t_vect(to_calc[i].x, to_calc[i].y - 1), board.get_cell(to_calc[i])->v_dist);
+		i++;
+	}
+	calculated = true;
+}
+
+void				s_game_engine::calculate_vision_line()
+{
+	board.reset_board();
+	t_actor 		*player = turn_order[turn_index % turn_order.size()];
+	int i;
+
+	board.get_cell(player->coord)->v_dist = 0;
+	i = 0;
+	while (i <= player->spell[s_spell]->range[1])
+	{
+		v_calc_cell(NULL, t_vect(player->coord.x + i, player->coord.y), i - 1);
+		v_calc_cell(NULL, t_vect(player->coord.x - i, player->coord.y), i - 1);
+		v_calc_cell(NULL, t_vect(player->coord.x, player->coord.y + i), i - 1);
+		v_calc_cell(NULL, t_vect(player->coord.x, player->coord.y - i), i - 1);
+		i++;
+	}
+	calculated = true;
 }
 
 void				s_game_engine::update_board()
@@ -287,9 +289,17 @@ void				s_game_engine::update_board()
 				turn_order[i]->dir = 0;
 			turn_order[i]->coord = turn_order[i]->destination[0];
 			turn_order[i]->destination.erase(turn_order[i]->destination.begin());
+			calculated = false;
 		}
 		i++;
 	}
-	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0 && calculated == false)
+	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0 && calculated == false && s_spell == -1)
 		calculate_distance();
+	if (turn_order.size() && turn_order[turn_index % turn_order.size()]->destination.size() == 0 && s_spell != -1 && calculated == false)
+	{
+		if (turn_order[turn_index % turn_order.size()]->spell[s_spell]->type == CIRCLE)
+			calculate_vision_circle();
+		else
+			calculate_vision_line();
+	}
 }

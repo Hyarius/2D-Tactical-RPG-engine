@@ -1,0 +1,9 @@
+name		:Fire 7
+description	:Fire spell number 7
+icon		:fire_spell_icons
+sprite		:3:1
+pa			:3
+pm			:0
+range		:1:4
+type		:0
+effect1		:1:10:2:2

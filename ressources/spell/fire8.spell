@@ -1,0 +1,9 @@
+name		:Fire 8
+description	:Fire spell number 8
+icon		:fire_spell_icons
+sprite		:0:2
+pa			:3
+pm			:0
+range		:1:4
+type		:0
+effect1		:1:10:2:2

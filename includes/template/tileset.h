@@ -29,6 +29,4 @@ typedef struct		s_tileset
 	void 			draw_self(t_vect p_coord, t_vect p_size, t_vect p_sprite, double p_alpha);
 }					t_tileset;
 
-void				read_tileset();
-
 #endif

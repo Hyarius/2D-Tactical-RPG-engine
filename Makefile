@@ -26,7 +26,7 @@ OBJS =		$(addprefix $(OBJ_PATH)/, $(OBJ))
 ##		COMPILER FLAGS
 ##
 
-CFLAGS=		-std=c++11
+CFLAGS=		-std=c++11 -Werror -Wextra -g -fsanitize=address
 
 CC=			g++
 

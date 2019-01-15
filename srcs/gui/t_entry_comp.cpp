@@ -27,7 +27,9 @@ bool			t_entry_comp::click(t_vect mouse)
 
 void			t_entry_comp::set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct)
 {
-
+	(void)p_funct;
+	(void)p_data;
+	(void)p_draw_funct;
 }
 
 void		t_entry_comp::set_back(string p_back)

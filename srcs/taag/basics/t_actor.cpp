@@ -20,6 +20,7 @@ t_actor					read_actor(string p_path)
 	t_value			hp;
 	t_value			pa;
 	t_value			pm;
+	t_spell			*spell[6];
 	int				init;
 
 	myfile.open(p_path);
@@ -33,8 +34,9 @@ t_actor					read_actor(string p_path)
 	pa = t_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
 	pm = t_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
 	init = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-
-	return (s_actor(name, tile, sprite, t_stat(hp, pa, pm, init)));
+	for (int i = 0; i < 6; i++)
+		spell[i] = &(spell_map[get_strsplit(&myfile, ":", 2)[1]]);
+	return (s_actor(name, tile, sprite, t_stat(hp, pa, pm, init), spell));
 }
 
 s_actor::s_actor()
@@ -45,13 +47,15 @@ s_actor::s_actor()
 	sprite = t_vect(-1, -1);
 }
 
-s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
+s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell)
 {
 	name = p_name;
 	selected = false;
 	tile = p_tile;
 	sprite = p_sprite;
 	stat = p_stat;
+	for (int i = 0; i < 6; i++)
+		spell[i] = p_spell[i];
 }
 
 void			s_actor::reset_value()

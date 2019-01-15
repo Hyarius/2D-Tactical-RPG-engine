@@ -1,0 +1,9 @@
+name		:Fire 12
+description	:Fire spell number 12
+icon		:fire_spell_icons
+sprite		:0:3
+pa			:3
+pm			:0
+range		:1:4
+type		:0
+effect1		:1:10:2:2

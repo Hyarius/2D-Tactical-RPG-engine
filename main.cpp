@@ -11,7 +11,10 @@ int main(int argc, char **argv)
 {
 	SDL_Event event;
 
-	window_initialisation("TAAG");
+	if (argc != 1)
+		return (0);
+
+	window_initialisation(argv[0]);
 
 	t_game_engine	game = s_game_engine("ressources/map/map_test.map");
 
@@ -23,8 +26,6 @@ int main(int argc, char **argv)
 		game.draw_board();
 		game.draw_gui();
 
-		render_screen(true);
-
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
 			game.handle_control_camera(&event);
 			game.handle_control_game(&event);
 		}
+
+		render_screen(true);
 	}
 	return (0);
 }

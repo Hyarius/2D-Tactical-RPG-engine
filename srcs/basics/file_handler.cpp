@@ -37,7 +37,7 @@ vector<string>			get_strsplit(ifstream *myfile, const string c, int size)
         tab.push_back(word);
         word = strtok_r(NULL, c.c_str(), &context);
     }
-	if (size != -1 && tab.size() != size)
+	if (size != -1 && tab.size() != (size_t)size)
 		error_exit("Bad splited line (" + saved_line + ")!", 134);
     return tab;
 }

@@ -4,8 +4,9 @@
 # include "template.h"
 # include "gui.h"
 
-extern map<string, t_tileset>		tileset_map;	//the dictionnary holding on every
+extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
 													//tileset of the prog, in extern to accessibility
+
 
 typedef struct			s_node
 {
@@ -38,6 +39,31 @@ typedef struct			s_stat
 						s_stat(t_value p_hp, t_value p_pa, t_value p_pm, int p_init);
 }						t_stat;
 
+enum e_range_type
+{
+	CIRCLE = 0,
+	LINE = 1,
+};
+
+typedef struct			s_spell
+{
+	string				name;			//name of the spell
+	string				desc;	//description of the spell
+	t_tileset			*tile;			//tile of the icon
+	t_vect				icon;			//the sprite to use to print the icon
+	int					cost_pa;		//cost in PA
+	int					cost_pm;		//cost in PM
+	int					range[2];		//0 - range min / 1 - range max
+	e_range_type		type;			//what kind of vision is
+						s_spell();
+						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_cost_pa, int p_cost_pm, int range_min, int range_max, e_range_type p_type);
+}						t_spell;
+
+
+extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
+										//from the game
+
+
 typedef struct          s_actor
 {
 	string				name;		//Name of the actor
@@ -49,8 +75,9 @@ typedef struct          s_actor
 	t_vect				coord;		//position of the actor in game_space
 	vector<t_vect>		destination;//list of coord the actor will take while moving
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
+	t_spell				*spell[6];
 						s_actor();
-						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
+						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
 }						t_actor;
@@ -59,6 +86,7 @@ typedef struct			s_cell
 {
 	t_vect				coord;		//coord of the cell in the game_space
 	int					m_dist;		//utils for pathfinding - mouvement distance
+	int					v_dist;		//utils for vision line - vision distance
 	t_actor				*actor;		//is there an actor here ?
 	t_node				*node;		//what node this cell is
 	t_vect				cursor;		//the sprite of the cursor to print up the cell
@@ -85,6 +113,7 @@ typedef struct			s_game_board
 						s_game_board();
 						s_game_board(string p_path);
 	t_cell				*get_cell(int x, int y);
+	t_cell				*get_cell(t_vect target);
 	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
 	void				draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite);
 									//draw a cursor on a certain coord
@@ -105,6 +134,7 @@ typedef struct			s_game_engine
 	size_t				turn_index;	//iterator to the turn_order
 	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
 	bool				calculated;	//did we need to calculate something ?
+	int					s_spell;	//what spell is selected : -1 for none
 
 						s_game_engine();
 						s_game_engine(string p_path);
@@ -117,8 +147,11 @@ typedef struct			s_game_engine
 	void				next_turn();	//pass to the next player
 	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
 	void				delete_actor(t_actor *old_actor);	//delete an actor
-	void				calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
+	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
+	void				v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist);	//Utils of calculate_distance
 	void				calculate_distance();	//calculate what tile the current actor can acces by foot
+	void				calculate_vision_circle();		//calculate what tile the current actir can see
+	void				calculate_vision_line();		//calculate what tile the current actir can see
 	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
 	vector<t_vect>		calc_path(t_vect dest);//get the list of tile to go to targeted tile
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
@@ -127,7 +160,8 @@ typedef struct			s_game_engine
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
 }						t_game_engine;
 
-t_node					read_node(string p_path); //read one .node file and return a t_node
-t_actor					read_actor(string p_path);//read one .act file and return a t_actor
-
+void					read_tileset();				//read every tileset file and place it into the tileset_map
+t_node					read_node(string p_path); 	//read one .node file and return a t_node
+t_actor					read_actor(string p_path);	//read one .act file and return a t_actor
+void					read_spell();				//read every spell and place it into the spell_map
 #endif

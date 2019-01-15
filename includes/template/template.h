@@ -23,7 +23,8 @@ bool				check_file_exist(string path);
 SDL_Surface			*create_surface_color(t_color p_color);
 t_vect				second_degree_solver(double a, double b, double c, double d, double e, double f);
 void				get_leaks(string msg);
-
+vector<t_vect>		calc_line_2d(double x1, double y1, double x2, double y2);
+vector<t_vect> 		calc_line_2d(t_vect start, t_vect end);
 void				set_lang_text(string path);
 string				*get_text(string key);
 

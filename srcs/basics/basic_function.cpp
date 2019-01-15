@@ -89,3 +89,49 @@ t_vect				second_degree_solver(double a, double b, double e, double c, double d,
 		error_exit("Error on calc cell", 15642);
 	return (t_vect(x, y));
 }
+
+vector<t_vect> 		calc_line_2d(double x1, double y1, double x2, double y2)
+{
+	vector<t_vect> result;
+	const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
+	if(steep)
+	{
+		swap(x1, y1);
+		swap(x2, y2);
+	}
+	if(x1 > x2)
+	{
+		swap(x1, x2);
+		swap(y1, y2);
+	}
+
+	double dx = x2 - x1;
+	double dy = fabs(y2 - y1);
+
+	double error = dx / 2.0f;
+	int ystep = (y1 < y2) ? 1 : -1;
+	int y = (int)y1;
+
+	int maxX = (int)x2;
+
+	for(int x=(int)x1; x<maxX; x++)
+	{
+		if(steep)
+			result.push_back(t_vect(y,x));
+		else
+			result.push_back(t_vect(x,y));
+
+		error -= dy;
+		if(error < 0)
+		{
+			y += ystep;
+			error += dx;
+		}
+	}
+	return (result);
+}
+
+vector<t_vect> 		calc_line_2d(t_vect start, t_vect end)
+{
+	return (calc_line_2d(start.x, start.y, end.x, end.y));
+}
