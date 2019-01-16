@@ -76,6 +76,7 @@ void		read_spell()
 
 		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], type, effect);
 
+		effect.clear();
 		myfile.close();
 
 		i++;

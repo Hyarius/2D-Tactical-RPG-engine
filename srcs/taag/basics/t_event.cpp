@@ -1,51 +1,59 @@
 #include "taag.h"
 
-event			g_effects[NB_EFFECTS];
+vector<event>		g_effects;
 
 void			init_effects()
 {
-	g_effects[0] = deal_mag_dmg;
-	g_effects[1] = deal_phy_dmg;
-	g_effects[2] = heal;
-	g_effects[3] = change_pm;
-	g_effects[4] = change_pa;
+	g_effects.push_back(deal_dmg);
+	g_effects.push_back(heal);
+	g_effects.push_back(change_pm);
+	g_effects.push_back(change_pa);
 }
 
-void deal_mag_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat)
+void deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
-	string source_name = (source != NULL ? source->name : "empty");
-	string target_name = (target != NULL ? target->name : "empty");
-	printf("%s deal %.2f magical damage to %s\n", source_name.c_str(), effect_stat.value[0], target_name.c_str());
-
-	int attack = (source != NULL ? 1 : 0);
-	int defense = (target != NULL ? 1 : 0);
-
-}
-
-void deal_phy_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat)
-{
-	string source_name = (source != NULL ? source->name : "empty");
-	string target_name = (target != NULL ? target->name : "empty");
-	printf("%s deal %.2f magical damage to %s\n", source_name.c_str(), effect_stat.value[0], target_name.c_str());
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
+	{
+		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
+		target->stat.hp.value -= damage;
+		target->visual_info.push_back(create_visual_info("-" + to_string(damage) + "hp", RED, 25, target->coord));
+	}
 }
 
 void heal(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
-	string source_name = (source != NULL ? source->name : "empty");
-	string target_name = (target != NULL ? target->name : "empty");
-	printf("%s heal %.2f hp to %s\n", source_name.c_str(), effect_stat.value[0], target_name.c_str());
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
+	{
+		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
+		target->stat.hp.value += damage;
+		target->visual_info.push_back(create_visual_info("+" + to_string(damage) + "hp", RED, 25, target->coord));
+	}
 }
 
 void change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
-	string source_name = (source != NULL ? source->name : "empty");
-	string target_name = (target != NULL ? target->name : "empty");
-	printf("%s give %.2f pm to %s\n", source_name.c_str(), effect_stat.value[0], target_name.c_str());
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
+	{
+		int damage = (effect_stat.value[0] < target->stat.pm.value ? effect_stat.value[0] : target->stat.pm.value);
+		target->stat.pm.value += damage;
+		target->visual_info.push_back(create_visual_info(to_string(damage) + "pm", DARK_GREEN, 25, target->coord));
+	}
 }
 
 void change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
-	string source_name = (source != NULL ? source->name : "empty");
-	string target_name = (target != NULL ? target->name : "empty");
-	printf("%s give %.2f pa to %s\n", source_name.c_str(), effect_stat.value[0], target_name.c_str());
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
+	{
+		int damage = (effect_stat.value[0] < target->stat.pa.value ? effect_stat.value[0] : target->stat.pa.value);
+		target->stat.pa.value += damage;
+		target->visual_info.push_back(create_visual_info(to_string(damage) + "pa", BLUE, 25, target->coord));
+	}
 }

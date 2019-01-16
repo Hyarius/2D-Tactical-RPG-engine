@@ -15,10 +15,11 @@ void				s_game_engine::draw_path()
 void				s_game_engine::draw_board()
 {
 	board.draw_cell_layer();
-	board.draw_actor_list();
 	board.draw_cursor_layer();
 	draw_path();
+	board.draw_actor_list();
 	board.draw_mouse_cursor();
+	board.draw_actor_visual_info();
 }
 
 void				s_game_engine::draw_actor_info_on_gui()
@@ -32,7 +33,7 @@ void				s_game_engine::draw_actor_info_on_gui()
 	draw_centred_text(text, calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9)), gui.unit * t_vect(17, 19), BLACK);
 	for (int i = 0; i < 6; i++)
 	{
-		if (i == s_spell)
+		if (player->spell[i]->tile != NULL && i == s_spell)
 			draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5) - 5, gui.unit + 10, t_color(230, 230, 0));
 		if (player->spell[i]->tile != NULL)
 			player->spell[i]->tile->draw_self(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, player->spell[i]->icon);

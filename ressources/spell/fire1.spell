@@ -1,9 +1,10 @@
 name		:Fire 1
-description	:Fire spell number 1
+description	:Read an incantation that deal damage and heal the caster
 icon		:fire_spell_icons
 sprite		:1:0
 pa			:3
 pm			:0
 range		:3:4
 type		:0
-effect1		:1:10:2:2:0
+effect1		:0:10:0:0:0
+effect1		:0:10:0:0:0

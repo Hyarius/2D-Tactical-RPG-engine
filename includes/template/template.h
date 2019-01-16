@@ -79,6 +79,12 @@ void				check_frame();
 void				check_frame(bool draw);
 
 int					draw_text(string text, int text_size, t_vect coord, int color_type);
+int					draw_text(string text, int text_size, int type, t_vect coord, int color_type);
+int					draw_text(string text, int text_size, int type, int outline, t_vect coord, int color_type, int color_type2);
+int					draw_lined_text(string text, int text_size, int type, t_vect coord, int color_type);
+int					draw_centred_text(string text, int text_size, int type, t_vect coord, int color_type);
+int					draw_lined_text(string text, int text_size, int type, int outline, t_vect coord, int color_type, int color_type2);
+int					draw_centred_text(string text, int text_size, int type, int outline, t_vect coord, int color_type, int color_type2);
 int					calc_text_len(string text, int text_size);
 int					calc_text_max_size(string text, t_vect size);
 int					draw_centred_text(string text, int text_size, t_vect coord, int color_type);
@@ -89,6 +95,8 @@ void				draw_paragraphe(string text, int text_size, t_vect coord, t_vect size, i
 
 void				set_color_tab();
 t_image				*get_char(int size, int p_color, char c);
+t_image				*get_char(int type, int size, int p_color, char c);
+t_image				*get_char(int type, int size, int outline, int p_color, char c);
 TTF_Font			*get_font(int size);
 SDL_Color			get_color(int i);
 int					calc_text_size(string p_text, t_vect p_size);

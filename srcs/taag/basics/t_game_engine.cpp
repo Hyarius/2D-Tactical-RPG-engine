@@ -18,6 +18,14 @@ void				s_game_engine::cast_spell(t_vect mouse)
 			player->spell[s_spell]->effect[i].effect(player, board.get_cell(mouse)->actor, player->spell[s_spell]->effect[i].stat);
 			i++;
 		}
+		vector<t_vect>	text_coord;
+		if (player->spell[s_spell]->cost_pa > 0)
+			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 25, player->coord));
+		text_coord.clear();
+		if (player->spell[s_spell]->cost_pm > 0)
+			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 25, player->coord));
+		s_spell = -1;
+		calculated = false;
 	}
 
 }
@@ -62,10 +70,12 @@ void				s_game_engine::move_actor(t_vect dest)
 	if (turn_order[turn_index % turn_order.size()]->destination.size() == 0 &&
 		board.get_cell(dest) && board.get_cell(dest.x, dest.y)->m_dist <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
 	{
-		turn_order[turn_index % turn_order.size()]->destination = pathfinding(board.get_mouse_pos());
-		turn_order[turn_index % turn_order.size()]->stat.pm.value -= board.get_cell(dest.x, dest.y)->m_dist;
-		board.get_cell(dest)->actor = turn_order[turn_index % turn_order.size()];
-		board.get_cell(turn_order[turn_index % turn_order.size()]->coord.x, turn_order[turn_index % turn_order.size()]->coord.y)->actor = NULL;
+		t_actor *player = turn_order[turn_index % turn_order.size()];
+		player->destination = pathfinding(board.get_mouse_pos());
+		player->stat.pm.value -= board.get_cell(dest.x, dest.y)->m_dist;
+		player->visual_info.push_back(create_visual_info("-" + to_string(board.get_cell(dest.x, dest.y)->m_dist) + "pm", DARK_GREEN, 25, player->coord));
+		board.get_cell(dest)->actor = player;
+		board.get_cell(player->coord.x, player->coord.y)->actor = NULL;
 		board.reset_board();
 	}
 }

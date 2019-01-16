@@ -10,6 +10,15 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
 }
 
+void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size)
+{
+	if (visual_info.size())
+	{
+		for (size_t i = 0; i < visual_info.size(); i++)
+			visual_info[i].draw_self(target, offset, size);
+	}
+}
+
 t_actor					read_actor(string p_path)
 {
 	ifstream		myfile;

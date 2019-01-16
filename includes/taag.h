@@ -56,8 +56,7 @@ typedef struct		s_effect_stat
 
 typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
 
-#define				NB_EFFECTS 5
-extern event		g_effects[NB_EFFECTS];
+extern vector<event> g_effects;
 
 typedef struct		s_effect
 {
@@ -85,6 +84,18 @@ typedef struct			s_spell
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
 										//from the game
 
+typedef struct			s_visual_info
+{
+	string				text;
+	int					text_color;
+	int					text_size;
+	int					index;
+	vector<t_vect>		text_coord;
+						s_visual_info();
+						s_visual_info(string p_text, int p_text_color, int p_text_size, vector<t_vect> p_text_coord);
+						s_visual_info(string p_text, int p_text_color, int p_text_size, int p_index, vector<t_vect> p_text_coord);
+	void				draw_self(t_vect target, t_vect offset, t_vect size);
+}						t_visual_info;
 
 typedef struct          s_actor
 {
@@ -96,12 +107,14 @@ typedef struct          s_actor
 	t_stat				stat;		//stat of the actor
 	t_vect				coord;		//position of the actor in game_space
 	vector<t_vect>		destination;//list of coord the actor will take while moving
+	vector<t_visual_info>	visual_info; //list of every infos we need to print on screen
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
+	void				draw_visual_info(t_vect target, t_vect offset, t_vect size); //draw the actor visual info on the screen
 }						t_actor;
 
 typedef struct			s_cell
@@ -144,6 +157,7 @@ typedef struct			s_game_board
 	void				draw_mouse_cursor();//draw the mouse up the cell
 	void				draw_cursor_layer();//draw only the cursor on the screen
 	void				draw_actor_list();//draw every actor on the screen
+	void				draw_actor_visual_info();//draw every visual info on screen
 	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
@@ -188,9 +202,9 @@ t_node					read_node(string p_path); 	//read one .node file and return a t_node
 t_actor					read_actor(string p_path);	//read one .act file and return a t_actor
 void					read_spell();				//read every spell and place it into the spell_map
 void					init_effects();				//initialize every effect spell can use
+t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_size, t_vect p_starting_coord); //creating one visual_info
 
-void 					deal_mag_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void 					deal_phy_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);

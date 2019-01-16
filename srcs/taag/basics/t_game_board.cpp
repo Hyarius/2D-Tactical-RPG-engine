@@ -114,6 +114,7 @@ void				s_game_board::draw_self()
 	draw_cursor_layer();
 	draw_actor_list();
 	draw_mouse_cursor();
+	draw_actor_visual_info();
 }
 
 void				s_game_board::draw_mouse_cursor()
@@ -186,6 +187,18 @@ void				s_game_board::draw_actor_list()
 	while (i < actor_list.size())
 	{
 		actor_list[i]->draw_self(target, offset, size);
+		i++;
+	}
+}
+
+void				s_game_board::draw_actor_visual_info()
+{
+	size_t i = 0;
+	t_vect size = sprite_unit * zoom;
+
+	while (i < actor_list.size())
+	{
+		actor_list[i]->draw_visual_info(target, offset, size);
 		i++;
 	}
 }
