@@ -32,7 +32,7 @@ void					s_visual_info::draw_self(t_vect target, t_vect offset, t_vect size, dou
 	if (index < (int)(text_coord.size()))
 	{
 		if (index >= 0)
-			draw_centred_text(text, text_size * zoom, BOLD, 4, (text_coord[index] + target) * size + offset, text_color, BLACK);
+			draw_centred_text(text, text_size * zoom, NORMAL, 4, (text_coord[index] + target) * size + offset, text_color, BLACK);
 		index++;
 	}
 }

@@ -8,6 +8,9 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
 	else if (selected == true)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
+	draw_rectangle((coord + target) * size + offset, t_vect(size.x, size.y / 15), t_color(0.6, 0.6, 0.6));
+	int percent = 100 * stat.hp.value / stat.hp.max;
+	draw_rectangle((coord + target) * size + offset, t_vect(size.x * percent / 100, size.y / 15), t_color(1.0, 0.0, 0.0));
 }
 
 void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom)

@@ -10,7 +10,9 @@ void				s_game_engine::cast_spell(t_vect mouse)
 {
 	t_actor *player = turn_order[turn_index % turn_order.size()];
 	if (board.get_cell(mouse)->v_dist >= player->spell[s_spell]->range[0] &&
-		board.get_cell(mouse)->v_dist <= player->spell[s_spell]->range[1])
+		board.get_cell(mouse)->v_dist <= player->spell[s_spell]->range[1] &&
+		player->stat.pm.value >= player->spell[s_spell]->cost_pm &&
+		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
 		size_t i = 0;
 		while (i < player->spell[s_spell]->effect.size())
@@ -20,10 +22,16 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		}
 		vector<t_vect>	text_coord;
 		if (player->spell[s_spell]->cost_pa > 0)
+		{
 			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, player->coord));
+			player->stat.pa.value -= player->spell[s_spell]->cost_pa;
+		}
 		text_coord.clear();
 		if (player->spell[s_spell]->cost_pm > 0)
+		{
 			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, player->coord));
+			player->stat.pm.value -= player->spell[s_spell]->cost_pm;
+		}
 		s_spell = -1;
 		calculated = false;
 	}
