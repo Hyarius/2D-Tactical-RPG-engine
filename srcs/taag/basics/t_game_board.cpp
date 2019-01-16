@@ -198,7 +198,7 @@ void				s_game_board::draw_actor_visual_info()
 
 	while (i < actor_list.size())
 	{
-		actor_list[i]->draw_visual_info(target, offset, size);
+		actor_list[i]->draw_visual_info(target, offset, size, zoom);
 		i++;
 	}
 }

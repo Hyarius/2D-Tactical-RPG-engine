@@ -94,7 +94,7 @@ typedef struct			s_visual_info
 						s_visual_info();
 						s_visual_info(string p_text, int p_text_color, int p_text_size, vector<t_vect> p_text_coord);
 						s_visual_info(string p_text, int p_text_color, int p_text_size, int p_index, vector<t_vect> p_text_coord);
-	void				draw_self(t_vect target, t_vect offset, t_vect size);
+	void				draw_self(t_vect target, t_vect offset, t_vect size, double zoom);
 }						t_visual_info;
 
 typedef struct          s_actor
@@ -114,7 +114,7 @@ typedef struct          s_actor
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
-	void				draw_visual_info(t_vect target, t_vect offset, t_vect size); //draw the actor visual info on the screen
+	void				draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom); //draw the actor visual info on the screen
 }						t_actor;
 
 typedef struct			s_cell

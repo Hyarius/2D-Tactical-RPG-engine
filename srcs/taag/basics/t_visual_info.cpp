@@ -27,12 +27,12 @@ s_visual_info::s_visual_info(string p_text, int p_text_color, int p_text_size, i
 	text_coord = p_text_coord;
 }
 
-void					s_visual_info::draw_self(t_vect target, t_vect offset, t_vect size)
+void					s_visual_info::draw_self(t_vect target, t_vect offset, t_vect size, double zoom)
 {
 	if (index < (int)(text_coord.size()))
 	{
 		if (index >= 0)
-			draw_centred_text(text, text_size, BOLD, 4, (text_coord[index] + target) * size + offset, text_color, BLACK);
+			draw_centred_text(text, text_size * zoom, BOLD, 4, (text_coord[index] + target) * size + offset, text_color, BLACK);
 		index++;
 	}
 }

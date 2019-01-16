@@ -100,6 +100,7 @@ t_image				*get_char(int size, int p_color, char c)
 		{
 			font_list[size] = TTF_OpenFont(font_path.c_str(), size);
 		}
+		TTF_SetFontStyle(font_list[size], NORMAL);
 		TTF_SetFontOutline(font_list[size], 0);
 		text = c + '\0';
 		char_list[NORMAL][size][p_color][c][0] = new t_image(TTF_RenderText_Blended(font_list[size],text.c_str(), get_color(p_color)));
@@ -128,6 +129,7 @@ t_image				*get_char(int type, int size, int p_color, char c)
 		TTF_SetFontStyle(font_list[size], type);
 		text = c + '\0';
 		char_list[type][size][p_color][c][0] = new t_image(TTF_RenderText_Blended(font_list[size],text.c_str(), get_color(p_color)));
+		TTF_SetFontStyle(font_list[size], NORMAL);
 	}
 	return (char_list[type][size][p_color][c][0]);
 }
@@ -154,6 +156,7 @@ t_image				*get_char(int type, int size, int outline, int p_color, char c)
 		TTF_SetFontOutline(font_list[size], outline);
 		text = c + '\0';
 		char_list[type][size][p_color][c][outline] = new t_image(TTF_RenderText_Blended(font_list[size],text.c_str(), get_color(p_color)));
+		TTF_SetFontStyle(font_list[size], NORMAL);
 	}
 	return (char_list[type][size][p_color][c][outline]);
 }
