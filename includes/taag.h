@@ -7,7 +7,6 @@
 extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
 													//tileset of the prog, in extern to accessibility
 
-
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -45,6 +44,29 @@ enum e_range_type
 	LINE = 1,
 };
 
+
+
+
+typedef struct		s_effect_stat
+{
+	double			value[4];
+					s_effect_stat();
+					s_effect_stat(double value0, double value1, double value2, double value3);
+}					t_effect_stat;
+
+typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
+
+#define				NB_EFFECTS 5
+extern event		g_effects[NB_EFFECTS];
+
+typedef struct		s_effect
+{
+	event			effect;
+	t_effect_stat	stat;
+					s_effect();
+					s_effect(event p_effect, double value0, double value1, double value2, double value3);
+}					t_effect;
+
 typedef struct			s_spell
 {
 	string				name;			//name of the spell
@@ -55,10 +77,10 @@ typedef struct			s_spell
 	int					cost_pm;		//cost in PM
 	int					range[2];		//0 - range min / 1 - range max
 	e_range_type		type;			//what kind of vision is
+	vector<t_effect>	effect;
 						s_spell();
-						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_cost_pa, int p_cost_pm, int range_min, int range_max, e_range_type p_type);
+						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_cost_pa, int p_cost_pm, int range_min, int range_max, e_range_type p_type, vector<t_effect> p_effect);
 }						t_spell;
-
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
 										//from the game
@@ -155,6 +177,7 @@ typedef struct			s_game_engine
 	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
 	vector<t_vect>		calc_path(t_vect dest);//get the list of tile to go to targeted tile
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
+	void				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
@@ -164,4 +187,12 @@ void					read_tileset();				//read every tileset file and place it into the tile
 t_node					read_node(string p_path); 	//read one .node file and return a t_node
 t_actor					read_actor(string p_path);	//read one .act file and return a t_actor
 void					read_spell();				//read every spell and place it into the spell_map
+void					init_effects();				//initialize every effect spell can use
+
+void 					deal_mag_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					deal_phy_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+
 #endif

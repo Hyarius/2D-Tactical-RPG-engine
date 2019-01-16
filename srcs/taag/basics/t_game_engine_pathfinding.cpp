@@ -78,7 +78,7 @@ vector<t_vect>		s_game_engine::calc_path(t_vect dest)
 	t_vect			to_look = actual;
 	t_vect			source = turn_order[turn_index % turn_order.size()]->coord;
 
-	if (board.get_cell(dest.x, dest.y) == NULL || board.get_cell(dest.x, dest.y)->m_dist == 999)
+	if (board.get_cell(dest.x, dest.y) == NULL || board.get_cell(dest.x, dest.y)->m_dist == 999 || board.get_cell(dest)->actor != NULL)
 		return (path);
 	while (actual != source)
 	{

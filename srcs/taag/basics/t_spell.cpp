@@ -20,7 +20,7 @@ s_spell::s_spell()
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
 					int p_cost_pa, int p_cost_pm, int range_min, int range_max,
-					e_range_type p_type)
+					e_range_type p_type, vector<t_effect> p_effect)
 {
 	name = p_name;
 	desc = p_desc;
@@ -31,6 +31,7 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	range[0] = range_min;
 	range[1] = range_max;
 	type = p_type;
+	effect = p_effect;
 }
 
 void		read_spell()
@@ -46,6 +47,7 @@ void		read_spell()
 	int				cost_pm;
 	int				range[2];
 	e_range_type	type;
+	vector<t_effect> effect;
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
 	size_t i = 0;
@@ -65,8 +67,14 @@ void		read_spell()
 		range[0] = atoi(tab[1].c_str());
 		range[1] = atoi(tab[2].c_str());
 		type = (e_range_type)(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
+		while (!myfile.eof())
+		{
+			tab = get_strsplit(&myfile, ":", -1);
+			if (tab.size() == 6)
+				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atof(tab[2].c_str()), atof(tab[3].c_str()), atof(tab[4].c_str()), atof(tab[5].c_str())));
+		}
 
-		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], type);
+		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], type, effect);
 
 		myfile.close();
 

@@ -44,6 +44,7 @@ s_actor::s_actor()
 	name = "";
 	selected = false;
 	tile = NULL;
+	dir = 0;
 	sprite = t_vect(-1, -1);
 }
 
@@ -54,6 +55,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	tile = p_tile;
 	sprite = p_sprite;
 	stat = p_stat;
+	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = p_spell[i];
 }

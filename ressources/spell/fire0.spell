@@ -4,6 +4,7 @@ icon		:fire_spell_icons
 sprite		:0:0
 pa			:3
 pm			:0
-range		:0:4
+range		:1:4
 type		:0
-effect1		:1:10:2:2
+effect1		:1:10:0:0:0
+effect2		:0:5:0:0:0
