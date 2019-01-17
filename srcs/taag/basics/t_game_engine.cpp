@@ -70,6 +70,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 				move_actor(board.get_mouse_pos());
 			else
 				cast_spell(board.get_mouse_pos());
+			check_alive();
 		}
 	}
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT && s_spell != -1)

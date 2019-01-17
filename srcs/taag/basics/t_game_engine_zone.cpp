@@ -68,8 +68,6 @@ vector<t_vect>	s_game_engine::calc_square(int size)
 
 	result.push_back(t_vect(0, 0));
 
-	(void)size;
-
 	int i = -size;
 	while (i <= size)
 	{

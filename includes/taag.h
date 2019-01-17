@@ -209,6 +209,7 @@ typedef struct			s_game_engine
 	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
 	void				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
+	void				check_alive();				//check if an actor is dead
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
