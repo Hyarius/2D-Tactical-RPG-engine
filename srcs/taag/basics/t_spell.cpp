@@ -15,12 +15,16 @@ s_spell::s_spell()
 	cost_pm = 0;
 	range[0] = -1;
 	range[1] = -1;
-	type = CIRCLE;
+	block = true;
+	range_type = R_CIRCLE;
+	zone_type = Z_CROSS;
+	zone_size = 1;
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
-					int p_cost_pa, int p_cost_pm, int range_min, int range_max,
-					e_range_type p_type, vector<t_effect> p_effect)
+					int p_cost_pa, int p_cost_pm, int range_min, int range_max, bool p_block,
+					e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
+					vector<t_effect> p_effect)
 {
 	name = p_name;
 	desc = p_desc;
@@ -30,7 +34,10 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	cost_pm = p_cost_pm;
 	range[0] = range_min;
 	range[1] = range_max;
-	type = p_type;
+	block = p_block;
+	range_type = p_range_type;
+	zone_type = p_zone_type;
+	zone_size = p_zone_size;
 	effect = p_effect;
 }
 
@@ -46,7 +53,10 @@ void		read_spell()
 	int				cost_pa;
 	int				cost_pm;
 	int				range[2];
-	e_range_type	type;
+	bool			block;
+	e_range_type	range_type;
+	e_zone_type		zone_type;
+	int				zone_size;
 	vector<t_effect> effect;
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
@@ -63,10 +73,14 @@ void		read_spell()
 		icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 		cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-		tab = get_strsplit(&myfile, ":", 3);
+		tab = get_strsplit(&myfile, ":", 4);
 		range[0] = atoi(tab[1].c_str());
 		range[1] = atoi(tab[2].c_str());
-		type = (e_range_type)(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
+		block = (atoi(tab[3].c_str()) == 0 ? true : false);
+		range_type = (e_range_type)(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
+		tab = get_strsplit(&myfile, ":", 3);
+		zone_type = (e_zone_type)(atoi(tab[1].c_str()));
+		zone_size = (e_zone_type)(atoi(tab[2].c_str()));
 		while (!myfile.eof())
 		{
 			tab = get_strsplit(&myfile, ":", -1);
@@ -74,7 +88,7 @@ void		read_spell()
 				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atof(tab[2].c_str()), atof(tab[3].c_str()), atof(tab[4].c_str()), atof(tab[5].c_str())));
 		}
 
-		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], type, effect);
+		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], block, range_type, zone_type, zone_size, effect);
 
 		effect.clear();
 		myfile.close();

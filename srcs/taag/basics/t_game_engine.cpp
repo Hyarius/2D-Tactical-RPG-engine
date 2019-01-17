@@ -15,9 +15,29 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
 		size_t i = 0;
-		while (i < player->spell[s_spell]->effect.size())
+		vector<t_vect>	target_list;
+		if (player->spell[s_spell]->zone_type == Z_CROSS)
+			target_list = calc_cross(player->spell[s_spell]->zone_size);
+		if (player->spell[s_spell]->zone_type == Z_CROSS_LINE)
+			target_list = calc_cross_line(player->spell[s_spell]->zone_size);
+		if (player->spell[s_spell]->zone_type == Z_LINE)
 		{
-			player->spell[s_spell]->effect[i].effect(player, board.get_cell(mouse)->actor, player->spell[s_spell]->effect[i].stat);
+			t_vect diff = player->coord - mouse;
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+								((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(player->spell[s_spell]->zone_size, dir);
+		}
+		if (player->spell[s_spell]->zone_type == Z_SQUARE)
+			target_list = calc_square(player->spell[s_spell]->zone_size);
+		while (i < target_list.size())
+		{
+			size_t j = 0;
+			while (j < player->spell[s_spell]->effect.size())
+			{
+				if (board.get_cell(mouse + target_list[i]) && board.get_cell(mouse + target_list[i])->actor != player)
+					player->spell[s_spell]->effect[j].effect(player, board.get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
+				j++;
+			}
 			i++;
 		}
 		vector<t_vect>	text_coord;
@@ -44,7 +64,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 		next_turn();
 	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
-		if (gui.click() == false && turn_order.size())
+		if (gui.click() == false)
 		{
 			if (s_spell == -1)
 				move_actor(board.get_mouse_pos());
@@ -57,20 +77,23 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 		s_spell = -1;
 		calculated = false;
 	}
-	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_q)
-		s_spell = 0;
-	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_w)
-		s_spell = 1;
-	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_e)
-		s_spell = 2;
-	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r)
-		s_spell = 3;
-	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_t)
-		s_spell = 4;
-	else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_y)
-		s_spell = 5;
-	if (s_spell != -1)
-		calculated = false;
+	if (event->type == SDL_KEYDOWN)
+	{
+		if (event->key.keysym.sym == SDLK_q)
+			s_spell = 0;
+		else if (event->key.keysym.sym == SDLK_w)
+			s_spell = 1;
+		else if (event->key.keysym.sym == SDLK_e)
+			s_spell = 2;
+		else if (event->key.keysym.sym == SDLK_r)
+			s_spell = 3;
+		else if (event->key.keysym.sym == SDLK_t)
+			s_spell = 4;
+		else if (event->key.keysym.sym == SDLK_y)
+			s_spell = 5;
+		if (s_spell != -1)
+			calculated = false;
+	}
 }
 
 void				s_game_engine::move_actor(t_vect dest)

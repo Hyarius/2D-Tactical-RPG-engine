@@ -8,9 +8,13 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
 	else if (selected == true)
 		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
-	draw_rectangle((coord + target) * size + offset - t_vect(0, size.y / 7), t_vect(size.x, size.y / 15), t_color(0.6, 0.6, 0.6));
+	t_vect bar_coord = (coord + target) * size + offset + t_vect((size.x - size.x * 0.8) / 2, 0);
+	t_vect bar_size = t_vect(size.x * 0.8, size.y / 10);
+ 	draw_rectangle(bar_coord, bar_size, t_color(0.0, 0.0, 0.0));
+	draw_rectangle(bar_coord + 2, bar_size - 4, t_color(0.6, 0.6, 0.6));
 	int percent = 100 * stat.hp.value / stat.hp.max;
-	draw_rectangle((coord + target) * size + offset - t_vect(0, size.y / 7), t_vect(size.x * percent / 100, size.y / 15), t_color(1.0, 0.0, 0.0));
+	if (percent > 0)
+		draw_rectangle(bar_coord + 2, t_vect(size.x * 0.8 * percent / 100, size.y / 10) - 4, t_color(1.0, 0.0, 0.0));
 }
 
 void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom)
@@ -18,7 +22,12 @@ void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size, do
 	if (visual_info.size())
 	{
 		for (size_t i = 0; i < visual_info.size(); i++)
+		{
 			visual_info[i].draw_self(target, offset, size, zoom);
+			if (visual_info[i].index == (int)visual_info[i].text_coord.size())
+				visual_info.erase(visual_info.begin() + i);
+		}
+
 	}
 }
 

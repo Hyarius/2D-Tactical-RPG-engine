@@ -15,9 +15,9 @@ void				s_game_engine::draw_path()
 void				s_game_engine::draw_board()
 {
 	board.draw_cell_layer();
-	board.draw_cursor_layer();
 	draw_path();
 	board.draw_actor_list();
+	board.draw_cursor_layer();
 	board.draw_mouse_cursor();
 	board.draw_actor_visual_info();
 }

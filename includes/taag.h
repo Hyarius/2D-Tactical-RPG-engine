@@ -40,12 +40,17 @@ typedef struct			s_stat
 
 enum e_range_type
 {
-	CIRCLE = 0,
-	LINE = 1,
+	R_CIRCLE = 0,
+	R_LINE = 1,
 };
 
-
-
+enum e_zone_type
+{
+	Z_CROSS = 0,
+	Z_CROSS_LINE = 1,
+	Z_LINE = 2,
+	Z_SQUARE = 3,
+};
 
 typedef struct		s_effect_stat
 {
@@ -75,10 +80,17 @@ typedef struct			s_spell
 	int					cost_pa;		//cost in PA
 	int					cost_pm;		//cost in PM
 	int					range[2];		//0 - range min / 1 - range max
-	e_range_type		type;			//what kind of vision is
-	vector<t_effect>	effect;
+	bool				block;		//did this spell need vision
+	e_range_type		range_type;		//what kind of vision is it ?
+	e_zone_type			zone_type;		//what kind of zone is it ?
+	int					zone_size;		//size of the zone
+	vector<t_effect>	effect;			//list of effect
 						s_spell();
-						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_cost_pa, int p_cost_pm, int range_min, int range_max, e_range_type p_type, vector<t_effect> p_effect);
+						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
+								int p_cost_pa, int p_cost_pm,
+								int range_min, int range_max, bool p_block, e_range_type p_range_type,
+								e_zone_type p_zone_type, int p_zone_size,
+								vector<t_effect> p_effect);
 }						t_spell;
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
@@ -185,11 +197,16 @@ typedef struct			s_game_engine
 	void				delete_actor(t_actor *old_actor);	//delete an actor
 	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
 	void				v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist);	//Utils of calculate_distance
-	void				calculate_distance();	//calculate what tile the current actor can acces by foot
-	void				calculate_vision_circle();		//calculate what tile the current actir can see
-	void				calculate_vision_line();		//calculate what tile the current actir can see
+	void				calculate_distance();		//compute what tile the current actor can acces by foot
+	void				calculate_vision_circle();	//compute what tile the current actir can see
+	void				calculate_vision_line();	//compute what tile the current actir can see
+	void				calculate_zone();			//compute what tile gonna been affected by the active spell
 	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
-	vector<t_vect>		calc_path(t_vect dest);//get the list of tile to go to targeted tile
+	vector<t_vect>		calc_path(t_vect dest);		//get the list of tile to go to targeted tile
+	vector<t_vect>		calc_cross(int size);		//calc the list of cell to hit with a cross zone
+	vector<t_vect>		calc_cross_line(int size);	//calc the list of cell to hit with a cross_line zone
+	vector<t_vect>		calc_line(int size, t_vect dir);	//calc the list of cell to hit with a line zone
+	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
 	void				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
