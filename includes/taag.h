@@ -151,7 +151,8 @@ typedef struct			s_game_board
 	t_vect				board_size;	//size in x / y of the map
 	vector<t_node>		node_list;	//list all the node printable by the board
 	t_tileset			*cursor_tile;//the tile to use to print cursor up the cell
-
+	vector<t_vect>		placement_list; //list of the node where you can place your actor
+	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
 	vector<t_actor *>	actor_list;	//contain every actor
@@ -174,6 +175,7 @@ typedef struct			s_game_board
 	void				draw_cell_layer();//draw only the cell on the screen
 	void				draw_mouse_cursor();//draw the mouse up the cell
 	void				draw_cursor_layer();//draw only the cursor on the screen
+	void				draw_placement(); //draw tile where we can place actor
 	void				draw_actor_list();//draw every actor on the screen
 	void				draw_actor_visual_info();//draw every visual info on screen
 	void				reset_board(); //reset every cursor on the map to 0, 0
@@ -222,7 +224,7 @@ typedef struct			s_game_engine
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
-
+	void				handle_actor_placement(SDL_Event *event);
 	void				placement_phase();
 	void				game_loop();
 

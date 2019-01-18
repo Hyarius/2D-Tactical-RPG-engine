@@ -18,6 +18,12 @@ int main(int argc, char **argv)
 
 	t_game_engine	game = s_game_engine("ressources/map/map_test.map");
 
+	printf("here\n");
+
+	game.placement_phase();
+
+	printf("here\n");
+
 	game.game_loop();
 
 	return (0);

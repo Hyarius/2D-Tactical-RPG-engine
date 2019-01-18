@@ -62,10 +62,19 @@ s_game_board::s_game_board(string p_path)
 	}
 	while (!myfile.eof())
 	{
-		if (tab.size() == 0)
-			break;
-
 		tab = get_strsplit(&myfile, ":", -1);
+		if (tab.size() <= 1)
+			break;
+		placement_list.push_back(t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str())));
+	}
+	while (!myfile.eof())
+	{
+		tab = get_strsplit(&myfile, ":", -1);
+		if (tab.size() <= 1)
+			break;
+		t_actor *new_actor = new t_actor(read_actor(ACTOR_PATH + tab[1] + ACTOR_EXT));
+		new_actor->team = 1;
+		actor_pool.push_back(new_actor);
 	}
 	myfile.close();
 
@@ -179,6 +188,18 @@ void				s_game_board::draw_cursor_layer()
 				draw_cursor(t_vect(i, j), target, size, offset, cell_layer[i][j].cursor);
 			j++;
 		}
+		i++;
+	}
+}
+
+void				s_game_board::draw_placement()
+{
+	size_t i = 0;
+	t_vect size = sprite_unit * zoom;
+
+	while (i < placement_list.size())
+	{
+		draw_cursor(placement_list[i], target, size, offset, t_vect(3, 0));
 		i++;
 	}
 }

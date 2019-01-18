@@ -15,7 +15,7 @@ void			s_game_engine::draw_spell_card(t_spell *spell)
 	coord = t_vect(2.4, 1.1);
 	size = t_vect(3, 1.2);
 	draw_border_rectangle(gui.unit * coord, gui.unit * size, 10, t_color(0.3, 0.3, 0.3, 0.5), t_color(0.4, 0.4, 0.4, 0.5));
-	int text_size = calc_text_max_size("mmmmmmmmmmmm", gui.unit * t_vect(4.3, 0.5));
+	static int text_size = calc_text_max_size("mmmmmmmmmmmm", gui.unit * t_vect(4.3, 0.5));
 	draw_centred_text(spell->name, text_size, gui.unit * (coord + size / 2), BLACK);
 
 	coord = t_vect(1.1, 2.4);
