@@ -102,28 +102,36 @@ s_vect			s_vect::operator - (s_vect min)
 	return (result);
 }
 
-bool			s_vect::operator < (s_vect delta)
+bool		s_vect::operator < (const s_vect& delta) const
 {
-	if (this->x < delta.x && this->y < delta.y)
+	if (this->y < delta.y)
+		return (true);
+	if (this->y > delta.y)
+		return (false);
+	if (this->x < delta.x)
 		return (true);
 	return (false);
 }
 
-bool			s_vect::operator > (s_vect delta)
+bool		s_vect::operator > (const s_vect& delta) const
 {
-	if (this->x > delta.x && this->y > delta.y)
+	if (this->y < delta.y)
+		return (false);
+	if (this->y > delta.y)
 		return (true);
-	return (false);
+	if (this->x < delta.x)
+		return (false);
+	return (true);
 }
 
-bool			s_vect::operator == (s_vect delta)
+bool		s_vect::operator == (const s_vect& delta) const
 {
 	if (this->x == delta.x && this->y == delta.y)
 		return (true);
 	return (false);
 }
 
-bool			s_vect::operator != (s_vect delta)
+bool		s_vect::operator != (const s_vect& delta) const
 {
 	if (this->x == delta.x && this->y == delta.y)
 		return (false);

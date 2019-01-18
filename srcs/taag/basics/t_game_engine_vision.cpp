@@ -1,37 +1,46 @@
 #include "taag.h"
 
+map<t_vect, map<t_vect, vector<t_vect>[4]>>	vision_map;
+
 void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist)
 {
 	t_vect 			player_coord = turn_order[turn_index % turn_order.size()]->coord;
 	int				scale = 10;
-	vector<t_vect>	vision = calc_line_2d(t_vect(player_coord.x + 0.5, player_coord.y + 0.5) * scale, t_vect(target.x + 0.5, target.y + 0.5) * scale);
+	if (vision_map.find(player_coord) == vision_map.end() || vision_map[player_coord].find(target) == vision_map[player_coord].end())
+	{
+		vision_map[player_coord][target][0] = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.49) * scale, t_vect(target.x + 0.49, target.y + 0.49) * scale);
+		vision_map[player_coord][target][1] = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.49) * scale, t_vect(target.x + 0.51, target.y + 0.49) * scale);
+		vision_map[player_coord][target][2] = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.51) * scale, t_vect(target.x + 0.49, target.y + 0.51) * scale);
+		vision_map[player_coord][target][3] = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.51) * scale, t_vect(target.x + 0.51, target.y + 0.51) * scale);
+	}
+	vector<t_vect>	vision_tl = vision_map[player_coord][target][0];
+	vector<t_vect>	vision_tr = vision_map[player_coord][target][1];
+	vector<t_vect>	vision_dl = vision_map[player_coord][target][2];
+	vector<t_vect>	vision_dr = vision_map[player_coord][target][3];
 
 	if (board.get_cell(target) && (board.get_cell(target)->node->v_obs == false || turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == false) && board.get_cell(target)->v_dist >= prev_dist)
 	{
 		size_t i = 0;
 		bool visible = true;
-		while (turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == true && i < vision.size() && visible == true)
+		while (turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == true && i < vision_tl.size() && visible == true)
 		{
-			t_vect coord = vision[i];
-			if (board.get_cell(coord / scale) == NULL)
-				printf("yolo\n");
-			if (board.get_cell((coord) / scale)->node->v_obs == true ||
-					(board.get_cell((coord) / scale)->actor != NULL &&
-					board.get_cell((coord) / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-					board.get_cell((coord) / scale)->actor != board.get_cell(target)->actor) &&
-				board.get_cell((coord) / scale)->node->v_obs == true ||
-				(board.get_cell((coord) / scale)->actor != NULL &&
-					board.get_cell((coord) / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-					board.get_cell((coord) / scale)->actor != board.get_cell(target)->actor) &&
-				board.get_cell((coord) / scale)->node->v_obs == true ||
-				(board.get_cell((coord) / scale)->actor != NULL &&
-					board.get_cell((coord) / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-					board.get_cell((coord) / scale)->actor != board.get_cell(target)->actor) &&
-				board.get_cell((coord) / scale)->node->v_obs == true ||
-				(board.get_cell((coord) / scale)->actor != NULL &&
-					board.get_cell((coord) / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-					board.get_cell((coord) / scale)->actor != board.get_cell(target)->actor))
-				visible = false;
+			if (board.get_cell(vision_tl[i] / scale)->node->v_obs == true ||
+				(board.get_cell(vision_tl[i] / scale)->actor != NULL &&
+				board.get_cell(vision_tl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+				board.get_cell(vision_tl[i] / scale)->actor != board.get_cell(target)->actor))
+				if (board.get_cell(vision_tr[i] / scale)->node->v_obs == true ||
+					(board.get_cell(vision_tr[i] / scale)->actor != NULL &&
+					board.get_cell(vision_tr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+					board.get_cell(vision_tr[i] / scale)->actor != board.get_cell(target)->actor))
+					if (board.get_cell(vision_dl[i] / scale)->node->v_obs == true ||
+						(board.get_cell(vision_dl[i] / scale)->actor != NULL &&
+						board.get_cell(vision_dl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+						board.get_cell(vision_dl[i] / scale)->actor != board.get_cell(target)->actor))
+						if (board.get_cell(vision_dr[i] / scale)->node->v_obs == true ||
+							(board.get_cell(vision_dr[i] / scale)->actor != NULL &&
+							board.get_cell(vision_dr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+							board.get_cell(vision_dr[i] / scale)->actor != board.get_cell(target)->actor))
+							visible = false;
 			i++;
 		}
 		if (visible == true)
