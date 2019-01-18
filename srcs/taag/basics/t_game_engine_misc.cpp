@@ -18,11 +18,13 @@ void				s_game_engine::delete_actor(t_actor *new_actor)
 	size_t count = 0;
 	while (count < board.actor_list.size() && new_actor != board.actor_list[count])
 		count++;
-	board.actor_list.erase(board.actor_list.begin() + count);
+	if (count < board.actor_list.size())
+		board.actor_list.erase(board.actor_list.begin() + count);
 	count = 0;
 	while (count < turn_order.size() && new_actor != turn_order[count])
 		count++;
-	turn_order.erase(turn_order.begin() + count);
+	if (count < turn_order.size())
+		turn_order.erase(turn_order.begin() + count);
 	board.get_cell(new_actor->coord)->actor = NULL;
 	delete new_actor;
 }
