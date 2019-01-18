@@ -7,6 +7,8 @@
 extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
 													//tileset of the prog, in extern to accessibility
 
+# define SPELL_BUTTON 1
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -18,6 +20,8 @@ typedef struct			s_node
 						s_node();
 						s_node(string p_name, t_tileset *p_tile, t_vect p_sprite, int p_cost, bool p_m_obs, bool p_v_obs);
 }						t_node;
+
+extern t_node			empty_node;	//the basic node for cell
 
 typedef struct			s_value
 {
@@ -161,6 +165,8 @@ typedef struct			s_game_board
 						s_game_board(string p_path);
 	t_cell				*get_cell(int x, int y);
 	t_cell				*get_cell(t_vect target);
+	void				add_actor(t_actor *new_actor);
+	void				remove_actor(t_actor *old_actor);
 	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
 	void				draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite);
 									//draw a cursor on a certain coord
@@ -191,10 +197,13 @@ typedef struct			s_game_engine
 	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
 	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
 	void				draw_path(); //draw the path the actor will follow on screen
+	void				draw_spell_card(t_spell *spell);	//draw one card info on the top-left corner
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player
 	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
 	void				delete_actor(t_actor *old_actor);	//delete an actor
+	void				invoke_actor(t_actor *new_actor, t_vect coord);	//invoke a new actor at a place
+	void				outvoke_actor(t_actor *new_actor);	//outvoke an actor
 	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
 	void				v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist);	//Utils of calculate_distance
 	void				calculate_distance();		//compute what tile the current actor can acces by foot
@@ -213,6 +222,10 @@ typedef struct			s_game_engine
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
+
+	void				placement_phase();
+	void				game_loop();
+
 }						t_game_engine;
 
 void					read_tileset();				//read every tileset file and place it into the tileset_map

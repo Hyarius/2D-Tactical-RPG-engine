@@ -1,9 +1,11 @@
 #include "taag.h"
 
+t_node empty_node = t_node();
+
 s_cell::s_cell()
 {
 	coord = t_vect(-1, -1);
-	node = NULL;
+	node = &empty_node;
 	actor = NULL;
 	cursor = t_vect(0, 0);
 	m_dist = 999;

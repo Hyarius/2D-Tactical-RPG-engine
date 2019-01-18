@@ -18,23 +18,7 @@ int main(int argc, char **argv)
 
 	t_game_engine	game = s_game_engine("ressources/map/map_test.map");
 
-	while (1)
-	{
-		prepare_screen();
+	game.game_loop();
 
-		game.update_board();
-		game.draw_board();
-		game.draw_gui();
-
-		if (SDL_PollEvent(&event) == 1)
-		{
-			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
-				exit(0);
-			game.handle_control_camera(&event);
-			game.handle_control_game(&event);
-		}
-
-		render_screen(true);
-	}
 	return (0);
 }

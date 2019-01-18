@@ -15,7 +15,8 @@ void			t_entry_comp::delete_text()
 
 bool			t_entry_comp::click(t_vect mouse)
 {
-	if (mouse > coord[0] && mouse < coord[0] + size[0])
+	if (mouse.x > this->coord[0].x && mouse.x < this->coord[0].x + this->size[0].x &&
+		mouse.y > this->coord[0].y && mouse.y < this->coord[0].y + this->size[0].y)
 	{
 		selected = true;
 		SDL_StartTextInput();

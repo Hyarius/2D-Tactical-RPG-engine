@@ -37,7 +37,21 @@ void				s_game_engine::draw_actor_info_on_gui()
 		if (player->spell[i]->tile != NULL && i == s_spell)
 			draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5) - 5, gui.unit + 10, t_color(230, 230, 0));
 		if (player->spell[i]->tile != NULL)
+		{
 			player->spell[i]->tile->draw_self(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, player->spell[i]->icon);
+			if (player->spell[i]->cost_pa > player->stat.pa.value || player->spell[i]->cost_pm > player->stat.pm.value)
+				draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, t_color(0.3, 0.3, 0.3, 0.7));
+			if (player->spell[i]->cost_pa > 0)
+			{
+				tileset_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));
+				draw_centred_text(to_string(player->spell[i]->cost_pa), 25, gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
+			}
+			if (player->spell[i]->cost_pm > 0)
+			{
+				tileset_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(1, 3));
+				draw_centred_text(to_string(player->spell[i]->cost_pm), 25, gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
+			}
+		}
 	}
 }
 
@@ -84,4 +98,13 @@ void				s_game_engine::draw_gui()
 	if (turn_order.size())
 		draw_actor_info_on_gui();
 	draw_cell_info_on_gui();
+	t_vect mouse = get_mouse_coord();
+	for (int i = 0; i < 6 ; i++)
+	{
+		t_actor *player = turn_order[turn_index % turn_order.size()];
+		t_button_comp *button = ((t_button *)(gui.object_list[SPELL_BUTTON][i]))->button;
+		if (mouse.x > button->coord[0].x && mouse.x < button->coord[0].x + button->size[0].x &&
+			mouse.y > button->coord[0].y && mouse.y < button->coord[0].y + button->size[0].y)
+			draw_spell_card(player->spell[i]);
+	}
 }

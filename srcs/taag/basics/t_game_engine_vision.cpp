@@ -6,6 +6,7 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 {
 	t_vect 			player_coord = turn_order[turn_index % turn_order.size()]->coord;
 	int				scale = 10;
+
 	if (vision_map.find(player_coord) == vision_map.end() || vision_map[player_coord].find(target) == vision_map[player_coord].end())
 	{
 		vision_map[player_coord][target][0] = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.49) * scale, t_vect(target.x + 0.49, target.y + 0.49) * scale);
@@ -22,7 +23,7 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 	{
 		size_t i = 0;
 		bool visible = true;
-		while (turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == true && i < vision_tl.size() && visible == true)
+		while (turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == true && i < vision_tl.size() && visible == true && board.get_cell(vision_dr[i] / scale))
 		{
 			if (board.get_cell(vision_tl[i] / scale)->node->v_obs == true ||
 				(board.get_cell(vision_tl[i] / scale)->actor != NULL &&
@@ -49,7 +50,7 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 			if (board.get_cell(target)->v_dist <= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[1])
 			{
 				if (board.get_cell(target)->v_dist >= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[0] &&
-					board.get_cell(target)->node->v_obs == false)
+					board.get_cell(target)->node->v_obs == false && board.get_cell(target)->node->tile != NULL)
 					board.get_cell(target)->cursor = t_vect(0, 2);
 				if (to_calc != NULL)
 					to_calc->push_back(target);

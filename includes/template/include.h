@@ -14,6 +14,7 @@
 # include <fcntl.h>
 # include <string>
 # include <map>
+# include <stdint.h>
 
 # include <string.h>
 # include <dirent.h>

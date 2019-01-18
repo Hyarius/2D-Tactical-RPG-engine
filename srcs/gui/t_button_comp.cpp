@@ -26,7 +26,8 @@ void		s_button_comp::set_funct_param(gui_funct p_funct, t_data p_data)
 
 bool		s_button_comp::click(t_vect mouse)
 {
-	if (mouse > this->coord[0] && mouse < this->coord[0] + this->size[0])
+	if (mouse.x > this->coord[0].x && mouse.x < this->coord[0].x + this->size[0].x &&
+		mouse.y > this->coord[0].y && mouse.y < this->coord[0].y + this->size[0].y)
 		if (this->funct != NULL)
 		{
 			this->funct(this->data);

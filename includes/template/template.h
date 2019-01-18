@@ -51,6 +51,7 @@ void				draw_image(t_vect coord, t_vect size, double p_alpha);
 void				draw_rectangle(t_vect p_tl, t_vect p_tr, t_vect p_dl, t_vect p_dr, t_color c);
 void				draw_rectangle(t_vect p_coord, t_vect p_size, t_color c);
 void				draw_centred_rectangle(t_vect p_coord, t_vect p_size, t_color c);
+void				draw_border_rectangle(t_vect p_coord, t_vect p_size, int border, t_color c, t_color c2);
 
 void				window_initialisation(string window_name);
 SDL_Window			*get_window();

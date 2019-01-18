@@ -29,7 +29,7 @@ s_game_board::s_game_board(string p_path)
 	while (!(myfile.eof()))
 	{
 		tab = get_strsplit(&myfile, ":", -1);
-		if (tab.size() == 0)
+		if (tab.size() < 3)
 			break;
 		coord = t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str()));
 		index = atoi(tab[2].c_str());
@@ -59,6 +59,13 @@ s_game_board::s_game_board(string p_path)
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
 		}
+	}
+	while (!myfile.eof())
+	{
+		if (tab.size() == 0)
+			break;
+
+		tab = get_strsplit(&myfile, ":", -1);
 	}
 	myfile.close();
 
@@ -115,6 +122,21 @@ void				s_game_board::draw_self()
 	draw_actor_list();
 	draw_mouse_cursor();
 	draw_actor_visual_info();
+}
+
+void				s_game_board::add_actor(t_actor *new_actor)
+{
+	actor_list.push_back(new_actor);
+}
+
+void				s_game_board::remove_actor(t_actor *old_actor)
+{
+	size_t count = 0;
+
+	while (count < actor_list.size() && old_actor != actor_list[count])
+		count++;
+	if (count < actor_list.size())
+		actor_list.erase(actor_list.begin() + count);
 }
 
 void				s_game_board::draw_mouse_cursor()
