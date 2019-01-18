@@ -1,1 +1,4 @@
 *.o
+Debug
+lib
+*.vcx*

@@ -1,4 +1,0 @@
-﻿  t_game_engine_vision.cpp
-LINK : warning LNK4075: ' /INCREMENTAL' ignoré à cause de la spécification '/PROFILE'
-main.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/OPT:REF'
-  TAAG-V2.vcxproj -> C:\Users\Hywa\Desktop\Programme C++\TAAG-V2\Debug\TAAG-V2.exe
