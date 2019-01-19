@@ -200,6 +200,7 @@ typedef struct			s_game_engine
 	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
 	void				draw_path(); //draw the path the actor will follow on screen
 	void				draw_spell_card(t_spell *spell);	//draw one card info on the top-left corner
+	void				draw_select_wheel(int *index);	//draw the wheel the player can use to select what actor gonna be placed
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player
 	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
@@ -224,7 +225,8 @@ typedef struct			s_game_engine
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
-	void				handle_actor_placement(SDL_Event *event);
+	void				handle_actor_placement(SDL_Event *event, int *index);
+	void				handle_actor_placement_camera(SDL_Event *event);
 	void				placement_phase();
 	void				game_loop();
 

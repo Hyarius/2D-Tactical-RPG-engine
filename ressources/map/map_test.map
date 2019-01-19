@@ -66,12 +66,12 @@
 2:6:0
 3:6:2
 4:6:0
-placement:
+placement list:
 7:1
-9:2
 2:4
+8:4
 2:6
-actor:
+actor list:
 actor0 :knight
 actor1 :mage
 actor2 :archer

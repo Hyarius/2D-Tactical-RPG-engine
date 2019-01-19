@@ -81,7 +81,6 @@ s_game_engine::s_game_engine(string p_path)
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), t_vect(0, 0), gui.unit * t_vect(30, 20)), NULL, NULL));
-	gui.add(new s_button(new t_text_button("", BLACK, gui.unit * t_vect(22, 0), gui.unit * t_vect(8, 5), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6)), NULL, NULL));
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
 }

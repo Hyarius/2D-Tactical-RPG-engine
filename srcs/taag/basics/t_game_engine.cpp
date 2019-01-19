@@ -6,6 +6,11 @@ void				s_game_engine::handle_control_camera(SDL_Event *event)
 	board.handle_zoom(event);
 }
 
+void				s_game_engine::handle_actor_placement_camera(SDL_Event *event)
+{
+	board.handle_mouvement(event);
+}
+
 void				s_game_engine::cast_spell(t_vect mouse)
 {
 	t_actor *player = turn_order[turn_index % turn_order.size()];
@@ -85,20 +90,49 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 	if (event->type == SDL_KEYDOWN)
 	{
 		t_actor *player = turn_order[turn_index % turn_order.size()];
-		if (event->key.keysym.sym == SDLK_q && player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
-			s_spell = 0;
-		else if (event->key.keysym.sym == SDLK_w && player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm)
-			s_spell = 1;
-		else if (event->key.keysym.sym == SDLK_e && player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm)
-			s_spell = 2;
-		else if (event->key.keysym.sym == SDLK_r && player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm)
-			s_spell = 3;
-		else if (event->key.keysym.sym == SDLK_t && player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm)
-			s_spell = 4;
-		else if (event->key.keysym.sym == SDLK_y && player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[5]->cost_pm)
-			s_spell = 5;
-		if (s_spell != -1)
-			calculated = false;
+		if (event->key.keysym.sym == SDLK_q)
+		{
+			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
+				s_spell = 0;
+			else
+				s_spell = -1;
+		}
+		else if (event->key.keysym.sym == SDLK_w)
+		{
+			if (player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm)
+				s_spell = 1;
+			else
+				s_spell = -1;
+		}
+		else if (event->key.keysym.sym == SDLK_e)
+		{
+			if (player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm)
+				s_spell = 2;
+			else
+				s_spell = -1;
+		}
+		else if (event->key.keysym.sym == SDLK_r)
+		{
+			if (player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm)
+				s_spell = 3;
+			else
+				s_spell = -1;
+		}
+		else if (event->key.keysym.sym == SDLK_t)
+		{
+			if (player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm)
+				s_spell = 4;
+			else
+				s_spell = -1;
+		}
+		else if (event->key.keysym.sym == SDLK_y)
+		{
+			if (player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
+				s_spell = 5;
+			else
+				s_spell = -1;
+		}
+		calculated = false;
 	}
 }
 
