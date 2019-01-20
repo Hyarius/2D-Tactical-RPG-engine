@@ -1,9 +1,9 @@
 #include "taag.h"
 
-#define ACTOR_PATH "ressources/game_object/actor/"
-#define ACTOR_EXT ".act"
 #define NODE_PATH "ressources/game_object/node/"
 #define NODE_EXT ".node"
+#define OBS_PATH "ressources/game_object/object/"
+#define OBS_EXT ".obs"
 
 s_game_board::s_game_board() {}
 
@@ -54,7 +54,11 @@ s_game_board::s_game_board(string p_path)
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)] = t_cell(coord, &(node_list[index]));
 		if (tab.size() >= 5)
 		{
-			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(ACTOR_PATH + tab[3] + ACTOR_EXT));
+			int team = atoi(tab[4].c_str());
+			if (team == 0)
+				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
+			else
+				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(ACTOR_PATH + tab[3] + ACTOR_EXT));
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->coord = coord;
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
@@ -67,18 +71,9 @@ s_game_board::s_game_board(string p_path)
 			break;
 		placement_list.push_back(t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str())));
 	}
-	while (!myfile.eof())
-	{
-		tab = get_strsplit(&myfile, ":", -1);
-		if (tab.size() <= 1)
-			break;
-		t_actor *new_actor = new t_actor(read_actor(ACTOR_PATH + tab[1] + ACTOR_EXT));
-		new_actor->team = 1;
-		actor_pool.push_back(new_actor);
-	}
 	myfile.close();
 
-	zoom = 3.0;
+	zoom = 1.5;
 	sprite_unit = t_vect(32, 32);
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);

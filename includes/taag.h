@@ -9,6 +9,9 @@ extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on ev
 
 # define SPELL_BUTTON 1
 
+#define ACTOR_PATH "ressources/game_object/actor/"
+#define ACTOR_EXT ".act"
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -152,7 +155,6 @@ typedef struct			s_game_board
 	vector<t_node>		node_list;	//list all the node printable by the board
 	t_tileset			*cursor_tile;//the tile to use to print cursor up the cell
 	vector<t_vect>		placement_list; //list of the node where you can place your actor
-	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
 	vector<t_actor *>	actor_list;	//contain every actor
@@ -191,6 +193,7 @@ typedef struct			s_game_engine
 	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
 	bool				calculated;	//did we need to calculate something ?
 	int					s_spell;	//what spell is selected : -1 for none
+	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 
 						s_game_engine();
 						s_game_engine(string p_path);

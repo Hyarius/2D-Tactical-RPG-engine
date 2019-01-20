@@ -5,15 +5,14 @@ void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 	t_vect mouse = board.get_mouse_pos();
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
-		if (board.actor_pool.size())
+		if (actor_pool.size())
 		{
 			size_t count = 0;
 			while (count < board.placement_list.size() && mouse != board.placement_list[count])
 				count++;
 			if (count < board.placement_list.size())
 			{
-				invoke_actor(board.actor_pool[*index], board.get_mouse_pos());
-				board.actor_pool.erase(board.actor_pool.begin());
+				invoke_actor(new t_actor(*(actor_pool[*index % actor_pool.size()])), board.get_mouse_pos());
 			}
 		}
 	}
@@ -27,7 +26,6 @@ void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 				count++;
 			if (count < board.placement_list.size())
 			{
-				board.actor_pool.insert(board.actor_pool.begin(), board.get_cell(mouse)->actor);
 				outvoke_actor(board.get_cell(mouse)->actor);
 			}
 		}
@@ -47,7 +45,13 @@ void			s_game_engine::placement_phase()
 	bool		play = true;
 	int			index = 0;
 
-	vector<t_vect>	placement = board.placement_list;
+	vector<string>	actor_file = list_files(ACTOR_PATH, ACTOR_EXT);
+	for (size_t i = 0; i < actor_file.size(); i++)
+	{
+		t_actor *new_actor = new t_actor(read_actor(ACTOR_PATH + actor_file[i] + ACTOR_EXT));
+		new_actor->team = 1;
+		actor_pool.push_back(new_actor);
+	}
 
 	while (play)
 	{

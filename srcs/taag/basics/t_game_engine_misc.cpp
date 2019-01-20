@@ -30,6 +30,7 @@ void				s_game_engine::outvoke_actor(t_actor *new_actor)
 		board.get_cell(new_actor->coord)->actor = NULL;
 		new_actor->coord = t_vect(-1, -1);
 		board.remove_actor(new_actor);
+		delete new_actor;
 	}
 }
 
@@ -83,6 +84,7 @@ s_game_engine::s_game_engine(string p_path)
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), t_vect(0, 0), gui.unit * t_vect(30, 20)), NULL, NULL));
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
+	
 }
 
 void				s_game_engine::initiate_turn_order()
