@@ -1,0 +1,11 @@
+name		:Crossed slash
+description	:Deal 6 damages to a target and push it back by 1 tile
+icon		:simple_iconset
+sprite		:2:4
+pa			:4
+pm			:0
+range		:1:2:0
+type		:0
+zone		:0:0
+effect1		:0:6:0:0:0
+effect1		:4:1:0:0:0

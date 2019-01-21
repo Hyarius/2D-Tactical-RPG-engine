@@ -1,0 +1,10 @@
+name		:Ice barrage
+description	:Deal 4 damages in zone
+icon		:simple_iconset
+sprite		:1:4
+pa			:3
+pm			:0
+range		:1:3:0
+type		:1
+zone		:2:2
+effect1		:0:4:0:0:0

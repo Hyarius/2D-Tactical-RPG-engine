@@ -16,13 +16,13 @@ int main(int argc, char **argv)
 
 	window_initialisation(argv[0]);
 
+	read_tileset();
+	init_effects();
+	read_spell();
+
 	t_game_engine	game = s_game_engine("ressources/map/map_test.map");
 
-	printf("here\n");
-
 	game.placement_phase();
-
-	printf("here\n");
 
 	game.game_loop();
 

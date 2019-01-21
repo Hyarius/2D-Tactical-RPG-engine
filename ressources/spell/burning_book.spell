@@ -1,0 +1,11 @@
+name		:Burning book
+description	:Deal 3 damages at target and 1 at caster
+icon		:simple_iconset
+sprite		:0:1
+pa			:3
+pm			:0
+range		:1:4:0
+type		:1
+zone		:0:0
+effect1		:0:3:0:0:0
+effect1		:7:1:0:0:0

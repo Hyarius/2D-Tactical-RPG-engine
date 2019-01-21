@@ -60,6 +60,7 @@ void		read_spell()
 	vector<t_effect> effect;
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
+	spell_map["NULL"] = t_spell();
 	size_t i = 0;
 	while (i < spell_file.size())
 	{

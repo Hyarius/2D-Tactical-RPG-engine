@@ -1,0 +1,11 @@
+name		:Transfusion
+description	:Deal 6 damages to the caster and heal target by 12
+icon		:simple_iconset
+sprite		:0:4
+pa			:2
+pm			:0
+range		:1:4:1
+type		:0
+zone		:0:0
+effect1		:7:6:0:0:0
+effect1		:1:12:0:0:0

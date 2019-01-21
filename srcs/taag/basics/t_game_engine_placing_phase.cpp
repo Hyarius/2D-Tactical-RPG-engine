@@ -2,7 +2,8 @@
 
 void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 {
-	t_vect mouse = board.get_mouse_pos();
+	t_vect 			mouse = board.get_mouse_pos();
+
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
 		if (actor_pool.size())
@@ -16,7 +17,7 @@ void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 			}
 		}
 	}
-	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT)
+	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT)
 	{
 
 		if (board.get_cell(mouse) && board.get_cell(mouse)->actor != NULL)
@@ -25,17 +26,15 @@ void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 			while (count < board.placement_list.size() && mouse != board.placement_list[count])
 				count++;
 			if (count < board.placement_list.size())
-			{
 				outvoke_actor(board.get_cell(mouse)->actor);
-			}
 		}
 	}
-	if (event->type == SDL_MOUSEWHEEL)
+	else if (event->type == SDL_KEYDOWN)
 	{
-		if (event->wheel.y > 0)
-			(*index)++;
-		else if (event->wheel.y < 0)
+		if (event->key.keysym.sym == SDLK_UP)
 			(*index)--;
+		else if (event->key.keysym.sym == SDLK_DOWN)
+			(*index)++;
 	}
 }
 
@@ -67,7 +66,7 @@ void			s_game_engine::placement_phase()
 				exit(0);
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
 				play = false;
-			handle_actor_placement_camera(&event);
+			handle_control_camera(&event);
 			handle_actor_placement(&event, &index);
 		}
 		render_screen(true);

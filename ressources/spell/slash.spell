@@ -1,0 +1,10 @@
+name		:Slash
+description	:Deal 4 damage
+icon		:simple_iconset
+sprite		:3:4
+pa			:1
+pm			:0
+range		:1:1:0
+type		:1
+zone		:0:0
+effect1		:0:2:0:0:0

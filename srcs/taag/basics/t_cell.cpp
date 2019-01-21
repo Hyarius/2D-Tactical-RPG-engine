@@ -25,3 +25,17 @@ void					s_cell::draw_cell(t_vect target, t_vect offset, t_vect size)
 	if (node != NULL && node->tile != NULL)
 		node->tile->draw_self((coord + target) * size + offset, size, node->sprite);
 }
+
+void					s_cell::draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom)
+{
+	if (visual_info.size())
+	{
+		for (size_t i = 0; i < visual_info.size(); i++)
+		{
+			visual_info[i].draw_self(target, offset, size, zoom);
+			if (visual_info[i].index == (int)visual_info[i].text_coord.size())
+				visual_info.erase(visual_info.begin() + i);
+		}
+
+	}
+}

@@ -1,0 +1,10 @@
+name		:Arrow flight
+description	:Deal 5 damages at every target in the zone
+icon		:simple_iconset
+sprite		:1:0
+pa			:5
+pm			:0
+range		:4:6:1
+type		:0
+zone		:0:1
+effect1		:1:5:0:0:0

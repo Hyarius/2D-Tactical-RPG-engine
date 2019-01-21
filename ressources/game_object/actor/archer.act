@@ -5,9 +5,9 @@ hp:35
 pa:6
 pm:5
 init:6
-spell1:Fireball
-spell2:NULL
-spell3:NULL
+spell1:Arrow flight
+spell2:Electric arrow
+spell3:Fire arrow
 spell4:NULL
 spell5:NULL
 spell6:NULL

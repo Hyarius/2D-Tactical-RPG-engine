@@ -62,6 +62,8 @@ s_game_board::s_game_board(string p_path)
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->coord = coord;
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
+			if (cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team == 2)
+				enemy_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
 		}
 	}
 	while (!myfile.eof())
@@ -125,7 +127,7 @@ void				s_game_board::draw_self()
 	draw_cursor_layer();
 	draw_actor_list();
 	draw_mouse_cursor();
-	draw_actor_visual_info();
+	draw_visual_info();
 }
 
 void				s_game_board::add_actor(t_actor *new_actor)
@@ -137,10 +139,20 @@ void				s_game_board::remove_actor(t_actor *old_actor)
 {
 	size_t count = 0;
 
+	if (old_actor->team == 2)
+	{
+		while (count < enemy_list.size() && old_actor != enemy_list[count])
+			count++;
+		if (count < enemy_list.size())
+			enemy_list.erase(enemy_list.begin() + count);
+	}
+	count = 0;
 	while (count < actor_list.size() && old_actor != actor_list[count])
 		count++;
 	if (count < actor_list.size())
+	{
 		actor_list.erase(actor_list.begin() + count);
+	}
 }
 
 void				s_game_board::draw_mouse_cursor()
@@ -163,6 +175,30 @@ void				s_game_board::draw_cell_layer()
 		while ((size_t)j < board_size.y)
 		{
 			cell_layer[i][j].draw_cell(target, offset, size);
+			j++;
+		}
+		i++;
+	}
+}
+
+void				s_game_board::draw_visual_info()
+{
+	size_t i = 0;
+	t_vect size = sprite_unit * zoom;
+
+	while (i < actor_list.size())
+	{
+		actor_list[i]->draw_visual_info(target, offset, size, zoom);
+		i++;
+	}
+
+	i = 0;
+	while (i < board_size.x)
+	{
+		int j = 0;
+		while (j < board_size.y)
+		{
+			cell_layer[i][j].draw_visual_info(target, offset, size, zoom);
 			j++;
 		}
 		i++;
@@ -229,17 +265,6 @@ void				s_game_board::draw_actor_list()
 	}
 }
 
-void				s_game_board::draw_actor_visual_info()
-{
-	size_t i = 0;
-	t_vect size = sprite_unit * zoom;
-
-	while (i < actor_list.size())
-	{
-		actor_list[i]->draw_visual_info(target, offset, size, zoom);
-		i++;
-	}
-}
 
 void				s_game_board::handle_mouvement(SDL_Event *event)
 {

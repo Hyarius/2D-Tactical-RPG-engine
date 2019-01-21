@@ -5,9 +5,9 @@ hp:25
 pa:6
 pm:4
 init:4
-spell1:Fire 2
-spell2:NULL
-spell3:Fire 6
+spell1:Fireball
+spell2:Ember shot
+spell3:Fire bomb
 spell4:NULL
 spell5:NULL
 spell6:NULL

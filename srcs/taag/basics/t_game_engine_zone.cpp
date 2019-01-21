@@ -11,8 +11,6 @@ vector<t_vect>	s_game_engine::calc_cross(int size)
 {
 	vector<t_vect>	result;
 
-	result.push_back(t_vect(0, 0));
-
 	int i = -size;
 	while (i <= size)
 	{
@@ -25,15 +23,12 @@ vector<t_vect>	s_game_engine::calc_cross(int size)
 		i++;
 	}
 
-
 	return (result);
 }
 
 vector<t_vect>	s_game_engine::calc_cross_line(int size)
 {
 	vector<t_vect>	result;
-
-	result.push_back(t_vect(0, 0));
 
 	int i = -size;
 	while (i <= size)
@@ -42,15 +37,13 @@ vector<t_vect>	s_game_engine::calc_cross_line(int size)
 		result.push_back(t_vect(i, 0));
 		i++;
 	}
-
+	
 	return (result);
 }
 
 vector<t_vect>	s_game_engine::calc_line(int size, t_vect dir)
 {
 	vector<t_vect>	result;
-
-	result.push_back(t_vect(0, 0));
 
 	int i = 0;
 	while (i < size)
@@ -65,8 +58,6 @@ vector<t_vect>	s_game_engine::calc_line(int size, t_vect dir)
 vector<t_vect>	s_game_engine::calc_square(int size)
 {
 	vector<t_vect>	result;
-
-	result.push_back(t_vect(0, 0));
 
 	int i = -size;
 	while (i <= size)

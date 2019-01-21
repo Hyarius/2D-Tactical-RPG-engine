@@ -6,11 +6,6 @@ void				s_game_engine::handle_control_camera(SDL_Event *event)
 	board.handle_zoom(event);
 }
 
-void				s_game_engine::handle_actor_placement_camera(SDL_Event *event)
-{
-	board.handle_mouvement(event);
-}
-
 void				s_game_engine::cast_spell(t_vect mouse)
 {
 	t_actor *player = turn_order[turn_index % turn_order.size()];
@@ -51,89 +46,20 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		if (player->spell[s_spell]->cost_pa > 0)
 		{
 			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size()) / 2.0);
-			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, tmp));
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, tmp));
 			player->stat.pa.value -= player->spell[s_spell]->cost_pa;
 		}
 		text_coord.clear();
 		if (player->spell[s_spell]->cost_pm > 0)
 		{
 			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size()) / 2.0);
-			player->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, tmp));
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, tmp));
 			player->stat.pm.value -= player->spell[s_spell]->cost_pm;
 		}
 		s_spell = -1;
 		calculated = false;
 	}
 
-}
-
-void				s_game_engine::handle_control_game(SDL_Event *event)
-{
-	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_SPACE)
-		next_turn();
-	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
-	{
-		if (gui.click() == false)
-		{
-			if (s_spell == -1)
-				move_actor(board.get_mouse_pos());
-			else
-				cast_spell(board.get_mouse_pos());
-			check_alive();
-		}
-	}
-	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT && s_spell != -1)
-	{
-		s_spell = -1;
-		calculated = false;
-	}
-	if (event->type == SDL_KEYDOWN)
-	{
-		t_actor *player = turn_order[turn_index % turn_order.size()];
-		if (event->key.keysym.sym == SDLK_q)
-		{
-			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
-				s_spell = 0;
-			else
-				s_spell = -1;
-		}
-		else if (event->key.keysym.sym == SDLK_w)
-		{
-			if (player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm)
-				s_spell = 1;
-			else
-				s_spell = -1;
-		}
-		else if (event->key.keysym.sym == SDLK_e)
-		{
-			if (player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm)
-				s_spell = 2;
-			else
-				s_spell = -1;
-		}
-		else if (event->key.keysym.sym == SDLK_r)
-		{
-			if (player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm)
-				s_spell = 3;
-			else
-				s_spell = -1;
-		}
-		else if (event->key.keysym.sym == SDLK_t)
-		{
-			if (player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm)
-				s_spell = 4;
-			else
-				s_spell = -1;
-		}
-		else if (event->key.keysym.sym == SDLK_y)
-		{
-			if (player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
-				s_spell = 5;
-			else
-				s_spell = -1;
-		}
-		calculated = false;
-	}
 }
 
 void				s_game_engine::move_actor(t_vect dest)

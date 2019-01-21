@@ -36,12 +36,8 @@ void				s_game_engine::outvoke_actor(t_actor *new_actor)
 
 void				s_game_engine::delete_actor(t_actor *new_actor)
 {
+	board.remove_actor(new_actor);
 	size_t count = 0;
-	while (count < board.actor_list.size() && new_actor != board.actor_list[count])
-		count++;
-	if (count < board.actor_list.size())
-		board.actor_list.erase(board.actor_list.begin() + count);
-	count = 0;
 	while (count < turn_order.size() && new_actor != turn_order[count])
 		count++;
 	if (count < turn_order.size())
@@ -76,15 +72,12 @@ s_game_engine::s_game_engine(string p_path)
 {
 	calculated = false;
 	s_spell = -1;
-	read_tileset();
-	init_effects();
-	read_spell();
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
-	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), t_vect(0, 0), gui.unit * t_vect(30, 20)), NULL, NULL));
+	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
-	
+	set_game_engine(this);
 }
 
 void				s_game_engine::initiate_turn_order()

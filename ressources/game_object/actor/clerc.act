@@ -5,9 +5,9 @@ hp:55
 pa:6
 pm:5
 init:6
-spell1:NULL
-spell2:NULL
-spell3:NULL
-spell4:NULL
+spell1:Heal
+spell2:First aid
+spell3:Fly
+spell4:Crossed slash
 spell5:NULL
 spell6:NULL

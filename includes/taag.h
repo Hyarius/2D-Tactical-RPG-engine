@@ -144,9 +144,12 @@ typedef struct			s_cell
 	t_actor				*actor;		//is there an actor here ?
 	t_node				*node;		//what node this cell is
 	t_vect				cursor;		//the sprite of the cursor to print up the cell
+	vector<t_visual_info>
+						visual_info; //list of every infos we need to print on screen
 						s_cell();
 						s_cell(t_vect p_coord, t_node *p_node);
 	void				draw_cell(t_vect target, t_vect offset, t_vect size); //draw the cell on her place on the screen
+	void				draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom); //draw the cell visual info on the screen
 }						t_cell;
 
 typedef struct			s_game_board
@@ -158,6 +161,7 @@ typedef struct			s_game_board
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
 	vector<t_actor *>	actor_list;	//contain every actor
+	vector<t_actor *>	enemy_list;	//contain every enemy to kill
 
 	t_vect				offset;		//the offset of the center of the map
 	t_vect				target;		//utils for zooming/moving the camera
@@ -179,7 +183,7 @@ typedef struct			s_game_board
 	void				draw_cursor_layer();//draw only the cursor on the screen
 	void				draw_placement(); //draw tile where we can place actor
 	void				draw_actor_list();//draw every actor on the screen
-	void				draw_actor_visual_info();//draw every visual info on screen
+	void				draw_visual_info();//draw every visual info on screen
 	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
@@ -232,6 +236,7 @@ typedef struct			s_game_engine
 	void				handle_actor_placement_camera(SDL_Event *event);
 	void				placement_phase();
 	void				game_loop();
+	void				ending_fight();
 
 }						t_game_engine;
 
@@ -242,9 +247,18 @@ void					read_spell();				//read every spell and place it into the spell_map
 void					init_effects();				//initialize every effect spell can use
 t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_size, t_vect p_starting_coord); //creating one visual_info
 
+void					set_game_engine(t_game_engine *new_game);
+void					set_coord_target(t_vect p_coord);
+
 void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					heal_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					dmg_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					pull_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					move_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 
 #endif

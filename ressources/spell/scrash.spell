@@ -1,0 +1,10 @@
+name		:Scrash
+description	:Deal 6 damages to a target
+icon		:simple_iconset
+sprite		:2:5
+pa			:3
+pm			:0
+range		:1:2:0
+type		:1
+zone		:0:0
+effect1		:0:6:0:0:0
