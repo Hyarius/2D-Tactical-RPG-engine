@@ -4,11 +4,11 @@ static int			generate_type()
 {
 	int type = generate_nbr(0, 100);
 
-	if (type <= 91)
+	if (type <= 85)
 		return (0);
-	if (type <= 94)
+	if (type <= 90)
 		return (4);
-	if (type <= 97)
+	if (type <= 95)
 		return (8);
 	return (7);
 }

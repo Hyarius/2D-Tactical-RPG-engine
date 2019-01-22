@@ -74,7 +74,7 @@ vector<t_vect>	s_game_engine::calc_square(int size)
 	return (result);
 }
 
-static void			reset_vision(t_game_board *board, int min)
+static void			reset_vision(t_game_board *board, int min, int max)
 {
 	int x = 0;
 	while (x < board->board_size.x)
@@ -83,7 +83,8 @@ static void			reset_vision(t_game_board *board, int min)
 		while (y < board->board_size.y)
 		{
 			board->get_cell(x, y)->cursor = t_vect(0, 0);
-			if (board->get_cell(x, y)->v_dist >= min && board->get_cell(x, y)->v_dist != 999)
+			if (board->get_cell(x, y)->v_dist >= min && board->get_cell(x, y)->v_dist != 999 &&
+				board->get_cell(x, y)->v_dist <= max)
 				board->get_cell(x, y)->cursor = t_vect(0, 2);
 			y++;
 		}
@@ -96,7 +97,7 @@ void				s_game_engine::calculate_zone()
 	t_vect mouse = board.get_mouse_pos();
 	t_actor *player = turn_order[turn_index % turn_order.size()];
 	if (s_spell != -1)
-		reset_vision(&board, player->spell[s_spell]->range[0]);
+		reset_vision(&board, player->spell[s_spell]->range[0], player->spell[s_spell]->range[1]);
 	if (board.get_cell(mouse) && board.get_cell(mouse)->cursor == t_vect(0, 2))
 	{
 		vector<t_vect>	result;

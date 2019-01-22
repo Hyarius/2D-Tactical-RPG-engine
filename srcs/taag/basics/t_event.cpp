@@ -87,7 +87,7 @@ void	push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(target->coord + delta)->node->m_obs == false && game->board.get_cell(target->coord + delta)->actor == NULL)
+			if (game->board.get_cell(target->coord + delta) && game->board.get_cell(target->coord + delta)->node->m_obs == false && game->board.get_cell(target->coord + delta)->actor == NULL)
 			{
 				game->board.get_cell(target->coord)->actor = NULL;
 				target->coord = target->coord + delta;
