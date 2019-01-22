@@ -44,7 +44,8 @@ t_game_board		board_generator(int size_x, int size_y)
 	for (int i = 0; i < nb_enemy; i++)
 	{
 		t_spell *p_spell[6];
-		for (int i = 0; i < 6; i++)
+		p_spell[0] = &(spell_map["Slash"]);
+		for (int i = 1; i < 6; i++)
 			p_spell[i] = &(spell_map["NULL"]);
 		t_actor *enemy = new t_actor("enemy_test", &(tileset_map["simple_actor"]), t_vect(0, 0), t_stat(t_value(15), t_value(6), t_value(3), 3), p_spell);
 		enemy->team = 2;
