@@ -252,7 +252,7 @@ void				s_game_board::draw_placement()
 
 	while (i < placement_list.size())
 	{
-		draw_cursor(placement_list[i], target, size, offset, t_vect(3, 0));
+		cursor_tile->draw_self((placement_list[i] + target) * size + offset, size, t_vect(3, 0));
 		i++;
 	}
 }

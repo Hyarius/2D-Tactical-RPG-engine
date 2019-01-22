@@ -5,7 +5,7 @@ map<t_vect, map<t_vect, vector<t_vect>[4]>>	vision_map;
 void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist)
 {
 	t_vect 			player_coord = turn_order[turn_index % turn_order.size()]->coord;
-	int				scale = 10;
+	int				scale = 5;
 
 	if (vision_map.find(player_coord) == vision_map.end() || vision_map[player_coord].find(target) == vision_map[player_coord].end())
 	{

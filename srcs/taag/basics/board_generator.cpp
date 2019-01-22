@@ -1,5 +1,18 @@
 #include "taag.h"
 
+static int			generate_type()
+{
+	int type = generate_nbr(0, 100);
+
+	if (type <= 91)
+		return (0);
+	if (type <= 94)
+		return (4);
+	if (type <= 97)
+		return (8);
+	return (7);
+}
+
 t_game_board		board_generator(int size_x, int size_y)
 {
 	t_game_board	board;
@@ -21,7 +34,8 @@ t_game_board		board_generator(int size_x, int size_y)
 		y = 0;
 		while (y < size_y)
 		{
-			board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[0]));
+			int type = generate_type();
+			board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[type]));
 			y++;
 		}
 		x++;
@@ -36,7 +50,7 @@ t_game_board		board_generator(int size_x, int size_y)
 		enemy->team = 2;
 		x = generate_nbr(0, size_x);
 		y = generate_nbr(0, size_y);
-		while (board.get_cell(x, y)->actor != NULL)
+		while (board.get_cell(x, y)->actor != NULL || board.get_cell(x, y)->node->m_obs == true)
 		{
 			x = generate_nbr(0, size_x);
 			y = generate_nbr(0, size_y);
@@ -52,7 +66,21 @@ t_game_board		board_generator(int size_x, int size_y)
 		x = generate_nbr(0, size_x);
 		y = generate_nbr(0, size_y);
 		if (board.get_cell(x, y)->actor == NULL)
+		{
+			size_t count = 0;
+			while (count < board.placement_list.size())
+			{
+				if (board.placement_list[count] == t_vect(x, y))
+				{
+					x = generate_nbr(0, size_x);
+					y = generate_nbr(0, size_y);
+					count = 0;
+				}
+				else
+					count++;
+			}
 			board.placement_list.push_back(t_vect(x, y));
+		}
 		i++;
 	}
 	return (board);
