@@ -250,6 +250,8 @@ t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_s
 void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
+t_game_board			board_generator(int size_x, int size_y);
+
 void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);

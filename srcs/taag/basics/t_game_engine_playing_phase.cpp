@@ -93,11 +93,6 @@ void			s_game_engine::game_loop()
 
 	while (play)
 	{
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-		if (state[SDL_SCANCODE_LSHIFT])
-		{
-			SDL_Delay(1000);
-		}
 		prepare_screen();
 
 		update_board();

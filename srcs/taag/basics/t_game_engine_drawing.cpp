@@ -140,7 +140,7 @@ void				s_game_engine::draw_select_wheel(int *index)
 	int i = 0;
 	t_actor *player = actor_pool[(*index) % actor_pool.size()];
 	string text = "Actor : " + player->name;
-	static int text_size = calc_text_max_size(text, gui.unit * t_vect(4.5, 0.5));
+	static int text_size = calc_text_max_size(text, gui.unit * t_vect(4.5, 0.5)) / 1.3;
 	draw_lined_text(text, text_size, gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
 	text = "Health : " + to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
 	draw_lined_text(text, text_size, gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
@@ -151,7 +151,7 @@ void				s_game_engine::draw_select_wheel(int *index)
 	while (i < 10)
 	{
 		text = "Spell [" + to_string(i - 4) + "] : " + player->spell[i - 4]->name;
-		draw_lined_text(text, text_size, gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
+		draw_lined_text(text, text_size , gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
 	}
 }
 

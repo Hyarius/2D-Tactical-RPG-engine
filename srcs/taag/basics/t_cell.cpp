@@ -23,7 +23,7 @@ s_cell::s_cell(t_vect p_coord, t_node *p_node)
 void					s_cell::draw_cell(t_vect target, t_vect offset, t_vect size)
 {
 	if (node != NULL && node->tile != NULL)
-		node->tile->draw_self((coord + target) * size + offset, size, node->sprite);
+		node->tile->prepare_print((coord + target) * size + offset, size, node->sprite);
 }
 
 void					s_cell::draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom)

@@ -143,6 +143,5 @@ void				s_game_engine::update_board()
 		else
 			calculate_vision_line();
 	}
-	if (player->destination.size() == 0 && s_spell != -1)
-		calculate_zone();
+	calculate_zone();
 }

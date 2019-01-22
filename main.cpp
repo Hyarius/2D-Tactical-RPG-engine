@@ -22,6 +22,8 @@ int main(int argc, char **argv)
 
 	t_game_engine	game = s_game_engine("ressources/map/map_test.map");
 
+	game.board = board_generator(40, 40);
+
 	game.placement_phase();
 
 	game.game_loop();

@@ -5,7 +5,23 @@
 #define OBS_PATH "ressources/game_object/object/"
 #define OBS_EXT ".obs"
 
-s_game_board::s_game_board() {}
+s_game_board::s_game_board()
+{
+	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);
+
+	size_t i = 0;
+	while (i < node_file.size())
+	{
+		node_list.push_back(read_node(NODE_PATH + node_file[i] + NODE_EXT));
+		i++;
+	}
+	board_size = t_vect(0, 0);
+	zoom = 1.5;
+	sprite_unit = t_vect(32, 32);
+	offset = get_win_size() / 2;
+	target = t_vect(-board_size.x / 2, -board_size.y / 2);
+	cursor_tile = &tileset_map["simple_cursor"];
+}
 
 s_game_board::s_game_board(string p_path)
 {
@@ -19,6 +35,7 @@ s_game_board::s_game_board(string p_path)
 		printf("can't open such file : %s\n", p_path.c_str());
 
 	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);
+
 	size_t i = 0;
 	while (i < node_file.size())
 	{
@@ -118,7 +135,7 @@ t_vect				s_game_board::get_mouse_pos()
 
 void				s_game_board::draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite)
 {
-	cursor_tile->draw_self((coord + target) * size + offset, size, sprite);
+	cursor_tile->prepare_print((coord + target) * size + offset, size, sprite);
 }
 
 void				s_game_board::draw_self()
@@ -179,6 +196,10 @@ void				s_game_board::draw_cell_layer()
 		}
 		i++;
 	}
+	i = 0;
+	while (get_cell(i, 0)->node->tile == NULL)
+		i++;
+	render_triangle_texture(cell_layer[i][0].node->tile->texture_id);
 }
 
 void				s_game_board::draw_visual_info()
@@ -221,6 +242,7 @@ void				s_game_board::draw_cursor_layer()
 		}
 		i++;
 	}
+	render_triangle_texture(tileset_map["simple_cursor"].texture_id);
 }
 
 void				s_game_board::draw_placement()
