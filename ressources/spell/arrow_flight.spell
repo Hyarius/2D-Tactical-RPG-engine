@@ -6,6 +6,6 @@ pa			:5
 pm			:0
 range		:4:6:1
 type		:0
-on target	:0
+on target	:2
 zone		:0:1
 effect1		:0:9:0:0:0
