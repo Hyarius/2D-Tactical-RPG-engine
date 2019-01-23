@@ -1,10 +1,11 @@
 name		:Electric arrow
-description	:Deal 3 damages in zone
+description	:Deal 6 damages in zone
 icon		:simple_iconset
 sprite		:3:1
 pa			:4
 pm			:0
 range		:2:5:0
 type		:1
+on target	:0
 zone		:0:2
-effect1		:0:3:0:0:0
+effect1		:0:6:0:0:0

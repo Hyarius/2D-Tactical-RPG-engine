@@ -1,11 +1,12 @@
 name		:Rock edge
-description	:Deal 5 damages and reduce PM by 1
+description	:Deal 6 damages and reduce PM by 1
 icon		:simple_iconset
 sprite		:4:4
 pa			:3
 pm			:0
 range		:1:4:0
 type		:0
+on target	:0
 zone		:1:1
-effect1		:0:5:0:0:0
+effect1		:0:6:0:0:0
 effect1		:2:-1:0:0:0

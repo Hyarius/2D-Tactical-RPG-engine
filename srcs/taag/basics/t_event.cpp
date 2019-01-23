@@ -27,6 +27,8 @@ void			init_effects()
 	g_effects.push_back(dmg_caster);	//7
 	g_effects.push_back(move_caster); 	//8
 	g_effects.push_back(swap_actor);	//9
+	g_effects.push_back(change_caster_pa);	//10
+	g_effects.push_back(change_caster_pm);	//11
 }
 
 void	swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
@@ -40,6 +42,36 @@ void	swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		source->coord = tmp;
 		game->board.get_cell(target->coord)->actor = target;
 		game->board.get_cell(source->coord)->actor = source;
+	}
+}
+
+void	change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat)
+{
+	vector<t_vect>	text_coord;
+	(void)target;
+	if (source != NULL)
+	{
+		int damage = (effect_stat.value[0] < source->stat.pa.value ? effect_stat.value[0] : source->stat.pa.value);
+		source->stat.pa.value += damage;
+		if (source->stat.hp.value != 0)
+			source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+		else if (damage)
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+	}
+}
+
+void	change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat)
+{
+	vector<t_vect>	text_coord;
+	(void)target;
+	if (source != NULL)
+	{
+		int damage = (effect_stat.value[0] < source->stat.pm.value ? effect_stat.value[0] : source->stat.pm.value);
+		source->stat.pm.value += damage;
+		if (source->stat.hp.value != 0)
+			source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+		else if (damage)
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
 	}
 }
 

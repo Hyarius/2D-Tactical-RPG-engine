@@ -1,11 +1,12 @@
 name		:Flying rock
-description	:Deal 8 damage in zone and reduce PA by 1
+description	:Deal 10 damage in zone and reduce PA by 1
 icon		:simple_iconset
 sprite		:0:5
 pa			:5
 pm			:1
 range		:1:6:0
 type		:1
+on target	:0
 zone		:3:1
-effect1		:0:8:0:0:0
+effect1		:0:10:0:0:0
 effect1		:3:-1:0:0:0

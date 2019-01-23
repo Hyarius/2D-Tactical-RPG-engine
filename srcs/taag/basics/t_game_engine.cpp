@@ -9,7 +9,9 @@ void				s_game_engine::handle_control_camera(SDL_Event *event)
 void				s_game_engine::cast_spell(t_vect mouse)
 {
 	t_actor *player = turn_order[turn_index % turn_order.size()];
-	if (board.get_cell(mouse) == NULL || board.get_cell(mouse)->node == NULL)
+	if (board.get_cell(mouse) == NULL || board.get_cell(mouse)->node == NULL ||
+		(player->spell[s_spell]->on_target == 0 && board.get_cell(mouse)->actor == NULL) ||
+		(player->spell[s_spell]->on_target == 2 && board.get_cell(mouse)->actor != NULL))
 		return ;
 	if (board.get_cell(mouse)->v_dist >= player->spell[s_spell]->range[0] &&
 		board.get_cell(mouse)->v_dist <= player->spell[s_spell]->range[1] &&
@@ -18,10 +20,10 @@ void				s_game_engine::cast_spell(t_vect mouse)
 	{
 		size_t i = 0;
 		vector<t_vect>	target_list;
+		if (player->spell[s_spell]->zone_type == Z_DIAM)
+			target_list = calc_diam(player->spell[s_spell]->zone_size);
 		if (player->spell[s_spell]->zone_type == Z_CROSS)
 			target_list = calc_cross(player->spell[s_spell]->zone_size);
-		if (player->spell[s_spell]->zone_type == Z_CROSS_LINE)
-			target_list = calc_cross_line(player->spell[s_spell]->zone_size);
 		if (player->spell[s_spell]->zone_type == Z_LINE)
 		{
 			t_vect diff = player->coord - mouse;

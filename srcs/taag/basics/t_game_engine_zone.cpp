@@ -7,7 +7,7 @@ Z_LINE = 2,
 Z_SQUARE = 3,
 */
 
-vector<t_vect>	s_game_engine::calc_cross(int size)
+vector<t_vect>	s_game_engine::calc_diam(int size)
 {
 	vector<t_vect>	result;
 
@@ -26,7 +26,7 @@ vector<t_vect>	s_game_engine::calc_cross(int size)
 	return (result);
 }
 
-vector<t_vect>	s_game_engine::calc_cross_line(int size)
+vector<t_vect>	s_game_engine::calc_cross(int size)
 {
 	vector<t_vect>	result;
 
@@ -101,10 +101,10 @@ void				s_game_engine::calculate_zone()
 	if (board.get_cell(mouse) && board.get_cell(mouse)->cursor == t_vect(0, 2))
 	{
 		vector<t_vect>	result;
-		if (player->spell[s_spell]->zone_type == Z_CROSS)
+		if (player->spell[s_spell]->zone_type == Z_DIAM)
+			result = calc_diam(player->spell[s_spell]->zone_size);
+		else if (player->spell[s_spell]->zone_type == Z_CROSS)
 			result = calc_cross(player->spell[s_spell]->zone_size);
-		else if (player->spell[s_spell]->zone_type == Z_CROSS_LINE)
-			result = calc_cross_line(player->spell[s_spell]->zone_size);
 		else if (player->spell[s_spell]->zone_type == Z_LINE)
 		{
 			t_vect diff = player->coord - mouse;

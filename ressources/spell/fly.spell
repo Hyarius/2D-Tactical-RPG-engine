@@ -3,8 +3,9 @@ description	:Move the caster to the targeted area
 icon		:simple_iconset
 sprite		:5:0
 pa			:2
-pm			:3
+pm			:1
 range		:1:8:1
 type		:0
+on target	:0
 zone		:0:0
 effect1		:8:0:0:0:0

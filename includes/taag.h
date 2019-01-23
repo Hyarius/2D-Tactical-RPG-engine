@@ -53,8 +53,8 @@ enum e_range_type
 
 enum e_zone_type
 {
-	Z_CROSS = 0,
-	Z_CROSS_LINE = 1,
+	Z_DIAM = 0,
+	Z_CROSS = 1,
 	Z_LINE = 2,
 	Z_SQUARE = 3,
 };
@@ -81,13 +81,14 @@ typedef struct		s_effect
 typedef struct			s_spell
 {
 	string				name;			//name of the spell
-	string				desc;	//description of the spell
+	string				desc;			//description of the spell
 	t_tileset			*tile;			//tile of the icon
 	t_vect				icon;			//the sprite to use to print the icon
 	int					cost_pa;		//cost in PA
 	int					cost_pm;		//cost in PM
 	int					range[2];		//0 - range min / 1 - range max
-	bool				block;		//did this spell need vision
+	bool				block;			//did this spell need vision
+	int					on_target;		//0 - click on target only / 1 - click on target and empty tile / 2 - click only on empty tile
 	e_range_type		range_type;		//what kind of vision is it ?
 	e_zone_type			zone_type;		//what kind of zone is it ?
 	int					zone_size;		//size of the zone
@@ -95,8 +96,8 @@ typedef struct			s_spell
 						s_spell();
 						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
 								int p_cost_pa, int p_cost_pm,
-								int range_min, int range_max, bool p_block, e_range_type p_range_type,
-								e_zone_type p_zone_type, int p_zone_size,
+								int range_min, int range_max, bool p_block, bool p_on_target,
+								e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
 								vector<t_effect> p_effect);
 }						t_spell;
 
@@ -222,8 +223,8 @@ typedef struct			s_game_engine
 	void				calculate_zone();			//compute what tile gonna been affected by the active spell
 	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
 	vector<t_vect>		calc_path(t_vect dest);		//get the list of tile to go to targeted tile
-	vector<t_vect>		calc_cross(int size);		//calc the list of cell to hit with a cross zone
-	vector<t_vect>		calc_cross_line(int size);	//calc the list of cell to hit with a cross_line zone
+	vector<t_vect>		calc_diam(int size);		//calc the list of cell to hit with a cross zone
+	vector<t_vect>		calc_cross(int size);		//calc the list of cell to hit with a cross_line zone
 	vector<t_vect>		calc_line(int size, t_vect dir);	//calc the list of cell to hit with a line zone
 	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
@@ -262,5 +263,6 @@ void					push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 void					pull_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					move_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-
+void					change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 #endif

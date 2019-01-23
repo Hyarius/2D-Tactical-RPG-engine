@@ -66,6 +66,11 @@ t_game_board		board_generator(int size_x, int size_y)
 	{
 		x = generate_nbr(0, size_x);
 		y = generate_nbr(0, size_y);
+		while (board.get_cell(x, y)->node->m_obs == true || board.get_cell(x, y)->node->cost != 1)
+		{
+			x = generate_nbr(0, size_x);
+			y = generate_nbr(0, size_y);
+		}
 		if (board.get_cell(x, y)->actor == NULL)
 		{
 			size_t count = 0;
@@ -75,6 +80,11 @@ t_game_board		board_generator(int size_x, int size_y)
 				{
 					x = generate_nbr(0, size_x);
 					y = generate_nbr(0, size_y);
+					while (board.get_cell(x, y)->node->m_obs == true || board.get_cell(x, y)->node->cost != 1)
+					{
+						x = generate_nbr(0, size_x);
+						y = generate_nbr(0, size_y);
+					}
 					count = 0;
 				}
 				else

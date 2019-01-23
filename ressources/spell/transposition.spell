@@ -2,9 +2,10 @@ name		:Transposition
 description	:Swap caster and target place
 icon		:simple_iconset
 sprite		:3:0
-pa			:2
+pa			:3
 pm			:0
 range		:1:7:1
 type		:1
+on target	:0
 zone		:0:0
 effect1		:9:0:0:0:0
