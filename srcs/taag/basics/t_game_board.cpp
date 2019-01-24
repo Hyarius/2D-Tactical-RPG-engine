@@ -179,6 +179,8 @@ void				s_game_board::draw_mouse_cursor()
 	t_vect size = sprite_unit * zoom;
 	if (mouse != t_vect(-1, -1))
 		draw_cursor(mouse, target, size, offset, t_vect(1, 0));
+	render_triangle_texture(cursor_tile->texture_id);
+
 }
 
 void				s_game_board::draw_cell_layer()

@@ -1,13 +1,13 @@
 name:Clerc
 tileset:simple_actor
-sprite:4:4
-hp:55
-pa:6
-pm:5
-init:6
-spell1:Heal
-spell2:First aid
-spell3:Fly
-spell4:Crossed slash
-spell5:NULL
-spell6:NULL
+sprite:8:0
+hp:75
+pa:7
+pm:4
+init:5
+spell1:Double hit
+spell2:Cursed heart
+spell3:Heal
+spell4:Healing flask
+spell5:Transposition
+spell6:Transfusion

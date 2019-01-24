@@ -265,4 +265,11 @@ void					move_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat
 void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+
+void					menu_start();
+void					menu_play(t_data data);
+void					menu_player_editor(t_data data);
+void					menu_map_editor(t_data data);
+void					menu_quit(t_data data);
+
 #endif

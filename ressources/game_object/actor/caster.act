@@ -1,0 +1,13 @@
+name:Caster
+tileset:simple_actor
+sprite:4:0
+hp:55
+pa:10
+pm:2
+init:4
+spell1:Fireball
+spell2:Fire bomb
+spell3:Frozen bolt
+spell4:Rock edge
+spell5:Fly
+spell6:Ice barrage

@@ -183,12 +183,16 @@ void change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	(void)source;
 	if (target != NULL)
 	{
-		int damage = (effect_stat.value[0] < target->stat.pm.value ? effect_stat.value[0] : target->stat.pm.value);
+		int damage;
+		if (target->stat.pm.value + effect_stat.value[0] < 0)
+			damage = target->stat.pm.value;
+		else
+			damage = effect_stat.value[0];
 		target->stat.pm.value += damage;
 		if (target->stat.hp.value != 0)
-			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
 		else if (damage)
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
 	}
 }
 
@@ -198,11 +202,15 @@ void change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	(void)source;
 	if (target != NULL)
 	{
-		int damage = (effect_stat.value[0] < target->stat.pa.value ? effect_stat.value[0] : target->stat.pa.value);
+		int damage;
+		if (target->stat.pa.value + effect_stat.value[0] < 0)
+			damage = target->stat.pa.value;
+		else
+			damage = effect_stat.value[0];
 		target->stat.pa.value += damage;
 		if (target->stat.hp.value != 0)
-			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
 		else if (damage)
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
 	}
 }

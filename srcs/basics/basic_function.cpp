@@ -86,7 +86,7 @@ t_vect				second_degree_solver(double a, double b, double e, double c, double d,
 		y = (a * f - e * c) / delta;
 	}
 	else
-		error_exit("Error on calc cell", 15642);
+		error_exit("Error on second_degree_solver", 15642);
 	return (t_vect(x, y));
 }
 

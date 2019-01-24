@@ -40,7 +40,8 @@ void			s_game_engine::draw_spell_card(t_spell *spell)
 	coord = t_vect(4.4, 6.9);
 	size = t_vect(1, 1);
 	int i = 0;
-	tileset_map["simple_cursor"].draw_self(gui.unit * coord, gui.unit * size, t_vect((int)(spell->zone_type), 5));
+	int tmp = (spell->zone_size != 0 ? (int)(spell->zone_type) : 4);
+	tileset_map["simple_cursor"].draw_self(gui.unit * coord, gui.unit * size, t_vect(tmp, 5));
 	coord = coord - t_vect(size.x, 0);
 	tileset_map["simple_cursor"].draw_self(gui.unit * coord, gui.unit * size, t_vect((int)(spell->range_type) + 2, 4));
 	coord = coord - t_vect(size.x, 0);

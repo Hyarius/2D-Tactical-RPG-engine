@@ -101,12 +101,15 @@ void				s_game_engine::initiate_turn_order()
 void				s_game_engine::next_turn()
 {
 	if (turn_order.size())
+	{
 		turn_order[turn_index % turn_order.size()]->selected = false;
+		turn_order[turn_index % turn_order.size()]->reset_value();
+	}
 	turn_index = (turn_index + 1) % turn_order.size();
 	if (turn_order.size())
+	{
 		turn_order[turn_index % turn_order.size()]->selected = true;
-	if (turn_order.size())
-		turn_order[turn_index % turn_order.size()]->reset_value();
+	}
 	calculated = false;
 	s_spell = -1;
 }

@@ -1,0 +1,13 @@
+name:Support
+tileset:simple_actor
+sprite:8:4
+hp:65
+pa:6
+pm:4
+init:7
+spell1:Burning book
+spell2:Cursed heart
+spell3:Healing potion
+spell4:Heal
+spell5:Healing flask
+spell6:Wing

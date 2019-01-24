@@ -1,0 +1,13 @@
+name:Tank
+tileset:simple_actor
+sprite:12:4
+hp:135
+pa:6
+pm:3
+init:8
+spell1:Cursed heart
+spell2:Double cross
+spell3:Double hit
+spell4:Flying rock
+spell5:Transposition
+spell6:Transfusion

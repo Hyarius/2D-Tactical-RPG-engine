@@ -1,11 +1,11 @@
 name		:Winged arrow
-description	:Deal 2 damages
+description	:Deal 3 damages
 icon		:simple_iconset
 sprite		:1:5
-pa			:0
+pa			:1
 pm			:1
 range		:3:7:1
 type		:1
-on target	:0
+on target	:2
 zone		:1:2
-effect1		:0:2:0:0:0
+effect1		:0:3:0:0:0
