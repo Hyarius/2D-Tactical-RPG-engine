@@ -26,6 +26,24 @@ bool			t_entry_comp::click(t_vect mouse)
 	return (false);
 }
 
+bool			t_entry_comp::key_press(SDL_Event *event)
+{
+	if (selected == true)
+	{
+		if (event->type == SDL_TEXTINPUT)
+		{
+			add_text(event->text.text);
+			return (true);
+		}
+		else if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_BACKSPACE)
+		{
+			delete_text();
+			return (true);
+		}
+	}
+	return (false);
+}
+
 void			t_entry_comp::set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct)
 {
 	(void)p_funct;

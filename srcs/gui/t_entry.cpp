@@ -17,3 +17,10 @@ bool			s_entry::click(t_vect mouse)
 		return (true);
 	return (false);
 }
+
+bool			s_entry::key_press(SDL_Event *event)
+{
+	if (this->entry->key_press(event) == true)
+		return (true);
+	return (false);
+}

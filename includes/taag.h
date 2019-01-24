@@ -7,7 +7,7 @@
 extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
 													//tileset of the prog, in extern to accessibility
 
-# define SPELL_BUTTON 1
+# define SPELL_BUTTON	3
 
 #define ACTOR_PATH "ressources/game_object/actor/"
 #define ACTOR_EXT ".act"

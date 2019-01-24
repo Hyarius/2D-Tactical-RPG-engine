@@ -5,6 +5,9 @@
 
 using namespace std;
 
+# define BUTTON_NUM		2
+# define ENTRY_NUM		2
+
 typedef struct		s_data
 {
 	vector<void *>	data;
@@ -42,6 +45,7 @@ typedef struct 		s_button_comp : t_gui_comp
 	void			set_text(string text);
 	virtual void	draw_self() = 0;
 	bool			click(t_vect mouse);
+	bool			key_press(SDL_Event *event);
 }					t_button_comp;
 
 
@@ -98,6 +102,7 @@ typedef struct		s_entry_comp : t_gui_comp
 	void			delete_text();
 	virtual void	draw_self() = 0; // draw the button
 	bool			click(t_vect mouse); // test if the mouse is in the button and start the funct if yes
+	bool			key_press(SDL_Event *event); // test if a key is pressed and react to it -> send true if we have done something with it
 }					t_entry_comp;
 
 typedef struct		s_text_entry : t_entry_comp
@@ -123,6 +128,7 @@ typedef struct		s_gui_obj
 {
 	virtual void	draw_self() = 0;
 	virtual bool	click(t_vect mouse) = 0;
+	virtual bool	key_press(SDL_Event *event) = 0;
 	virtual 		~s_gui_obj() {}
 }					t_gui_obj;
 
@@ -134,6 +140,7 @@ typedef struct		s_button : t_gui_obj
 					s_button(t_button_comp *p_button, gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
 	void			draw_self();
 	bool			click(t_vect mouse);
+	bool			key_press(SDL_Event *event);
 }					t_button;
 
 typedef struct		s_entry : t_gui_obj
@@ -143,6 +150,7 @@ typedef struct		s_entry : t_gui_obj
 					s_entry(t_entry_comp *p_entry);
 	void			draw_self();
 	bool			click(t_vect mouse);
+	bool			key_press(SDL_Event *event);
 }					t_entry;
 
 typedef struct		s_gui
@@ -159,6 +167,7 @@ typedef struct		s_gui
 	void			add(int rep, t_gui_obj *object);
 	void			draw_self();
 	bool			click();
+	bool			key_press(SDL_Event *event);
 }					t_gui;
 
 #endif

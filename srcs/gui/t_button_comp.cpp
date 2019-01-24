@@ -35,3 +35,9 @@ bool		s_button_comp::click(t_vect mouse)
 		}
 	return (false);
 }
+
+bool		s_button_comp::key_press(SDL_Event *event)
+{
+	(void)event;
+	return (false);
+}

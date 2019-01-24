@@ -27,3 +27,10 @@ bool			s_button::click(t_vect mouse)
 		return (true);
 	return (false);
 }
+
+bool			s_button::key_press(SDL_Event *event)
+{
+	if (this->button->key_press(event) == true)
+		return (true);
+	return (false);
+}

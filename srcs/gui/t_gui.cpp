@@ -4,12 +4,14 @@ s_gui::s_gui()
 {
 	entry = NULL;
 	unit = t_vect(get_win_size().x / 30, get_win_size().y / 20);
+	object_list.resize(5);
 }
 
 s_gui::s_gui(int x, int y)
 {
 	entry = NULL;
 	unit = t_vect(get_win_size().x / x, get_win_size().y / y);
+	object_list.resize(5);
 }
 
 void		s_gui::draw_self()
@@ -35,11 +37,14 @@ bool		s_gui::click()
 	size_t j = 0;
 	t_vect mouse = get_mouse_coord();
 
-	if (entry != NULL)
+	while (i < object_list[ENTRY_NUM].size())
 	{
-		entry = NULL;
-		SDL_StopTextInput();
+		((t_entry *)(object_list[ENTRY_NUM][i]))->entry->selected = false;
+		i++;
 	}
+	entry = NULL;
+	SDL_StopTextInput();
+	i = 0;
 	while (i < object_list.size())
 	{
 		j = 0;
@@ -50,6 +55,29 @@ bool		s_gui::click()
 			j++;
 		}
 		i++;
+	}
+	return (false);
+}
+
+bool		s_gui::key_press(SDL_Event *event)
+{
+	size_t i = 0;
+	size_t j = 0;
+
+	if (event->type == SDL_TEXTINPUT || (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_BACKSPACE))
+	{
+		i = 0;
+		while (i < object_list.size())
+		{
+			j = 0;
+			while (j < object_list[i].size())
+			{
+				if (object_list[i].at(j)->key_press(event) == true)
+					return (true);
+				j++;
+			}
+			i++;
+		}
 	}
 	return (false);
 }
