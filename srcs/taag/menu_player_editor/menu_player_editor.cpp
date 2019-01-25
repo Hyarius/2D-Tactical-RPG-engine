@@ -21,7 +21,7 @@ void					menu_player_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
-	int		pool = 30;
+	int		pool = 15;
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
 		new t_button(new s_text_button(
 				"Attrib points (AtbP) left : ", DARK_GREY,
@@ -73,7 +73,7 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *mouvement_iterator = new s_iterator(3, &pool, 1, 3, 3, 6,
+	t_iterator *mouvement_iterator = new s_iterator(3, &pool, 1, 3, 2, 6,
 		new t_button(new s_text_button(
 				"Mouvement points (1 mvt / 3 AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -111,8 +111,11 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	size_t *index;
 	i = 1;
+	size_t *index = NULL;
+	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map["simple_actor"]), t_vect(0, 0),
+			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
+	t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
 				t_vect(4, 4),
 				new t_button(new s_text_button(
@@ -123,9 +126,8 @@ void					menu_player_editor(t_data data)
 						"-", DARK_GREY,
 						t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
-				new t_button(new s_tileset_button(&(sprite_map["simple_actor"]), t_vect(0, 0),
-						t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5),
-						menu_choose_sprite, t_data(2, &gui, &index)),
+				new t_button(tile_button,
+						menu_choose_sprite, t_data(3, &gui, &index, &sprite)),
 				new t_button(new s_text_button(
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
