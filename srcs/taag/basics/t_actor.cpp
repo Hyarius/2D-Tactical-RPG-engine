@@ -27,7 +27,6 @@ void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size, do
 			if (visual_info[i].index == (int)visual_info[i].text_coord.size())
 				visual_info.erase(visual_info.begin() + i);
 		}
-
 	}
 }
 
@@ -48,7 +47,7 @@ t_actor					read_actor(string p_path)
 	if (myfile.fail())
 		printf("can't open such file : %s\n", p_path.c_str());
 	name = get_strsplit(&myfile, ":", 2)[1];
-	tile = &(tileset_map[get_strsplit(&myfile, ":", 2)[1]]);
+	tile = &(sprite_map[get_strsplit(&myfile, ":", 2)[1]]);
 	tab = get_strsplit(&myfile, ":", 3);
 	sprite = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 	hp = t_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));

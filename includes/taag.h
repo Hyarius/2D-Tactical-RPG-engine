@@ -3,9 +3,18 @@
 
 # include "template.h"
 # include "gui.h"
+# include "taag_gui.h"
 
 extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
-													//tileset of the prog, in extern to accessibility
+													//tileset used as tile for the prog, in extern to accessibility
+extern map<string, struct s_tileset>	interface_map;
+													//the dictionnary holding on every
+													//tileset used by interface for the prog, in extern to accessibility
+extern map<string, struct s_tileset>	sprite_map; //the dictionnary holding on every
+													//tileset used by sprite for the prog, in extern to accessibility
+extern vector<string>					tileset_name; //stock the name of every tileset in tileset_map
+extern vector<string>					sprite_name;//stock the name of every tileset in sprite_map
+extern vector<string>					interface_name;//stock the name of every tileset in interface_map
 
 # define SPELL_BUTTON	3
 
@@ -269,6 +278,8 @@ void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect
 void					menu_start();
 void					menu_play(t_data data);
 void					menu_player_editor(t_data data);
+void						menu_choose_sprite(t_data data);
+void						menu_save_actor(t_data data);
 void					menu_map_editor(t_data data);
 void					menu_quit(t_data data);
 

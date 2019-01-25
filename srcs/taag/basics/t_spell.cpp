@@ -72,7 +72,7 @@ void		read_spell()
 			printf("can't open such file : %s%s%s\n", SPELL_PATH, spell_file[i].c_str(), SPELL_EXT);
 		name = get_strsplit(&myfile, ":", 2)[1];
 		desc = get_strsplit(&myfile, ":", 2)[1];
-		tile = &(tileset_map[get_strsplit(&myfile, ":", 2)[1]]);
+		tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
 		tab = get_strsplit(&myfile, ":", 3);
 		icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 		cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
