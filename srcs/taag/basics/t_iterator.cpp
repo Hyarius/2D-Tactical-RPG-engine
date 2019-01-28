@@ -72,14 +72,14 @@ static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 	if (minus != NULL)
 	{
 		minus->button->funct = decrement_iterator;
-		minus->button->data = t_data(6, &value, pool, delta, pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+		minus->button->data = t_data(6, linked_value, pool, delta, pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	}
 	container = p_contain;
 	plus = p_plus;
 	if (plus != NULL)
 	{
 		plus->button->funct = increment_iterator;
-		plus->button->data = t_data(6, &value, pool, delta, pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+		plus->button->data = t_data(6, linked_value, pool, delta, pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	}
 }
 

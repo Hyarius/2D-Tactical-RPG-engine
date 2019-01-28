@@ -52,6 +52,7 @@ s_sprite_iterator::s_sprite_iterator()
 
 s_sprite_iterator::s_sprite_iterator(t_vect p_delta, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus)
 {
+	i = 0;
 	delta = p_delta;
 	desc = p_desc;
 	minus = p_minus;
@@ -63,6 +64,8 @@ s_sprite_iterator::s_sprite_iterator(t_vect p_delta, t_button *p_desc, t_button 
 			if (&(sprite_map[(sprite_name[i])]) == ((t_tileset_button *)(container->button))->tile)
 				break;
 		}
+		container->button->funct = menu_choose_sprite;
+		container->button->data = t_data(2, &i, &((t_tileset_button *)(p_contain->button))->selected); //0 - &index / 1 - &selected / 2 - &delta
 	}
 	if (minus != NULL && container != NULL)
 	{

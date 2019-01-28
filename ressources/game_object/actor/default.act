@@ -1,0 +1,13 @@
+name:Default
+tileset: simple_actor2
+sprite_pos: 0.000000:0.000000
+health:50
+action:6
+mouvement:3
+initiative:5
+spell1:NULL
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:NULL
+spell6:NULL

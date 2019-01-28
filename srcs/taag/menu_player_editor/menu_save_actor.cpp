@@ -1,12 +1,6 @@
 #include "taag.h"
 
-t_actor			read_actor(t_data data)
-{
-	string	p_path = *((string *)(data.data[0]));
-	return (read_actor(p_path));
-}
-
-void			save_actor(t_data data)
+void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = ACTOR_PATH + *((string *)(data.data[1])) + ACTOR_EXT;
@@ -16,8 +10,9 @@ void			save_actor(t_data data)
 	map<string, t_tileset>::const_iterator i;
 	string name;
 
-	for (i = tileset_map.begin(); i != tileset_map.end(); ++i)
+	for (i = sprite_map.begin(); i != sprite_map.end(); ++i)
 	{
+		printf("test pour i = %s\n", i->first.c_str());
 		if (&(i->second) == to_save->tile)
 		{
 			name = i->first;
@@ -43,30 +38,25 @@ void			save_actor(t_data data)
 static void		quit_save(t_data data)
 {
 	save_actor(t_data(2, data.data[0], data.data[1]));
-	bool *continu = (bool *)(data.data[2]);
-	*continu = true;
+	bool *play = (bool *)(data.data[2]);
+	*play = false;
 }
 
-static void			stand(t_data data)
-{
-	*((bool *)data.data[0]) = false;
-}
-
-void			menu_save_actor(t_data data)
+void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 {
 	string name = (*((string *)(data.data[2])) == "" ? "default" : *((string *)(data.data[2])) );
 	string full_path = ACTOR_PATH + name + ACTOR_EXT;
 
-	t_gui		gui;
+	t_gui		gui = t_gui(15, 10);
 	SDL_Event	event;
 
-	bool		continu = false;
+	bool		play = true;
 
 
 	s_button *button = new s_button(new s_text_button(//button did you wanna quit
 						"Did you want to save this file ?", DARK_GREY, //text info
 						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
-						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						NULL, NULL);
 	button->button->coord[2] = button->button->coord[2] - (gui.unit * t_vect(0, 1));
 
@@ -83,16 +73,16 @@ void			menu_save_actor(t_data data)
 	gui.add(new s_button(new s_text_button(//button yes
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
-						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-						quit_save, t_data(3, data.data[1], &name, &continu)));
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+						quit_save, t_data(3, data.data[1], &name, &play)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info
 						gui.unit * t_vect(7.75, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
-						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-						stand, &continu));
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+						NULL, NULL));
 
-	while (continu == false)
+	while (play == true)
 	{
 		prepare_screen();
 
@@ -105,9 +95,10 @@ void			menu_save_actor(t_data data)
 		if (SDL_PollEvent(&(event)) == 1)
 		{
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
-				continu = true;
+				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 				gui.click();
 		}
 	}
+
 }

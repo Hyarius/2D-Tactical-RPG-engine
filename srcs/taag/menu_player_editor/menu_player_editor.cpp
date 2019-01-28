@@ -16,10 +16,14 @@ void					menu_player_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
+	entry_path->entry->back = ACTOR_EXT;
+
 	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", "", BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
+
+	entry_name->entry->max_len = 32;
 
 	int		pool = 15;
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
@@ -35,7 +39,11 @@ void					menu_player_editor(t_data data)
 		NULL);
 	i++;
 
-	t_iterator *hp_iterator = new s_iterator(50, &pool, 5, 1, 30, 75,
+	t_actor actor;
+	string *name = &(entry_name->entry->text);
+	string *path = &(entry_path->entry->text);
+
+	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 30, 75,
 		new t_button(new s_text_button(
 				"Health points (5 hp / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -54,7 +62,7 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *action_iterator = new s_iterator(6, &pool, 1, 4, 5, 12,
+	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), &pool, 1, 4, 5, 12,
 		new t_button(new s_text_button(
 				"Action points (1 act / 4 AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -73,7 +81,7 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *mouvement_iterator = new s_iterator(3, &pool, 1, 3, 2, 6,
+	t_iterator *mouvement_iterator = new s_iterator(&(actor.stat.pm.max), &pool, 1, 3, 2, 6,
 		new t_button(new s_text_button(
 				"Mouvement points (1 mvt / 3 AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -92,7 +100,7 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *initiative_iterator = new s_iterator(6, &pool, 1, 1, 4, 12,
+	t_iterator *initiative_iterator = new s_iterator(&(actor.stat.init), &pool, 1, 1, 4, 12,
 		new t_button(new s_text_button(
 				"Initiative (1 init / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -111,11 +119,38 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
+	t_button	*save_button = new t_button(new s_text_button(
+			"Save actor", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_save_actor, t_data(3, &gui, &actor, path));//0 - gui / 1 - t_actor * / 2 - & file name
+	i++;
+
+	t_button	*load_button = new t_button(new s_text_button(
+			"Load actor", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_load_actor, NULL);
+	i++;
+
+	t_button	*delete_button = new t_button(new s_text_button(
+			"Delete actor", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_delete_actor, NULL);
+	i++;
+
+	t_button	*duplicate_button = new t_button(new s_text_button(
+			"Duplicate actor", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_duplicate_actor, NULL);
+	i++;
+
 	i = 1;
-	size_t *index = NULL;
-	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map["simple_actor"]), t_vect(0, 0),
+	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map[sprite_name[1]]), t_vect(0, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
-	t_vect *sprite = &(tile_button->selected);
+	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
 				t_vect(4, 4),
 				new t_button(new s_text_button(
@@ -127,20 +162,13 @@ void					menu_player_editor(t_data data)
 						t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 				new t_button(tile_button,
-						menu_choose_sprite, t_data(3, &gui, &index, &sprite)),
+						NULL, NULL),
 				new t_button(new s_text_button(
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
 	i++;
-
-			index = &(tileset_selector->i);
-	string	*name = &(entry_name->entry->text);
-	string	*path = &(entry_path->entry->text);
-	int		*hp = &(hp_iterator->value);
-	int		*action = &(action_iterator->value);
-	int		*mouvement = &(mouvement_iterator->value);
-	int		*initiative = &(initiative_iterator->value);
 
 	gui.add(back_ground);
 	gui.add(ENTRY_NUM, entry_name);
@@ -151,9 +179,16 @@ void					menu_player_editor(t_data data)
 	gui.add(mouvement_iterator);
 	gui.add(initiative_iterator);
 	gui.add(tileset_selector);
+	gui.add(save_button);
+	gui.add(load_button);
+	gui.add(delete_button);
+	gui.add(duplicate_button);
 
 	while (play)
 	{
+		actor.tile = &(sprite_map[sprite_name[tileset_selector->i]]);
+		actor.sprite = ((t_tileset_button *)(tileset_selector->container->button))->selected;
+
 		prepare_screen();
 
 		gui.draw_self();

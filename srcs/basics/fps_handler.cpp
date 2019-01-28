@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int				g_fps = 60;
+int				g_fps = 60000;
 int				nb_frame;
 int				beginsecond = 0;
 unsigned int	framedelay = 1000 / g_fps;

@@ -2,16 +2,13 @@
 
 static void		quit_choose_sprite(t_data data)
 {
-	size_t			*index = *(size_t **)(data.data[0]);
-	t_vect			*selected = *(t_vect **)(data.data[1]);
+	size_t			*index = (size_t *)(data.data[0]);
+	t_vect			*selected = (t_vect *)(data.data[1]);
 	int				*tmp_index = (int *)(data.data[2]);
 	t_vect			*tmp_selected = (t_vect *)(data.data[3]);
 	bool			*continu = (bool *)(data.data[4]);
 
-	printf("index = %zu\n", *index);
 	*index = *tmp_index;
-	printf("select = %.2f / %.2f\n", (*selected).x, (*selected).y);
-	printf("tmp = %.2f / %.2f\n", (*tmp_selected).x, (*tmp_selected).y);
 	*selected = *tmp_selected;
 	*continu = false;
 }
@@ -30,8 +27,8 @@ void			menu_choose_sprite(t_data data)
 	SDL_Event		event;
 	t_gui			gui;
 
-	size_t *index = *((size_t **)(data.data[1]));
-	t_vect *target = *((t_vect **)(data.data[2]));
+	size_t *index = ((size_t *)(data.data[1]));
+	t_vect *target = ((t_vect *)(data.data[2]));
 	size_t tmp_index = *index;
 
 	s_button *button = new s_button(new s_text_button(

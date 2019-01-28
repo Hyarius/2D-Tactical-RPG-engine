@@ -140,6 +140,7 @@ typedef struct          s_actor
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
 						s_actor();
+						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
@@ -280,6 +281,9 @@ void					menu_play(t_data data);
 void					menu_player_editor(t_data data);
 void						menu_choose_sprite(t_data data);
 void						menu_save_actor(t_data data);
+void						menu_load_actor(t_data data);
+void						menu_delete_actor(t_data data);
+void						menu_duplicate_actor(t_data data);
 void					menu_map_editor(t_data data);
 void					menu_quit(t_data data);
 
