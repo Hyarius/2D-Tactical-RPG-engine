@@ -20,7 +20,7 @@ s_game_board::s_game_board()
 	sprite_unit = t_vect(32, 32);
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);
-	cursor_tile = &tileset_map["simple_cursor"];
+	cursor_tile = &interface_map["simple_cursor"];
 }
 
 s_game_board::s_game_board(string p_path)
@@ -96,7 +96,7 @@ s_game_board::s_game_board(string p_path)
 	sprite_unit = t_vect(32, 32);
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);
-	cursor_tile = &tileset_map["simple_cursor"];
+	cursor_tile = &interface_map["simple_cursor"];
 }
 
 t_cell				*s_game_board::get_cell(int x, int y)
@@ -244,7 +244,7 @@ void				s_game_board::draw_cursor_layer()
 		}
 		i++;
 	}
-	render_triangle_texture(tileset_map["simple_cursor"].texture_id);
+	render_triangle_texture(interface_map["simple_cursor"].texture_id);
 }
 
 void				s_game_board::draw_placement()

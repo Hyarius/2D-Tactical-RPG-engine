@@ -73,6 +73,8 @@ int		s_tileset::get_sprite(t_vect p_sprite)
 
 void	s_tileset::draw_self(t_vect p_tl, t_vect p_tr, t_vect p_dl, t_vect p_dr, int p_sprite, double p_alpha)
 {
+	if (surface == NULL)
+		return ;
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 	t_point		tl = screen_to_opengl(p_tl);
 	t_point		tr = screen_to_opengl(p_tr);

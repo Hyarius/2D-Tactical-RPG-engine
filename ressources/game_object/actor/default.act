@@ -1,6 +1,6 @@
 name:Default
-tileset: simple_actor2
-sprite_pos: 0.000000:0.000000
+tileset:simple_actor2
+sprite_pos: 12.000000:0.000000
 health:50
 action:6
 mouvement:3

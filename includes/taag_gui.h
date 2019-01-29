@@ -37,4 +37,17 @@ typedef struct	s_sprite_iterator : t_gui_obj
 	bool		key_press(SDL_Event *event);
 }				t_sprite_iterator;
 
+typedef struct		s_spell_card : t_gui_obj
+{
+	t_button_comp	*button[4]; //0 - background | 1 - image | 2 - name | 3 - desc
+	struct s_spell	*spell;		//spell of the card
+	int				desc_size;
+
+					s_spell_card();
+					s_spell_card(struct s_spell *p_spell, t_vect coord, t_vect size, gui_funct p_funct, t_data p_data);
+	void			draw_self();
+	bool			click(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_spell_card;
+
 #endif

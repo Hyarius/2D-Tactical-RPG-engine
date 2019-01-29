@@ -170,6 +170,8 @@ void					menu_player_editor(t_data data)
 	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
 	i++;
 
+	t_spell_card *spell_card = new t_spell_card(&(spell_map["Fireball"]), t_vect(12, 9) * gui.unit, t_vect(6, 9) * gui.unit, NULL, NULL);
+
 	gui.add(back_ground);
 	gui.add(ENTRY_NUM, entry_name);
 	gui.add(ENTRY_NUM, entry_path);
@@ -183,6 +185,7 @@ void					menu_player_editor(t_data data)
 	gui.add(load_button);
 	gui.add(delete_button);
 	gui.add(duplicate_button);
+	gui.add(spell_card);
 
 	while (play)
 	{

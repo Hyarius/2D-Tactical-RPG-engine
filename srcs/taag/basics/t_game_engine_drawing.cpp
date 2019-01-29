@@ -45,12 +45,12 @@ void				s_game_engine::draw_actor_info_on_gui()
 				draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, t_color(0.3, 0.3, 0.3, 0.7));
 			if (player->spell[i]->cost_pa > 0)
 			{
-				tileset_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));
+				interface_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));
 				draw_centred_text(to_string(player->spell[i]->cost_pa), 25, gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
 			}
 			if (player->spell[i]->cost_pm > 0)
 			{
-				tileset_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(1, 3));
+				interface_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(1, 3));
 				draw_centred_text(to_string(player->spell[i]->cost_pm), 25, gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
 			}
 		}
@@ -152,7 +152,7 @@ void				s_game_engine::draw_select_wheel(int *index)
 	{
 		text = "Spell [" + to_string(i - 4) + "] : " + player->spell[i - 4]->name;
 		draw_lined_text(text, text_size , gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
-	}
+}
 }
 
 void				s_game_engine::draw_gui()
@@ -168,6 +168,6 @@ void				s_game_engine::draw_gui()
 		t_button_comp *button = ((t_button *)(gui.object_list[SPELL_BUTTON][i]))->button;
 		if (mouse.x > button->coord[0].x && mouse.x < button->coord[0].x + button->size[0].x &&
 			mouse.y > button->coord[0].y && mouse.y < button->coord[0].y + button->size[0].y && player->spell[i]->tile != NULL)
-			draw_spell_card(player->spell[i]);
+			draw_spell_card(player->spell[i], t_vect(0.9, 0.9), t_vect(4.5, 7.5));
 	}
 }

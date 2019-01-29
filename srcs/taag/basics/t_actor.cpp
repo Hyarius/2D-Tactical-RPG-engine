@@ -5,9 +5,9 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 	if (tile != NULL)
 		tile->draw_self((coord + target) * size + offset, size, sprite + t_vect(get_frame_state(4), dir));
 	if (selected == false && team >= 0 && team < 4)
-		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
+		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
 	else if (selected == true)
-		tileset_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
+		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
 	t_vect bar_coord = (coord + target) * size + offset + t_vect((size.x - size.x * 0.8) / 2, 0);
 	t_vect bar_size = t_vect(size.x * 0.8, size.y / 10);
  	draw_rectangle(bar_coord, bar_size, t_color(0.0, 0.0, 0.0));

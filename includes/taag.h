@@ -217,7 +217,7 @@ typedef struct			s_game_engine
 	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
 	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
 	void				draw_path(); //draw the path the actor will follow on screen
-	void				draw_spell_card(t_spell *spell);	//draw one card info on the top-left corner
+	void				draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one card info on the top-left corner
 	void				draw_select_wheel(int *index);	//draw the wheel the player can use to select what actor gonna be placed
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player

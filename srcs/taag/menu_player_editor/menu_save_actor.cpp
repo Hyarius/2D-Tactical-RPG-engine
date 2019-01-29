@@ -12,7 +12,6 @@ void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 
 	for (i = sprite_map.begin(); i != sprite_map.end(); ++i)
 	{
-		printf("test pour i = %s\n", i->first.c_str());
 		if (&(i->second) == to_save->tile)
 		{
 			name = i->first;
@@ -20,8 +19,8 @@ void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 		}
 	}
 
-	myfile << "tileset: " + name + "\n";
-	myfile << "sprite_pos: " + to_string(to_save->sprite.x) + ":" + to_string(to_save->sprite.y) + "\n";
+	myfile << "tileset:" + name + "\n";
+	myfile << "sprite_pos: " + to_string((int)(to_save->sprite.x)) + ":" + to_string((int)(to_save->sprite.y)) + "\n";
 	myfile << "health:" + to_string(to_save->stat.hp.max) + "\n";
 	myfile << "action:" + to_string(to_save->stat.pa.max) + "\n";
 	myfile << "mouvement:" + to_string(to_save->stat.pm.max) + "\n";
