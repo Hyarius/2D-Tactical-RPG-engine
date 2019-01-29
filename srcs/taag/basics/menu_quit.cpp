@@ -16,6 +16,8 @@ static void			quit(t_data data)
 
 void			menu_quit(t_data data)
 {
+	SDL_FlushEvents(SDL_KEYUP, SDL_KEYDOWN);
+
 	SDL_Event	event;
 	bool		play = true;
 
@@ -54,8 +56,8 @@ void			menu_quit(t_data data)
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{
-			//if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
-			//	continu = true;
+			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
+				play = false;
 			if (event.type == SDL_MOUSEBUTTONUP)
 				gui.click();
 		}

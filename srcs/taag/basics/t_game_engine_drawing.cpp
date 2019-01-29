@@ -168,6 +168,6 @@ void				s_game_engine::draw_gui()
 		t_button_comp *button = ((t_button *)(gui.object_list[SPELL_BUTTON][i]))->button;
 		if (mouse.x > button->coord[0].x && mouse.x < button->coord[0].x + button->size[0].x &&
 			mouse.y > button->coord[0].y && mouse.y < button->coord[0].y + button->size[0].y && player->spell[i]->tile != NULL)
-			draw_spell_card(player->spell[i], t_vect(0.9, 0.9), t_vect(4.5, 7.5));
+			draw_spell_card(player->spell[i], gui.unit * t_vect(0.9, 0.9), gui.unit * t_vect(4.5, 7.5));
 	}
 }

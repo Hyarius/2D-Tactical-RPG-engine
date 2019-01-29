@@ -6,11 +6,11 @@ static void		quit_choose_sprite(t_data data)
 	t_vect			*selected = (t_vect *)(data.data[1]);
 	int				*tmp_index = (int *)(data.data[2]);
 	t_vect			*tmp_selected = (t_vect *)(data.data[3]);
-	bool			*continu = (bool *)(data.data[4]);
+	bool			*play = (bool *)(data.data[4]);
 
 	*index = *tmp_index;
 	*selected = *tmp_selected;
-	*continu = false;
+	*play = false;
 }
 
 static void		increment_index(t_data data)
@@ -23,7 +23,7 @@ static void		increment_index(t_data data)
 
 void			menu_choose_sprite(t_data data)
 {
-	bool			continu = true;
+	bool			play = true;
 	SDL_Event		event;
 	t_gui			gui;
 
@@ -52,7 +52,7 @@ void			menu_choose_sprite(t_data data)
 		t_button *button = new t_button(new t_text_button("", BLACK, // text info
 					(coord + t_vect(3, 4.5)) * gui.unit, size * gui.unit, 8, // coord / size info
 					t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-					quit_choose_sprite, t_data(5, data.data[1], data.data[2], &tmp_index, new t_vect(selected), &continu));
+					quit_choose_sprite, t_data(5, data.data[1], data.data[2], &tmp_index, new t_vect(selected), &play));
 		gui.add(button);
 		selected.x += increment.x;
 		if (selected.x >= sprite_map[sprite_name[tmp_index]].nb_sprite.x)
@@ -76,7 +76,7 @@ void			menu_choose_sprite(t_data data)
 	gui.add(button);
 
 
-	while (continu == true)
+	while (play == true)
 	{
 		prepare_screen();
 
@@ -105,9 +105,9 @@ void			menu_choose_sprite(t_data data)
 		if (SDL_PollEvent(&(event)) == 1)
 		{
 			if (event.type == SDL_QUIT)
-				menu_quit(t_data(2, &gui, &continu));
-			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
-				continu = false;
+				menu_quit(t_data(1, &gui));
+			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 				gui.click();
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y < 0)

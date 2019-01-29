@@ -7,7 +7,7 @@ void					menu_player_editor(t_data data)
 	bool		play = true;
 	t_gui 		gui;
 
-	int i = 0;
+	double i = 0;
 
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
@@ -119,6 +119,7 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
+	i += 2.4;
 	t_button	*save_button = new t_button(new s_text_button(
 			"Save actor", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -170,8 +171,6 @@ void					menu_player_editor(t_data data)
 	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
 	i++;
 
-	t_spell_card *spell_card = new t_spell_card(&(spell_map["Fireball"]), t_vect(12, 9) * gui.unit, t_vect(6, 9) * gui.unit, NULL, NULL);
-
 	gui.add(back_ground);
 	gui.add(ENTRY_NUM, entry_name);
 	gui.add(ENTRY_NUM, entry_path);
@@ -185,10 +184,13 @@ void					menu_player_editor(t_data data)
 	gui.add(load_button);
 	gui.add(delete_button);
 	gui.add(duplicate_button);
-	gui.add(spell_card);
+
+	for (int i = 0; i < 6; i++)
+		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor)));
 
 	while (play)
 	{
+		actor.name = *name;
 		actor.tile = &(sprite_map[sprite_name[tileset_selector->i]]);
 		actor.sprite = ((t_tileset_button *)(tileset_selector->container->button))->selected;
 
@@ -198,7 +200,7 @@ void					menu_player_editor(t_data data)
 
 		if (SDL_PollEvent(&event) == 1)
 		{
-			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
+			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 				gui.click();

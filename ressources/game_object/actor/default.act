@@ -1,13 +1,13 @@
-name:Default
+name:Hywa
 tileset:simple_actor2
-sprite_pos: 12.000000:0.000000
+sprite_pos:0:0
 health:50
 action:6
 mouvement:3
 initiative:5
-spell1:NULL
+spell1:Ember shot
 spell2:NULL
-spell3:NULL
+spell3:Cursed heart
 spell4:NULL
-spell5:NULL
+spell5:Transfusion
 spell6:NULL

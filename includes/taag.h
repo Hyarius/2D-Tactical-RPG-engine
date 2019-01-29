@@ -112,7 +112,7 @@ typedef struct			s_spell
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
 										//from the game
-
+extern vector<string>		spell_name;
 typedef struct			s_visual_info
 {
 	string				text;
@@ -217,7 +217,6 @@ typedef struct			s_game_engine
 	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
 	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
 	void				draw_path(); //draw the path the actor will follow on screen
-	void				draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one card info on the top-left corner
 	void				draw_select_wheel(int *index);	//draw the wheel the player can use to select what actor gonna be placed
 	void				initiate_turn_order();	//create the vector for tun order
 	void				next_turn();	//pass to the next player
@@ -258,6 +257,8 @@ void					read_spell();				//read every spell and place it into the spell_map
 void					init_effects();				//initialize every effect spell can use
 t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_size, t_vect p_starting_coord); //creating one visual_info
 
+void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one card info on the top-left corner
+
 void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
@@ -279,6 +280,7 @@ void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect
 void					menu_start();
 void					menu_play(t_data data);
 void					menu_player_editor(t_data data);
+void						menu_choose_spell(t_data data);
 void						menu_choose_sprite(t_data data);
 void						menu_save_actor(t_data data);
 void						menu_load_actor(t_data data);

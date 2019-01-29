@@ -4,6 +4,7 @@
 #define SPELL_EXT ".spell"
 
 map<string, t_spell>	spell_map;
+vector<string>			spell_name;
 
 s_spell::s_spell()
 {
@@ -64,6 +65,7 @@ void		read_spell()
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
 	spell_map["NULL"] = t_spell();
+	spell_name.push_back("NULL");
 	size_t i = 0;
 	while (i < spell_file.size())
 	{
@@ -94,7 +96,7 @@ void		read_spell()
 		}
 
 		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
-
+		spell_name.push_back(name);
 		effect.clear();
 		myfile.close();
 

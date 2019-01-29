@@ -104,8 +104,8 @@ void			s_game_engine::game_loop()
 
 		if (SDL_PollEvent(&event) == 1)
 		{
-			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
-				exit(0);
+			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+				menu_quit(t_data(2, &gui, &play));
 			handle_control_camera(&event);
 			handle_control_game(&event);
 		}

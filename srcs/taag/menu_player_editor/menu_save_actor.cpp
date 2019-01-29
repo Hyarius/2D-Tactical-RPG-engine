@@ -20,7 +20,7 @@ void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	}
 
 	myfile << "tileset:" + name + "\n";
-	myfile << "sprite_pos: " + to_string((int)(to_save->sprite.x)) + ":" + to_string((int)(to_save->sprite.y)) + "\n";
+	myfile << "sprite_pos:" + to_string((int)(to_save->sprite.x)) + ":" + to_string((int)(to_save->sprite.y)) + "\n";
 	myfile << "health:" + to_string(to_save->stat.hp.max) + "\n";
 	myfile << "action:" + to_string(to_save->stat.pa.max) + "\n";
 	myfile << "mouvement:" + to_string(to_save->stat.pm.max) + "\n";
