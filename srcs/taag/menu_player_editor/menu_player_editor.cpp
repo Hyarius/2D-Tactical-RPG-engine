@@ -119,6 +119,10 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
+
+	size_t	*tile_index;
+	t_vect	*sprite_target;
+
 	i += 2.4;
 	t_button	*save_button = new t_button(new s_text_button(
 			"Save actor", DARK_GREY,
@@ -131,14 +135,18 @@ void					menu_player_editor(t_data data)
 			"Load actor", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_load_actor, NULL);
+			menu_load_actor, t_data(7, &gui, &actor, name, path, &pool, &tile_index, &sprite_target));// 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
 	i++;
 
 	t_button	*delete_button = new t_button(new s_text_button(
 			"Delete actor", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_delete_actor, NULL);
+			t_vect(1, 1 + (1.2 * i)) * gui.unit,
+			t_vect(8, 1) * gui.unit,
+			5,
+			t_color(0.4, 0.4, 0.4),
+			t_color(0.6, 0.6, 0.6)),
+			menu_delete_actor,
+			t_data(7, &gui, &actor, name, path, &pool, &tile_index, &sprite_target));// 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
 	i++;
 
 	t_button	*duplicate_button = new t_button(new s_text_button(
@@ -171,6 +179,10 @@ void					menu_player_editor(t_data data)
 	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
 	i++;
 
+	tile_index = &(tileset_selector->i);
+	printf("%p = %zu\n", tile_index, *tile_index);
+	sprite_target = &(((t_tileset_button *)(tileset_selector->container->button))->selected);
+
 	gui.add(back_ground);
 	gui.add(ENTRY_NUM, entry_name);
 	gui.add(ENTRY_NUM, entry_path);
@@ -191,8 +203,8 @@ void					menu_player_editor(t_data data)
 	while (play)
 	{
 		actor.name = *name;
-		actor.tile = &(sprite_map[sprite_name[tileset_selector->i]]);
-		actor.sprite = ((t_tileset_button *)(tileset_selector->container->button))->selected;
+		actor.tile = &(sprite_map[sprite_name[*tile_index]]);
+		actor.sprite = *sprite_target;
 
 		prepare_screen();
 

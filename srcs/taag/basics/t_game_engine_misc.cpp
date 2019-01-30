@@ -124,11 +124,11 @@ void				s_game_engine::update_board()
 		if (turn_order[i]->destination.size() != 0)
 		{
 			if (turn_order[i]->destination[0].x > turn_order[i]->coord.x)
-				turn_order[i]->dir = 1;
-			else if (turn_order[i]->destination[0].x < turn_order[i]->coord.x)
-				turn_order[i]->dir = 3;
-			else if (turn_order[i]->destination[0].y < turn_order[i]->coord.y)
 				turn_order[i]->dir = 2;
+			else if (turn_order[i]->destination[0].x < turn_order[i]->coord.x)
+				turn_order[i]->dir = 1;
+			else if (turn_order[i]->destination[0].y < turn_order[i]->coord.y)
+				turn_order[i]->dir = 3;
 			else if (turn_order[i]->destination[0].y > turn_order[i]->coord.y)
 				turn_order[i]->dir = 0;
 			turn_order[i]->coord = turn_order[i]->destination[0];

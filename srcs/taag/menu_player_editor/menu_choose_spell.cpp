@@ -107,5 +107,4 @@ void		menu_choose_spell(t_data data)
 		}
 	}
 	(void)data;
-	printf("menu_choose_spell\n");
 }

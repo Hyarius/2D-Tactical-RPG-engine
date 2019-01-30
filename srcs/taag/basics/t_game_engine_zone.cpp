@@ -34,7 +34,8 @@ vector<t_vect>	s_game_engine::calc_cross(int size)
 	while (i <= size)
 	{
 		result.push_back(t_vect(0, i));
-		result.push_back(t_vect(i, 0));
+		if (i != 0)
+			result.push_back(t_vect(i, 0));
 		i++;
 	}
 

@@ -75,7 +75,7 @@ s_game_board::s_game_board(string p_path)
 			if (team == 0)
 				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
 			else
-				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(ACTOR_PATH + tab[3] + ACTOR_EXT));
+				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->coord = coord;
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);

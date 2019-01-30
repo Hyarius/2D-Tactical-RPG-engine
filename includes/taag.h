@@ -19,6 +19,7 @@ extern vector<string>					interface_name;//stock the name of every tileset in in
 # define SPELL_BUTTON	3
 
 #define ACTOR_PATH "ressources/game_object/actor/"
+#define MONSTER_PATH "ressources/game_object/monster/"
 #define ACTOR_EXT ".act"
 
 typedef struct			s_node
