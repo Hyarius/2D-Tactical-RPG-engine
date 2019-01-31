@@ -7,8 +7,6 @@ faire un menu start, et un menu play
 
 int main(int argc, char **argv)
 {
-	SDL_Event event;
-
 	if (argc != 1)
 		return (0);
 
