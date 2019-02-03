@@ -149,11 +149,11 @@ void					menu_player_editor(t_data data)
 			t_data(7, &gui, &actor, name, path, &pool, &tile_index, &sprite_target));// 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
 	i++;
 
-	t_button	*duplicate_button = new t_button(new s_text_button(
-			"Duplicate actor", DARK_GREY,
+	t_button	*quit_button = new t_button(new s_text_button(
+			"Quit", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_duplicate_actor, NULL);
+			menu_quit, t_data(2, &gui, &play));
 	i++;
 
 	i = 1;
@@ -195,7 +195,7 @@ void					menu_player_editor(t_data data)
 	gui.add(save_button);
 	gui.add(load_button);
 	gui.add(delete_button);
-	gui.add(duplicate_button);
+	gui.add(quit_button);
 
 	for (int i = 0; i < 6; i++)
 		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor)));

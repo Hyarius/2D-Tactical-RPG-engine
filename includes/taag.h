@@ -22,6 +22,9 @@ extern vector<string>					interface_name;//stock the name of every tileset in in
 #define MONSTER_PATH "ressources/game_object/monster/"
 #define ACTOR_EXT ".act"
 
+#define MAP_PATH "ressources/map/"
+#define MAP_EXT ".map"
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
