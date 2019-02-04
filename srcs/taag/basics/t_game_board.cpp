@@ -201,6 +201,8 @@ void				s_game_board::draw_self()
 				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
 				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
 			}
+			else
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 2));
 			j++;
 		}
 		i++;
