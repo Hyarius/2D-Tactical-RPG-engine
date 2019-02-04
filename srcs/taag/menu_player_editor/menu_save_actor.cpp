@@ -1,6 +1,6 @@
 #include "taag.h"
 
-void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
+static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = ACTOR_PATH + *((string *)(data.data[1])) + ACTOR_EXT;

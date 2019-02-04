@@ -40,6 +40,7 @@ void			s_game_engine::handle_actor_placement(SDL_Event *event, int *index)
 
 void			s_game_engine::placement_phase()
 {
+	bool		continu = true;
 	SDL_Event	event;
 	bool		play = true;
 	int			index = 0;
@@ -63,7 +64,7 @@ void			s_game_engine::placement_phase()
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
-				menu_quit(t_data(1, &gui));
+				menu_quit(t_data(3, &gui, &play, &continu));
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
 				play = false;
 			handle_control_camera(&event);
@@ -72,4 +73,8 @@ void			s_game_engine::placement_phase()
 		render_screen(true);
 	}
 	board.placement_list.clear();
+	board.enemy_placement_list.clear();
+
+	if (continu == true)
+		game_loop();
 }

@@ -14,6 +14,7 @@ DIR = 			srcs/ \
 				srcs/gui \
 				srcs/taag/basics \
 				srcs/taag/menu_player_editor \
+				srcs/taag/menu_map_editor \
 				srcs/taag
 
 SRCS_LIST = $(foreach dir, $(DIR), $(wildcard $(dir)/*.cpp))
@@ -31,7 +32,7 @@ CFLAGS=		-std=c++11 -Werror -Wextra -g -fsanitize=address
 
 CC=			g++
 
-vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics:./srcs/gui:./srcs/taag/menu_player_editor
+vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics:./srcs/gui:./srcs/taag/menu_player_editor:./srcs/taag/menu_map_editor
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(SDL_MAIN_LIBS_PATH):$(SDL_IMAGE_LIBS_PATH):$(SDL_MIXER_LIBS_PATH):$(SDL_TTF_LIBS_PATH)
 

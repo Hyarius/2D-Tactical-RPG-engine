@@ -10,8 +10,10 @@ static void			quit(t_data data)
 	if (data.data[0] == NULL)
 		exit(0);
 	else
-		*((bool *)data.data[0]) = false;
-		*((bool *)data.data[1]) = false;
+	{
+		for (size_t i = 0; i < data.data.size(); i++)
+			*((bool *)data.data[i]) = false;
+	}
 }
 
 void			menu_quit(t_data data)
@@ -31,12 +33,13 @@ void			menu_quit(t_data data)
 	button->button->coord[2] = button->button->coord[2] - gui.unit * t_vect(0, 1);
 	gui.add(button);
 
+	t_data new_data = (data.data.size() == 1 ? NULL : (data.data.size() == 2 ? t_data(2, data.data[1], &play) : data.data.size() == 3 ? t_data(3, data.data[1], data.data[2], &play) : NULL));
 
 	gui.add(new s_button(new s_text_button(//button yes
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-						quit, (data.data.size() == 1 ? NULL : t_data(2, data.data[1], &play))));
+						quit, new_data));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info

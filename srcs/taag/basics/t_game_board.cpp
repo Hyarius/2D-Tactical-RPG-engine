@@ -76,6 +76,7 @@ s_game_board::s_game_board(string p_path)
 				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
 			else
 				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
+			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->path =	tab[3];
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->coord = coord;
 			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
@@ -88,7 +89,11 @@ s_game_board::s_game_board(string p_path)
 		tab = get_strsplit(&myfile, ":", -1);
 		if (tab.size() <= 1)
 			break;
-		placement_list.push_back(t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str())));
+		int team = atoi(tab[2].c_str());
+		if (team == 0)
+			placement_list.push_back(t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str())));
+		if (team == 2)
+			enemy_placement_list.push_back(t_vect(atoi(tab[0].c_str()), atoi(tab[1].c_str())));
 	}
 	myfile.close();
 
@@ -140,12 +145,68 @@ void				s_game_board::draw_cursor(t_vect coord, t_vect target, t_vect size, t_ve
 
 void				s_game_board::draw_self()
 {
-	draw_cell_layer();
-	draw_cursor_layer();
-	draw_actor_list();
-	draw_mouse_cursor();
-	draw_visual_info();
+	t_vect size = sprite_unit * zoom;
+	//(coord + target) * size + offset, size, sprite);
+	int i = 0;
+	while (i < board_size.x)
+	{
+		int j = 0;
+		while (j < board_size.y)
+		{
+			if (i == 0 && j == 0) // top - left corner
+			{
+				interface_map["simple_board"].draw_self((t_vect(-1 , -1) + target) * size + offset, size, t_vect(0, 0));
+				interface_map["simple_board"].draw_self((t_vect(-1 , 0) + target) * size + offset, size, t_vect(0, 1));
+				interface_map["simple_board"].draw_self((t_vect(0 , -1) + target) * size + offset, size, t_vect(1, 0));
+				interface_map["simple_board"].draw_self((t_vect(0 , 0) + target) * size + offset, size, t_vect(1, 1));
+			}
+			else if (i == board_size.x - 1 && j == 0) // top - right corner
+			{
+				interface_map["simple_board"].draw_self((t_vect(i , j - 1) + target) * size + offset, size, t_vect(3, 0));
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 1));
+				interface_map["simple_board"].draw_self((t_vect(i + 1 , j - 1) + target) * size + offset, size, t_vect(4, 0));
+				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 1));
+			}
+			else if (i == 0 && j == board_size.y - 1) // down - left corner
+			{
+				interface_map["simple_board"].draw_self((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 3));
+				interface_map["simple_board"].draw_self((t_vect(i - 1, j + 1) + target) * size + offset, size, t_vect(0, 4));
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(1, 3));
+				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(1, 4));
+			}
+			else if (i == board_size.x - 1 && j == board_size.y - 1) // down - right corner
+			{
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 3));
+				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(3, 4));
+				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 3));
+				interface_map["simple_board"].draw_self((t_vect(i + 1, j + 1) + target) * size + offset, size, t_vect(4, 4));
+			}
+			else if (i == 0) // left side
+			{
+				interface_map["simple_board"].draw_self((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 2));
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(1, 2));
+			}
+			else if (i == board_size.x - 1) // right side
+			{
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 2));
+				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 2));
+			}
+			else if (j == 0) // top side
+			{
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 1));
+				interface_map["simple_board"].draw_self((t_vect(i , j - 1) + target) * size + offset, size, t_vect(2, 0));
+			}
+			else if (j == board_size.y - 1) // down side
+			{
+				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
+				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
+			}
+			j++;
+		}
+		i++;
+	}
 }
+
 
 void				s_game_board::add_actor(t_actor *new_actor)
 {
@@ -201,7 +262,7 @@ void				s_game_board::draw_cell_layer()
 	if (board_size == t_vect(0, 0))
 		return;
 	i = 0;
-	while (get_cell(i, 0)->node->tile == NULL && i < board_size.x)
+	while (get_cell(i, 0) && get_cell(i, 0)->node->tile == NULL && i < board_size.x)
 		i++;
 	if (get_cell(i, 0))
 		render_triangle_texture(cell_layer[i][0].node->tile->texture_id);
@@ -252,14 +313,12 @@ void				s_game_board::draw_cursor_layer()
 
 void				s_game_board::draw_placement()
 {
-	size_t i = 0;
 	t_vect size = sprite_unit * zoom;
 
-	while (i < placement_list.size())
-	{
+	for (size_t i = 0; i < placement_list.size(); i++)
 		cursor_tile->draw_self((placement_list[i] + target) * size + offset, size, t_vect(3, 0));
-		i++;
-	}
+	for (size_t i = 0; i < enemy_placement_list.size(); i++)
+		cursor_tile->draw_self((enemy_placement_list[i] + target) * size + offset, size, t_vect(4, 0));
 }
 
 void				s_game_board::reset_board()

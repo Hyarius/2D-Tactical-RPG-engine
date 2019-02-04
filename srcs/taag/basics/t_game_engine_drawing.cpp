@@ -14,6 +14,7 @@ void				s_game_engine::draw_path()
 
 void				s_game_engine::draw_board()
 {
+	board.draw_self();
 	board.draw_cell_layer();
 	board.draw_placement();
 	if (turn_order.size())

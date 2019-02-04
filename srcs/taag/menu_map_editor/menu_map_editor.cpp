@@ -3,19 +3,25 @@
 void					menu_map_editor(t_data data)
 {
 	(void)data;
-	t_game_board board;
+	t_game_engine engine;
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
-	
+
 	double i = 0;
+
+	t_entry *entry_path = new s_entry(new s_text_entry("File name of your map", "", BLACK,
+	t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+	t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
+	entry_path->entry->back = MAP_EXT;
+	entry_path->entry->max_len = 32;
 
 	i = 13;
 	t_button	*save_button = new t_button(new s_text_button(
 		"Save map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		NULL, NULL);
+		menu_save_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text)));//0 - gui / 1 - t_game_board * / 2 - & file name
 
 	t_button	*generate_button = new t_button(new s_text_button(
 		"Generate map", DARK_GREY,
@@ -24,7 +30,7 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_generate_board, t_data(2, &gui, &board));
+		menu_generate_board, t_data(2, &gui, &(engine.board)));
 
 	i++;
 
@@ -32,7 +38,7 @@ void					menu_map_editor(t_data data)
 		"Load map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		NULL, NULL);
+		menu_load_map, NULL);
 
 	t_button	*delete_button = new t_button(new s_text_button(
 		"Delete map", DARK_GREY,
@@ -41,7 +47,7 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		NULL, NULL);
+		menu_delete_map, NULL);
 
 	t_button	*quit_button = new t_button(new s_text_button(
 		"Quit", DARK_GREY,
@@ -51,6 +57,7 @@ void					menu_map_editor(t_data data)
 	i++;
 
 	gui.add(save_button);
+	gui.add(ENTRY_NUM, entry_path);
 	gui.add(generate_button);
 	gui.add(load_button);
 	gui.add(delete_button);
@@ -60,7 +67,7 @@ void					menu_map_editor(t_data data)
 	{
 		prepare_screen(t_color(0.2, 0.2, 0.2));
 
-		board.draw_self();
+		engine.draw_board();
 
 		gui.draw_self();
 
@@ -72,8 +79,8 @@ void					menu_map_editor(t_data data)
 				gui.click();
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
-			board.handle_mouvement(&event);
-			board.handle_zoom(&event);
+			(engine.board).handle_mouvement(&event);
+			(engine.board).handle_zoom(&event);
 		}
 		render_screen(true);
 	}

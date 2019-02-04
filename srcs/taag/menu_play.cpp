@@ -25,6 +25,4 @@ void					menu_play(t_data data)
 	t_game_engine	game = s_game_engine("ressources/map/domolia.map");
 
 	game.placement_phase();
-
-	game.game_loop();
 }

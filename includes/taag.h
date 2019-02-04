@@ -132,6 +132,7 @@ typedef struct			s_visual_info
 
 typedef struct          s_actor
 {
+	string				path;	//path for the file where it came from, utils for saving map
 	string				name;		//Name of the actor
 	bool				selected;	//is this actor the selected ?
 	t_tileset			*tile;		//tile used by the actor, describe in the .act file
@@ -173,6 +174,7 @@ typedef struct			s_game_board
 	vector<t_node>		node_list;	//list all the node printable by the board
 	t_tileset			*cursor_tile;//the tile to use to print cursor up the cell
 	vector<t_vect>		placement_list; //list of the node where you can place your actor
+	vector<t_vect>		enemy_placement_list; //list of the node where you can place your actor
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
 	vector<t_actor *>	actor_list;	//contain every actor
@@ -266,7 +268,7 @@ void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one 
 void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
-t_game_board			board_generator(int size_x, int size_y);
+t_game_board			board_generator(int size_x, int size_y, t_node *node);
 
 void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
@@ -292,6 +294,9 @@ void						menu_delete_actor(t_data data);
 void						menu_duplicate_actor(t_data data);
 void					menu_map_editor(t_data data);
 void						menu_generate_board(t_data data);
+void 						menu_save_map(t_data data);
+void 						menu_load_map(t_data data);
+void 						menu_delete_map(t_data data);
 void					menu_quit(t_data data);
 
 #endif
