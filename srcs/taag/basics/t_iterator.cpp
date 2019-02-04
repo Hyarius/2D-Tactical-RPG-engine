@@ -14,10 +14,11 @@ static void		increment_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 
 	if (value != NULL)
 	{
-		if (*value + delta <= max && *pool - cost >= 0)
+		if (*value + delta <= max && ((pool != NULL && *pool - cost >= 0) || pool == NULL))
 		{
 			*value += delta;
-			*pool -= cost;
+			if (pool)
+				*pool -= cost;
 		}
 	}
 }
@@ -36,7 +37,8 @@ static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 		if (*value - delta >= min)
 		{
 			*value -= delta;
-			*pool += cost;
+			if (pool)
+				*pool += cost;
 		}
 	}
 }

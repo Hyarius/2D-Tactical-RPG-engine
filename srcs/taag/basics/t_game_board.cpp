@@ -198,10 +198,13 @@ void				s_game_board::draw_cell_layer()
 		}
 		i++;
 	}
+	if (board_size == t_vect(0, 0))
+		return;
 	i = 0;
-	while (get_cell(i, 0)->node->tile == NULL)
+	while (get_cell(i, 0)->node->tile == NULL && i < board_size.x)
 		i++;
-	render_triangle_texture(cell_layer[i][0].node->tile->texture_id);
+	if (get_cell(i, 0))
+		render_triangle_texture(cell_layer[i][0].node->tile->texture_id);
 }
 
 void				s_game_board::draw_visual_info()

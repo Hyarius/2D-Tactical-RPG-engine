@@ -291,6 +291,7 @@ void						menu_load_actor(t_data data);
 void						menu_delete_actor(t_data data);
 void						menu_duplicate_actor(t_data data);
 void					menu_map_editor(t_data data);
+void						menu_generate_board(t_data data);
 void					menu_quit(t_data data);
 
 #endif
