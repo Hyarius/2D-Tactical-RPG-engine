@@ -28,7 +28,6 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	bool 		*play = (bool *)(data.data[4]);
 	int			i = (int &)(data.data[5]);
 	size_t		*tile_index = *(size_t **)(data.data[6]);
-	printf("%p = %zu\n", tile_index, *tile_index);
 	t_vect		*sprite_target = (t_vect *)(data.data[7]);
 
 	if (*(text_list_load[i]) != "")
@@ -55,7 +54,6 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 	string		*entry_path = (string *)(data.data[3]);
 	int			*pool_value = (int *)(data.data[4]);
 	size_t		*tile_index = *(size_t **)(data.data[5]);
-	printf("%p = %zu\n", tile_index, *tile_index);
 	t_vect		*sprite_target = *(t_vect **)(data.data[6]);
 	t_gui		gui;
 	bool		play = true;
@@ -131,6 +129,4 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 			}
 		}
 	}
-	(void)data;
-	printf("menu_load_actor\n");
 }

@@ -1,5 +1,10 @@
 #include "taag.h"
 
+static void			stand(t_data data)
+{
+	*((bool *)data.data[0]) = false;
+}
+
 static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
@@ -79,7 +84,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 						"NO", DARK_GREY, //text info
 						gui.unit * t_vect(7.75, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						NULL, NULL));
+						stand, &play));
 
 	while (play == true)
 	{

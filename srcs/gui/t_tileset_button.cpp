@@ -41,9 +41,9 @@ s_tileset_button::s_tileset_button(t_tileset *p_tile, t_vect p_selected,
 
 void			s_tileset_button::draw_self()
 {
-	draw_rectangle(coord[0], size[0], t_color(0.3, 0.3, 0.3));
+	draw_rectangle(coord[0], size[0], t_color(0.4, 0.4, 0.4));
 	draw_rectangle(coord[1], size[1], t_color(0.6, 0.6, 0.6));
-	if (selected != t_vect(-1, -1))
+	if (tile != NULL && selected != t_vect(-1, -1))
 		tile->draw_self(coord[1], size[1], selected);
 	if (text != "")
 	{

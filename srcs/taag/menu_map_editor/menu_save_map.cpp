@@ -1,5 +1,10 @@
 #include "taag.h"
 
+static void			stand(t_data data)
+{
+	*((bool *)data.data[0]) = false;
+}
+
 static void			save_map(t_data data) // 0 - t_board * / 1 - file name
 {
 	t_game_board *board = (t_game_board *)(data.data[0]);
@@ -8,27 +13,39 @@ static void			save_map(t_data data) // 0 - t_board * / 1 - file name
 	ofstream myfile;
 	myfile.open (path);
 
-	//myfile << "name:" + (to_save->name == "" ? "Default" : to_save->name) + "\n";
-
 	int j = 0;
 	while (j < board->board_size.y)
 	{
 		int i = 0;
 		while (i < board->board_size.x)
 		{
-			size_t node_type = 0;
-			while (node_type < board->node_list.size() && &(board->node_list[node_type]) != board->cell_layer[i][j].node)
-				node_type++;
-			printf("%zu", node_type);
+			if (board->cell_layer[i][j].node != &empty_node)
+			{
+				size_t node_type = 0;
+				while (node_type < board->node_list.size() && &(board->node_list[node_type]) != board->cell_layer[i][j].node)
+					node_type++;
+				myfile << to_string(i) + ":" + to_string(j) + ":" + to_string(node_type);
+				if (board->cell_layer[i][j].actor != NULL && board->cell_layer[i][j].actor->team != 1)
+					myfile << ":" + board->cell_layer[i][j].actor->path + ":" + to_string(board->cell_layer[i][j].actor->team);
+				myfile << "\n";
+			}
 			i++;
-			if (i != board->board_size.x)
-				printf("-");
 		}
-		printf("\n");
 		j++;
 	}
-
-	printf("save_map\n");
+	myfile << "placement :\n";
+	size_t i = 0 ;
+	while (i < board->placement_list.size())
+	{
+		myfile << to_string((int)(board->placement_list[i].x)) + ":" + to_string((int)(board->placement_list[i].y)) + ":0\n";
+		i++;
+	}
+	i = 0 ;
+	while (i < board->enemy_placement_list.size())
+	{
+		myfile << to_string((int)(board->enemy_placement_list[i].x)) + ":" + to_string((int)(board->enemy_placement_list[i].y)) + ":2\n";
+		i++;
+	}
 }
 
 static void			quit_save(t_data data)
@@ -75,7 +92,7 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 						"NO", DARK_GREY, //text info
 						gui.unit * t_vect(7.75, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						NULL, NULL));
+						stand, &play));
 
 	while (play == true)
 	{
@@ -89,7 +106,9 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{
-			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
+			if (event.type == SDL_QUIT)
+				menu_quit(t_data(1, &gui));
+			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 				gui.click();

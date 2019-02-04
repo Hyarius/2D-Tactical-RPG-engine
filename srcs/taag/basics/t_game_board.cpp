@@ -155,58 +155,59 @@ void				s_game_board::draw_self()
 		{
 			if (i == 0 && j == 0) // top - left corner
 			{
-				interface_map["simple_board"].draw_self((t_vect(-1 , -1) + target) * size + offset, size, t_vect(0, 0));
-				interface_map["simple_board"].draw_self((t_vect(-1 , 0) + target) * size + offset, size, t_vect(0, 1));
-				interface_map["simple_board"].draw_self((t_vect(0 , -1) + target) * size + offset, size, t_vect(1, 0));
-				interface_map["simple_board"].draw_self((t_vect(0 , 0) + target) * size + offset, size, t_vect(1, 1));
+				interface_map["simple_board"].prepare_print((t_vect(-1 , -1) + target) * size + offset, size, t_vect(0, 0));
+				interface_map["simple_board"].prepare_print((t_vect(-1 , 0) + target) * size + offset, size, t_vect(0, 1));
+				interface_map["simple_board"].prepare_print((t_vect(0 , -1) + target) * size + offset, size, t_vect(1, 0));
+				interface_map["simple_board"].prepare_print((t_vect(0 , 0) + target) * size + offset, size, t_vect(1, 1));
 			}
 			else if (i == board_size.x - 1 && j == 0) // top - right corner
 			{
-				interface_map["simple_board"].draw_self((t_vect(i , j - 1) + target) * size + offset, size, t_vect(3, 0));
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 1));
-				interface_map["simple_board"].draw_self((t_vect(i + 1 , j - 1) + target) * size + offset, size, t_vect(4, 0));
-				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 1));
+				interface_map["simple_board"].prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(3, 0));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 1));
+				interface_map["simple_board"].prepare_print((t_vect(i + 1 , j - 1) + target) * size + offset, size, t_vect(4, 0));
+				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 1));
 			}
 			else if (i == 0 && j == board_size.y - 1) // down - left corner
 			{
-				interface_map["simple_board"].draw_self((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 3));
-				interface_map["simple_board"].draw_self((t_vect(i - 1, j + 1) + target) * size + offset, size, t_vect(0, 4));
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(1, 3));
-				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(1, 4));
+				interface_map["simple_board"].prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 3));
+				interface_map["simple_board"].prepare_print((t_vect(i - 1, j + 1) + target) * size + offset, size, t_vect(0, 4));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 3));
+				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(1, 4));
 			}
 			else if (i == board_size.x - 1 && j == board_size.y - 1) // down - right corner
 			{
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 3));
-				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(3, 4));
-				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 3));
-				interface_map["simple_board"].draw_self((t_vect(i + 1, j + 1) + target) * size + offset, size, t_vect(4, 4));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 3));
+				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(3, 4));
+				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 3));
+				interface_map["simple_board"].prepare_print((t_vect(i + 1, j + 1) + target) * size + offset, size, t_vect(4, 4));
 			}
 			else if (i == 0) // left side
 			{
-				interface_map["simple_board"].draw_self((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 2));
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(1, 2));
+				interface_map["simple_board"].prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 2));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 2));
 			}
 			else if (i == board_size.x - 1) // right side
 			{
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(3, 2));
-				interface_map["simple_board"].draw_self((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 2));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 2));
+				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 2));
 			}
 			else if (j == 0) // top side
 			{
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 1));
-				interface_map["simple_board"].draw_self((t_vect(i , j - 1) + target) * size + offset, size, t_vect(2, 0));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 1));
+				interface_map["simple_board"].prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(2, 0));
 			}
 			else if (j == board_size.y - 1) // down side
 			{
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
-				interface_map["simple_board"].draw_self((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
+				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
 			}
 			else
-				interface_map["simple_board"].draw_self((t_vect(i , j) + target) * size + offset, size, t_vect(2, 2));
+				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 2));
 			j++;
 		}
 		i++;
 	}
+	render_triangle_texture(interface_map["simple_board"].texture_id);
 }
 
 
@@ -356,7 +357,7 @@ void				s_game_board::draw_actor_list()
 
 void				s_game_board::handle_mouvement(SDL_Event *event)
 {
-	if (event->type == SDL_MOUSEMOTION && event->button.button == SDL_BUTTON_LEFT)
+	if (event->type == SDL_MOUSEMOTION && event->button.button == SDL_BUTTON_MIDDLE)
 	{
 		target.x += (double)(event->motion.xrel) / (sprite_unit.x * zoom);
 		target.y += (double)(event->motion.yrel) / (sprite_unit.y * zoom);

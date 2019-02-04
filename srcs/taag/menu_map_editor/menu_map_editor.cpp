@@ -1,5 +1,78 @@
 #include "taag.h"
 
+vector<t_cell *>		cell_list;
+
+static void				select_node(t_data data)
+{
+	t_node *node;
+	t_game_engine *engine = (t_game_engine *)(data.data[0]);
+	int i = (int &)(data.data[1]);
+	if (i != -1)
+		node = &(engine->board.node_list[i]);
+	else
+		node = &empty_node;
+	size_t j = 0;
+	while (j < cell_list.size())
+	{
+		cell_list[j]->node = node;
+		cell_list[j]->cursor = t_vect(0, 0);
+		j++;
+	}
+	cell_list.clear();
+}
+
+static void				select_placement(t_data data)
+{
+	t_game_engine *engine = (t_game_engine *)(data.data[0]);
+	int i = (int &)(data.data[1]);
+	size_t j = 0;
+	while (j < cell_list.size())
+	{
+		size_t h = 0;
+		while (h < engine->board.placement_list.size())
+		{
+			if (engine->board.placement_list[h] == cell_list[j]->coord)
+				engine->board.placement_list.erase(engine->board.placement_list.begin() + h);
+			h++;
+		}
+		h = 0;
+		while (h < engine->board.enemy_placement_list.size())
+		{
+			if (engine->board.enemy_placement_list[h] == cell_list[j]->coord)
+				engine->board.enemy_placement_list.erase(engine->board.enemy_placement_list.begin() + h);
+			h++;
+		}
+		if (i == 1)
+			engine->board.placement_list.push_back(cell_list[j]->coord);
+		else if (i == 2)
+			engine->board.enemy_placement_list.push_back(cell_list[j]->coord);
+		cell_list[j]->cursor = t_vect(0, 0);
+		j++;
+	}
+	cell_list.clear();
+}
+
+static void				control_mouse_editor(t_game_engine *engine)
+{
+	t_vect mouse = engine->board.get_mouse_pos();
+	if (mouse != t_vect(-1, -1))
+	{
+		engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
+		cell_list.push_back(engine->board.get_cell(mouse));
+	}
+}
+
+static void				reset_selection()
+{
+	size_t i = 0;
+	while (i < cell_list.size())
+	{
+		cell_list[i]->cursor = t_vect(0, 0);
+		i++;
+	}
+	cell_list.clear();
+}
+
 void					menu_map_editor(t_data data)
 {
 	(void)data;
@@ -16,13 +89,63 @@ void					menu_map_editor(t_data data)
 	entry_path->entry->back = MAP_EXT;
 	entry_path->entry->max_len = 32;
 
+	i++;
+
+	t_button	*button = new t_button(new s_text_button(
+	"Node buttons :", DARK_GREY,
+	t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,
+	t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+	NULL, NULL);
+	gui.add(button);
+
+	i += 0.7;
+
+	size_t j = 0;
+	while (j < engine.board.node_list.size() + 1)
+	{
+		t_button	*node_button = new t_button(new s_tileset_button(
+					"", DARK_GREY,
+					(j == 0 ? NULL : engine.board.node_list[j - 1].tile),
+					(j == 0 ? t_vect(-1, -1) : engine.board.node_list[j - 1].sprite),
+					t_vect(1 + (1.2 * (j % 4)), 1 + (1.2 * (i + j / 4))) * gui.unit,
+					t_vect(1, 1) * gui.unit,
+					5),
+					select_node, t_data(2, &engine, ((int)j) - 1));
+
+		gui.add(node_button);
+		j++;
+	}
+	i += engine.board.node_list.size() / 4 + 1;
+
+	button = new t_button(new s_text_button(
+		"Placement buttons :", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		NULL, NULL);
+		gui.add(button);
+			i += 0.7;
+	j = 0;
+	while (j < 3)
+	{
+	t_button	*placement_button = new t_button(new s_tileset_button(
+				"", DARK_GREY,
+				&(interface_map["simple_cursor"]),
+				(j == 0 ? t_vect(0, 0) : (j == 1 ? t_vect(3, 0) : t_vect(4, 0))),
+				t_vect(1 + (1.2 * j), 1 + (1.2 * i)) * gui.unit,
+				t_vect(1, 1) * gui.unit,
+				5),
+				select_placement, t_data(2, &engine, ((int)j)));
+
+				gui.add(placement_button);
+			j++;
+	}
+
 	i = 13;
 	t_button	*save_button = new t_button(new s_text_button(
 		"Save map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 		menu_save_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text)));//0 - gui / 1 - t_game_board * / 2 - & file name
-
 	t_button	*generate_button = new t_button(new s_text_button(
 		"Generate map", DARK_GREY,
 		t_vect(10, 1 + (1.2 * i)) * gui.unit,
@@ -30,16 +153,13 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_generate_board, t_data(2, &gui, &(engine.board)));
-
+		menu_generate_board, t_data(2, &gui, &(engine)));
 	i++;
-
 	t_button	*load_button = new t_button(new s_text_button(
 		"Load map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		menu_load_map, NULL);
-
+		menu_load_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text))); // 0 - t_gui * / 1 - game_board * / 2 - &path
 	t_button	*delete_button = new t_button(new s_text_button(
 		"Delete map", DARK_GREY,
 		t_vect(10, 1 + (1.2 * i)) * gui.unit,
@@ -47,8 +167,7 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_delete_map, NULL);
-
+		menu_delete_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text)));
 	t_button	*quit_button = new t_button(new s_text_button(
 		"Quit", DARK_GREY,
 		t_vect(19, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -75,12 +194,18 @@ void					menu_map_editor(t_data data)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
+			else if (event.type == SDL_MOUSEMOTION && event.button.button == SDL_BUTTON_LEFT)
+				control_mouse_editor(&engine);
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+			{
+				if (gui.click() == false)
+					control_mouse_editor(&engine);
+			}
+			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
+				reset_selection();
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
-			(engine.board).handle_mouvement(&event);
-			(engine.board).handle_zoom(&event);
+			engine.handle_control_camera(&event);
 		}
 		render_screen(true);
 	}

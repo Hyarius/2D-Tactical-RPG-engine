@@ -180,7 +180,6 @@ void					menu_player_editor(t_data data)
 	i++;
 
 	tile_index = &(tileset_selector->i);
-	printf("%p = %zu\n", tile_index, *tile_index);
 	sprite_target = &(((t_tileset_button *)(tileset_selector->container->button))->selected);
 
 	gui.add(back_ground);
