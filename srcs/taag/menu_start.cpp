@@ -24,8 +24,14 @@ void		menu_start()
 			menu_player_editor, NULL));
 
 	gui.add(new t_button(new s_text_button(
-			"Map editor", DARK_GREY,
+			"Monster editor", DARK_GREY,
 			t_vect(21, 7) * gui.unit, t_vect(8, 2) * gui.unit, 8,
+			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+			menu_monster_editor, NULL));
+
+	gui.add(new t_button(new s_text_button(
+			"Map editor", DARK_GREY,
+			t_vect(21, 10) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_map_editor, NULL));
 
