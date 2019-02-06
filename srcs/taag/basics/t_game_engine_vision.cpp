@@ -49,9 +49,17 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 			board.get_cell(target)->v_dist = prev_dist + 1;
 			if (board.get_cell(target)->v_dist <= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[1])
 			{
+				board.get_cell(target)->cursor = t_vect(0, 0);
 				if (board.get_cell(target)->v_dist >= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[0] &&
 					board.get_cell(target)->node->v_obs == false && board.get_cell(target)->node->tile != NULL)
-					board.get_cell(target)->cursor = t_vect(0, 2);
+				{
+					if (board.get_cell(target)->actor == NULL && turn_order[turn_index % turn_order.size()]->spell[s_spell]->on_target != 0)
+						board.get_cell(target)->cursor = t_vect(0, 2);
+					else if (board.get_cell(target)->actor != NULL && turn_order[turn_index % turn_order.size()]->spell[s_spell]->on_target != 2)
+						board.get_cell(target)->cursor = t_vect(0, 2);
+					else
+						board.get_cell(target)->v_dist = 999;
+				}
 				if (to_calc != NULL)
 					to_calc->push_back(target);
 			}

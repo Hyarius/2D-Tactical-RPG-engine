@@ -109,7 +109,7 @@ typedef struct			s_spell
 						s_spell();
 						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
 								int p_cost_pa, int p_cost_pm,
-								int range_min, int range_max, bool p_block, bool p_on_target,
+								int range_min, int range_max, bool p_block, int p_on_target,
 								e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
 								vector<t_effect> p_effect);
 }						t_spell;
@@ -302,6 +302,7 @@ void						menu_generate_board(t_data data);
 void 						menu_save_map(t_data data);
 void 						menu_load_map(t_data data);
 void 						menu_delete_map(t_data data);
+void						menu_place_monster(t_data data);
 void					menu_quit(t_data data);
 
 #endif

@@ -222,7 +222,21 @@ void					menu_map_editor(t_data data)
 				moved = false;
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
-				reset_selection();
+			{
+				if (cell_list.size() != 0)
+					reset_selection();
+				else
+				{
+					t_cell *cell =  engine.board.get_cell(engine.board.get_mouse_pos());
+					if (cell != NULL)
+					{
+						if (cell->actor == NULL)
+							menu_place_monster(t_data(3, &(cell->coord), &engine, &gui));
+						else if (cell->actor != NULL)
+							engine.outvoke_actor(cell->actor);
+					}
+				}
+			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 			engine.handle_control_camera(&event);

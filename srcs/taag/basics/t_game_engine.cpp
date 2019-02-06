@@ -18,6 +18,21 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		player->stat.pm.value >= player->spell[s_spell]->cost_pm &&
 		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
+
+		vector<t_vect>	text_coord;
+		if (player->spell[s_spell]->cost_pa > 0)
+		{
+			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size() + board.get_cell(player->coord)->visual_info.size()) / 2.0);
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, tmp));
+			player->stat.pa.value -= player->spell[s_spell]->cost_pa;
+		}
+		text_coord.clear();
+		if (player->spell[s_spell]->cost_pm > 0)
+		{
+			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size() + board.get_cell(player->coord)->visual_info.size()) / 2.0);
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, tmp));
+			player->stat.pm.value -= player->spell[s_spell]->cost_pm;
+		}
 		size_t i = 0;
 		vector<t_vect>	target_list;
 		if (player->spell[s_spell]->zone_type == Z_DIAM)
@@ -45,20 +60,6 @@ void				s_game_engine::cast_spell(t_vect mouse)
 				j++;
 			}
 			i++;
-		}
-		vector<t_vect>	text_coord;
-		if (player->spell[s_spell]->cost_pa > 0)
-		{
-			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size()) / 2.0);
-			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, tmp));
-			player->stat.pa.value -= player->spell[s_spell]->cost_pa;
-		}
-		text_coord.clear();
-		if (player->spell[s_spell]->cost_pm > 0)
-		{
-			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info.size()) / 2.0);
-			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, tmp));
-			player->stat.pm.value -= player->spell[s_spell]->cost_pm;
 		}
 		s_spell = -1;
 		calculated = false;

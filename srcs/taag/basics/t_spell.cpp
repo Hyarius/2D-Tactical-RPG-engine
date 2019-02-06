@@ -24,7 +24,7 @@ s_spell::s_spell()
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
-					int p_cost_pa, int p_cost_pm, int range_min, int range_max, bool p_block, bool p_on_target,
+					int p_cost_pa, int p_cost_pm, int range_min, int range_max, bool p_block, int p_on_target,
 					e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
 					vector<t_effect> p_effect)
 {
@@ -94,7 +94,6 @@ void		read_spell()
 			if (tab.size() == 6)
 				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atof(tab[2].c_str()), atof(tab[3].c_str()), atof(tab[4].c_str()), atof(tab[5].c_str())));
 		}
-
 		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
 		spell_name.push_back(name);
 		effect.clear();

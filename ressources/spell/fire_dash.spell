@@ -1,12 +1,12 @@
 name		:Fire dash
-description	:Move the caster to the targeted area and give him 2 PA
+description	:Move the caster to the targeted area and heal him by 2
 icon		:simple_iconset
 sprite		:2:2
 pa			:2
 pm			:1
 range		:2:6:0
 type		:1
-on target	:1
+on target	:2
 zone		:0:0
 effect1		:8:0:0:0:0
-effect1		:10:2:0:0:0
+effect1		:6:2:0:0:0
