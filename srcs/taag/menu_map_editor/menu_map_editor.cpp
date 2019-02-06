@@ -52,13 +52,29 @@ static void				select_placement(t_data data)
 	cell_list.clear();
 }
 
+bool moved = false;
+
 static void				control_mouse_editor(t_game_engine *engine)
 {
 	t_vect mouse = engine->board.get_mouse_pos();
 	if (mouse != t_vect(-1, -1))
 	{
-		engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
-		cell_list.push_back(engine->board.get_cell(mouse));
+		if (moved == true && engine->board.get_cell(mouse)->cursor == t_vect(0, 0))
+		{
+			engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
+			cell_list.push_back(engine->board.get_cell(mouse));
+		}
+		else if (moved == false && engine->board.get_cell(mouse)->cursor == t_vect(2, 0))
+		{
+			engine->board.get_cell(mouse)->cursor = t_vect(0, 0);
+			size_t h = 0;
+			while (h < cell_list.size())
+			{
+				if (cell_list[h]->coord == mouse)
+					cell_list.erase(cell_list.begin() + h);
+				h++;
+			}
+		}
 	}
 }
 
@@ -195,11 +211,15 @@ void					menu_map_editor(t_data data)
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEMOTION && event.button.button == SDL_BUTTON_LEFT)
+			{
+				moved = true;
 				control_mouse_editor(&engine);
+			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (gui.click() == false)
 					control_mouse_editor(&engine);
+				moved = false;
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
 				reset_selection();
