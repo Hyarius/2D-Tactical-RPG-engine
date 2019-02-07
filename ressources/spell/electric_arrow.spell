@@ -2,6 +2,7 @@ name		:Electric arrow
 description	:Deal 6 damages in zone
 icon		:simple_iconset
 sprite		:3:1
+m_spell		:0
 pa			:4
 pm			:0
 range		:2:5:0

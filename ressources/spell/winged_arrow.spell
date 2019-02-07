@@ -2,6 +2,7 @@ name		:Winged arrow
 description	:Deal 3 damages
 icon		:simple_iconset
 sprite		:1:5
+m_spell		:1
 pa			:1
 pm			:1
 range		:3:7:1

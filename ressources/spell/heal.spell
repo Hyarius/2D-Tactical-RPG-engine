@@ -2,6 +2,7 @@ name		:Heal
 description	:Heal by 12 the target
 icon		:simple_iconset
 sprite		:4:2
+m_spell		:0
 pa			:5
 pm			:0
 range		:0:3:0

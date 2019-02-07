@@ -2,6 +2,7 @@ name		:Fireball
 description	:Deal 8 damage in zone
 icon		:simple_iconset
 sprite		:1:1
+m_spell		:0
 pa			:4
 pm			:0
 range		:1:4:0

@@ -1,6 +1,0 @@
-name:Stone tile
-tileset:simple_tile
-sprite:3:0
-cost:1
-m_obstacle:0
-v_obstacle:0

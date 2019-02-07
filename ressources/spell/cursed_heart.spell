@@ -2,6 +2,7 @@ name		:Cursed heart
 description	:Deal 11 damages to the target and heal the caster by 4
 icon		:simple_iconset
 sprite		:4:0
+m_spell		:0
 pa			:4
 pm			:1
 range		:2:4:1

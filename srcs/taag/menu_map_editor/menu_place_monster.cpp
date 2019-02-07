@@ -36,6 +36,20 @@ static void			quit_place(t_data data)
 	}
 }
 
+static void			start_monster_editor(t_data data)
+{
+	int *index = (int *)(data.data[0]);
+	menu_monster_editor(data);
+	list_file_place_monster = list_files(MONSTER_PATH, ACTOR_EXT);
+	for (int i = 0; i < 30; i++)
+	{
+		if (*index + i >= (int)(list_file_place_monster.size()) || *index + i < 0)
+			*(text_list_place_monster[i]) = "";
+		else
+			*(text_list_place_monster[i]) = list_file_place_monster[i + *index];
+	}
+}
+
 void				menu_place_monster(t_data data) //coord, engine, gui
 {
 	t_vect			*coord = (t_vect *)(data.data[0]);
@@ -65,7 +79,7 @@ void				menu_place_monster(t_data data) //coord, engine, gui
 						gui.unit * t_vect(6, 4), gui.unit * t_vect(18, 1.0), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						menu_monster_editor, NULL));
+						start_monster_editor, &index));
 
 	list_file_place_monster = list_files(MONSTER_PATH, ACTOR_EXT);
 	int i = 0;

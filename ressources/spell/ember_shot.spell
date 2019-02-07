@@ -2,6 +2,7 @@ name		:Ember shot
 description	:Deal 2 damage
 icon		:simple_iconset
 sprite		:1:2
+m_spell		:0
 pa			:0
 pm			:1
 range		:3:12:1

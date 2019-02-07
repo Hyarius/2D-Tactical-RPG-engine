@@ -64,6 +64,11 @@ static void				control_mouse_editor(t_game_engine *engine)
 			engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
 			cell_list.push_back(engine->board.get_cell(mouse));
 		}
+		if (moved == false && engine->board.get_cell(mouse)->cursor == t_vect(0, 0))
+		{
+			engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
+			cell_list.push_back(engine->board.get_cell(mouse));
+		}
 		else if (moved == false && engine->board.get_cell(mouse)->cursor == t_vect(2, 0))
 		{
 			engine->board.get_cell(mouse)->cursor = t_vect(0, 0);
@@ -117,21 +122,32 @@ void					menu_map_editor(t_data data)
 	i += 0.7;
 
 	size_t j = 0;
-	while (j < engine.board.node_list.size() + 1)
+	t_vect size = t_vect(gui.unit.y / gui.unit.x, 1);
+	t_button	*node_button = new t_button(new s_tileset_button(
+				"", DARK_GREY,
+				NULL,
+				t_vect(-1, -1),
+				t_vect(1 + ((size.x + 0.2) * (j % 8)), 1 + ((size.y + 0.2) * (i + j / 8))) * gui.unit,
+				size * gui.unit,
+				5),
+				select_node, t_data(2, &engine, ((int)j) - 1));
+
+	gui.add(node_button);
+	while (j < engine.board.node_list.size())
 	{
-		t_button	*node_button = new t_button(new s_tileset_button(
+		node_button = new t_button(new s_tileset_button(
 					"", DARK_GREY,
-					(j == 0 ? NULL : engine.board.node_list[j - 1].tile),
-					(j == 0 ? t_vect(-1, -1) : engine.board.node_list[j - 1].sprite),
-					t_vect(1 + (1.2 * (j % 4)), 1 + (1.2 * (i + j / 4))) * gui.unit,
-					t_vect(1, 1) * gui.unit,
+					engine.board.node_list[j].tile,
+					engine.board.node_list[j].sprite,
+					t_vect(1 + ((size.x + 0.2) * (j % 8)), 2.2 + ((size.y + 0.2) * (i + j / 8))) * gui.unit,
+					size * gui.unit,
 					5),
-					select_node, t_data(2, &engine, ((int)j) - 1));
+					select_node, t_data(2, &engine, j));
 
 		gui.add(node_button);
 		j++;
 	}
-	i += engine.board.node_list.size() / 4 + 1;
+	i += engine.board.node_list.size() / 8 + 1;
 
 	button = new t_button(new s_text_button(
 		"Placement buttons :", DARK_GREY,

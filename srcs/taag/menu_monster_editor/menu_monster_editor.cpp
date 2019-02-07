@@ -29,7 +29,7 @@ void					menu_monster_editor(t_data data)
 	string *name = &(entry_name->entry->text);
 	string *path = &(entry_path->entry->text);
 
-	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), NULL, 10, 1, 10, 1000,
+	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), NULL, 1, 1, 1, 1000,
 		new t_button(new s_text_button(
 				"Health points :            ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -48,7 +48,7 @@ void					menu_monster_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), NULL, 1, 4, 5, 25,
+	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), NULL, 1, 4, 0, 25,
 		new t_button(new s_text_button(
 				"Action points :            ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -67,7 +67,7 @@ void					menu_monster_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *mouvement_iterator = new s_iterator(&(actor.stat.pm.max), NULL, 1, 3, 2, 6,
+	t_iterator *mouvement_iterator = new s_iterator(&(actor.stat.pm.max), NULL, 1, 3, 0, 20,
 		new t_button(new s_text_button(
 				"Mouvement points :            ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -86,7 +86,7 @@ void					menu_monster_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *initiative_iterator = new s_iterator(&(actor.stat.init), NULL, 1, 1, 4, 12,
+	t_iterator *initiative_iterator = new s_iterator(&(actor.stat.init), NULL, 1, 1, 0, 16,
 		new t_button(new s_text_button(
 				"Initiative :            ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -182,7 +182,7 @@ void					menu_monster_editor(t_data data)
 	gui.add(quit_button);
 
 	for (int i = 0; i < 6; i++)
-		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor)));
+		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell_monster, t_data(3, &gui, i, &actor)));
 
 	while (play)
 	{

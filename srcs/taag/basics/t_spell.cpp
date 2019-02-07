@@ -5,11 +5,13 @@
 
 map<string, t_spell>	spell_map;
 vector<string>			spell_name;
+vector<string>			spell_heros_name;
 
 s_spell::s_spell()
 {
 	name = "NULL";
 	desc = "";
+	m_spell = false;
 	tile = NULL;
 	icon = t_vect(-1, -1);
 	cost_pa = 0;
@@ -23,13 +25,14 @@ s_spell::s_spell()
 	zone_size = 1;
 }
 
-s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
+s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, bool p_m_spell,
 					int p_cost_pa, int p_cost_pm, int range_min, int range_max, bool p_block, int p_on_target,
 					e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
 					vector<t_effect> p_effect)
 {
 	name = p_name;
 	desc = p_desc;
+	m_spell = p_m_spell;
 	tile = p_tile;
 	icon = p_icon;
 	cost_pa = p_cost_pa;
@@ -53,6 +56,7 @@ void		read_spell()
 	string			desc;
 	t_tileset		*tile;
 	t_vect			icon;
+	bool			m_spell;
 	int				cost_pa;
 	int				cost_pm;
 	int				range[2];
@@ -66,6 +70,7 @@ void		read_spell()
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
 	spell_map["NULL"] = t_spell();
 	spell_name.push_back("NULL");
+	spell_heros_name.push_back("NULL");
 	size_t i = 0;
 	while (i < spell_file.size())
 	{
@@ -77,6 +82,7 @@ void		read_spell()
 		tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
 		tab = get_strsplit(&myfile, ":", 3);
 		icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
+		m_spell = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()) == 0 ? false : true);
 		cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		tab = get_strsplit(&myfile, ":", 4);
@@ -94,7 +100,9 @@ void		read_spell()
 			if (tab.size() == 6)
 				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atof(tab[2].c_str()), atof(tab[3].c_str()), atof(tab[4].c_str()), atof(tab[5].c_str())));
 		}
-		spell_map[name] = t_spell(name, desc, tile, icon, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
+		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
+		if (m_spell == false)
+			spell_heros_name.push_back(name);
 		spell_name.push_back(name);
 		effect.clear();
 		myfile.close();

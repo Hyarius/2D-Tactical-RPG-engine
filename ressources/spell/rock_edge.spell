@@ -2,6 +2,7 @@ name		:Rock edge
 description	:Deal 6 damages and reduce PM by 1
 icon		:simple_iconset
 sprite		:4:4
+m_spell		:0
 pa			:3
 pm			:0
 range		:1:4:0

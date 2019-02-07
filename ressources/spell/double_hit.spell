@@ -2,6 +2,7 @@ name		:Double hit
 description	:Deal 6 damages two times
 icon		:simple_iconset
 sprite		:4:1
+m_spell		:0
 pa			:3
 pm			:1
 range		:3:7:1

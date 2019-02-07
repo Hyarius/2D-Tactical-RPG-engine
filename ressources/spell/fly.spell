@@ -2,6 +2,7 @@ name		:Fly
 description	:Move the caster to the targeted area
 icon		:simple_iconset
 sprite		:5:0
+m_spell		:0
 pa			:2
 pm			:1
 range		:1:8:1

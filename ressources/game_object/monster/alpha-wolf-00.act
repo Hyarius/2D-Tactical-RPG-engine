@@ -1,0 +1,13 @@
+name:Wolf alpha
+tileset:C19
+sprite_pos:6:0
+health:37
+action:7
+mouvement:4
+initiative:7
+spell1:Scrash
+spell2:Slash
+spell3:Triple slash
+spell4:NULL
+spell5:NULL
+spell6:NULL

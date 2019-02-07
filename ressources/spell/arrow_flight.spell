@@ -2,6 +2,7 @@ name		:Arrow flight
 description	:Deal 9 damages in zone
 icon		:simple_iconset
 sprite		:1:0
+m_spell		:0
 pa			:5
 pm			:0
 range		:4:6:1

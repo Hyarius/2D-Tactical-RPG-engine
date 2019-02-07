@@ -1,10 +1,5 @@
 #include "taag.h"
 
-#define NODE_PATH "ressources/game_object/node/"
-#define NODE_EXT ".node"
-#define OBS_PATH "ressources/game_object/object/"
-#define OBS_EXT ".obs"
-
 s_game_board::s_game_board()
 {
 	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);

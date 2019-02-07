@@ -2,6 +2,7 @@ name		:Scrash
 description	:Deal 9 damages
 icon		:simple_iconset
 sprite		:2:5
+m_spell		:0
 pa			:3
 pm			:0
 range		:1:2:0

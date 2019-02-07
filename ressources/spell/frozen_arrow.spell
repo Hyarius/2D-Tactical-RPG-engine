@@ -2,6 +2,7 @@ name		:Frozen arrow
 description	:Deal 6 damages and reduce PA by 1
 icon		:simple_iconset
 sprite		:5:2
+m_spell		:0
 pa			:4
 pm			:0
 range		:1:4:0

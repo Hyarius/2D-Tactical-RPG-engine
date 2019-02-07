@@ -9,6 +9,12 @@ static void		increment_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 	int *pool = (int *)(data.data[1]);
 	int	delta = (int &)(data.data[2]);
 	int	cost = (int &)(data.data[3]);
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_LCTRL])
+	{
+		delta = delta * 10;
+		cost = cost * 10;
+	}
 	int	min = (int &)(data.data[4]);
 	int	max = (int &)(data.data[5]);
 
@@ -29,6 +35,12 @@ static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 	int *pool = (int *)(data.data[1]);
 	int	delta = (int &)(data.data[2]);
 	int	cost = (int &)(data.data[3]);
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_LCTRL])
+	{
+		delta = delta * 10;
+		cost = cost * 10;
+	}
 	int	min = (int &)(data.data[4]);
 	int	max = (int &)(data.data[5]);
 

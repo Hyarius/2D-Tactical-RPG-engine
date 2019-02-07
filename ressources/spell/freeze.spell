@@ -2,6 +2,7 @@ name		:Freeze
 description	:Reduce PA by 2 and deal 5 damages
 icon		:simple_iconset
 sprite		:2:0
+m_spell		:0
 pa			:3
 pm			:0
 range		:1:3:0

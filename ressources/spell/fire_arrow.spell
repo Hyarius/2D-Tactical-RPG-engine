@@ -2,6 +2,7 @@ name		:Fire arrow
 description	:Deal 10 damages in line
 icon		:simple_iconset
 sprite		:1:3
+m_spell		:0
 pa			:4
 pm			:0
 range		:1:6:0

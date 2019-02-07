@@ -2,6 +2,7 @@ name		:Frozen bolt
 description	:Deal 16 damages and reduce PA by 1
 icon		:simple_iconset
 sprite		:3:3
+m_spell		:0
 pa			:6
 pm			:0
 range		:1:8:0

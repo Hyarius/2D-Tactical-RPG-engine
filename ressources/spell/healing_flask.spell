@@ -2,6 +2,7 @@ name		:Healing flask
 description	:Heal 4 HP in zone and give 1 PM bonus
 icon		:simple_iconset
 sprite		:2:3
+m_spell		:0
 pa			:4
 pm			:0
 range		:0:3:1

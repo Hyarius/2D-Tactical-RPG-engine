@@ -2,6 +2,7 @@ name		:Ice barrage
 description	:Deal 5 damages in zone
 icon		:simple_iconset
 sprite		:1:4
+m_spell		:0
 pa			:3
 pm			:0
 range		:1:3:0

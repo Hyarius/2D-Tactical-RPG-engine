@@ -2,6 +2,7 @@ name		:First aid
 description	:Heal the target by 5 and the caster by 3
 icon		:simple_iconset
 sprite		:3:2
+m_spell		:0
 pa			:3
 pm			:0
 range		:1:4:0

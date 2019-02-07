@@ -25,6 +25,11 @@ extern vector<string>					interface_name;//stock the name of every tileset in in
 #define MAP_PATH "ressources/map/"
 #define MAP_EXT ".map"
 
+#define NODE_PATH "ressources/game_object/node/"
+#define NODE_EXT ".node"
+#define OBS_PATH "ressources/game_object/object/"
+#define OBS_EXT ".obs"
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -95,6 +100,7 @@ typedef struct			s_spell
 {
 	string				name;			//name of the spell
 	string				desc;			//description of the spell
+	bool				m_spell;		//true = monster only
 	t_tileset			*tile;			//tile of the icon
 	t_vect				icon;			//the sprite to use to print the icon
 	int					cost_pa;		//cost in PA
@@ -107,7 +113,7 @@ typedef struct			s_spell
 	int					zone_size;		//size of the zone
 	vector<t_effect>	effect;			//list of effect
 						s_spell();
-						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon,
+						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, bool p_m_spell,
 								int p_cost_pa, int p_cost_pm,
 								int range_min, int range_max, bool p_block, int p_on_target,
 								e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
@@ -117,6 +123,7 @@ typedef struct			s_spell
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
 										//from the game
 extern vector<string>		spell_name;
+extern vector<string>		spell_heros_name;
 typedef struct			s_visual_info
 {
 	string				text;
@@ -269,6 +276,7 @@ void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
 void					generate_charset_tileset();
+void					generate_node_file();
 
 t_game_board			board_generator(int size_x, int size_y, int node);
 
@@ -294,8 +302,7 @@ void						menu_save_actor(t_data data);
 void						menu_load_actor(t_data data);
 void						menu_delete_actor(t_data data);
 void					menu_monster_editor(t_data data);
-void						menu_choose_spell(t_data data);
-void						menu_choose_sprite(t_data data);
+void						menu_choose_spell_monster(t_data data);
 void						menu_save_monster(t_data data);
 void						menu_load_monster(t_data data);
 void						menu_delete_monster(t_data data);
