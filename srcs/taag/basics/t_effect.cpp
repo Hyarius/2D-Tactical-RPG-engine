@@ -2,13 +2,13 @@
 
 s_effect_stat::s_effect_stat()
 {
-	value[0] = -1;
-	value[1] = -1;
-	value[2] = -1;
-	value[3] = -1;
+	value[0] = 0;
+	value[1] = 0;
+	value[2] = 0;
+	value[3] = 0;
 }
 
-s_effect_stat::s_effect_stat(double p_value0, double p_value1, double p_value2, double p_value3)
+s_effect_stat::s_effect_stat(int p_value0, int p_value1, int p_value2, int p_value3)
 {
 	value[0] = p_value0;
 	value[1] = p_value1;
@@ -19,9 +19,10 @@ s_effect_stat::s_effect_stat(double p_value0, double p_value1, double p_value2, 
 s_effect::s_effect()
 {
 	effect = NULL;
+	stat = s_effect_stat();
 }
 
-	s_effect::s_effect(event p_effect, double p_value0, double p_value1, double p_value2, double p_value3)
+	s_effect::s_effect(event p_effect, int p_value0, int p_value1, int p_value2, int p_value3)
 {
 	effect = p_effect;
 	stat = s_effect_stat(p_value0, p_value1, p_value2, p_value3);

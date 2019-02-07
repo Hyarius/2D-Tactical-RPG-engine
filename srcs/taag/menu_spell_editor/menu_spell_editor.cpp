@@ -205,14 +205,16 @@ void menu_spell_editor(t_data data)
 			"Save spell", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			NULL, NULL);
+			menu_save_spell, t_data(3, &gui, spell, &(entry_path->entry->text)));//0 - gui / 1 - t_spell * / 2 - & file name
 	i++;
+
+	t_vect *selected;
 
 	t_button	*load_button = new t_button(new s_text_button(
 			"Load spell", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			NULL, NULL);
+			menu_load_spell, t_data(5, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
 	i++;
 
 	t_button	*delete_button = new t_button(new s_text_button(
@@ -252,10 +254,13 @@ void menu_spell_editor(t_data data)
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i += 2;
 
+	selected = &(tile_button->selected);
+
 	gui.add(back_ground);
 
-	for (int j = 0; j < 6; j++)
+	for (size_t j = 0; j < 6; j++)
 	{
+		printf("effect %zu = %p\n", j, spell->effect[j].effect);
 		t_button *button = new t_button(new s_text_button(
 			"Effect " + to_string(j + 1) + " :", DARK_GREY,
 			t_vect(9.2, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,

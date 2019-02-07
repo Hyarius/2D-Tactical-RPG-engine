@@ -30,6 +30,9 @@ extern vector<string>					interface_name;//stock the name of every tileset in in
 #define OBS_PATH "ressources/game_object/object/"
 #define OBS_EXT ".obs"
 
+#define SPELL_PATH "ressources/spell/"
+#define SPELL_EXT ".spell"
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -79,9 +82,9 @@ enum e_zone_type
 
 typedef struct		s_effect_stat
 {
-	double			value[4];
+	int			value[4];
 					s_effect_stat();
-					s_effect_stat(double value0, double value1, double value2, double value3);
+					s_effect_stat(int value0, int value1, int value2, int value3);
 }					t_effect_stat;
 
 typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
@@ -93,7 +96,7 @@ typedef struct		s_effect
 	event			effect;
 	t_effect_stat	stat;
 					s_effect();
-					s_effect(event p_effect, double value0, double value1, double value2, double value3);
+					s_effect(event p_effect, int value0, int value1, int value2, int value3);
 }					t_effect;
 
 typedef struct			s_spell
@@ -266,6 +269,7 @@ typedef struct			s_game_engine
 void					read_tileset();				//read every tileset file and place it into the tileset_map
 t_node					read_node(string p_path); 	//read one .node file and return a t_node
 t_actor					read_actor(string p_path);	//read one .act file and return a t_actor
+t_spell					read_one_spell(string path);//read one spell and return it
 void					read_spell();				//read every spell and place it into the spell_map
 void					init_effects();				//initialize every effect spell can use
 t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_size, t_vect p_starting_coord); //creating one visual_info
@@ -313,6 +317,8 @@ void 						menu_load_map(t_data data);
 void 						menu_delete_map(t_data data);
 void						menu_place_monster(t_data data);
 void					menu_spell_editor(t_data data);
+void						menu_save_spell(t_data data);
+void						menu_load_spell(t_data data);
 void					menu_quit(t_data data);
 
 #endif
