@@ -22,7 +22,7 @@ s_spell::s_spell()
 	on_target = 0;
 	range_type = R_CIRCLE;
 	zone_type = Z_CROSS;
-	zone_size = 1;
+	zone_size = 0;
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, bool p_m_spell,

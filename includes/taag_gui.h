@@ -37,6 +37,22 @@ typedef struct	s_sprite_iterator : t_gui_obj
 	bool		key_press(SDL_Event *event);
 }				t_sprite_iterator;
 
+typedef struct	s_tileset_iterator : t_gui_obj
+{
+	size_t		i;		//the key to get the correct sprite
+	t_vect		delta;	//describ the way we run throught the tileset
+	int			change;	//describ if we need to checkout the tile before printing it;
+	t_button	*desc;
+	t_button	*minus;
+	t_button	*container;
+	t_button	*plus;
+				s_tileset_iterator();
+				s_tileset_iterator(t_vect p_delta, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
+	void		draw_self();
+	bool		click(t_vect mouse);
+	bool		key_press(SDL_Event *event);
+}				t_tileset_iterator;
+
 typedef struct		s_spell_card : t_gui_obj
 {
 	t_button		*button; //0 - background | 1 - image | 2 - name | 3 - desc

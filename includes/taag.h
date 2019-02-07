@@ -98,18 +98,18 @@ typedef struct		s_effect
 
 typedef struct			s_spell
 {
-	string				name;			//name of the spell
+	string				name;			//name of the spell -
 	string				desc;			//description of the spell
 	bool				m_spell;		//true = monster only
 	t_tileset			*tile;			//tile of the icon
 	t_vect				icon;			//the sprite to use to print the icon
-	int					cost_pa;		//cost in PA
-	int					cost_pm;		//cost in PM
-	int					range[2];		//0 - range min / 1 - range max
-	bool				block;			//did this spell need vision
+	int					cost_pa;		//cost in PA-
+	int					cost_pm;		//cost in PM -
+	int					range[2];		//0 - range min / 1 - range max -
+	bool				block;			//did this spell need vision -
 	int					on_target;		//0 - click on target only / 1 - click on target and empty tile / 2 - click only on empty tile
-	e_range_type		range_type;		//what kind of vision is it ?
-	e_zone_type			zone_type;		//what kind of zone is it ?
+	e_range_type		range_type;		//what kind of vision is it ? -
+	e_zone_type			zone_type;		//what kind of zone is it ? -
 	int					zone_size;		//size of the zone
 	vector<t_effect>	effect;			//list of effect
 						s_spell();
@@ -312,6 +312,7 @@ void 						menu_save_map(t_data data);
 void 						menu_load_map(t_data data);
 void 						menu_delete_map(t_data data);
 void						menu_place_monster(t_data data);
+void					menu_spell_editor(t_data data);
 void					menu_quit(t_data data);
 
 #endif
