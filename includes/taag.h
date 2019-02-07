@@ -319,6 +319,7 @@ void						menu_place_monster(t_data data);
 void					menu_spell_editor(t_data data);
 void						menu_save_spell(t_data data);
 void						menu_load_spell(t_data data);
+void						menu_delete_spell(t_data data);
 void					menu_quit(t_data data);
 
 #endif

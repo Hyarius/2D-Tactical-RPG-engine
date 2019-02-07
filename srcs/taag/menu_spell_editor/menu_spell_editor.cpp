@@ -224,7 +224,7 @@ void menu_spell_editor(t_data data)
 			5,
 			t_color(0.4, 0.4, 0.4),
 			t_color(0.6, 0.6, 0.6)),
-			NULL, NULL);
+			menu_delete_spell, t_data(5, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
 	i++;
 
 	t_button	*quit_button = new t_button(new s_text_button(
