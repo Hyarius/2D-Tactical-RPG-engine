@@ -268,6 +268,8 @@ void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one 
 void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
+void					generate_charset_tileset();
+
 t_game_board			board_generator(int size_x, int size_y, int node);
 
 void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);

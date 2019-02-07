@@ -15,6 +15,30 @@ vector<string>				tileset_name;
 vector<string>				sprite_name;
 vector<string>				interface_name;
 
+void				generate_charset_tileset()
+{
+	vector<string>	texture_file;
+	ofstream		myfile;
+
+	texture_file = list_files("ressources/tmp/", ".png");
+	size_t i = 0;
+	while (i < texture_file.size())
+	{
+		myfile.open(TILESET_CHARSET_PATH + texture_file[i] + TILESET_CHARSET_EXT);
+		if (myfile.fail())
+			printf("can't open such file : %s%s%s\n", TILESET_CHARSET_PATH, texture_file[i].c_str(), TILESET_CHARSET_EXT);
+		printf("%s\n", texture_file[i].c_str());
+		myfile << "tile_name:" + texture_file[i] + "\n";
+		myfile << "file:ressources/assets/charset/" + texture_file[i] + ".png\n";
+		myfile << "size:12:8\n";
+		myfile.close();
+		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", "ressources/assets/charset/" + texture_file[i] + ".png") == false)
+			error_exit("can't copy ressources/tmp/" + texture_file[i] + ".png to ressources/assets/charset/" + texture_file[i] + ".png", 15462);
+		remove(("ressources/tmp/" + texture_file[i] + ".png").c_str());
+		i++;
+	}
+}
+
 void				read_tileset()
 {
 	vector<string>	texture_file;

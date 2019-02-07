@@ -20,6 +20,7 @@ int					generate_nbr(int min, int max);
 vector<string>		strsplit(string input, string c);
 vector<string>		list_files(string path, string extension);
 bool				check_file_exist(string path);
+bool				copy_file(string src, string dest);
 SDL_Surface			*create_surface_color(t_color p_color);
 t_vect				second_degree_solver(double a, double b, double c, double d, double e, double f);
 void				get_leaks(string msg);

@@ -24,11 +24,10 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	t_actor		*player = (t_actor *)(data.data[0]);
 	string		*entry_name = (string *)(data.data[1]);
 	string		*entry_path = (string *)(data.data[2]);
-	int			*pool_value = (int *)(data.data[3]);
-	bool 		*play = (bool *)(data.data[4]);
-	int			i = (int &)(data.data[5]);
-	size_t		*tile_index = *(size_t **)(data.data[6]);
-	t_vect		*sprite_target = (t_vect *)(data.data[7]);
+	bool 		*play = (bool *)(data.data[3]);
+	int			i = (int &)(data.data[4]);
+	size_t		*tile_index = *(size_t **)(data.data[5]);
+	t_vect		*sprite_target = (t_vect *)(data.data[6]);
 
 	if (*(text_list_load_monster[i]) != "")
 	{
@@ -41,7 +40,6 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 		*entry_path = *(text_list_load_monster[i]);
 		*entry_name = player->name;
 		t_actor base;
-		*pool_value = 15 - ((player->stat.hp.max - base.stat.hp.max) + (player->stat.pa.max - base.stat.pa.max) + (player->stat.pm.max - base.stat.pm.max) + (player->stat.init - base.stat.init));
 		*play = false;
 	}
 }
@@ -52,9 +50,8 @@ void			menu_load_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name
 	t_actor		*player = (t_actor *)(data.data[1]);
 	string		*entry_name = (string *)(data.data[2]);
 	string		*entry_path = (string *)(data.data[3]);
-	int			*pool_value = (int *)(data.data[4]);
-	size_t		*tile_index = *(size_t **)(data.data[5]);
-	t_vect		*sprite_target = *(t_vect **)(data.data[6]);
+	size_t		*tile_index = *(size_t **)(data.data[4]);
+	t_vect		*sprite_target = *(t_vect **)(data.data[5]);
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
@@ -85,7 +82,7 @@ void			menu_load_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name
 					8,
 					t_color(0.4, 0.4, 0.4),
 					t_color(0.6, 0.6, 0.6)),
-					quit_load, t_data(8, player, entry_name, entry_path, pool_value, &play, i, &tile_index, sprite_target));// player / entry_name / entry_path / pool / play / num
+					quit_load, t_data(7, player, entry_name, entry_path, &play, i, &tile_index, sprite_target));// player / entry_name / entry_path / pool / play / num
 		text_list_load_monster[i] = &(button->button->text);
 		gui.add(button);
 		i++;

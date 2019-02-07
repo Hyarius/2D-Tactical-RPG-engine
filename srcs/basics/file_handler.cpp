@@ -76,3 +76,22 @@ bool				check_file_exist(string path)
 	ifstream file(path.c_str());
     return file.good();
 }
+
+bool				copy_file(string src, string dest)
+{
+	ifstream source;
+	ofstream destination;
+
+	source.open(src, ios::binary);
+	destination.open(dest, ios::binary);
+
+	source.seekg(0, ios::end);
+	ifstream::pos_type size = source.tellg();
+	source.seekg(0);
+	char* buffer = new char[size];
+
+	source.read(buffer, size);
+	destination.write(buffer, size);
+
+	return (true);
+}

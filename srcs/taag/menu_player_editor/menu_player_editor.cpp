@@ -157,11 +157,11 @@ void					menu_player_editor(t_data data)
 	i++;
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map[sprite_name[1]]), t_vect(0, 0),
+	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map[sprite_name[1]]), t_vect(0, 0), t_vect(4, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
-				t_vect(4, 4),
+				t_vect(3, 4),
 				new t_button(new s_text_button(
 						"Tileset : ", DARK_GREY,
 						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,

@@ -24,24 +24,19 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 	t_actor		*player = (t_actor *)(data.data[0]);
 	string		*entry_name = (string *)(data.data[1]);
 	string		*entry_path = (string *)(data.data[2]);
-	int			*pool_value = (int *)(data.data[3]);
-	bool 		*play = (bool *)(data.data[4]);
-	size_t		*tile_index = *(size_t **)(data.data[6]);
-	t_vect		*sprite_target = *(t_vect **)(data.data[7]);
-	int			i = (int &)(data.data[5]);
+	bool 		*play = (bool *)(data.data[3]);
+	size_t		*tile_index = *(size_t **)(data.data[5]);
+	t_vect		*sprite_target = *(t_vect **)(data.data[6]);
+	int			i = (int &)(data.data[4]);
 
 	if (*(text_list_delete_monster[i]) != "")
 	{
 		remove((MONSTER_PATH + *(text_list_delete_monster[i]) + ACTOR_EXT).c_str());
 		*player = t_actor();
-		size_t t = 0;
-		for(t = 0; &(sprite_map[sprite_name[t]]) != player->tile; t++)
-			;
-		*tile_index = t;
+		*tile_index = 0;
 		*sprite_target = player->sprite;
 		*entry_path = "";
 		*entry_name = "";
-		*pool_value = 15;
 		*play = true;
 		list_file_delete_monster = list_files(MONSTER_PATH, ACTOR_EXT);
 		for (int i = 0; i < 30; i++)
@@ -55,9 +50,8 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 	t_actor		*player = (t_actor *)(data.data[1]);
 	string		*entry_name = (string *)(data.data[2]);
 	string		*entry_path = (string *)(data.data[3]);
-	int			*pool_value = (int *)(data.data[4]);
-	size_t		*tile_index = *(size_t **)(data.data[5]);
-	t_vect		*sprite_target = *(t_vect **)(data.data[6]);
+	size_t		*tile_index = *(size_t **)(data.data[4]);
+	t_vect		*sprite_target = *(t_vect **)(data.data[5]);
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
@@ -88,7 +82,7 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 					8,
 					t_color(0.4, 0.4, 0.4),
 					t_color(0.6, 0.6, 0.6)),
-					quit_delete, t_data(8, player, entry_name, entry_path, pool_value, &play, i, &tile_index, &sprite_target));// player / entry_name / entry_path / pool / play / num
+					quit_delete, t_data(7, player, entry_name, entry_path, &play, i, &tile_index, &sprite_target));// player / entry_name / entry_path / pool / play / num
 		text_list_delete_monster[i] = &(button->button->text);
 		gui.add(button);
 		i++;

@@ -34,17 +34,14 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 	{
 		remove((ACTOR_PATH + *(text_list_delete[i]) + ACTOR_EXT).c_str());
 		*player = t_actor();
-		size_t t = 0;
-		for(t = 0; &(sprite_map[sprite_name[t]]) != player->tile; t++)
-			;
-		*tile_index = t;
-		*sprite_target = player->sprite;
+		*tile_index = 0;
+		*sprite_target = t_vect(0, 0);
 		*entry_path = "";
 		*entry_name = "";
 		*pool_value = 15;
 		*play = true;
 		list_file_delete = list_files(ACTOR_PATH, ACTOR_EXT);
-		for (int i = 0; i < 30; i++)
+		for (i = 0; i < 30; i++)
 			*(text_list_delete[i]) = (i < (int)(list_file_delete.size()) ? list_file_delete[i] : "");
 	}
 }
