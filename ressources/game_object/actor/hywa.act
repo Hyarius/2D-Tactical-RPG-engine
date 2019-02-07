@@ -1,0 +1,13 @@
+name:Hywa the warrior
+tileset:H19
+sprite_pos:0:4
+health:50
+action:6
+mouvement:3
+initiative:5
+spell1:Electric arrow
+spell2:Freeze
+spell3:Fire dash
+spell4:Cursed heart
+spell5:Flying rock
+spell6:Fire arrow

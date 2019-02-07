@@ -27,20 +27,20 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 		{
 			if (board.get_cell(vision_tl[i] / scale)->node->v_obs == true ||
 				(board.get_cell(vision_tl[i] / scale)->actor != NULL &&
-				board.get_cell(vision_tl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-				board.get_cell(vision_tl[i] / scale)->actor != board.get_cell(target)->actor))
+					board.get_cell(vision_tl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+					board.get_cell(vision_tl[i] / scale)->actor != board.get_cell(target)->actor))
 				if (board.get_cell(vision_tr[i] / scale)->node->v_obs == true ||
 					(board.get_cell(vision_tr[i] / scale)->actor != NULL &&
-					board.get_cell(vision_tr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-					board.get_cell(vision_tr[i] / scale)->actor != board.get_cell(target)->actor))
+						board.get_cell(vision_tr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+						board.get_cell(vision_tr[i] / scale)->actor != board.get_cell(target)->actor))
 					if (board.get_cell(vision_dl[i] / scale)->node->v_obs == true ||
 						(board.get_cell(vision_dl[i] / scale)->actor != NULL &&
-						board.get_cell(vision_dl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-						board.get_cell(vision_dl[i] / scale)->actor != board.get_cell(target)->actor))
+							board.get_cell(vision_dl[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+							board.get_cell(vision_dl[i] / scale)->actor != board.get_cell(target)->actor))
 						if (board.get_cell(vision_dr[i] / scale)->node->v_obs == true ||
 							(board.get_cell(vision_dr[i] / scale)->actor != NULL &&
-							board.get_cell(vision_dr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
-							board.get_cell(vision_dr[i] / scale)->actor != board.get_cell(target)->actor))
+								board.get_cell(vision_dr[i] / scale)->actor != turn_order[turn_index % turn_order.size()] &&
+								board.get_cell(vision_dr[i] / scale)->actor != board.get_cell(target)->actor))
 							visible = false;
 			i++;
 		}
@@ -49,17 +49,9 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 			board.get_cell(target)->v_dist = prev_dist + 1;
 			if (board.get_cell(target)->v_dist <= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[1])
 			{
-				board.get_cell(target)->cursor = t_vect(0, 0);
 				if (board.get_cell(target)->v_dist >= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[0] &&
 					board.get_cell(target)->node->v_obs == false && board.get_cell(target)->node->tile != NULL)
-				{
-					if (board.get_cell(target)->actor == NULL && turn_order[turn_index % turn_order.size()]->spell[s_spell]->on_target != 0)
-						board.get_cell(target)->cursor = t_vect(0, 2);
-					else if (board.get_cell(target)->actor != NULL && turn_order[turn_index % turn_order.size()]->spell[s_spell]->on_target != 2)
-						board.get_cell(target)->cursor = t_vect(0, 2);
-					else
-						board.get_cell(target)->v_dist = 999;
-				}
+					board.get_cell(target)->cursor = t_vect(0, 2);
 				if (to_calc != NULL)
 					to_calc->push_back(target);
 			}
@@ -106,4 +98,3 @@ void				s_game_engine::calculate_vision_line()
 	}
 	calculated = true;
 }
-\

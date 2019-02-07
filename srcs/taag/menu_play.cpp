@@ -22,7 +22,7 @@ void					menu_play(t_data data)
 		}
 		render_screen(true);
 	}*/
-	t_game_engine	game = s_game_engine("ressources/map/default.map");
+	t_game_engine	game = s_game_engine("ressources/map/Forest-01.map");
 
 	game.placement_phase();
 }
