@@ -2,6 +2,10 @@
 
 void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 {
+	if (selected == false && team >= 0 && team < 4)
+		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
+	else if (selected == true)
+		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
 	if (tile != NULL)
 	{
 		int type = get_frame_state(4);
@@ -9,10 +13,6 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 			type = 1;
 		tile->draw_self((coord + target) * size + offset, size, sprite + t_vect(type, dir));
 	}
-	if (selected == false && team >= 0 && team < 4)
-		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
-	else if (selected == true)
-		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
 	t_vect bar_coord = (coord + target) * size + offset + t_vect((size.x - size.x * 0.8) / 2, 0);
 	t_vect bar_size = t_vect(size.x * 0.8, size.y / 10);
  	draw_rectangle(bar_coord, bar_size, t_color(0.0, 0.0, 0.0));

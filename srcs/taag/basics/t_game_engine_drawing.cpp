@@ -22,7 +22,9 @@ void				s_game_engine::draw_board()
 	board.draw_actor_list();
 	board.draw_cursor_layer();
 	board.draw_mouse_cursor();
+	//board.draw_cell_border();
 	board.draw_visual_info();
+
 }
 
 void				s_game_engine::draw_actor_info_on_gui()

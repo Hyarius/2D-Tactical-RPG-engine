@@ -99,6 +99,30 @@ s_game_board::s_game_board(string p_path)
 	cursor_tile = &interface_map["simple_cursor"];
 }
 
+void				s_game_board::draw_cell_border()
+{
+	t_vect size = sprite_unit * zoom;
+
+	int i = 0;
+	while ((size_t)i < board_size.x)
+	{
+		int j = 0;
+		while ((size_t)j < board_size.y)
+		{
+			//((t_vect(i, j) + target) * size + offset
+			t_vect coord = (t_vect(i, j) + target) * size + offset;
+			if (i == 0)
+				draw_rectangle(coord, t_vect(1, size.y), t_color(0.4, 0.4, 0.4));
+			if (j == 0)
+				draw_rectangle(coord, t_vect(size.x, 1), t_color(0.4, 0.4, 0.4));
+			draw_rectangle(coord + t_vect(size.x, 0), t_vect(1, size.y), t_color(0.4, 0.4, 0.4));
+			draw_rectangle(coord + t_vect(0, size.y), t_vect(size.x, 1), t_color(0.4, 0.4, 0.4));
+			j++;
+		}
+		i++;
+	}
+}
+
 t_cell				*s_game_board::get_cell(int x, int y)
 {
 	if (x < 0 || x >= board_size.x || y < 0 || y >= board_size.y)

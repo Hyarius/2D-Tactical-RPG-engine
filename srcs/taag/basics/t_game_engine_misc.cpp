@@ -40,6 +40,8 @@ void				s_game_engine::delete_actor(t_actor *new_actor)
 	size_t count = 0;
 	while (count < turn_order.size() && new_actor != turn_order[count])
 		count++;
+	if (turn_index >= count)
+		turn_index--;
 	if (count < turn_order.size())
 		turn_order.erase(turn_order.begin() + count);
 	board.get_cell(new_actor->coord)->actor = NULL;

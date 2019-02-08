@@ -211,6 +211,7 @@ typedef struct			s_game_board
 	void				draw_placement(); //draw tile where we can place actor
 	void				draw_actor_list();//draw every actor on the screen
 	void				draw_visual_info();//draw every visual info on screen
+	void				draw_cell_border();//draw a 1 grey pixel border around every tile
 	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
