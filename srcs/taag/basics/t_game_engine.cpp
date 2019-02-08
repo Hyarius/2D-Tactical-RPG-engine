@@ -55,7 +55,7 @@ void				s_game_engine::cast_spell(t_vect mouse)
 			{
 				if (player->spell[s_spell]->effect[j].effect == move_caster)
 					set_coord_target(mouse + target_list[i]);
-				if (board.get_cell(mouse + target_list[i]))
+				if (board.get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL)
 					player->spell[s_spell]->effect[j].effect(player, board.get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
 				j++;
 			}
