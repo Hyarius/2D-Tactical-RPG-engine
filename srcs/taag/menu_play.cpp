@@ -31,6 +31,7 @@ void					menu_play(t_data data)
 	{
 		t_game_engine	game = s_game_engine(MAP_PATH + path + MAP_EXT);
 
-		game.placement_phase();
+		if (game.board.board_size.x >= 5 && game.board.board_size.y >= 5)
+			game.placement_phase();
 	}
 }
