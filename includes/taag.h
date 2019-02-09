@@ -263,7 +263,7 @@ typedef struct			s_game_engine
 	void				handle_actor_placement_camera(SDL_Event *event);
 	void				placement_phase();
 	void				game_loop();
-	void				ending_fight();
+	void				ending_fight(bool *play);
 
 }						t_game_engine;
 

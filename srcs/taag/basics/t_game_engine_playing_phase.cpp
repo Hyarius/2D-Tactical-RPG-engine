@@ -69,7 +69,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 	}
 }
 
-void			s_game_engine::ending_fight()
+void			s_game_engine::ending_fight(bool *play)
 {
 	size_t count = 0;
 	bool	leave_game = true;
@@ -81,7 +81,7 @@ void			s_game_engine::ending_fight()
 		count++;
 	}
 	if (leave_game == true)
-		exit(0);
+		*play = false;
 }
 
 void			s_game_engine::game_loop()
@@ -100,7 +100,7 @@ void			s_game_engine::game_loop()
 		draw_gui();
 
 		if (board.enemy_list.size() == 0)
-			ending_fight();
+			ending_fight(&play);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
