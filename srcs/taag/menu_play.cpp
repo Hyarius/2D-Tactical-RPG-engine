@@ -27,8 +27,6 @@ void					menu_play(t_data data)
 
 	menu_choose_map(t_data(1, &path));
 
-	printf("path = %s\n", (MAP_PATH + path + MAP_EXT).c_str());
-
 	if (path != "")
 	{
 		t_game_engine	game = s_game_engine(MAP_PATH + path + MAP_EXT);
