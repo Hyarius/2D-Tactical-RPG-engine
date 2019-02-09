@@ -300,6 +300,7 @@ void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect
 
 void					menu_start();
 void					menu_play(t_data data);
+void						menu_choose_map(t_data data);
 void					menu_player_editor(t_data data);
 void						menu_choose_spell(t_data data);
 void						menu_choose_sprite(t_data data);
