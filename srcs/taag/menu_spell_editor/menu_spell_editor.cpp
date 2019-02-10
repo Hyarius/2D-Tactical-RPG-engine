@@ -1,26 +1,48 @@
 #include "taag.h"
 
+vector<string>		list_effect_name;
+
+static void			set_list_effect_name()
+{
+	list_effect_name.push_back("Empty effect");
+	list_effect_name.push_back("deal dmg"); 		//0
+	list_effect_name.push_back("heal");			//1
+	list_effect_name.push_back("change pm");		//2
+	list_effect_name.push_back("change pa");		//3
+	list_effect_name.push_back("push actor");	//4
+	list_effect_name.push_back("pull actor");	//5
+	list_effect_name.push_back("heal caster");	//6
+	list_effect_name.push_back("dmg caster");	//7
+	list_effect_name.push_back("move caster"); 	//8
+	list_effect_name.push_back("swap actor");	//9
+	list_effect_name.push_back("change caster pa");	//10
+	list_effect_name.push_back("change caster pm");	//11
+}
+
 void menu_spell_editor(t_data data)
 {
-	(void)data;(void)data;
+	(void)data; (void)data;
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
 
 	double i = 0;
 
+	if (list_effect_name.size() == 0)
+		set_list_effect_name();
+
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
-	t_entry *entry_path = new s_entry(new s_text_entry(	"File name of your spell", "", BLACK,
-			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
+	t_entry *entry_path = new s_entry(new s_text_entry("File name of your spell", "", BLACK,
+		t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
 	entry_path->entry->back = ACTOR_EXT;
 
-	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your spell", "", BLACK,
-			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
+	t_entry *entry_name = new s_entry(new s_text_entry("Name of your spell", "", BLACK,
+		t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
 	entry_name->entry->max_len = 32;
@@ -31,234 +53,236 @@ void menu_spell_editor(t_data data)
 
 	t_iterator *pa_iterator = new s_iterator(&(spell->cost_pa), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
-				"Cost PA: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Cost PA: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *pm_iterator = new s_iterator(&(spell->cost_pm), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
-				"Cost PM: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Cost PM: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *range_type_iterator = new s_iterator(&(spell->range_type), NULL, 1, 1, 0, 1,
 		new t_button(new s_text_button(
-				"Range type: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Range type: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *block_range_iterator = new s_iterator(&(spell->block), NULL, 1, 1, 0, 1,
 		new t_button(new s_text_button(
-				"Vision line bocked ? : ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Vision line bocked ? : ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *min_range_iterator = new s_iterator(&(spell->range[0]), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
-				"Range min: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Range min: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *max_range_iterator = new s_iterator(&(spell->range[1]), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
-				"Range max: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Range max: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *zone_type_iterator = new s_iterator(&(spell->zone_type), NULL, 1, 1, 0, 3,
 		new t_button(new s_text_button(
-				"Zone type: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Zone type: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *zone_size_iterator = new s_iterator(&(spell->zone_size), NULL, 1, 1, 0, 4,
 		new t_button(new s_text_button(
-				"Zone size: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Zone size: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
 	t_iterator *target_type_iterator = new s_iterator(&(spell->on_target), NULL, 1, 1, 0, 2,
 		new t_button(new s_text_button(
-				"Target type: ", DARK_GREY,
-				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"Target type: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"-", DARK_GREY,
-				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"", DARK_GREY,
-				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
-				"+", DARK_GREY,
-				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
-				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 	t_button	*save_button = new t_button(new s_text_button(
-			"Save spell", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_save_spell, t_data(3, &gui, spell, &(entry_path->entry->text)));//0 - gui / 1 - t_spell * / 2 - & file name
+		"Save spell", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_save_spell, t_data(3, &gui, spell, &(entry_path->entry->text)));//0 - gui / 1 - t_spell * / 2 - & file name
 	i++;
 
 	t_vect *selected;
+	string		*text[6];
 
 	t_button	*load_button = new t_button(new s_text_button(
-			"Load spell", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_load_spell, t_data(5, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
+		"Load spell", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_load_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
 	i++;
 
 	t_button	*delete_button = new t_button(new s_text_button(
-			"Delete spell", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit,
-			t_vect(8, 1) * gui.unit,
-			5,
-			t_color(0.4, 0.4, 0.4),
-			t_color(0.6, 0.6, 0.6)),
-			menu_delete_spell, t_data(5, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
+		"Delete spell", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit,
+		t_vect(8, 1) * gui.unit,
+		5,
+		t_color(0.4, 0.4, 0.4),
+		t_color(0.6, 0.6, 0.6)),
+		menu_delete_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
 	i++;
 
 	t_button	*quit_button = new t_button(new s_text_button(
-			"Quit", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_quit, t_data(2, &gui, &play));
+		"Quit", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_quit, t_data(2, &gui, &play));
 	i++;
 	i = 1;
 	t_tileset_button *tile_button = new s_tileset_button(&(interface_map["simple_iconset"]), t_vect(0, 0), t_vect(1, 0),
-			t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
+		t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	s_tileset_iterator *tileset_selector = new s_tileset_iterator(
-				t_vect(1, 1),
-				new t_button(new s_text_button(
-						"Tileset : ", DARK_GREY,
-						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(3, 1) * gui.unit, 5,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
-				new t_button(new s_text_button(
-						"-", DARK_GREY,
-						t_vect(12.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
-				new t_button(tile_button,
-						NULL, NULL),
-				new t_button(new s_text_button(
-						"+", DARK_GREY,
-						t_vect(17.25, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+		t_vect(1, 1),
+		new t_button(new s_text_button(
+			"Tileset : ", DARK_GREY,
+			t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(3, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"-", DARK_GREY,
+			t_vect(12.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(tile_button,
+			NULL, NULL),
+		new t_button(new s_text_button(
+			"+", DARK_GREY,
+			t_vect(17.25, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i += 2;
 
 	selected = &(tile_button->selected);
 
 	gui.add(back_ground);
 
-	for (size_t j = 0; j < 6; j++)
+
+	int j = 0;
+	while (j < 6)
 	{
-		printf("effect %zu = %p\n", j, spell->effect[j].effect);
 		t_button *button = new t_button(new s_text_button(
 			"Effect " + to_string(j + 1) + " :", DARK_GREY,
 			t_vect(9.2, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,
@@ -267,14 +291,25 @@ void menu_spell_editor(t_data data)
 		gui.add(button);
 
 		i+= 0.7;
+		int count = 0;
 
+		while (count < (int)(g_effects.size()) && g_effects[count] != spell->effect[j].effect)
+			count++;
+		if (count == g_effects.size())
+			count = -1;
+		else
+			count++;
+		string tmp_text = (count != -1 ? list_effect_name[count] : list_effect_name[0]);
 		button = new t_button(new s_text_button(
-			"test", DARK_GREY,
+			tmp_text, DARK_GREY,
 			t_vect(9.2, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			NULL, NULL);
+			menu_select_effect, NULL);
+		button->button->data = t_data(3, &gui, spell, text);
+		text[j] = &(button->button->text);
 		i += 1.35;
 		gui.add(button);
+		j++;
 	}
 
 	gui.add(entry_path);

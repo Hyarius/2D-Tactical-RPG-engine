@@ -27,6 +27,7 @@ static void		quit_load(t_data data)// spell / entry_name / entry_path / pool / p
 	bool 		*play = (bool *)(data.data[3]);
 	t_vect		*sprite_target = (t_vect *)(data.data[4]);
 	int			i = (int &)(data.data[5]);
+	string		**text = (string **)(data.data[6]);
 
 	if (*(text_list_load_spell[i]) != "")
 	{
@@ -35,6 +36,18 @@ static void		quit_load(t_data data)// spell / entry_name / entry_path / pool / p
 		*entry_path = *(text_list_load_spell[i]);
 		*entry_name = spell->name;
 		*play = false;
+		for (int i = 0; i < 6; i++)
+		{
+			int count = 0;
+
+			while (count < (int)(g_effects.size()) && g_effects[count] != spell->effect[i].effect)
+				count++;
+			if (count == g_effects.size())
+				count = -1;
+			else
+				count++;
+			*(text[i]) = (count != -1 ? list_effect_name[count] : list_effect_name[0]);
+		}
 	}
 }
 
@@ -45,6 +58,7 @@ void			menu_load_spell(t_data data) // 0 - t_gui * / 1 - t_spell * / 2 - &name /
 	string		*entry_name = (string *)(data.data[2]);
 	string		*entry_path = (string *)(data.data[3]);
 	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
+	string		**text = (string **)(data.data[5]);
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
@@ -75,7 +89,7 @@ void			menu_load_spell(t_data data) // 0 - t_gui * / 1 - t_spell * / 2 - &name /
 					8,
 					t_color(0.4, 0.4, 0.4),
 					t_color(0.6, 0.6, 0.6)),
-					quit_load, t_data(6, spell, entry_name, entry_path, &play, sprite_target, i));// spell / entry_name / entry_path / pool / play / num
+					quit_load, t_data(7, spell, entry_name, entry_path, &play, sprite_target, i, text));// spell / entry_name / entry_path / pool / play / num
 		text_list_load_spell[i] = &(button->button->text);
 		gui.add(button);
 		i++;

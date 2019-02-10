@@ -86,6 +86,7 @@ typedef struct		s_effect_stat
 
 typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
 
+extern vector<string>	list_effect_name;
 extern vector<event> g_effects;
 
 typedef struct		s_effect
@@ -319,6 +320,7 @@ void					menu_spell_editor(t_data data);
 void						menu_save_spell(t_data data);
 void						menu_load_spell(t_data data);
 void						menu_delete_spell(t_data data);
+void						menu_select_effect(t_data data);
 void					menu_quit(t_data data);
 
 #endif
