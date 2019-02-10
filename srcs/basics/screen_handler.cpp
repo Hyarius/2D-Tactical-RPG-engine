@@ -34,10 +34,6 @@ void				window_initialisation(string window_name)
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_PNG);
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GetDesktopDisplayMode(0, &current);
 	g_window = SDL_CreateWindow(window_name.c_str(),
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -45,9 +41,14 @@ void				window_initialisation(string window_name)
 		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	SDL_GetWindowSize(g_window, &win_x, &win_y);
 	g_window_size = t_vect(win_x, win_y);
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	g_context = SDL_GL_CreateContext(g_window);
 
-	SDL_GL_SetSwapInterval(0);
+	SDL_GL_SetSwapInterval(1);
 
 	#ifndef __APPLE__
 		glewInit();
@@ -114,12 +115,14 @@ void				prepare_screen(t_color color)
 void				render_screen()
 {
 	check_frame();
+	glFlush();
 	SDL_GL_SwapWindow(g_window);
 }
 
 void				render_screen(bool value)
 {
 	check_frame(value);
+	glFlush();
 	SDL_GL_SwapWindow(g_window);
 }
 

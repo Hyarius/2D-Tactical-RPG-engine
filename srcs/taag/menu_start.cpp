@@ -49,6 +49,7 @@ void		menu_start()
 
 	while (play)
 	{
+
 		prepare_screen();
 
 		gui.draw_self();

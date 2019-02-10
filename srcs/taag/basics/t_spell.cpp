@@ -8,14 +8,14 @@ s_spell::s_spell()
 {
 	name = "NULL";
 	desc = "";
-	m_spell = false;
+	m_spell = INT_FALSE;
 	tile = NULL;
 	icon = t_vect(-1, -1);
 	cost_pa = 0;
 	cost_pm = 0;
-	range[0] = -1;
-	range[1] = -1;
-	block = true;
+	range[0] = 0;
+	range[1] = 0;
+	block = INT_FALSE;
 	on_target = 0;
 	range_type = R_CIRCLE;
 	zone_type = Z_CROSS;
@@ -25,9 +25,9 @@ s_spell::s_spell()
 		effect[i] = s_effect();
 }
 
-s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, bool p_m_spell,
-					int p_cost_pa, int p_cost_pm, int range_min, int range_max, bool p_block, int p_on_target,
-					e_range_type p_range_type, e_zone_type p_zone_type, int p_zone_size,
+s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
+					int p_cost_pa, int p_cost_pm, int range_min, int range_max, int p_block, int p_on_target,
+					int p_range_type, int p_zone_type, int p_zone_size,
 					vector<t_effect> p_effect)
 {
 	name = p_name;
@@ -56,14 +56,14 @@ t_spell		read_one_spell(string path)
 	string			desc;
 	t_tileset		*tile;
 	t_vect			icon;
-	bool			m_spell;
+	int				m_spell;
 	int				cost_pa;
 	int				cost_pm;
 	int				range[2];
-	bool			block;
+	int				block;
 	int				on_target;
-	e_range_type	range_type;
-	e_zone_type		zone_type;
+	int				range_type;
+	int				zone_type;
 	int				zone_size;
 	vector<t_effect> effect;
 
@@ -75,18 +75,18 @@ t_spell		read_one_spell(string path)
 	tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
 	tab = get_strsplit(&myfile, ":", 3);
 	icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
-	m_spell = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()) == 0 ? false : true);
+	m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	tab = get_strsplit(&myfile, ":", 4);
 	range[0] = atoi(tab[1].c_str());
 	range[1] = atoi(tab[2].c_str());
-	block = (atoi(tab[3].c_str()) == 0 ? true : false);
-	range_type = (e_range_type)(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
+	block = atoi(tab[3].c_str());
+	range_type = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
 	on_target = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	tab = get_strsplit(&myfile, ":", 3);
-	zone_type = (e_zone_type)(atoi(tab[1].c_str()));
-	zone_size = (e_zone_type)(atoi(tab[2].c_str()));
+	zone_type = (atoi(tab[1].c_str()));
+	zone_size = (atoi(tab[2].c_str()));
 	while (!myfile.eof())
 	{
 		tab = get_strsplit(&myfile, ":", -1);
@@ -108,14 +108,14 @@ void		read_spell()
 	string			desc;
 	t_tileset		*tile;
 	t_vect			icon;
-	bool			m_spell;
+	int				m_spell;
 	int				cost_pa;
 	int				cost_pm;
 	int				range[2];
-	bool			block;
+	int				block;
 	int				on_target;
-	e_range_type	range_type;
-	e_zone_type		zone_type;
+	int				range_type;
+	int				zone_type;
 	int				zone_size;
 	vector<t_effect> effect;
 
@@ -134,18 +134,18 @@ void		read_spell()
 		tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
 		tab = get_strsplit(&myfile, ":", 3);
 		icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
-		m_spell = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()) == 0 ? false : true);
+		m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		tab = get_strsplit(&myfile, ":", 4);
 		range[0] = atoi(tab[1].c_str());
 		range[1] = atoi(tab[2].c_str());
-		block = (atoi(tab[3].c_str()) == 0 ? true : false);
-		range_type = (e_range_type)(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
+		block = atoi(tab[3].c_str());
+		range_type = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));
 		on_target = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		tab = get_strsplit(&myfile, ":", 3);
-		zone_type = (e_zone_type)(atoi(tab[1].c_str()));
-		zone_size = (e_zone_type)(atoi(tab[2].c_str()));
+		zone_type = (atoi(tab[1].c_str()));
+		zone_size = (atoi(tab[2].c_str()));
 		while (!myfile.eof())
 		{
 			tab = get_strsplit(&myfile, ":", -1);

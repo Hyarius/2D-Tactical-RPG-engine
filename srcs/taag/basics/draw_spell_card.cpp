@@ -32,10 +32,11 @@ void			draw_spell_card(t_spell *spell, t_vect coord, t_vect size)
 	draw_paragraphe(spell->desc, text_size, (coord + unit * t_vect(2, 20.5)), unit * t_vect(36.6, 38), BLACK);
 
 	int i = 0;
-	int tmp = (spell->zone_size != 0 ? (int)(spell->zone_type) : 4);
+	int tmp = (spell->zone_size != 0 ? spell->zone_type : 4);
 	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(29.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect(tmp, 5));
-	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(20, 49.5)), unit * t_vect(8.5, 8.5), t_vect((int)(spell->range_type) + 2, 4));
-	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(10.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect((spell->block == false ? 1 : 0), 4));
+	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(21.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect((int)(spell->range_type) + 2, 4));
+	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(12.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect(spell->block, 4));
+	interface_map["simple_cursor"].draw_self((coord + unit * t_vect(4.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect(2 + spell->on_target, 3));
 
 	}
 }

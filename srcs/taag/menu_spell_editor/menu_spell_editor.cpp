@@ -66,8 +66,8 @@ void menu_spell_editor(t_data data)
 				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
-	int range_type = 0;
-	t_iterator *range_type_iterator = new s_iterator(&range_type, NULL, 1, 1, 0, 1,
+
+	t_iterator *range_type_iterator = new s_iterator(&(spell->range_type), NULL, 1, 1, 0, 1,
 		new t_button(new s_text_button(
 				"Range type: ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -86,8 +86,7 @@ void menu_spell_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	int block = 1;
-	t_iterator *block_range_iterator = new s_iterator(&(block), NULL, 1, 1, 0, 1,
+	t_iterator *block_range_iterator = new s_iterator(&(spell->block), NULL, 1, 1, 0, 1,
 		new t_button(new s_text_button(
 				"Vision line bocked ? : ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -106,7 +105,6 @@ void menu_spell_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	spell->range[0] = 0;
 	t_iterator *min_range_iterator = new s_iterator(&(spell->range[0]), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
 				"Range min: ", DARK_GREY,
@@ -125,7 +123,6 @@ void menu_spell_editor(t_data data)
 				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
-	spell->range[1] = 0;
 
 	t_iterator *max_range_iterator = new s_iterator(&(spell->range[1]), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
@@ -145,10 +142,10 @@ void menu_spell_editor(t_data data)
 				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
-	int zone_type = 0;
-	t_iterator *zone_type_iterator = new s_iterator(&zone_type, NULL, 1, 1, 0, 3,
+
+	t_iterator *zone_type_iterator = new s_iterator(&(spell->zone_type), NULL, 1, 1, 0, 3,
 		new t_button(new s_text_button(
-				"Range type: ", DARK_GREY,
+				"Zone type: ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
@@ -164,6 +161,7 @@ void menu_spell_editor(t_data data)
 				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+
 	t_iterator *zone_size_iterator = new s_iterator(&(spell->zone_size), NULL, 1, 1, 0, 4,
 		new t_button(new s_text_button(
 				"Zone size: ", DARK_GREY,
@@ -301,9 +299,6 @@ void menu_spell_editor(t_data data)
 	while (play)
 	{
 		spell->name = entry_name->entry->text;
-		spell->range_type = (e_range_type)range_type;
-		spell->zone_type = (e_zone_type)zone_type;
-		spell->block = (bool)block;
 		spell->icon = tile_button->selected;
 		prepare_screen();
 

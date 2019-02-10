@@ -37,16 +37,16 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		vector<t_vect>	target_list;
 		if (player->spell[s_spell]->zone_type == Z_DIAM)
 			target_list = calc_diam(player->spell[s_spell]->zone_size);
-		if (player->spell[s_spell]->zone_type == Z_CROSS)
+		else if (player->spell[s_spell]->zone_type == Z_CROSS)
 			target_list = calc_cross(player->spell[s_spell]->zone_size);
-		if (player->spell[s_spell]->zone_type == Z_LINE)
+		else if (player->spell[s_spell]->zone_type == Z_LINE)
 		{
 			t_vect diff = player->coord - mouse;
 			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
 								((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
 			target_list = calc_line(player->spell[s_spell]->zone_size, dir);
 		}
-		if (player->spell[s_spell]->zone_type == Z_SQUARE)
+		else if (player->spell[s_spell]->zone_type == Z_SQUARE)
 			target_list = calc_square(player->spell[s_spell]->zone_size);
 		while (i < target_list.size())
 		{
