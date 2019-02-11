@@ -47,6 +47,8 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_quit, t_data(2, &gui, &play)));
 
+	
+
 	while (play)
 	{
 

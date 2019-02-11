@@ -46,8 +46,6 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 		}
 		if (visible == true)
 		{
-			if (to_calc == NULL)
-				printf("test for %.0f / %.0f\n", target.x, target.y);
 			board.get_cell(target)->v_dist = prev_dist + 1;
 			if (board.get_cell(target)->v_dist <= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[1])
 			{

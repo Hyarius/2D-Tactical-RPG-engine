@@ -30,7 +30,7 @@ void			menu_quit(t_data data)
 						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 16, //object info
 						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 						NULL, NULL);
-	button->button->coord[2] = button->button->coord[2] - gui.unit * t_vect(0, 1);
+	button->button->image_coord = button->button->image_coord - gui.unit * t_vect(0, 1);
 	gui.add(button);
 
 	t_data new_data = (data.data.size() == 1 ? NULL : (data.data.size() == 2 ? t_data(2, data.data[1], &play) : data.data.size() == 3 ? t_data(3, data.data[1], data.data[2], &play) : NULL));

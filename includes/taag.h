@@ -12,9 +12,12 @@ extern map<string, struct s_tileset>	interface_map;
 													//tileset used by interface for the prog, in extern to accessibility
 extern map<string, struct s_tileset>	sprite_map; //the dictionnary holding on every
 													//tileset used by sprite for the prog, in extern to accessibility
+extern map<string, struct s_tileset>	animation_map; //the dictionnary holding on every
+													//tileset used by sprite for the prog, in extern to accessibility
 extern vector<string>					tileset_name; //stock the name of every tileset in tileset_map
 extern vector<string>					sprite_name;//stock the name of every tileset in sprite_map
 extern vector<string>					interface_name;//stock the name of every tileset in interface_map
+extern vector<string>					animation_name;//stock the name of every tileset in interface_map
 
 # define SPELL_BUTTON	3
 
@@ -32,6 +35,19 @@ extern vector<string>					interface_name;//stock the name of every tileset in in
 
 #define SPELL_PATH "ressources/spell/"
 #define SPELL_EXT ".spell"
+
+
+typedef struct			s_animation
+{
+	t_tileset			*tile;
+	int					start; //on what frame this anim start
+	int					len; //len total of the animation
+	double				index; //where we are into this animation
+	t_vect				coord; //center of the animation
+	t_vect				size; //size ratio of the animation
+						s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect p_coord, t_vect p_size);
+	void				draw_self(t_vect target, t_vect offset, t_vect size);
+}						t_animation;
 
 typedef struct			s_node
 {
@@ -170,6 +186,7 @@ typedef struct			s_cell
 	t_vect				cursor;		//the sprite of the cursor to print up the cell
 	vector<t_visual_info>
 						visual_info; //list of every infos we need to print on screen
+	vector<t_animation>	animation; //list of every animation in this cell
 						s_cell();
 						s_cell(t_vect p_coord, t_node *p_node);
 	void				draw_cell(t_vect target, t_vect offset, t_vect size); //draw the cell on her place on the screen
@@ -209,6 +226,7 @@ typedef struct			s_game_board
 	void				draw_placement(); //draw tile where we can place actor
 	void				draw_actor_list();//draw every actor on the screen
 	void				draw_visual_info();//draw every visual info on screen
+	void				draw_animation();//draw every animation info on screen
 	void				draw_cell_border();//draw a 1 grey pixel border around every tile
 	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera

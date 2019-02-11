@@ -25,13 +25,13 @@ void			draw_triangle_texture(t_point a, t_point b, t_point c)
 	glBindVertexArray(get_vertex_array());
 
 	glBindBuffer(GL_ARRAY_BUFFER, get_vertex_buffer());
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_DYNAMIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, get_texture_buffer());
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_DYNAMIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, get_alpha_buffer());
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_alpha_buffer_data), g_alpha_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_alpha_buffer_data), g_alpha_buffer_data, GL_DYNAMIC_DRAW);
 
 	if (type != 0)
 	{
@@ -74,10 +74,10 @@ void			draw_triangle_color(t_point a, t_point b, t_point c)
 	glBindVertexArray(get_vertex_array());
 
 	glBindBuffer(GL_ARRAY_BUFFER, get_vertex_buffer());
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_DYNAMIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, get_color_buffer());
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_DYNAMIC_DRAW);
 
 	if (type != 1)
 	{
@@ -115,7 +115,7 @@ void			add_triangle_texture(t_point a, t_point b, t_point c)
 void			add_triangle_color(t_point a, t_point b, t_point c)
 {
 	g_vertex_vector_data.insert(g_vertex_vector_data.end(),{(GLfloat)(a.x),(GLfloat)(a.y),0.0f ,(GLfloat)(b.x),(GLfloat)(b.y),0.0f ,(GLfloat)(c.x),(GLfloat)(c.y),0.0f });
-	g_color_vector_data.insert(g_uv_vector_data.end(),{(GLfloat)(a.r),(GLfloat)(a.g),(GLfloat)(a.b),(GLfloat)(a.a) ,(GLfloat)(b.r),(GLfloat)(b.g),(GLfloat)(b.b),(GLfloat)(b.a) ,(GLfloat)(c.r),(GLfloat)(c.g),(GLfloat)(c.b),(GLfloat)(c.a) });
+	g_color_vector_data.insert(g_color_vector_data.end(),{(GLfloat)(a.r),(GLfloat)(a.g),(GLfloat)(a.b),(GLfloat)(a.a) ,(GLfloat)(b.r),(GLfloat)(b.g),(GLfloat)(b.b),(GLfloat)(b.a) ,(GLfloat)(c.r),(GLfloat)(c.g),(GLfloat)(c.b),(GLfloat)(c.a) });
 }
 
 void			render_triangle_texture(GLuint texture_id)

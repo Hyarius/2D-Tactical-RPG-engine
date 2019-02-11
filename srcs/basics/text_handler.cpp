@@ -4,7 +4,7 @@ map< int, TTF_Font *> 						font_list;
 vector<vector<vector<vector<vector<t_image *>>>>>
 											char_list;
 SDL_Color									g_color_tab[NB_COLOR];
-string										font_path = "ressources/font/MonospaceTypewriter.ttf";
+string										font_path = "ressources/font/Tinos-Regular.ttf";
 
 static SDL_Color	create_color(int r, int g, int b, int a)
 {

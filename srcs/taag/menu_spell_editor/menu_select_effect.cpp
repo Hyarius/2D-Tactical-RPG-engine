@@ -81,7 +81,7 @@ void			menu_choose_effect(t_data data)
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -185,14 +185,15 @@ static void save_effect(t_data data)
 	for (int i = 0; i < 6; i++)
 	{
 		int count = 0;
-		
+
 		while (count < (int)(list_effect_name.size()) && list_effect_name[count] != *(entry[i]))
 			count++;
-		if (count == list_effect_name.size())
+		if (count == (int)(list_effect_name.size()))
 			count = -1;
 		else
 			count--;
-		spell->effect[i].effect = g_effects[count];
+		if (count != -1)
+			spell->effect[i].effect = g_effects[count];
 		*(text[i]) = list_effect_name[count + 1];
 		for (int j = 0; j < 4; j++)
 		{
@@ -301,7 +302,7 @@ void menu_select_effect(t_data data)
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

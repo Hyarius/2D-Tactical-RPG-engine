@@ -70,7 +70,7 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						NULL, NULL);
-	button->button->coord[2] = button->button->coord[2] - (gui.unit * t_vect(0, 1));
+	button->button->image_coord = button->button->image_coord - (gui.unit * t_vect(0, 1));
 
 	gui.add(button);
 

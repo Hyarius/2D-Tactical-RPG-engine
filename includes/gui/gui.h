@@ -32,8 +32,13 @@ typedef struct		s_gui_comp
 typedef struct 		s_button_comp : t_gui_comp
 {
 	string			text; //text to draw on screen
+	string			saved_text; //memory buffer of the text we created in image_text;
 	int				text_size;
 	int				text_color;
+	SDL_Surface		*surface;
+	t_image			*text_image;
+	t_vect			image_coord;
+	t_vect 			image_size;
 	t_vect			coord[3]; //0 - coord first rect || 1 - coord second rect || 2 - text coord
 	t_vect			size[2]; //0 - size first rect || 1 - size second rect
 	gui_funct		funct; //function to use when clicked : initialized empty

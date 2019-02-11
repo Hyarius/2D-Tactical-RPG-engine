@@ -295,7 +295,7 @@ void menu_spell_editor(t_data data)
 
 		while (count < (int)(g_effects.size()) && g_effects[count] != spell->effect[j].effect)
 			count++;
-		if (count == g_effects.size())
+		if (count == (int)(g_effects.size()))
 			count = -1;
 		else
 			count++;
@@ -307,10 +307,21 @@ void menu_spell_editor(t_data data)
 			menu_select_effect, NULL);
 		button->button->data = t_data(3, &gui, spell, text);
 		text[j] = &(button->button->text);
-		i += 1.35;
+		i += 1;
 		gui.add(button);
 		j++;
 	}
+
+	t_button	*test = new t_button(new s_text_button(
+		"Edit spell's animation", DARK_GREY,
+		t_vect(9.2, 1 + (1.2 * i)) * gui.unit,
+		t_vect(8, 1.8) * gui.unit,
+		5,
+		t_color(0.4, 0.4, 0.4),
+		t_color(0.6, 0.6, 0.6)),
+		NULL, NULL);
+	i++;
+
 
 	gui.add(entry_path);
 	gui.add(entry_name);
@@ -329,6 +340,7 @@ void menu_spell_editor(t_data data)
 	gui.add(quit_button);
 	gui.add(tileset_selector);
 	gui.add(card);
+	gui.add(test);
 
 	spell->tile = &(interface_map["simple_iconset"]);
 	while (play)
@@ -350,5 +362,4 @@ void menu_spell_editor(t_data data)
 		}
 		render_screen(true);
 	}
-	printf("Menu spell editor\n");
 }

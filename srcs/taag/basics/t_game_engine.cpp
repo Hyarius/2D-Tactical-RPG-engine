@@ -56,7 +56,10 @@ void				s_game_engine::cast_spell(t_vect mouse)
 				if (player->spell[s_spell]->effect[j].effect == move_caster)
 					set_coord_target(mouse + target_list[i]);
 				if (board.get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL)
+				{
 					player->spell[s_spell]->effect[j].effect(player, board.get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
+					board.get_cell(mouse + target_list[i])->animation.push_back(s_animation(&(animation_map["explosion-00"]), 0, 15, mouse + target_list[i] + 0.5, t_vect(1, 1)));
+				}
 				j++;
 			}
 			i++;

@@ -52,11 +52,14 @@ void	change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_sta
 	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] < source->stat.pa.value ? effect_stat.value[0] : source->stat.pa.value);
-		source->stat.pa.value += damage;
-		if (source->stat.hp.value != 0)
-			source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			source->stat.pa.value += damage;
+			if (source->stat.hp.value != 0)
+				source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+			else
+				game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
 
@@ -67,11 +70,14 @@ void	change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_sta
 	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] < source->stat.pm.value ? effect_stat.value[0] : source->stat.pm.value);
-		source->stat.pm.value += damage;
-		if (source->stat.hp.value != 0)
-			source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			source->stat.pm.value += damage;
+			if (source->stat.hp.value != 0)
+				source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+			else
+				game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
 
@@ -95,19 +101,25 @@ void	heal_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] + source->stat.hp.value < source->stat.hp.max ? effect_stat.value[0] : source->stat.hp.max - source->stat.hp.value);
-		source->stat.hp.value += damage;
-		source->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+		if (damage != 0)
+		{
+			source->stat.hp.value += damage;
+			source->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+		}
 	}
 }
 
 void	dmg_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
 	int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
-	source->stat.hp.value -= damage;
-	if (source->stat.hp.value != 0)
-		source->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-	else if (damage)
-		game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+	if (damage != 0)
+	{
+		source->stat.hp.value -= damage;
+		if (source->stat.hp.value != 0)
+			source->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+		else if (damage)
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+	}
 }
 
 void	push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
@@ -157,11 +169,14 @@ void deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
-		target->stat.hp.value -= damage;
-		if (target->stat.hp.value != 0)
-			target->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			target->stat.hp.value -= damage;
+			if (target->stat.hp.value != 0)
+				target->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			else if (damage)
+				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
 
@@ -172,8 +187,11 @@ void heal(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage = (effect_stat.value[0] + target->stat.hp.value < target->stat.hp.max ? effect_stat.value[0] : target->stat.hp.max - target->stat.hp.value);
-		target->stat.hp.value += damage;
-		target->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			target->stat.hp.value += damage;
+			target->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
 
@@ -188,11 +206,14 @@ void change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 			damage = target->stat.pm.value;
 		else
 			damage = effect_stat.value[0];
-		target->stat.pm.value += damage;
-		if (target->stat.hp.value != 0)
-			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			target->stat.pm.value += damage;
+			if (target->stat.hp.value != 0)
+				target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			else if (damage)
+				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
 
@@ -207,10 +228,13 @@ void change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 			damage = target->stat.pa.value;
 		else
 			damage = effect_stat.value[0];
-		target->stat.pa.value += damage;
-		if (target->stat.hp.value != 0)
-			target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		if (damage != 0)
+		{
+			target->stat.pa.value += damage;
+			if (target->stat.hp.value != 0)
+				target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			else if (damage)
+				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		}
 	}
 }
