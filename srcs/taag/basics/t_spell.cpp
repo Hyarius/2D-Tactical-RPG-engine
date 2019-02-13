@@ -23,12 +23,15 @@ s_spell::s_spell()
 	effect.resize(6);
 	for (int i = 0; i < 6; i++)
 		effect[i] = s_effect();
+	caster_anim = t_animation();
+	target_anim = t_animation();
+	anim_type = 0;
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
 					int p_cost_pa, int p_cost_pm, int range_min, int range_max, int p_block, int p_on_target,
 					int p_range_type, int p_zone_type, int p_zone_size,
-					vector<t_effect> p_effect)
+					vector<t_effect> p_effect, t_animation p_caster_anim, t_animation p_target_anim, int p_anim_type)
 {
 	name = p_name;
 	desc = p_desc;
@@ -46,6 +49,9 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	zone_size = p_zone_size;
 	effect = p_effect;
 	effect.resize(6);
+	caster_anim = p_caster_anim;
+	target_anim = p_target_anim;
+	anim_type = p_anim_type;
 }
 
 t_spell		read_one_spell(string path)
@@ -87,18 +93,18 @@ t_spell		read_one_spell(string path)
 	tab = get_strsplit(&myfile, ":", 3);
 	zone_type = (atoi(tab[1].c_str()));
 	zone_size = (atoi(tab[2].c_str()));
-	while (!myfile.eof())
+	for (int count = 0; count < 6; count++)
 	{
 		tab = get_strsplit(&myfile, ":", -1);
 		if (tab.size() == 6)
 			effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
 	}
-	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
 	tab = get_strsplit(&myfile, ":", 6);
-	spell.caster_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atoi(tab[4].c_str()), atoi(tab[5].c_str())));
+	t_animation caster_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 	tab = get_strsplit(&myfile, ":", 6);
-	spell.target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atoi(tab[4].c_str()), atoi(tab[5].c_str())));
-	spell.anim_type = 0;
+	t_animation target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
+	int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, caster_anim, target_anim, anim_type);
 	effect.clear();
 	myfile.close();
 	return (spell);
@@ -133,7 +139,7 @@ void		read_spell()
 	{
 		myfile.open(SPELL_PATH + spell_file[i] + SPELL_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", SPELL_PATH, spell_file[i].c_str(), SPELL_EXT);
+			printf("can't open such file : %s\n", (SPELL_PATH + spell_file[i] + SPELL_EXT).c_str());
 		name = get_strsplit(&myfile, ":", 2)[1];
 		desc = get_strsplit(&myfile, ":", 2)[1];
 		tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
@@ -151,14 +157,19 @@ void		read_spell()
 		tab = get_strsplit(&myfile, ":", 3);
 		zone_type = (atoi(tab[1].c_str()));
 		zone_size = (atoi(tab[2].c_str()));
-		while (!myfile.eof())
+		for (int count = 0; count < 6; count++)
 		{
-			tab = get_strsplit(&myfile, ":", -1);
+			tab = get_strsplit(&myfile, ":", 6);
 			if (tab.size() == 6)
 				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
 		}
-		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
-		if (m_spell == false)
+		tab = get_strsplit(&myfile, ":", 6);
+		t_animation caster_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
+		tab = get_strsplit(&myfile, ":", 6);
+		t_animation target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
+		int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, caster_anim, target_anim, anim_type);
+		if (m_spell == INT_FALSE)
 			spell_heros_name.push_back(name);
 		spell_name.push_back(name);
 		effect.clear();

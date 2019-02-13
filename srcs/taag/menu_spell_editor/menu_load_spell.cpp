@@ -42,7 +42,7 @@ static void		quit_load(t_data data)// spell / entry_name / entry_path / pool / p
 
 			while (count < (int)(g_effects.size()) && g_effects[count] != spell->effect[i].effect)
 				count++;
-			if (count == (int)(g_effects.size()))
+			if (count == (int)(g_effects.size()) || (count == 0 && spell->effect[i].stat.value[0] == 0))
 				count = -1;
 			else
 				count++;

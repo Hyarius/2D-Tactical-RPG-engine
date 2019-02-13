@@ -48,6 +48,8 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		}
 		else if (player->spell[s_spell]->zone_type == Z_SQUARE)
 			target_list = calc_square(player->spell[s_spell]->zone_size);
+		if (player->spell[s_spell]->anim_type == 0)
+			board.get_cell(mouse)->animation.push_back(player->spell[s_spell]->target_anim);
 		while (i < target_list.size())
 		{
 			size_t j = 0;
@@ -58,7 +60,8 @@ void				s_game_engine::cast_spell(t_vect mouse)
 				if (board.get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL)
 				{
 					player->spell[s_spell]->effect[j].effect(player, board.get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
-					board.get_cell(mouse + target_list[i])->animation.push_back(s_animation(get_animation_tile(1), 0, 15, mouse + target_list[i] + 0.5, t_vect(1, 1)));
+					if (player->spell[s_spell]->anim_type == 1 || (player->spell[s_spell]->anim_type == 2 && board.get_cell(mouse + target_list[i])->actor != NULL))
+						board.get_cell(mouse + target_list[i])->animation.push_back(player->spell[s_spell]->target_anim);
 				}
 				j++;
 			}

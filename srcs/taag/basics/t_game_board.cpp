@@ -138,7 +138,7 @@ void				s_game_board::draw_animation()
 				size_t count = 0;
 				while (count < get_cell(i, j)->animation.size())
 				{
-					get_cell(i, j)->animation[count].draw_self(t_vect(i, j), target, offset, size);
+					get_cell(i, j)->animation[count].draw_self(t_vect(i, j) + 0.5, target, offset, size);
 					count++;
 				}
 			}
