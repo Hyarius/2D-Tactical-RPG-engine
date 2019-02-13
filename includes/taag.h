@@ -36,18 +36,14 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 #define SPELL_PATH "ressources/spell/"
 #define SPELL_EXT ".spell"
 
-
-typedef struct			s_animation
-{
-	t_tileset			*tile;
-	int					start; //on what frame this anim start
-	int					len; //len total of the animation
-	double				index; //where we are into this animation
-	t_vect				coord; //center of the animation
-	t_vect				size; //size ratio of the animation
-						s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect p_coord, t_vect p_size);
-	void				draw_self(t_vect target, t_vect offset, t_vect size);
-}						t_animation;
+#define TILESET_TILESET_PATH "ressources/tileset/tileset/"
+#define TILESET_TILESET_EXT ".tls"
+#define TILESET_CHARSET_PATH "ressources/tileset/charset/"
+#define TILESET_CHARSET_EXT ".tls"
+#define TILESET_INTERFACE_PATH "ressources/tileset/interface/"
+#define TILESET_INTERFACE_EXT ".tls"
+#define TILESET_ANIMATION_PATH "ressources/tileset/animation/"
+#define TILESET_ANIMATION_EXT ".tls"
 
 typedef struct			s_node
 {
@@ -113,6 +109,17 @@ typedef struct		s_effect
 					s_effect(event p_effect, int value0, int value1, int value2, int value3);
 }					t_effect;
 
+typedef struct			s_animation
+{
+	t_tileset			*tile;
+	int					start; //on what frame this anim start
+	int					len; //len total of the animation
+	double				index; //where we are into this animation
+	t_vect				anim_size;
+						s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect anim_size);
+	void				draw_self(t_vect coord, t_vect target, t_vect offset, t_vect size);
+}						t_animation;
+
 typedef struct			s_spell
 {
 	string				name;			//name of the spell -
@@ -129,6 +136,9 @@ typedef struct			s_spell
 	int					zone_type;		//what kind of zone is it ? -
 	int					zone_size;		//size of the zone
 	vector<t_effect>	effect;			//list of effect
+	s_animation			caster_anim;	//anim to display on the caster
+	s_animation			target_anim;	//anim to display on the target zone
+	int					anim_type; 		//0 - single anim on the clicked coord | 1 - anim on every cell | 2 - anim on every target
 						s_spell();
 						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
 								int p_cost_pa, int p_cost_pm,
@@ -297,7 +307,17 @@ void					set_game_engine(t_game_engine *new_game);
 void					set_coord_target(t_vect p_coord);
 
 void					generate_charset_tileset();
+void					generate_animation_tileset();
 void					generate_node_file();
+
+t_tileset				*get_tileset_tile(string p_name);
+t_tileset				*get_tileset_tile(size_t name_num);
+t_tileset				*get_sprite_tile(string p_name);
+t_tileset				*get_sprite_tile(size_t name_num);
+t_tileset				*get_interface_tile(string p_name);
+t_tileset				*get_interface_tile(size_t name_num);
+t_tileset				*get_animation_tile(string p_name);
+t_tileset				*get_animation_tile(size_t name_num);
 
 t_game_board			board_generator(int size_x, int size_y, int node);
 

@@ -3,9 +3,9 @@
 void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 {
 	if (selected == false && team >= 0 && team < 4)
-		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(team, 1));
+		get_interface_tile("simple_cursor")->draw_self((coord + target) * size + offset, size, t_vect(team, 1));
 	else if (selected == true)
-		interface_map["simple_cursor"].draw_self((coord + target) * size + offset, size, t_vect(2, 0));
+		get_interface_tile("simple_cursor")->draw_self((coord + target) * size + offset, size, t_vect(2, 0));
 	if (tile != NULL)
 	{
 		int type = get_frame_state(4);
@@ -52,7 +52,7 @@ t_actor					read_actor(string p_path)
 	if (myfile.fail())
 		printf("can't open such file : %s\n", p_path.c_str());
 	name = get_strsplit(&myfile, ":", 2)[1];
-	tile = &(sprite_map[get_strsplit(&myfile, ":", 2)[1]]);
+	tile = get_sprite_tile(get_strsplit(&myfile, ":", 2)[1]);
 	tab = get_strsplit(&myfile, ":", 3);
 	sprite = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 	hp = t_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()));

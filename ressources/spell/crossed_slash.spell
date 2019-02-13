@@ -1,7 +1,7 @@
 name:Crossed slash
 description:Deal 10 damages to a target and push it back by 1 tile
 icon:simple_iconset
-sprite:8:5
+sprite:12:5
 m_spell:0
 pa:4
 pm:0

@@ -12,7 +12,6 @@ static void		quit_choose_sprite(t_data data)
 	bool			*play = (bool *)(data.data[5]);
 
 	*index = (*tmp_index + i) % sprite_name.size();
-	printf("index = %zu\n", *index);
 	*selected = *tmp_selected;
 	*play = false;
 }
@@ -25,11 +24,11 @@ static void		increment_index(t_data data)
 	if (*index == 0 && delta < 0)
 		*index = sprite_name.size() + delta;
 	else
-		*index = (*index + delta) % sprite_name.size();
+		*index = (*index + delta) % (sprite_name.size());
 	int i = 0;
 	while (i < 32)
 	{
-		*(tileset_list[i]) = &(sprite_map[sprite_name[(*index + i / 8) % sprite_name.size()]]);
+		*(tileset_list[i]) = get_sprite_tile(sprite_name[(*index + i / 8) % (sprite_name.size())]);
 		i++;
 	}
 }
@@ -84,7 +83,7 @@ void			menu_choose_sprite(t_data data)
 						quit_choose_sprite, NULL);
 		button->button->data = t_data(6, index, target, &tmp_index, i / 8, &(((t_tileset_button *)(button->button))->selected), &play);
 		tileset_list[i] = &(((t_tileset_button *)(button->button))->tile);
-		*(tileset_list[i]) = &(sprite_map[sprite_name[(tmp_index + i / 8) % sprite_name.size()]]);
+		*(tileset_list[i]) = get_sprite_tile(sprite_name[(tmp_index + i / 8) % sprite_name.size()]);
 		gui.add(button);
 		selected.x += increment.x;
 		if (selected.x >= sprite_map[sprite_name[tmp_index]].nb_sprite.x)

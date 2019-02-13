@@ -72,7 +72,7 @@ t_spell		read_one_spell(string path)
 		printf("can't open such file : %s\n", path.c_str());
 	name = get_strsplit(&myfile, ":", 2)[1];
 	desc = get_strsplit(&myfile, ":", 2)[1];
-	tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
+	tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
 	tab = get_strsplit(&myfile, ":", 3);
 	icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 	m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
@@ -131,7 +131,7 @@ void		read_spell()
 			printf("can't open such file : %s%s%s\n", SPELL_PATH, spell_file[i].c_str(), SPELL_EXT);
 		name = get_strsplit(&myfile, ":", 2)[1];
 		desc = get_strsplit(&myfile, ":", 2)[1];
-		tile = &(interface_map[get_strsplit(&myfile, ":", 2)[1]]);
+		tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
 		tab = get_strsplit(&myfile, ":", 3);
 		icon = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 		m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());

@@ -15,7 +15,7 @@ s_game_board::s_game_board()
 	sprite_unit = t_vect(32, 32);
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);
-	cursor_tile = &interface_map["simple_cursor"];
+	cursor_tile = get_interface_tile("simple_cursor");
 }
 
 s_game_board::s_game_board(string p_path)
@@ -138,7 +138,7 @@ void				s_game_board::draw_animation()
 				size_t count = 0;
 				while (count < get_cell(i, j)->animation.size())
 				{
-					get_cell(i, j)->animation[count].draw_self(target, offset, size);
+					get_cell(i, j)->animation[count].draw_self(t_vect(i, j), target, offset, size);
 					count++;
 				}
 			}
@@ -191,6 +191,7 @@ void				s_game_board::draw_self()
 {
 	t_vect size = sprite_unit * zoom;
 	//(coord + target) * size + offset, size, sprite);
+		t_tileset *tile= get_interface_tile("simple_board");
 	int i = 0;
 	while (i < board_size.x)
 	{
@@ -199,59 +200,59 @@ void				s_game_board::draw_self()
 		{
 			if (i == 0 && j == 0) // top - left corner
 			{
-				interface_map["simple_board"].prepare_print((t_vect(-1 , -1) + target) * size + offset, size, t_vect(0, 0));
-				interface_map["simple_board"].prepare_print((t_vect(-1 , 0) + target) * size + offset, size, t_vect(0, 1));
-				interface_map["simple_board"].prepare_print((t_vect(0 , -1) + target) * size + offset, size, t_vect(1, 0));
-				interface_map["simple_board"].prepare_print((t_vect(0 , 0) + target) * size + offset, size, t_vect(1, 1));
+				tile->prepare_print((t_vect(-1 , -1) + target) * size + offset, size, t_vect(0, 0));
+				tile->prepare_print((t_vect(-1 , 0) + target) * size + offset, size, t_vect(0, 1));
+				tile->prepare_print((t_vect(0 , -1) + target) * size + offset, size, t_vect(1, 0));
+				tile->prepare_print((t_vect(0 , 0) + target) * size + offset, size, t_vect(1, 1));
 			}
 			else if (i == board_size.x - 1 && j == 0) // top - right corner
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(3, 0));
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 1));
-				interface_map["simple_board"].prepare_print((t_vect(i + 1 , j - 1) + target) * size + offset, size, t_vect(4, 0));
-				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 1));
+				tile->prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(3, 0));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 1));
+				tile->prepare_print((t_vect(i + 1 , j - 1) + target) * size + offset, size, t_vect(4, 0));
+				tile->prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 1));
 			}
 			else if (i == 0 && j == board_size.y - 1) // down - left corner
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 3));
-				interface_map["simple_board"].prepare_print((t_vect(i - 1, j + 1) + target) * size + offset, size, t_vect(0, 4));
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 3));
-				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(1, 4));
+				tile->prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 3));
+				tile->prepare_print((t_vect(i - 1, j + 1) + target) * size + offset, size, t_vect(0, 4));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 3));
+				tile->prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(1, 4));
 			}
 			else if (i == board_size.x - 1 && j == board_size.y - 1) // down - right corner
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 3));
-				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(3, 4));
-				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 3));
-				interface_map["simple_board"].prepare_print((t_vect(i + 1, j + 1) + target) * size + offset, size, t_vect(4, 4));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 3));
+				tile->prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(3, 4));
+				tile->prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 3));
+				tile->prepare_print((t_vect(i + 1, j + 1) + target) * size + offset, size, t_vect(4, 4));
 			}
 			else if (i == 0) // left side
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 2));
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 2));
+				tile->prepare_print((t_vect(i - 1, j) + target) * size + offset, size, t_vect(0, 2));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(1, 2));
 			}
 			else if (i == board_size.x - 1) // right side
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 2));
-				interface_map["simple_board"].prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 2));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(3, 2));
+				tile->prepare_print((t_vect(i + 1, j) + target) * size + offset, size, t_vect(4, 2));
 			}
 			else if (j == 0) // top side
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 1));
-				interface_map["simple_board"].prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(2, 0));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 1));
+				tile->prepare_print((t_vect(i , j - 1) + target) * size + offset, size, t_vect(2, 0));
 			}
 			else if (j == board_size.y - 1) // down side
 			{
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
-				interface_map["simple_board"].prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 3));
+				tile->prepare_print((t_vect(i , j + 1) + target) * size + offset, size, t_vect(2, 4));
 			}
 			else
-				interface_map["simple_board"].prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 2));
+				tile->prepare_print((t_vect(i , j) + target) * size + offset, size, t_vect(2, 2));
 			j++;
 		}
 		i++;
 	}
-	render_triangle_texture(interface_map["simple_board"].texture_id);
+	render_triangle_texture(tile->texture_id);
 }
 
 

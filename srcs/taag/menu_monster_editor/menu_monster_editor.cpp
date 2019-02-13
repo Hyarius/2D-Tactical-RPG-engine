@@ -143,7 +143,7 @@ void					menu_monster_editor(t_data data)
 	i++;
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(&(sprite_map[sprite_name[1]]), t_vect(0, 0), t_vect(4, 0),
+	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(sprite_name[0]), t_vect(0, 0), t_vect(4, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(

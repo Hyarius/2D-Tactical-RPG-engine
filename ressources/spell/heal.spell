@@ -1,12 +1,17 @@
-name		:Heal
-description	:Heal by 12 the target
-icon		:simple_iconset
-sprite		:4:2
-m_spell		:0
-pa			:5
-pm			:0
-range		:0:3:0
-type		:0
-on target	:0
-zone		:0:0
-effect1		:1:12:0:0:0
+name:Heal
+description:Heal by 12 the target
+icon:simple_iconset
+sprite:9:3
+m_spell:0
+pa:5
+pm:0
+range:0:3:0
+type:0
+on target:0
+zone:0:0
+effect1:1:12:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0

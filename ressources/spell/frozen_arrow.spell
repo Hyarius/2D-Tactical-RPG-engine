@@ -1,13 +1,17 @@
-name		:Frozen arrow
-description	:Deal 6 damages and reduce PA by 1
-icon		:simple_iconset
-sprite		:5:2
-m_spell		:0
-pa			:4
-pm			:0
-range		:1:4:0
-type		:0
-on target	:0
-zone		:0:0
-effect1		:0:6:0:0:0
-effect1		:3:-1:0:0:0
+name:Frozen arrow
+description:Deal 6 damages and reduce PA by 1
+icon:simple_iconset
+sprite:6:7
+m_spell:0
+pa:4
+pm:0
+range:1:4:0
+type:0
+on target:0
+zone:0:0
+effect1:0:6:0:0:0
+effect2:3:-1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0

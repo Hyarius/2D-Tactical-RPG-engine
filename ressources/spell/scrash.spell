@@ -1,12 +1,17 @@
-name		:Scrash
-description	:Deal 9 damages
-icon		:simple_iconset
-sprite		:2:5
-m_spell		:0
-pa			:3
-pm			:0
-range		:1:2:0
-type		:1
-on target	:0
-zone		:0:0
-effect1		:0:9:0:0:0
+name:Scrash
+description:Deal 9 damages
+icon:simple_iconset
+sprite:7:4
+m_spell:0
+pa:3
+pm:0
+range:1:2:0
+type:1
+on target:0
+zone:0:0
+effect1:0:9:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0

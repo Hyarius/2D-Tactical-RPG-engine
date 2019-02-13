@@ -1,7 +1,7 @@
 name:Fire punch
 description:Deal 12 damages at target and 3 at caster
 icon:simple_iconset
-sprite:8:6
+sprite:1:6
 m_spell:0
 pa:3
 pm:0

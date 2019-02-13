@@ -1,12 +1,17 @@
-name		:Electric arrow
-description	:Deal 6 damages in zone
-icon		:simple_iconset
-sprite		:3:1
-m_spell		:0
-pa			:4
-pm			:0
-range		:2:5:0
-type		:1
-on target	:2
-zone		:0:2
-effect1		:0:6:0:0:0
+name:Electric arrow
+description:Deal 6 damages in zone
+icon:simple_iconset
+sprite:2:7
+m_spell:0
+pa:4
+pm:0
+range:2:5:0
+type:1
+on target:2
+zone:0:2
+effect1:0:6:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0

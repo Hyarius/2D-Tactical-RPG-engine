@@ -1,7 +1,7 @@
 name:Healing potion
 description:Heal 4 HP in zone and give 2 PA
 icon:simple_iconset
-sprite:8:5
+sprite:10:2
 m_spell:0
 pa:4
 pm:0

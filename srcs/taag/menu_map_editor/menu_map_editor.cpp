@@ -161,7 +161,7 @@ void					menu_map_editor(t_data data)
 	{
 	t_button	*placement_button = new t_button(new s_tileset_button(
 				"", DARK_GREY,
-				&(interface_map["simple_cursor"]),
+				get_interface_tile("simple_cursor"),
 				(j == 0 ? t_vect(0, 0) : (j == 1 ? t_vect(3, 0) : t_vect(4, 0))),
 				t_vect(1 + (1.2 * j), 1 + (1.2 * i)) * gui.unit,
 				t_vect(1, 1) * gui.unit,

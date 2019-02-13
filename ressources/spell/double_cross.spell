@@ -1,13 +1,17 @@
-name		:Double cross
-description	:Deal 15 damage to the target and reduce PM by 1
-icon		:simple_iconset
-sprite		:5:3
-m_spell		:0
-pa			:6
-pm			:0
-range		:1:1:0
-type		:1
-on target	:0
-zone		:0:0
-effect1		:0:15:0:0:0
-effect1		:2:-1:0:0:0
+name:Double cross
+description:Deal 15 damage to the target and reduce PM by 1
+icon:simple_iconset
+sprite:0:5
+m_spell:0
+pa:6
+pm:0
+range:1:1:0
+type:1
+on target:0
+zone:0:0
+effect1:0:15:0:0:0
+effect2:2:-1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0

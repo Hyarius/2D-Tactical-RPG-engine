@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 
 	window_initialisation(argv[0]);
 
+	//generate_animation_tileset();
 
 	read_tileset();
 	init_effects();

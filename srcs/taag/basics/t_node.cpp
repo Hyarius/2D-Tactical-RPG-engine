@@ -101,7 +101,5 @@ t_node			read_node(string p_path)
 	m_obs = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()) == 1 ? true : false);
 	v_obs = (atoi(get_strsplit(&myfile, ":", 2)[1].c_str()) == 1 ? true : false);
 
-	if (tileset_map.find(tile_name) == tileset_map.end())
-		return (t_node(name, NULL, sprite, cost, m_obs, v_obs));
-	return(t_node(name, &(tileset_map[tile_name]), sprite, cost, m_obs, v_obs));
+	return(t_node(name, get_tileset_tile(tile_name), sprite, cost, m_obs, v_obs));
 }

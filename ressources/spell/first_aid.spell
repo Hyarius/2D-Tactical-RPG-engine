@@ -1,13 +1,17 @@
-name		:First aid
-description	:Heal the target by 5 and the caster by 3
-icon		:simple_iconset
-sprite		:3:2
-m_spell		:0
-pa			:3
-pm			:0
-range		:1:4:0
-type		:0
-on target	:0
-zone		:0:0
-effect1		:1:5:0:0:0
-effect1		:6:3:0:0:0
+name:First aid
+description:Heal the target by 5 and the caster by 3
+icon:simple_iconset
+sprite:7:2
+m_spell:0
+pa:3
+pm:0
+range:1:4:0
+type:0
+on target:0
+zone:0:0
+effect1:1:5:0:0:0
+effect2:6:3:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
