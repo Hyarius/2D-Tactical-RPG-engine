@@ -29,22 +29,13 @@ void				generate_animation_tileset()
 	}
 }
 
-t_animation			read_animation(string p_path)
+s_animation::s_animation()
 {
-	ifstream		myfile;
-	t_tileset		*tile;
-	int 			start;
-	int 			len;
-	t_vect			anim_size;
-
-	myfile.open(p_path);
-	if (myfile.fail())
-		printf("can't open such file : %s\n", p_path.c_str());
-	tile = get_animation_tile(get_strsplit(&myfile, ":", 2)[1]);
-	start = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-	len = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-	anim_size = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
-	return (tile, start, len, anim_size);
+	tile = NULL;
+	start = 0;
+	len = 0;
+	index = 0;
+	size = t_vect(-1, -1);
 }
 
 s_animation::s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect p_size)

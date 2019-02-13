@@ -94,6 +94,11 @@ t_spell		read_one_spell(string path)
 			effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
 	}
 	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect);
+	tab = get_strsplit(&myfile, ":", 6);
+	spell.caster_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atoi(tab[4].c_str()), atoi(tab[5].c_str())));
+	tab = get_strsplit(&myfile, ":", 6);
+	spell.target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atoi(tab[4].c_str()), atoi(tab[5].c_str())));
+	spell.anim_type = 0;
 	effect.clear();
 	myfile.close();
 	return (spell);

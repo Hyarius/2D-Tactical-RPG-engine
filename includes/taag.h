@@ -116,6 +116,7 @@ typedef struct			s_animation
 	int					len; //len total of the animation
 	double				index; //where we are into this animation
 	t_vect				anim_size;
+						s_animation();
 						s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect anim_size);
 	void				draw_self(t_vect coord, t_vect target, t_vect offset, t_vect size);
 }						t_animation;

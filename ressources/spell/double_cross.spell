@@ -15,3 +15,6 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
+caster_effect:tile:start:len:size.x:size.y
+target_effect:tile:start:len:size.x:size.y
+anim_type:0
