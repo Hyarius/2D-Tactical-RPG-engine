@@ -18,7 +18,6 @@ void				s_game_engine::cast_spell(t_vect mouse)
 		player->stat.pm.value >= player->spell[s_spell]->cost_pm &&
 		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
-		board.get_cell(player->coord)->animation.push_back(player->spell[s_spell]->caster_anim);
 		vector<t_vect>	text_coord;
 		if (player->spell[s_spell]->cost_pa > 0)
 		{

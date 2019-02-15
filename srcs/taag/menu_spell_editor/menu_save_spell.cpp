@@ -39,7 +39,17 @@ static void			save_spell(t_data data) // 0 - t_spell * / 1 - file name
 		else
 			myfile << "effect" + to_string(i + 1) + ":0:0:0:0:0\n";
 	}
-	myfile << "caster_effect:XCast:2:18:1:1\ntarget_effect:XFire:0:25:1:1\nanim_type:0\n";
+	string tile_name = "NULL";
+	for (map<string, t_tileset>::const_iterator i = animation_map.begin(); spell->target_anim.tile != NULL && i != animation_map.end(); ++i)
+	{
+		if (&(i->second) == spell->target_anim.tile)
+		{
+			tile_name = i->first;
+			break;
+		}
+	}
+	myfile << "target_effect:" + tile_name + ":" + to_string(spell->target_anim.start) + ":" + to_string(spell->target_anim.len) + ":" + to_string((int)(spell->target_anim.anim_size.x)) + ":" + to_string((int)(spell->target_anim.anim_size.y)) + "\n";
+	myfile << "anim_type:" + to_string(spell->anim_type) + "\n";
 	myfile.close();
 }
 

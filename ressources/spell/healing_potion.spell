@@ -8,13 +8,12 @@ pm:0
 range:1:3:1
 type:0
 on target:2
-zone:0:2
+zone:3:1
 effect1:1:4:0:0:0
 effect2:3:2:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-caster_effect:XCast:2:18:2:2
-target_effect:XFire:0:25:1:1
+target_effect:XHoly:0:54:4:4
 anim_type:0

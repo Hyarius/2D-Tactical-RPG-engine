@@ -137,7 +137,6 @@ typedef struct			s_spell
 	int					zone_type;		//what kind of zone is it ? -
 	int					zone_size;		//size of the zone
 	vector<t_effect>	effect;			//list of effect
-	s_animation			caster_anim;	//anim to display on the caster
 	s_animation			target_anim;	//anim to display on the target zone
 	int					anim_type; 		//0 - single anim on the clicked coord | 1 - anim on every cell | 2 - anim on every target
 						s_spell();
@@ -145,7 +144,7 @@ typedef struct			s_spell
 								int p_cost_pa, int p_cost_pm,
 								int range_min, int range_max, int p_block, int p_on_target,
 								int p_range_type, int p_zone_type, int p_zone_size,
-								vector<t_effect> p_effect, t_animation p_caster_anim, t_animation p_target_anim, int p_anim_type);
+								vector<t_effect> p_effect, t_animation p_target_anim, int p_anim_type);
 }						t_spell;
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
@@ -360,6 +359,8 @@ void						menu_save_spell(t_data data);
 void						menu_load_spell(t_data data);
 void						menu_delete_spell(t_data data);
 void						menu_select_effect(t_data data);
+void						menu_edit_animation(t_data data);
+void							menu_select_anim(t_data data);
 void					menu_quit(t_data data);
 
 #endif

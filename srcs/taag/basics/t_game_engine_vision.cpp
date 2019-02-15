@@ -88,7 +88,6 @@ void				s_game_engine::calculate_vision_line()
 
 	board.get_cell(player->coord)->v_dist = 0;
 	i = 0;
-	printf("block = %d\n", turn_order[turn_index % turn_order.size()]->spell[s_spell]->block);
 	while (i <= player->spell[s_spell]->range[1])
 	{
 		v_calc_cell(NULL, t_vect(player->coord.x + i, player->coord.y), i - 1);

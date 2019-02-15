@@ -11,7 +11,7 @@ s_spell_card::s_spell_card(t_spell **p_spell, t_vect p_coord, t_vect p_size, gui
 	spell = p_spell;
 	button = new t_button(new t_text_button(
 				"", DARK_GREY, // text info
-				p_coord, p_size, 8, // coord / size info
+				p_coord, p_size, 5, // coord / size info
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 				p_funct, p_data);
 }

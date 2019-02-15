@@ -35,7 +35,7 @@ s_animation::s_animation()
 	start = 0;
 	len = 0;
 	index = 0;
-	anim_size = t_vect(-1, -1);
+	anim_size = t_vect(1, 1);
 }
 
 s_animation::s_animation(t_tileset *p_tile, int p_start, int p_len, t_vect p_size)
@@ -54,6 +54,6 @@ void			s_animation::draw_self(t_vect coord, t_vect target, t_vect offset, t_vect
 		t_vect reel_size = size * anim_size;
 		t_vect reel_coord = (coord + target) * size + offset - reel_size / 2;
 		tile->draw_self(reel_coord, reel_size, index + start);
-		index += (double)len / 60.0;
+		index += (double)len / ((60.0 / 15) * len);
 	}
 }

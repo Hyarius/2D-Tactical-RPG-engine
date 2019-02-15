@@ -15,6 +15,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-caster_effect:XCast:2:18:2:2
-target_effect:XFire:0:25:1:1
-anim_type:0
+target_effect:XEngineFire01:0:16:1:1
+anim_type:2

@@ -29,5 +29,5 @@ void			draw_centred_rectangle(t_vect p_coord, t_vect p_size, t_color c)
 void			draw_border_rectangle(t_vect p_coord, t_vect p_size, int border, t_color c, t_color c2)
 {
 	draw_rectangle(p_coord, p_size, c);
-	draw_rectangle(p_coord + border / 2, p_size - border, c2);
+	draw_rectangle(p_coord + border, p_size - (border * 2), c2);
 }

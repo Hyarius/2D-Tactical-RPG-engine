@@ -319,7 +319,7 @@ void menu_spell_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		NULL, NULL);
+		menu_edit_animation, t_data(2, &gui, spell));
 	i++;
 
 
@@ -362,4 +362,6 @@ void menu_spell_editor(t_data data)
 		}
 		render_screen(true);
 	}
+
+	read_spell();
 }

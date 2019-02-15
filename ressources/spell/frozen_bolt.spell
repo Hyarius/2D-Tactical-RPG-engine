@@ -1,7 +1,7 @@
 name:Frozen bolt
 description:Deal 16 damages and reduce PA by 1
 icon:simple_iconset
-sprite:8:3
+sprite:7:3
 m_spell:0
 pa:6
 pm:0
@@ -15,6 +15,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-caster_effect:XCast:2:18:2:2
-target_effect:XFire:0:25:1:1
-anim_type:0
+target_effect:ice_bolt:0:13:1:1
+anim_type:2

@@ -1,0 +1,19 @@
+name:Frozen age
+description:Deal 6 damages in zone and reduce PA by 1
+icon:simple_iconset
+sprite:11:3
+m_spell:0
+pa:5
+pm:0
+range:1:5:1
+type:1
+on target:2
+zone:0:2
+effect1:0:6:0:0:0
+effect2:3:-1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_effect:XBlizzard:0:27:1:1
+anim_type:1

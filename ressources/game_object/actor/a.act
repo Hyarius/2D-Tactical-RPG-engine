@@ -1,0 +1,13 @@
+name:A
+tileset:C00
+sprite_pos:0:0
+health:30
+action:11
+mouvement:2
+initiative:4
+spell1:Arrow flight
+spell2:Crossed slash
+spell3:Cursed heart
+spell4:Double cross
+spell5:Double hit
+spell6:Electric arrow

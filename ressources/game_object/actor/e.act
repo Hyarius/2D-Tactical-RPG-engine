@@ -1,0 +1,13 @@
+name:E
+tileset:C00
+sprite_pos:3:4
+health:30
+action:11
+mouvement:2
+initiative:4
+spell1:Scrash
+spell2:Slash
+spell3:Swing
+spell4:Transposition
+spell5:Triple slash
+spell6:Transfusion

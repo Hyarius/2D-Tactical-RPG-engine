@@ -7,7 +7,7 @@ pa:4
 pm:0
 range:2:5:0
 type:1
-on target:2
+on target:1
 zone:0:2
 effect1:0:6:0:0:0
 effect2:0:0:0:0:0
@@ -15,6 +15,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-caster_effect:XCast2:3:32:2:2
-target_effect:XFire:0:25:1:1
-anim_type:1
+target_effect:XThunder:2:22:5:5
+anim_type:0
