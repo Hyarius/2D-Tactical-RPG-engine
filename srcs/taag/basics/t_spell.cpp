@@ -131,6 +131,8 @@ void		read_spell()
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
 	spell_map.clear();
 	spell_map["NULL"] = t_spell();
+	spell_name.clear();
+	spell_heros_name.clear();
 	spell_name.push_back("NULL");
 	spell_heros_name.push_back("NULL");
 	size_t i = 0;
