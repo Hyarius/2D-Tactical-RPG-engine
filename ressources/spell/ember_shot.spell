@@ -5,7 +5,7 @@ sprite:0:0
 m_spell:0
 pa:0
 pm:1
-range:3:12:1
+range:4:8:1
 type:0
 on target:0
 zone:0:0

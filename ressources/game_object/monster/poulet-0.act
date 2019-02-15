@@ -1,0 +1,13 @@
+name:BadassMFfireChikin
+tileset:M03
+sprite_pos:0:4
+health:50
+action:6
+mouvement:20
+initiative:5
+spell1:Fire dash
+spell2:Fireball
+spell3:Wing
+spell4:Scrash
+spell5:Swing
+spell6:Triple slash
