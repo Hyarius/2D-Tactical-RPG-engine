@@ -185,7 +185,7 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_generate_board, t_data(2, &gui, &(engine)));
+		menu_generate_board, t_data(3, &gui, &(engine), &(entry_path->entry->text)));
 	i++;
 	t_button	*load_button = new t_button(new s_text_button(
 		"Load map", DARK_GREY,

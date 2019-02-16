@@ -11,6 +11,7 @@ static void			quit_generate_menu(t_data data) //0 - board | 1 - x | 2 - y | 3 - 
 	int size_x = *((int *)(data.data[1]));
 	int size_y = *((int *)(data.data[2]));
 	int node = *((int *)(data.data[4]));
+	string			*path = (string *)(data.data[5]);
 	t_vect target = board->target;
 	double zoom = board->zoom;
 	if (board->board_size != t_vect(0, 0))
@@ -22,6 +23,7 @@ static void			quit_generate_menu(t_data data) //0 - board | 1 - x | 2 - y | 3 - 
 	else
 		*board = board_generator(size_x, size_y, node);
 	*((bool *)data.data[3]) = false;
+	*path = "";
 }
 
 t_game_board		board_generator(int size_x, int size_y, int node)
@@ -46,7 +48,14 @@ t_game_board		board_generator(int size_x, int size_y, int node)
 		y = 0;
 		while (y < size_y)
 		{
-			board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node]));
+			int type = generate_nbr(0, 100);
+			if (type < 70)
+				board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node]));
+			else if (type < 85)
+				board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node + 1]));
+			else
+				board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node + 2]));
+
 			y++;
 		}
 		x++;
@@ -57,7 +66,7 @@ t_game_board		board_generator(int size_x, int size_y, int node)
 void	menu_generate_board(t_data data)
 {
 	t_game_engine *engine = (t_game_engine *)(data.data[1]);
-	(void)data;
+	string			*path = (string *)(data.data[2]);
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
@@ -146,7 +155,7 @@ void	menu_generate_board(t_data data)
 		"Generate", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		quit_generate_menu, t_data(5, &(engine->board), &size_x, &size_y, &play, &node_type)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
+		quit_generate_menu, t_data(6, &(engine->board), &size_x, &size_y, &play, &node_type, path)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
 	i++;
 
 	t_button	*quit_button = new t_button(new s_text_button(
