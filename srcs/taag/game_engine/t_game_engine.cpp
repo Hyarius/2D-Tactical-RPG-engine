@@ -75,14 +75,20 @@ void				s_game_engine::cast_spell(t_vect mouse)
 void				s_game_engine::move_actor(t_vect dest)
 {
 	if (turn_order[turn_index % turn_order.size()]->destination.size() == 0 &&
-		board.get_cell(dest) && board.get_cell(dest.x, dest.y)->m_dist <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
+		turn_order[turn_index % turn_order.size()]->stat.pm.value != 0 &&
+		(board.get_cell(dest.x, dest.y)->m_dist != 999 ||
+		(board.get_cell(dest.x, dest.y)->m_dist == 999 && board.get_cell(dest.x, dest.y)->actor != NULL)))
 	{
 		t_actor *player = turn_order[turn_index % turn_order.size()];
 		player->destination = pathfinding(board.get_mouse_pos());
-		player->stat.pm.value -= board.get_cell(dest.x, dest.y)->m_dist;
-		player->visual_info.push_back(create_visual_info("-" + to_string(board.get_cell(dest.x, dest.y)->m_dist) + "pm", DARK_GREEN, 10, player->coord));
-		board.get_cell(dest)->actor = player;
-		board.get_cell(player->coord.x, player->coord.y)->actor = NULL;
-		board.reset_board();
+		if (player->destination.size() != 0)
+		{
+			t_vect final_dest = player->destination[player->destination.size() - 1];
+			player->stat.pm.value -= board.get_cell(final_dest.x, final_dest.y)->m_dist;
+			player->visual_info.push_back(create_visual_info("-" + to_string(board.get_cell(final_dest.x, final_dest.y)->m_dist) + "pm", DARK_GREEN, 10, player->coord));
+			board.get_cell(final_dest)->actor = player;
+			board.get_cell(player->coord.x, player->coord.y)->actor = NULL;
+			board.reset_board();
+		}
 	}
 }

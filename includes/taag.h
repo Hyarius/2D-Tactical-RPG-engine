@@ -286,10 +286,12 @@ typedef struct			s_game_engine
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
 	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
 	void				handle_actor_placement(SDL_Event *event, int *index);
-	void				handle_actor_placement_camera(SDL_Event *event);
 	void				placement_phase();
 	void				game_loop();
 	void				ending_fight(bool *play);
+
+	void				enemy_turn();
+	t_actor				*get_nearest_player();
 
 }						t_game_engine;
 

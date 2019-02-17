@@ -55,7 +55,6 @@ t_game_board		board_generator(int size_x, int size_y, int node)
 				board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node + 1]));
 			else
 				board.cell_layer[x][y] = t_cell(t_vect(x, y), &(board.node_list[node + 2]));
-
 			y++;
 		}
 		x++;

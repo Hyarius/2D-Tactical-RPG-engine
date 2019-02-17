@@ -3,11 +3,15 @@
 void				s_game_engine::draw_path()
 {
 	vector<t_vect>	path = calc_path(board.get_mouse_pos());
+	t_actor *player = turn_order[turn_index % turn_order.size()];
 
 	size_t i = 0;
 	while (i < path.size())
 	{
-		draw_centred_rectangle((path[i] + board.target) * board.sprite_unit * board.zoom + board.offset + board.sprite_unit * board.zoom / 2, board.sprite_unit * board.zoom / 2, t_color(0.5, 0.5, 1.0));
+		if (board.get_cell(path[i]) && board.get_cell(path[i])->m_dist <= player->stat.pm.value)
+			draw_centred_rectangle((path[i] + board.target) * board.sprite_unit * board.zoom + board.offset + board.sprite_unit * board.zoom / 2, board.sprite_unit * board.zoom / 2, t_color(0.5, 0.5, 1.0));
+		else
+			draw_centred_rectangle((path[i] + board.target) * board.sprite_unit * board.zoom + board.offset + board.sprite_unit * board.zoom / 2, board.sprite_unit * board.zoom / 2, t_color(1.0, 0.5, 0.5));
 		i++;
 	}
 }
