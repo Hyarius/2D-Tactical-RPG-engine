@@ -123,14 +123,17 @@ void				s_game_engine::update_board()
 		}
 		i++;
 	}
-	if (turn_order.size() && player->destination.size() == 0 && calculated == false && s_spell == -1)
-		calculate_distance();
-	if (turn_order.size() && player->destination.size() == 0 && s_spell != -1 && calculated == false)
+	if (player->team == 1)
 	{
-		if (player->spell[s_spell]->range_type == R_CIRCLE)
-			calculate_vision_circle();
-		else
-			calculate_vision_line();
+		if (turn_order.size() && player->destination.size() == 0 && calculated == false && s_spell == -1)
+			calculate_distance();
+		if (turn_order.size() && player->destination.size() == 0 && s_spell != -1 && calculated == false)
+		{
+			if (player->spell[s_spell]->range_type == R_CIRCLE)
+				calculate_vision_circle();
+			else
+				calculate_vision_line();
+		}
+		calculate_zone();
 	}
-	calculate_zone();
 }

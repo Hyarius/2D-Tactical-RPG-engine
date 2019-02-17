@@ -224,6 +224,7 @@ typedef struct			s_game_board
 						s_game_board(string p_path);
 	t_cell				*get_cell(int x, int y);
 	t_cell				*get_cell(t_vect target);
+	bool				check_anim(); //check if an anim is ended
 	void				add_actor(t_actor *new_actor);
 	void				remove_actor(t_actor *old_actor);
 	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
@@ -291,7 +292,9 @@ typedef struct			s_game_engine
 	void				ending_fight(bool *play);
 
 	void				enemy_turn();
-	t_actor				*get_nearest_player();
+	t_vect				get_close_enemy(int distance, int type);
+	t_vect				get_close_ally(int distance, int type);
+	t_vect				flee_enemy();
 
 }						t_game_engine;
 

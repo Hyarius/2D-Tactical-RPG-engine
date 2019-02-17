@@ -74,13 +74,14 @@ void				s_game_engine::cast_spell(t_vect mouse)
 
 void				s_game_engine::move_actor(t_vect dest)
 {
-	if (turn_order[turn_index % turn_order.size()]->destination.size() == 0 &&
+	if (board.get_cell(dest.x, dest.y) &&
+		turn_order[turn_index % turn_order.size()]->destination.size() == 0 &&
 		turn_order[turn_index % turn_order.size()]->stat.pm.value != 0 &&
 		(board.get_cell(dest.x, dest.y)->m_dist != 999 ||
 		(board.get_cell(dest.x, dest.y)->m_dist == 999 && board.get_cell(dest.x, dest.y)->actor != NULL)))
 	{
 		t_actor *player = turn_order[turn_index % turn_order.size()];
-		player->destination = pathfinding(board.get_mouse_pos());
+		player->destination = pathfinding(dest);
 		if (player->destination.size() != 0)
 		{
 			t_vect final_dest = player->destination[player->destination.size() - 1];

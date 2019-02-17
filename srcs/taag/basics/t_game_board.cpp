@@ -139,7 +139,10 @@ void				s_game_board::draw_animation()
 				while (count < get_cell(i, j)->animation.size())
 				{
 					get_cell(i, j)->animation[count].draw_self(t_vect(i, j) + 0.5, target, offset, size);
-					count++;
+					if (get_cell(i, j)->animation[count].index >= get_cell(i, j)->animation[count].len)
+						get_cell(i, j)->animation.erase(get_cell(i, j)->animation.begin() + count);
+					else
+						count++;
 				}
 			}
 			j++;
@@ -290,6 +293,33 @@ void				s_game_board::draw_mouse_cursor()
 		draw_cursor(mouse, target, size, offset, t_vect(1, 0));
 	render_triangle_texture(cursor_tile->texture_id);
 
+}
+
+bool				s_game_board::check_anim()
+{
+	int i = 0;
+
+	while ((size_t)i < board_size.x)
+	{
+		int j = 0;
+		while ((size_t)j < board_size.y)
+		{
+
+			if (get_cell(i, j))
+			{
+				size_t k = 0;
+				while (k < get_cell(i, j)->animation.size())
+				{
+					if (get_cell(i, j)->animation[k].index < get_cell(i, j)->animation[k].len)
+						return (false);
+					k++;
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (true);
 }
 
 void				s_game_board::draw_cell_layer()
