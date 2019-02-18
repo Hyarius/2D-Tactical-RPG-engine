@@ -37,7 +37,6 @@ s_game_board::s_game_board(string p_path)
 		node_list.push_back(read_node(NODE_PATH + node_file[i] + NODE_EXT));
 		i++;
 	}
-
 	while (!(myfile.eof()))
 	{
 		tab = get_strsplit(&myfile, ":", -1);

@@ -22,8 +22,9 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 # define SPELL_BUTTON	3
 
 #define ACTOR_PATH "ressources/game_object/actor/"
-#define MONSTER_PATH "ressources/game_object/monster/"
 #define ACTOR_EXT ".act"
+#define MONSTER_PATH "ressources/game_object/monster/"
+#define MONSTER_EXT ".act"
 
 #define MAP_PATH "ressources/map/"
 #define MAP_EXT ".map"
@@ -66,7 +67,13 @@ typedef struct			s_value
 						s_value();
 						s_value(int p_max);
 						s_value(int p_value, int p_max);
+	int					percent();
 }						t_value;
+
+#define STAT_VALUE_HP	0	//refer to the HP value of the actor stat
+#define STAT_VALUE_PA	1	//refer to the PA value of the actor stat
+#define STAT_VALUE_PM	2	//refer to the PM value of the actor stat
+#define STAT_VALUE_INIT	3	//refer to the init value of the actor stat
 
 typedef struct			s_stat
 {
@@ -89,25 +96,25 @@ typedef struct			s_stat
 #define Z_LINE 2
 #define Z_SQUARE 3
 
-typedef struct		s_effect_stat
+typedef struct			s_effect_stat
 {
-	int			value[4];
-					s_effect_stat();
-					s_effect_stat(int value0, int value1, int value2, int value3);
-}					t_effect_stat;
+	int					value[4];
+						s_effect_stat();
+						s_effect_stat(int value0, int value1, int value2, int value3);
+}						t_effect_stat;
 
 typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
 
 extern vector<string>	list_effect_name;
-extern vector<event> g_effects;
+extern vector<event>	g_effects;
 
-typedef struct		s_effect
+typedef struct			s_effect
 {
-	event			effect;
-	t_effect_stat	stat;
-					s_effect();
-					s_effect(event p_effect, int value0, int value1, int value2, int value3);
-}					t_effect;
+	event				effect;
+	t_effect_stat		stat;
+						s_effect();
+						s_effect(event p_effect, int value0, int value1, int value2, int value3);
+}						t_effect;
 
 typedef struct			s_animation
 {
@@ -164,6 +171,13 @@ typedef struct			s_visual_info
 	void				draw_self(t_vect target, t_vect offset, t_vect size, double zoom);
 }						t_visual_info;
 
+typedef struct			s_ai_helper
+{
+	vector<int>			value;
+						s_ai_helper();
+						s_ai_helper(vector<int> p_value);
+}						t_ai_helper;
+
 typedef struct          s_actor
 {
 	string				path;	//path for the file where it came from, utils for saving map
@@ -178,6 +192,8 @@ typedef struct          s_actor
 	vector<t_visual_info>	visual_info; //list of every infos we need to print on screen
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
+	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
+
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
@@ -292,11 +308,27 @@ typedef struct			s_game_engine
 	void				ending_fight(bool *play);
 
 	void				enemy_turn();
-	t_vect				get_close_enemy(int distance, int type);
-	t_vect				get_close_ally(int distance, int type);
-	t_vect				flee_enemy();
+	bool				get_close_enemy(t_ai_helper data);
+	bool				get_close_ally(t_ai_helper data);
+	bool				flee_enemy(t_ai_helper data);
+	bool				execute_gambit(t_actor *source);
 
 }						t_game_engine;
+
+
+#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
+#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
+#define RETREAT			2	//retreat to the safest tile if stat hp < value[1] %
+#define SUPPORT			3	//run to closest ally at range value[1], delta value[2] and range type value[3]
+#define SUPPORT_WEAK	4	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
+#define ATTACK			5	//cast the spell num value[1] on the first enemy availible if range possible
+#define ATTACK_WEAK		6	//cast the spell num value[1] on the enemy with the less hp if range possible
+#define HELP			7	//cast the spell num value[1] on an ally 
+#define HELP_WEAK		8	//cast the spell num value[1] on the ally with less % HP
+#define HELP_PERC		9	//cast the spell num value[2] on the ally if HP % < value[1]
+#define TURN			10	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
+
+typedef bool (s_game_engine:: *gambit_command)(t_ai_helper);
 
 void					read_tileset();				//read every tileset file and place it into the tileset_map
 t_node					read_node(string p_path); 	//read one .node file and return a t_node

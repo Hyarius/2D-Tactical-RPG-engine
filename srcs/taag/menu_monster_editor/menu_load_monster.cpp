@@ -31,7 +31,7 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 
 	if (*(text_list_load_monster[i]) != "")
 	{
-		*player = read_actor(MONSTER_PATH + *(text_list_load_monster[i]) + ACTOR_EXT);
+		*player = read_actor(MONSTER_PATH + *(text_list_load_monster[i]) + MONSTER_EXT);
 		size_t t = 0;
 		for(t = 0; &(sprite_map[sprite_name[t]]) != player->tile;t++)
 			;
@@ -71,7 +71,7 @@ void			menu_load_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name
 						),
 						NULL, NULL));
 
-	list_file_load_monster = list_files(MONSTER_PATH, ACTOR_EXT);
+	list_file_load_monster = list_files(MONSTER_PATH, MONSTER_EXT);
 	int i = 0;
 	while (i < 30)
 	{

@@ -30,3 +30,8 @@ s_value::s_value(int p_value, int p_max)
 	value = p_value;
 	max = p_max;
 }
+
+int s_value::percent()
+{
+	return (((double)value / (double)max) * 100);
+}

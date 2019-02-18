@@ -16,7 +16,7 @@ void					menu_monster_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
-	entry_path->entry->back = ACTOR_EXT;
+	entry_path->entry->back = MONSTER_EXT;
 
 	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your monster", "", BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,

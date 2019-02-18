@@ -61,7 +61,16 @@ t_actor					read_actor(string p_path)
 	init = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map[get_strsplit(&myfile, ":", 2)[1]]);
-	return (s_actor(name, tile, sprite, t_stat(hp, pa, pm, init), spell));
+	t_actor result = s_actor(name, tile, sprite, t_stat(hp, pa, pm, init), spell);
+	while (!(myfile.eof()))
+	{
+		tab = get_strsplit(&myfile, ":", -1);
+		vector<int> value;
+		for (int i = 0; i < tab.size(); i++)
+			value.push_back(atoi(tab[i].c_str()));
+		result.gambit.push_back(s_ai_helper(value));
+	}
+	return (result);
 }
 
 s_actor::s_actor()

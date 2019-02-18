@@ -65,7 +65,7 @@ void			s_game_engine::placement_phase()
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(3, &gui, &play, &continu));
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE && board.actor_list.size() != board.enemy_list.size())
 				play = false;
 			handle_control_camera(&event);
 			handle_actor_placement(&event, &index);

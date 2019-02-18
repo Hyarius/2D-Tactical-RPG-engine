@@ -31,14 +31,14 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 
 	if (*(text_list_delete_monster[i]) != "")
 	{
-		remove((MONSTER_PATH + *(text_list_delete_monster[i]) + ACTOR_EXT).c_str());
+		remove((MONSTER_PATH + *(text_list_delete_monster[i]) + MONSTER_EXT).c_str());
 		*player = t_actor();
 		*tile_index = 0;
 		*sprite_target = player->sprite;
 		*entry_path = "";
 		*entry_name = "";
 		*play = true;
-		list_file_delete_monster = list_files(MONSTER_PATH, ACTOR_EXT);
+		list_file_delete_monster = list_files(MONSTER_PATH, MONSTER_EXT);
 		for (int i = 0; i < 30; i++)
 			*(text_list_delete_monster[i]) = (i < (int)(list_file_delete_monster.size()) ? list_file_delete_monster[i] : "");
 	}
@@ -71,7 +71,7 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 						),
 						NULL, NULL));
 
-	list_file_delete_monster = list_files(MONSTER_PATH, ACTOR_EXT);
+	list_file_delete_monster = list_files(MONSTER_PATH, MONSTER_EXT);
 	int i = 0;
 	while (i < 30)
 	{

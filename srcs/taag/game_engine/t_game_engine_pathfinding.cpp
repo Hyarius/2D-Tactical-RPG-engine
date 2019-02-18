@@ -16,7 +16,7 @@ void				s_game_engine::calculate_distance()
 	board.reset_board();
 	t_actor 		*player = turn_order[turn_index % turn_order.size()];
 	vector<t_vect>	to_calc;
-	size_t i, j;
+	size_t i;
 
 	to_calc.push_back(player->coord);
 
