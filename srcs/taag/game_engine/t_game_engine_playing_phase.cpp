@@ -2,6 +2,7 @@
 
 void				s_game_engine::handle_control_game(SDL_Event *event)
 {
+	t_actor *player = turn_order[turn_index % turn_order.size()];
 	if (event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_SPACE)
 		next_turn();
 	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
@@ -22,7 +23,6 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 	}
 	if (event->type == SDL_KEYDOWN)
 	{
-		t_actor *player = turn_order[turn_index % turn_order.size()];
 		if (event->key.keysym.sym == SDLK_q)
 		{
 			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)

@@ -286,7 +286,7 @@ typedef struct			s_game_engine
 	void				invoke_actor(t_actor *new_actor, t_vect coord);	//invoke a new actor at a place
 	void				outvoke_actor(t_actor *new_actor);	//outvoke an actor
 	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
-	void				v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist);	//Utils of calculate_distance
+	bool				v_calc_cell(t_vect source, t_vect target, int prev_dist); //utils to check if a cell can be seen
 	void				calculate_distance();		//compute what tile the current actor can acces by foot
 	void				calculate_vision_circle();	//compute what tile the current actir can see
 	void				calculate_vision_line();	//compute what tile the current actir can see

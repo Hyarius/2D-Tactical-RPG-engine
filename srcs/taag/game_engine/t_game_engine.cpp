@@ -66,6 +66,7 @@ void				s_game_engine::cast_spell(t_vect mouse)
 			}
 			i++;
 		}
+		check_alive();
 		s_spell = -1;
 		calculated = false;
 	}

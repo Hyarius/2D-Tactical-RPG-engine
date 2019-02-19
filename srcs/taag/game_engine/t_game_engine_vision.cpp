@@ -2,22 +2,21 @@
 
 map<t_vect, map<t_vect, vector<t_vect>[4]>>	vision_map;
 
-void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int prev_dist)
+bool				s_game_engine::v_calc_cell(t_vect source, t_vect target, int prev_dist)
 {
-	t_vect 			player_coord = turn_order[turn_index % turn_order.size()]->coord;
 	int				scale = 5;
 
-	if (vision_map.find(player_coord) == vision_map.end() || vision_map[player_coord].find(target) == vision_map[player_coord].end())
+	if (vision_map.find(source) == vision_map.end() || vision_map[source].find(target) == vision_map[source].end())
 	{
-		vision_map[player_coord][target][0] = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.49) * scale, t_vect(target.x + 0.49, target.y + 0.49) * scale);
-		vision_map[player_coord][target][1] = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.49) * scale, t_vect(target.x + 0.51, target.y + 0.49) * scale);
-		vision_map[player_coord][target][2] = calc_line_2d(t_vect(player_coord.x + 0.49, player_coord.y + 0.51) * scale, t_vect(target.x + 0.49, target.y + 0.51) * scale);
-		vision_map[player_coord][target][3] = calc_line_2d(t_vect(player_coord.x + 0.51, player_coord.y + 0.51) * scale, t_vect(target.x + 0.51, target.y + 0.51) * scale);
+		vision_map[source][target][0] = calc_line_2d(t_vect(source.x + 0.49, source.y + 0.49) * scale, t_vect(target.x + 0.49, target.y + 0.49) * scale);
+		vision_map[source][target][1] = calc_line_2d(t_vect(source.x + 0.51, source.y + 0.49) * scale, t_vect(target.x + 0.51, target.y + 0.49) * scale);
+		vision_map[source][target][2] = calc_line_2d(t_vect(source.x + 0.49, source.y + 0.51) * scale, t_vect(target.x + 0.49, target.y + 0.51) * scale);
+		vision_map[source][target][3] = calc_line_2d(t_vect(source.x + 0.51, source.y + 0.51) * scale, t_vect(target.x + 0.51, target.y + 0.51) * scale);
 	}
-	vector<t_vect>	vision_tl = vision_map[player_coord][target][0];
-	vector<t_vect>	vision_tr = vision_map[player_coord][target][1];
-	vector<t_vect>	vision_dl = vision_map[player_coord][target][2];
-	vector<t_vect>	vision_dr = vision_map[player_coord][target][3];
+	vector<t_vect>	vision_tl = vision_map[source][target][0];
+	vector<t_vect>	vision_tr = vision_map[source][target][1];
+	vector<t_vect>	vision_dl = vision_map[source][target][2];
+	vector<t_vect>	vision_dr = vision_map[source][target][3];
 
 	if (board.get_cell(target) && (board.get_cell(target)->node->v_obs == false || turn_order[turn_index % turn_order.size()]->spell[s_spell]->block == INT_TRUE) && board.get_cell(target)->v_dist >= prev_dist)
 	{
@@ -52,11 +51,11 @@ void				s_game_engine::v_calc_cell(vector<t_vect> *to_calc, t_vect target, int p
 				if (board.get_cell(target)->v_dist >= turn_order[turn_index % turn_order.size()]->spell[s_spell]->range[0] &&
 					board.get_cell(target)->node->v_obs == false && board.get_cell(target)->node->tile != NULL)
 					board.get_cell(target)->cursor = t_vect(0, 2);
-				if (to_calc != NULL)
-					to_calc->push_back(target);
+				return (true);
 			}
 		}
 	}
+	return (false);
 }
 
 void				s_game_engine::calculate_vision_circle()
@@ -71,10 +70,14 @@ void				s_game_engine::calculate_vision_circle()
 	i = 0;
 	while (i < to_calc.size())
 	{
-		v_calc_cell(&to_calc, t_vect(to_calc[i].x + 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist);
-		v_calc_cell(&to_calc, t_vect(to_calc[i].x - 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist);
-		v_calc_cell(&to_calc, t_vect(to_calc[i].x, to_calc[i].y + 1), board.get_cell(to_calc[i])->v_dist);
-		v_calc_cell(&to_calc, t_vect(to_calc[i].x, to_calc[i].y - 1), board.get_cell(to_calc[i])->v_dist);
+		if(v_calc_cell(player->coord, t_vect(to_calc[i].x + 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist) == true)
+			to_calc.push_back(t_vect(to_calc[i].x + 1, to_calc[i].y));
+		if(v_calc_cell(player->coord, t_vect(to_calc[i].x - 1, to_calc[i].y), board.get_cell(to_calc[i])->v_dist) == true)
+			to_calc.push_back(t_vect(to_calc[i].x - 1, to_calc[i].y));
+		if(v_calc_cell(player->coord, t_vect(to_calc[i].x, to_calc[i].y + 1), board.get_cell(to_calc[i])->v_dist) == true)
+			to_calc.push_back(t_vect(to_calc[i].x, to_calc[i].y + 1));
+		if(v_calc_cell(player->coord, t_vect(to_calc[i].x, to_calc[i].y - 1), board.get_cell(to_calc[i])->v_dist) == true)
+			to_calc.push_back(t_vect(to_calc[i].x, to_calc[i].y - 1));
 		i++;
 	}
 	calculated = true;
@@ -90,10 +93,10 @@ void				s_game_engine::calculate_vision_line()
 	i = 0;
 	while (i <= player->spell[s_spell]->range[1])
 	{
-		v_calc_cell(NULL, t_vect(player->coord.x + i, player->coord.y), i - 1);
-		v_calc_cell(NULL, t_vect(player->coord.x - i, player->coord.y), i - 1);
-		v_calc_cell(NULL, t_vect(player->coord.x, player->coord.y + i), i - 1);
-		v_calc_cell(NULL, t_vect(player->coord.x, player->coord.y - i), i - 1);
+		v_calc_cell(player->coord, t_vect(player->coord.x + i, player->coord.y), i - 1);
+		v_calc_cell(player->coord, t_vect(player->coord.x - i, player->coord.y), i - 1);
+		v_calc_cell(player->coord, t_vect(player->coord.x, player->coord.y + i), i - 1);
+		v_calc_cell(player->coord, t_vect(player->coord.x, player->coord.y - i), i - 1);
 		i++;
 	}
 	calculated = true;

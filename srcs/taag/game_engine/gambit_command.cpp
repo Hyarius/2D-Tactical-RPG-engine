@@ -59,16 +59,15 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into get_close_enemy_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into get_close_enemy_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
 	calculate_distance();
-	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
 	t_actor *saved = NULL;
@@ -81,6 +80,7 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 	if (saved == NULL)
 		return (false);
 	to_calc.push_back(saved->coord);
+	vector<t_vect>	range;
 	if (type == R_CIRCLE)
 		range = AI_calc_diam(distance - delta, distance);
 	if (type == R_LINE)
@@ -110,6 +110,10 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 		}
 		i++;
 	}
+	
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
 		move_actor(result);
@@ -125,9 +129,9 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into get_close_enemy_weak [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into get_close_enemy_weak [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
@@ -176,6 +180,10 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 		}
 		i++;
 	}
+	
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
 		move_actor(result);
@@ -191,9 +199,9 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into get_close_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into get_close_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
@@ -238,6 +246,10 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 		}
 		i++;
 	}
+	
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
 		move_actor(result);
@@ -253,9 +265,9 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into get_close_ally [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into get_close_ally [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
@@ -301,6 +313,10 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 		}
 		i++;
 	}
+	
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
 		move_actor(result);
@@ -316,9 +332,9 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into get_close_ally_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into get_close_ally_percents [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
@@ -369,6 +385,10 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 		}
 		i++;
 	}
+	
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
 		move_actor(result);
@@ -384,9 +404,9 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 2)
+	if (data.value.size() < 3)
 		error_exit("not enought arg into flee_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 2)
+	if (data.value.size() > 3)
 		error_exit("too much arg into flee_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	if (turn_order[turn_index % turn_order.size()]->stat.hp.percent() > data.value[1])
 		return (false);
@@ -471,6 +491,10 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 		actual = to_look;
 	}
 	calculate_distance();
+	
+	vector<t_vect> path = calc_path(actual);
+	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+		actual = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && actual != t_vect(-1, -1))
 	{
 		move_actor(actual);
@@ -490,8 +514,10 @@ bool				s_game_engine::attack(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -500,16 +526,59 @@ bool				s_game_engine::attack(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
-	while (i < turn_order.size())
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
 	{
-		if ((target == NULL || board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist) && turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
-		i++;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor->team != actor->team)
+				{
+					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
 	}
-	if (target == NULL)
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
@@ -522,8 +591,10 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -532,17 +603,72 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
+	t_actor *target_actor = NULL;
 	while (i < turn_order.size())
 	{
-		if ((target == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist && turn_order[i]->stat.hp.value < target->stat.hp.value)) &&
+		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.value < target_actor->stat.hp.value)) &&
 			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
+			target_actor = turn_order[i];
 		i++;
 	}
-	if (target == NULL)
+	i = 0;
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
+	{
+		int find = 0;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (board.get_cell(tmp)->actor->team != actor->team)
+				{
+					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
+	}
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	printf("target = [%.2f / %.2f]\n", target.x, target.y);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
@@ -555,8 +681,11 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -565,17 +694,71 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
+	t_actor *target_actor = NULL;
 	while (i < turn_order.size())
 	{
-		if ((target == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist && turn_order[i]->stat.hp.percent() < target->stat.hp.percent())) &&
+		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < target_actor->stat.hp.percent())) &&
 			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
+			target_actor = turn_order[i];
 		i++;
 	}
-	if (target == NULL)
+	i = 0;
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
+	{
+		int find = 0;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (board.get_cell(tmp)->actor->team != actor->team)
+				{
+					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
+	}
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
@@ -588,8 +771,11 @@ bool				s_game_engine::help(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -653,8 +839,11 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;

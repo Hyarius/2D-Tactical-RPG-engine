@@ -7,7 +7,7 @@ pa:2
 pm:1
 range:1:8:1
 type:0
-on target:1
+on target:2
 zone:0:0
 effect1:8:0:0:0:0
 effect2:0:0:0:0:0
@@ -15,5 +15,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_effect:NULL:0:25:1:1
+target_effect:NULL:0:0:1:1
 anim_type:0

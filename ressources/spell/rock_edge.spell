@@ -7,7 +7,7 @@ pa:3
 pm:0
 range:1:4:0
 type:0
-on target:2
+on target:1
 zone:1:1
 effect1:0:6:0:0:0
 effect2:2:-1:0:0:0

@@ -1,11 +1,11 @@
 #include "taag.h"
 /*
-#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
-#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
-#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3]
-#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] %
-#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3]
-#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
+#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] and max path len value[4]
+#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
+#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
+#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] % and max path len value[2]
+#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] and max path len value[4]
+#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
 #define ATTACK			6	//cast the spell num value[1] on the first enemy availible in range if possible
 #define ATTACK_WEAK		7	//cast the spell num value[1] on the enemy with the less hp in range if possible
 #define ATTACK_PERCENT	8	//cast the spell num value[1] on the enemy with the less % hp in range if possible
@@ -36,7 +36,7 @@ bool					s_game_engine::execute_gambit(t_actor *source)
 	if (board.check_anim() == false || source->destination.size() != 0)
 		return (false);
 	size_t i = 0;
-	while (i < source->gambit.size())
+	while (i < source->gambit.size() && source->gambit[i].value.size() != 0)
 	{
 		int index = source->gambit[i].value[0];
 		t_ai_helper data = source->gambit[i];
