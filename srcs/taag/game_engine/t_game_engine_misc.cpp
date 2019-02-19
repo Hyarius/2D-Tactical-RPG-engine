@@ -74,6 +74,7 @@ s_game_engine::s_game_engine(string p_path)
 {
 	calculated = false;
 	s_spell = -1;
+	turn_num = 0;
 	board = t_game_board(p_path);
 	gui = t_gui(30, 20);
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));

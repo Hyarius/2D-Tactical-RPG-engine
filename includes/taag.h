@@ -268,6 +268,7 @@ typedef struct			s_game_engine
 	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
 	bool				calculated;	//did we need to calculate something ?
 	int					s_spell;	//what spell is selected : -1 for none
+	int					turn_num;	//the number of turn
 	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 
 						s_game_engine();
@@ -308,9 +309,21 @@ typedef struct			s_game_engine
 	void				ending_fight(bool *play);
 
 	void				enemy_turn();
+
 	bool				get_close_enemy(t_ai_helper data);
+	bool				get_close_enemy_weak(t_ai_helper data);
+	bool				get_close_enemy_percent(t_ai_helper data);
 	bool				get_close_ally(t_ai_helper data);
+	bool				get_close_ally_percent(t_ai_helper data);
 	bool				flee_enemy(t_ai_helper data);
+	bool				attack(t_ai_helper data);
+	bool				attack_weak(t_ai_helper data);
+	bool				attack_percent(t_ai_helper data);
+	bool				help(t_ai_helper data);
+	bool				help_weak(t_ai_helper data);
+	bool				help_percent(t_ai_helper data);
+	bool				action_on_turn(t_ai_helper data);
+
 	bool				execute_gambit(t_actor *source);
 
 }						t_game_engine;
@@ -318,15 +331,17 @@ typedef struct			s_game_engine
 
 #define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
 #define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
-#define RETREAT			2	//retreat to the safest tile if stat hp < value[1] %
-#define SUPPORT			3	//run to closest ally at range value[1], delta value[2] and range type value[3]
-#define SUPPORT_WEAK	4	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
-#define ATTACK			5	//cast the spell num value[1] on the first enemy availible if range possible
-#define ATTACK_WEAK		6	//cast the spell num value[1] on the enemy with the less hp if range possible
-#define HELP			7	//cast the spell num value[1] on an ally 
-#define HELP_WEAK		8	//cast the spell num value[1] on the ally with less % HP
-#define HELP_PERC		9	//cast the spell num value[2] on the ally if HP % < value[1]
-#define TURN			10	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
+#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3]
+#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] %
+#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3]
+#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
+#define ATTACK			6	//cast the spell num value[1] on the first enemy availible in range if possible
+#define ATTACK_WEAK		7	//cast the spell num value[1] on the enemy with the less hp in range if possible
+#define ATTACK_PERCENT	8	//cast the spell num value[1] on the enemy with the less % hp in range if possible
+#define HELP			9	//cast the spell num value[1] on an ally
+#define HELP_WEAK		10	//cast the spell num value[1] on the ally with less % HP
+#define HELP_PERC		11	//cast the spell num value[2] on the ally if HP % < value[1]
+#define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
 
 typedef bool (s_game_engine:: *gambit_command)(t_ai_helper);
 

@@ -1,17 +1,34 @@
 #include "taag.h"
+/*
+#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
+#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
+#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3]
+#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] %
+#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3]
+#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
+#define ATTACK			6	//cast the spell num value[1] on the first enemy availible in range if possible
+#define ATTACK_WEAK		7	//cast the spell num value[1] on the enemy with the less hp in range if possible
+#define ATTACK_PERCENT	8	//cast the spell num value[1] on the enemy with the less % hp in range if possible
+#define HELP			9	//cast the spell num value[1] on an ally
+#define HELP_WEAK		10	//cast the spell num value[1] on the ally with less % HP
+#define HELP_PERC		11	//cast the spell num value[2] on the ally if HP % < value[1]
+#define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
+*/
 
-
-gambit_command command[10] = {
+gambit_command command[13] = {
 	&s_game_engine::get_close_enemy,
-	NULL,
+	&s_game_engine::get_close_enemy_weak,
+	&s_game_engine::get_close_enemy_percent,
 	&s_game_engine::flee_enemy,
 	&s_game_engine::get_close_ally,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
+	&s_game_engine::get_close_ally_percent,
+	&s_game_engine::attack,
+	&s_game_engine::attack_weak,
+	&s_game_engine::attack_percent,
+	&s_game_engine::help,
+	&s_game_engine::help_weak,
+	&s_game_engine::help_percent,
+	&s_game_engine::action_on_turn,
 };
 
 bool					s_game_engine::execute_gambit(t_actor *source)
