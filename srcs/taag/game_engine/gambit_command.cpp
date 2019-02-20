@@ -508,10 +508,12 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 
 bool				s_game_engine::attack(t_ai_helper data)
 {
+	printf("------\n");
 	if (data.value.size() < 4)
 		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	if (data.value.size() > 4)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
+	printf("arg conditionnement correct\n");
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -519,6 +521,7 @@ bool				s_game_engine::attack(t_ai_helper data)
 		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
 		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
+	printf("PA/PM condition validated\n");
 	board.reset_board();
 	calculated = false;
 	if (actor->spell[s_spell]->range_type == R_CIRCLE)
@@ -560,11 +563,11 @@ bool				s_game_engine::attack(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor->team != actor->team)
 				{
-					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+					if (percent_target_hit >= board.get_cell(tmp)->actor->stat.hp.percent())
 						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
 					nb_target_hit++;
 				}
@@ -576,10 +579,14 @@ bool				s_game_engine::attack(t_ai_helper data)
 			target = actor->coord + to_look[i];
 		}
 	}
+	printf("target = [%.2f / %.2f]\n", target.x, target.y);
 	if (target == t_vect(-1, -1))
 		return (false);
+	printf("before casting : PA = %d / PM = %d\n", actor->stat.pa.value, actor->stat.pm.value);
 	cast_spell(target);
+	printf("after casting : PA = %d / PM = %d\n", actor->stat.pa.value, actor->stat.pm.value);
 	board.reset_board();
+	printf("------\n");
 	return (true);
 }
 
@@ -647,14 +654,14 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;
 				if (board.get_cell(tmp)->actor->team != actor->team)
 				{
-					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
-						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					if (percent_target_hit >= board.get_cell(tmp)->actor->stat.hp.value)
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.value;
 					nb_target_hit++;
 				}
 			}
@@ -667,7 +674,6 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 	}
 	if (target == t_vect(-1, -1))
 		return (false);
-	printf("target = [%.2f / %.2f]\n", target.x, target.y);
 	cast_spell(target);
 	board.reset_board();
 	return (true);
@@ -738,13 +744,13 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;
 				if (board.get_cell(tmp)->actor->team != actor->team)
 				{
-					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+					if (percent_target_hit >= board.get_cell(tmp)->actor->stat.hp.percent())
 						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
 					nb_target_hit++;
 				}
@@ -771,7 +777,6 @@ bool				s_game_engine::help(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
 		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
 		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
@@ -784,16 +789,59 @@ bool				s_game_engine::help(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
-	while (i < turn_order.size())
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
 	{
-		if ((target == NULL || board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist) && turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
-		i++;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor->team == actor->team)
+				{
+					if (percent_target_hit > board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
 	}
-	if (target == NULL)
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
@@ -806,8 +854,10 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
-	if ((actor->stat.pa.value < actor->spell[s_spell]->cost_pm && actor->stat.pa.value == data.value[2]) ||
-		(actor->stat.pm.value < actor->spell[s_spell]->cost_pa && actor->stat.pm.value == data.value[3]))
+	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
+		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
+		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
+		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -816,17 +866,71 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
+	t_actor *target_actor = NULL;
 	while (i < turn_order.size())
 	{
-		if ((target == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist && turn_order[i]->stat.hp.value < target->stat.hp.value)) &&
-			turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
+		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.value < target_actor->stat.hp.value)) &&
+			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
+			target_actor = turn_order[i];
 		i++;
 	}
-	if (target == NULL)
+	i = 0;
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
+	{
+		int find = 0;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (board.get_cell(tmp)->actor->team == actor->team)
+				{
+					if (percent_target_hit >= board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
+	}
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
@@ -852,17 +956,71 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
-	t_actor *target = NULL;
+	t_actor *target_actor = NULL;
 	while (i < turn_order.size())
 	{
-		if ((target == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target->coord)->v_dist && turn_order[i]->stat.hp.percent() < target->stat.hp.percent())) &&
-			turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
-			target = turn_order[i];
+		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < target_actor->stat.hp.percent())) &&
+			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
+			target_actor = turn_order[i];
 		i++;
 	}
-	if (target == NULL)
+	i = 0;
+
+	vector<t_vect>	target_list; //every tile hited by the spell
+	if (actor->spell[s_spell]->zone_type == Z_DIAM)
+		target_list = calc_diam(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_CROSS)
+		target_list = calc_cross(actor->spell[s_spell]->zone_size);
+	else if (actor->spell[s_spell]->zone_type == Z_SQUARE)
+		target_list = calc_square(actor->spell[s_spell]->zone_size);
+
+
+	vector<t_vect> to_look; //every tile to look
+
+	if (actor->spell[s_spell]->range_type == R_CIRCLE)
+		to_look = AI_calc_diam(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+	if (actor->spell[s_spell]->range_type == R_LINE)
+		to_look = AI_calc_cross(actor->spell[s_spell]->range[0], actor->spell[s_spell]->range[1]);
+
+	t_vect target = t_vect(-1, -1); //the saved coord of the spell
+	int		utils_value = 999;
+
+	for (size_t i = 0; i < to_look.size(); i++)
+	{
+		int find = 0;
+		int nb_target_hit = 0;
+		int percent_target_hit = 100;
+		if (actor->spell[s_spell]->zone_type == Z_LINE)
+		{
+			t_vect diff = actor->coord - to_look[i];
+			t_vect dir = t_vect(((diff).x > 0 ? -1 : (diff).x < 0 ? 1 : 0),
+				((diff).y > 0 ? -1 : (diff).y < 0 ? 1 : 0));
+			target_list = calc_line(actor->spell[s_spell]->zone_size, dir);
+		}
+		for (size_t j = 0; j < target_list.size(); j++)
+		{
+			t_vect tmp = actor->coord + to_look[i] + target_list[j];
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			{
+				if (board.get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (board.get_cell(tmp)->actor->team == actor->team)
+				{
+					if (percent_target_hit >= board.get_cell(tmp)->actor->stat.hp.percent())
+						percent_target_hit = board.get_cell(tmp)->actor->stat.hp.percent();
+					nb_target_hit++;
+				}
+			}
+		}
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
+		{
+			utils_value = percent_target_hit / nb_target_hit;
+			target = actor->coord + to_look[i];
+		}
+	}
+	if (target == t_vect(-1, -1))
 		return (false);
-	cast_spell(target->coord);
+	cast_spell(target);
 	board.reset_board();
 	return (true);
 }
