@@ -1,25 +1,79 @@
 #include "taag.h"
 
 /*
-#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] % max mouvement value[2]
-#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define ATTACK			6	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the closest enemy availible in range if possible
-#define ATTACK_WEAK		7	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less hp in range if possible
-#define ATTACK_PERCENT	8	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less % hp in range if possible
-#define HELP			9	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on an ally
-#define HELP_WEAK		10	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the ally with less % HP
-#define HELP_PERC		11	//cast the spell num value[2] (if value[2] PA and value[3] pm on caster) on the ally if HP % < value[1]
-#define TURN			12	//if turn == value[1] --> execute command num value[2] with value stocked after
+TO_DO :
+
+erase the increment function into iterator to allow a recalculation of every text in the screen when + or -
 */
 
-extern vector<size_t> nb_param_gambit;
+vector<vector<string>> gambit_text_desc = {
+	{"Approche enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Approche weak enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Approche weak % enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Flee enemy", "Hp percent to start :", "Max mouvement"},
+	{"Support ally", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Support weak % ally", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Attack enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Attack weak enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Attack weak % enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Help ally", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Help weak ally", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Help weak % ally", "Spell num to cast:", "Ally percent to trigger :", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"XXXX", "", ""},
+};
+
+vector<vector<int>> gambit_starting_value = {
+	{0, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1},
+	{0, 5, 1},
+	{0, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1},
+	{0, 1, 1, 1},
+	{0, 1, 1, 1},
+	{0, 1, 1, 1},
+	{0, 1, 1, 1},
+	{0, 1, 1, 1},
+	{0, 1, 5, 1, 1},
+	{0, 0, 0},
+};
+
+vector<vector<int>> gambit_min_value = {
+	{0, 1, 0, 0, -1},
+	{0, 1, 0, 0, -1},
+	{0, 1, 0, 0, -1},
+	{0, 5, -1},
+	{0, 1, 0, 0, -1},
+	{0, 1, 0, 0, -1},
+	{0, 0, -1, -1},
+	{0, 0, -1, -1},
+	{0, 0, -1, -1},
+	{0, 0, -1, -1},
+	{0, 0, -1, -1},
+	{0, 0, 5, -1, -1},
+	{0, 0, 0},
+};
+
+vector<vector<int>> gambit_max_value = {
+	{0, 1, 10, 10, 10},
+	{0, 1, 10, 10, 10},
+	{0, 1, 10, 10, 10},
+	{0, 100, 10},
+	{0, 1, 10, 10, 10},
+	{0, 1, 10, 10, 10},
+	{0, 5, 10, 10},
+	{0, 5, 10, 10},
+	{0, 5, 10, 10},
+	{0, 5, 10, 10},
+	{0, 5, 10, 10},
+	{0, 5, 100, 10, 10},
+	{0, 0, 0},
+};
 
 t_button *button_num_list[16];
 t_button *button_desc_list[16];
+t_button *gambit_desc;
+t_iterator *value_iterator[10];
 
 static void		increment_index(t_data data)//actor, &index, delta
 {
@@ -36,14 +90,70 @@ static void		increment_index(t_data data)//actor, &index, delta
 	}
 }
 
-static void select_gambit_editable(t_data data)
+static void select_gambit_editable(t_data data) //&gui, &actor, &index, selected
 {
-	t_gui		*gui_right = (t_actor *)(data.data[0]);
+	t_gui		*gui_right = (t_gui *)(data.data[0]);
 	t_actor		*actor = (t_actor *)(data.data[1]);
 	size_t		*index = (size_t *)(data.data[2]);
-	int			selected = (int &)(data.data[3]);
+	size_t		selected = (size_t &)(data.data[3]);
+	size_t		value = *index + selected;
 
 	*gui_right = t_gui();
+
+	if (value >= (actor->gambit).size())
+		return ;
+
+	if ((actor->gambit)[value].value.size() == 0 || (actor->gambit)[value].value.size() != gambit_text_desc[actor->gambit[value].value[0]].size())
+		(actor->gambit)[value] = t_ai_helper({0, 1, 0, 0, -1});
+	int			*action_type = &(actor->gambit[value].value[0]);
+
+	if (value < actor->gambit.size())
+	{
+		int j = (actor->gambit)[value].value[0];
+		int i = 0;
+		gambit_desc = new s_button(new s_text_button(
+			gambit_text_desc[actor->gambit[value].value[0]][0], DARK_GREY,
+			gui_right->unit * t_vect(17, 1.5), gui_right->unit * t_vect(10.25, 1), 4,
+			t_color(0.5, 0.5, 0.5), t_color(0.7, 0.7, 0.7)),
+			NULL, NULL);
+		t_iterator *gambit_selecter = new s_iterator(j, NULL, 1, 0, 0, gambit_text_desc.size(),
+			NULL,
+			new t_button(new s_text_button(
+					"<", DARK_GREY,
+					t_vect(15.75, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(1, 1) * gui_right->unit, 5,
+					t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+			NULL,
+			new t_button(new s_text_button(
+					">", DARK_GREY,
+					t_vect(27.5, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(1, 1) * gui_right->unit, 5,
+					t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			i++;
+		gui_right->add(gambit_desc);
+		gui_right->add(gambit_selecter);
+		for (size_t j = 1; j < gambit_text_desc[actor->gambit[value].value[0]].size(); j++)
+		{
+			value_iterator[j] = new s_iterator(&(actor->gambit[value].value[j]), NULL, gambit_starting_value[actor->gambit[value].value[0]][j], 1, gambit_min_value[actor->gambit[value].value[0]][j], gambit_max_value[actor->gambit[value].value[0]][j],
+				new t_button(new s_text_button(
+						gambit_text_desc[actor->gambit[value].value[0]][j], DARK_GREY,
+						t_vect(15.75, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(9, 1) * gui_right->unit, 5,
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+				new t_button(new s_text_button(
+						"-", DARK_GREY,
+						t_vect(25, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(1, 1) * gui_right->unit, 5,
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+				new t_button(new s_text_button(
+						"", DARK_GREY,
+						t_vect(26.25, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(1, 1) * gui_right->unit, 5,
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+				new t_button(new s_text_button(
+						"+", DARK_GREY,
+						t_vect(27.5, 1.5 + (1.2 * (i))) * gui_right->unit, t_vect(1, 1) * gui_right->unit, 5,
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+			i++;
+			gui_right->add(value_iterator[j]);
+		}
+
+	}
 }
 
 void menu_gambit_editor(t_data data)
@@ -102,7 +212,7 @@ void menu_gambit_editor(t_data data)
 				((j + index) < actor->gambit.size() ? parse_gambit(actor->gambit[j + index]) : ""), DARK_GREY,
 				t_vect(2.75, 1.5 + (1.1 * i)) * gui_left.unit, t_vect(11.5, 0.95) * gui_left.unit, 3,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-				NULL, NULL);
+				select_gambit_editable, t_data(4, &gui_right, actor, &index, j)); //&gui, &actor, &index, selected
 		i += 0.95;
 		gui_left.add(button_num_list[j]);
 		gui_left.add(button_desc_list[j]);
@@ -128,6 +238,7 @@ void menu_gambit_editor(t_data data)
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
 				gui_left.click();
+				gui_right.click();
 			}
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y < 0)
 				increment_index(t_data(3, actor, &index, 1));
