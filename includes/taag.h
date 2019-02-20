@@ -16,6 +16,7 @@ extern map<string, struct s_tileset>	animation_map; //the dictionnary holding on
 													//tileset used by sprite for the prog, in extern to accessibility
 extern vector<string>					tileset_name; //stock the name of every tileset in tileset_map
 extern vector<string>					sprite_name;//stock the name of every tileset in sprite_map
+extern vector<string>					human_sprite_name;//stock the name of every tileset in sprite_map
 extern vector<string>					interface_name;//stock the name of every tileset in interface_map
 extern vector<string>					animation_name;//stock the name of every tileset in interface_map
 

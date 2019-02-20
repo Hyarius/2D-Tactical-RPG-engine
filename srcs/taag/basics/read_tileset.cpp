@@ -7,6 +7,7 @@ map<string, t_tileset>		animation_map;
 
 vector<string>				tileset_name;
 vector<string>				sprite_name;
+vector<string>				human_sprite_name;
 vector<string>				interface_name;
 vector<string>				animation_name;
 
@@ -157,6 +158,8 @@ static void			read_texture_folder(string p_path, string p_ext, vector<string> *v
 	while (i < texture_file.size())
 	{
 		vector_name->push_back(texture_file[i]);
+		if (vector_name == &sprite_name && texture_file[i][0] == 'H')
+			human_sprite_name.push_back(texture_file[i]);
 		i++;
 	}
 }

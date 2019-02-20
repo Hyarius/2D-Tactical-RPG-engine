@@ -26,12 +26,13 @@ typedef struct	s_sprite_iterator : t_gui_obj
 {
 	size_t		i;		//the key to get the correct sprite
 	t_vect		delta;	//describ the way we run throught the tileset
+	vector<string>	*vector_name;
 	t_button	*desc;
 	t_button	*minus;
 	t_button	*container;
 	t_button	*plus;
 				s_sprite_iterator();
-				s_sprite_iterator(t_vect p_delta, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
+				s_sprite_iterator(t_vect p_delta, vector<string> *p_vector_name, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
 	void		draw_self();
 	bool		click(t_vect mouse);
 	bool		key_press(SDL_Event *event);

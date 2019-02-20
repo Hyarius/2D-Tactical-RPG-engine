@@ -8,7 +8,7 @@ static void			stand(t_data data)
 static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
-	string	p_path = MONSTER_PATH + *((string *)(data.data[1])) + MONSTER_EXT;
+	string	p_path = *((string *)(data.data[1]));
 	ofstream myfile;
 	myfile.open (p_path);
 	myfile << "name:" + (to_save->name == "" ? "Default" : to_save->name) + "\n";
@@ -50,7 +50,11 @@ void			menu_save_monster(t_data data) //0 - gui / 1 - t_actor * / 2 - & file nam
 {
 	string name = (*((string *)(data.data[2])) == "" ? "default" : *((string *)(data.data[2])) );
 	string full_path = MONSTER_PATH + name + MONSTER_EXT;
-
+	if (name == "default" && check_file_exist(full_path) == true)
+	{
+		for (int i = 0; check_file_exist(full_path) == true; i++)
+			full_path = MONSTER_PATH + name + "(" + to_string(i) + ")" + MONSTER_EXT;
+	}
 	t_gui		gui = t_gui(15, 10);
 	SDL_Event	event;
 
@@ -78,7 +82,7 @@ void			menu_save_monster(t_data data) //0 - gui / 1 - t_actor * / 2 - & file nam
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						quit_save, t_data(3, data.data[1], &name, &play)));
+						quit_save, t_data(3, data.data[1], &full_path, &play)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info

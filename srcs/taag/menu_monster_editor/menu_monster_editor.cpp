@@ -147,7 +147,7 @@ void					menu_monster_editor(t_data data)
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
-				t_vect(4, 4),
+				t_vect(4, 4), &sprite_name,
 				new t_button(new s_text_button(
 						"Tileset :            ", DARK_GREY,
 						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -162,10 +162,13 @@ void					menu_monster_editor(t_data data)
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
+	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &sprite_name);
 	i++;
 
 	tile_index = &(tileset_selector->i);
+	while (sprite_name[*tile_index][0] != 'M')
+		(*tile_index)++;
+	tile_button->tile = get_sprite_tile(sprite_name[*tile_index]);
 	sprite_target = &(((t_tileset_button *)(tileset_selector->container->button))->selected);
 
 	gui.add(back_ground);

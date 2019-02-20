@@ -50,7 +50,7 @@ bool					s_game_engine::execute_gambit(t_actor *source)
 void				s_game_engine::enemy_turn()
 {
 	board.reset_board();
-	
+
 	SDL_Event	event;
 
 	while (execute_gambit(turn_order[turn_index % turn_order.size()]) == false)

@@ -10,25 +10,27 @@ static void		quit_choose_sprite(t_data data)
 	int				i = (int &)(data.data[3]);
 	t_vect			*tmp_selected = (t_vect *)(data.data[4]);
 	bool			*play = (bool *)(data.data[5]);
+	vector<string>	*vector_name = (vector<string> *)(data.data[6]);
 
-	*index = (*tmp_index + i) % sprite_name.size();
+	*index = (*tmp_index + i) % vector_name->size();
 	*selected = *tmp_selected;
 	*play = false;
 }
 
 static void		increment_index(t_data data)
 {
-	size_t *index = (size_t *)(data.data[0]);
-	int delta = (int &)(data.data[1]);
+	size_t			*index = (size_t *)(data.data[0]);
+	int				delta = (int &)(data.data[1]);
+	vector<string>	*vector_name = (vector<string> *)(data.data[2]);
 
 	if (*index == 0 && delta < 0)
-		*index = sprite_name.size() + delta;
+		*index = (*vector_name).size() + delta;
 	else
-		*index = (*index + delta) % (sprite_name.size());
+		*index = (*index + delta) % (vector_name->size());
 	int i = 0;
 	while (i < 32)
 	{
-		*(tileset_list[i]) = get_sprite_tile(sprite_name[(*index + i / 8) % (sprite_name.size())]);
+		*(tileset_list[i]) = get_sprite_tile((*vector_name)[(*index + i / 8) % ((*vector_name).size())]);
 		i++;
 	}
 }
@@ -41,7 +43,8 @@ void			menu_choose_sprite(t_data data)
 
 	size_t *index = ((size_t *)(data.data[1]));
 	t_vect *target = ((t_vect *)(data.data[2]));
-	size_t tmp_index = *index;
+	vector<string> *vector_name = (vector<string> *)(data.data[3]);
+	size_t tmp_index = (int)(*index) % vector_name->size();
 
 	s_button *button = new s_button(new s_text_button(
 		"", DARK_GREY,
@@ -54,14 +57,14 @@ void			menu_choose_sprite(t_data data)
 		"UP", DARK_GREY,
 		gui.unit * t_vect(13, 1), gui.unit * t_vect(4, 1), 8,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		increment_index, t_data(2, &tmp_index, -1));
+		increment_index, t_data(3, &tmp_index, -1, vector_name));
 	gui.add(button);
 
 	button = new s_button(new s_text_button(
 		"DOWN", DARK_GREY,
 		gui.unit * t_vect(13, 18), gui.unit * t_vect(4, 1), 8,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		increment_index, t_data(2, &tmp_index, 1));
+		increment_index, t_data(3, &tmp_index, 1, vector_name));
 	gui.add(button);
 
 	t_vect coord = t_vect(2, 2.25);
@@ -81,20 +84,21 @@ void			menu_choose_sprite(t_data data)
 						size * gui.unit,
 						5),
 						quit_choose_sprite, NULL);
-		button->button->data = t_data(6, index, target, &tmp_index, i / 8, &(((t_tileset_button *)(button->button))->selected), &play);
+		button->button->data = t_data(7, index, target, &tmp_index, i / 8, &(((t_tileset_button *)(button->button))->selected), &play, vector_name);
 		tileset_list[i] = &(((t_tileset_button *)(button->button))->tile);
-		*(tileset_list[i]) = get_sprite_tile(sprite_name[(tmp_index + i / 8) % sprite_name.size()]);
+		*(tileset_list[i]) = get_sprite_tile((*vector_name)[(tmp_index + i / 8) % (*vector_name).size()]);
 		gui.add(button);
 		selected.x += increment.x;
-		if (selected.x >= sprite_map[sprite_name[tmp_index]].nb_sprite.x)
+		if (selected.x >= sprite_map[(*vector_name)[tmp_index]].nb_sprite.x)
 			selected = t_vect(0, selected.y + increment.y);
-		if (selected.y >= sprite_map[sprite_name[tmp_index]].nb_sprite.y)
+		if (selected.y >= sprite_map[(*vector_name)[tmp_index]].nb_sprite.y)
 			selected = t_vect(0, 0);
 		i++;
 	}
 
 	while (play == true)
 	{
+		printf("tmp = %zu\n", tmp_index);
 		prepare_screen();
 
 		if (data.data.size() != 0)
@@ -113,9 +117,9 @@ void			menu_choose_sprite(t_data data)
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 				gui.click();
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y < 0)
-				increment_index(t_data(2, &tmp_index, +1));
+				increment_index(t_data(3, &tmp_index, +1, vector_name));
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y > 0)
-				increment_index(t_data(2, &tmp_index, -1));
+				increment_index(t_data(3, &tmp_index, -1, vector_name));
 		}
 	}
 }

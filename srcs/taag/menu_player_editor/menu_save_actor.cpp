@@ -10,8 +10,13 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = ACTOR_PATH + *((string *)(data.data[1])) + ACTOR_EXT;
 	ofstream myfile;
+	if (check_file_exist(p_path) == true)
+	{
+		for (int i = 0; *((string *)(data.data[1])) == "default" && check_file_exist(p_path) == true; i++)
+			p_path = ACTOR_PATH + *((string *)(data.data[1])) + "(" + to_string(i) + ")" + ACTOR_EXT;
+	}
 	myfile.open (p_path);
-	myfile << "name:" + (to_save->name == "" ? "Default" : to_save->name) + "\n";
+	myfile << "name:" + (to_save->name == "" ? "default" : to_save->name) + "\n";
 	map<string, t_tileset>::const_iterator i;
 	string name;
 
@@ -50,7 +55,11 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 {
 	string name = (*((string *)(data.data[2])) == "" ? "default" : *((string *)(data.data[2])) );
 	string full_path = ACTOR_PATH + name + ACTOR_EXT;
-
+	if (name == "default" && check_file_exist(full_path) == true)
+	{
+		for (int i = 0; check_file_exist(full_path) == true; i++)
+			full_path = ACTOR_PATH + name + "(" + to_string(i) + ")" + ACTOR_EXT;
+	}
 	t_gui		gui = t_gui(15, 10);
 	SDL_Event	event;
 

@@ -110,9 +110,9 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 		}
 		i++;
 	}
-	
+
 	vector<t_vect> path = calc_path(result);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
@@ -180,9 +180,9 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 		}
 		i++;
 	}
-	
+
 	vector<t_vect> path = calc_path(result);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
@@ -246,9 +246,9 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 		}
 		i++;
 	}
-	
+
 	vector<t_vect> path = calc_path(result);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
@@ -313,9 +313,9 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 		}
 		i++;
 	}
-	
+
 	vector<t_vect> path = calc_path(result);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
@@ -385,9 +385,9 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 		}
 		i++;
 	}
-	
+
 	vector<t_vect> path = calc_path(result);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
@@ -491,10 +491,7 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 		actual = to_look;
 	}
 	calculate_distance();
-	
-	vector<t_vect> path = calc_path(actual);
-	if (data.value[4] != -1 && path.size() >= data.value[4] + 1)
-		actual = path[data.value[4]];
+
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && actual != t_vect(-1, -1))
 	{
 		move_actor(actual);
@@ -508,12 +505,10 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 
 bool				s_game_engine::attack(t_ai_helper data)
 {
-	printf("------\n");
 	if (data.value.size() < 4)
 		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	if (data.value.size() > 4)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	printf("arg conditionnement correct\n");
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -521,7 +516,6 @@ bool				s_game_engine::attack(t_ai_helper data)
 		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
 		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
 		return (false);
-	printf("PA/PM condition validated\n");
 	board.reset_board();
 	calculated = false;
 	if (actor->spell[s_spell]->range_type == R_CIRCLE)
@@ -579,14 +573,10 @@ bool				s_game_engine::attack(t_ai_helper data)
 			target = actor->coord + to_look[i];
 		}
 	}
-	printf("target = [%.2f / %.2f]\n", target.x, target.y);
 	if (target == t_vect(-1, -1))
 		return (false);
-	printf("before casting : PA = %d / PM = %d\n", actor->stat.pa.value, actor->stat.pm.value);
 	cast_spell(target);
-	printf("after casting : PA = %d / PM = %d\n", actor->stat.pa.value, actor->stat.pm.value);
 	board.reset_board();
-	printf("------\n");
 	return (true);
 }
 
@@ -654,7 +644,7 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;
@@ -1027,6 +1017,7 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 
 bool				s_game_engine::action_on_turn(t_ai_helper data)
 {
+	(void)data;
 	return (false);
 
 }

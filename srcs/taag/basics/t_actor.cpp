@@ -66,7 +66,7 @@ t_actor					read_actor(string p_path)
 	{
 		tab = get_strsplit(&myfile, ":", -1);
 		vector<int> value;
-		for (int i = 0; i < tab.size(); i++)
+		for (size_t i = 0; i < tab.size(); i++)
 			value.push_back(atoi(tab[i].c_str()));
 		result.gambit.push_back(s_ai_helper(value));
 	}

@@ -34,7 +34,7 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	{
 		*player = read_actor(ACTOR_PATH + *(text_list_load[i]) + ACTOR_EXT);
 		size_t t = 0;
-		for(t = 0; &(sprite_map[sprite_name[t]]) != player->tile;t++)
+		for(t = 0; &(sprite_map[human_sprite_name[t]]) != player->tile;t++)
 			;
 		*tile_index = t;
 		*sprite_target = player->sprite;

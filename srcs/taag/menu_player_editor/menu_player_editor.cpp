@@ -157,11 +157,11 @@ void					menu_player_editor(t_data data)
 	i++;
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(sprite_name[0]), t_vect(0, 0), t_vect(4, 0),
+	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(human_sprite_name[0]), t_vect(0, 0), t_vect(4, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
-				t_vect(3, 4),
+				t_vect(3, 4), &human_sprite_name,
 				new t_button(new s_text_button(
 						"Tileset : ", DARK_GREY,
 						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -176,7 +176,7 @@ void					menu_player_editor(t_data data)
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(3, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected);
+	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &human_sprite_name);
 	i++;
 
 	tile_index = &(tileset_selector->i);
@@ -201,8 +201,10 @@ void					menu_player_editor(t_data data)
 
 	while (play)
 	{
+		//printf("index = %zu / %zu\n", *tile_index, tileset_selector->vector_name->size());
+		//printf("sprite_target = [%.2f / %.2f]\n", sprite_target->x, sprite_target->y);
 		actor.name = *name;
-		actor.tile = &(sprite_map[sprite_name[*tile_index]]);
+		actor.tile = &(sprite_map[human_sprite_name[*tile_index]]);
 		actor.sprite = *sprite_target;
 
 		prepare_screen();
