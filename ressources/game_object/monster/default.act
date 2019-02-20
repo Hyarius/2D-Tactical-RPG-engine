@@ -1,13 +1,22 @@
 name:Default
-tileset:C00
+tileset:M00
 sprite_pos:0:0
 health:50
 action:6
 mouvement:3
 initiative:5
-spell1:NULL
-spell2:NULL
-spell3:NULL
-spell4:NULL
+spell0:Fire arrow
+spell1:Fireball
+spell2:Triple slash
+spell3:Cursed heart
+spell4:Flying rock
 spell5:NULL
-spell6:NULL
+6:0:-1:-1
+6:1:-1:-1
+6:2:-1:-1
+6:3:-1:-1
+
+6:4:-1:-1
+11:5:75:-1:-1
+3:25:-1
+0:1:0:0:-1

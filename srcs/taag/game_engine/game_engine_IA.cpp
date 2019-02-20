@@ -1,17 +1,17 @@
 #include "taag.h"
 /*
-#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] and max path len value[4]
-#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
-#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
-#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] % and max path len value[2]
-#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] and max path len value[4]
-#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] and max path len value[4]
-#define ATTACK			6	//cast the spell num value[1] on the first enemy availible in range if possible
-#define ATTACK_WEAK		7	//cast the spell num value[1] on the enemy with the less hp in range if possible
-#define ATTACK_PERCENT	8	//cast the spell num value[1] on the enemy with the less % hp in range if possible
-#define HELP			9	//cast the spell num value[1] on an ally
-#define HELP_WEAK		10	//cast the spell num value[1] on the ally with less % HP
-#define HELP_PERC		11	//cast the spell num value[2] on the ally if HP % < value[1]
+#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] %
+#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define ATTACK			6	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the closest enemy availible in range if possible
+#define ATTACK_WEAK		7	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less hp in range if possible
+#define ATTACK_PERCENT	8	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less % hp in range if possible
+#define HELP			9	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on an ally
+#define HELP_WEAK		10	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the ally with less % HP
+#define HELP_PERC		11	//cast the spell num value[2] (if value[2] PA and value[3] pm on caster) on the ally if HP % < value[1]
 #define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
 */
 
@@ -33,15 +33,19 @@ gambit_command command[13] = {
 
 bool					s_game_engine::execute_gambit(t_actor *source)
 {
-	if (board.check_anim() == false || source->destination.size() != 0)
+	if (board.check_anim() == false || source->destination.size() != 0 ||
+		board.enemy_list.size() == 0 || board.ally_list.size() == 0)
 		return (false);
 	size_t i = 0;
-	while (i < source->gambit.size() && source->gambit[i].value.size() != 0)
+	while (i < source->gambit.size())
 	{
-		int index = source->gambit[i].value[0];
-		t_ai_helper data = source->gambit[i];
-		if ((this->*(command[index]))(data) == true)
-			return (false);
+		if (source->gambit[i].value.size() != 0)
+		{
+			int index = source->gambit[i].value[0];
+			t_ai_helper data = source->gambit[i];
+			if ((this->*(command[index]))(data) == true)
+				return (false);
+		}
 		i++;
 	}
 	return (true);
@@ -51,15 +55,19 @@ void				s_game_engine::enemy_turn()
 {
 	board.reset_board();
 
+	bool play = true;
 	SDL_Event	event;
 
-	while (execute_gambit(turn_order[turn_index % turn_order.size()]) == false)
+	while (execute_gambit(turn_order[turn_index % turn_order.size()]) == false && play == true)
 	{
 		prepare_screen();
 
 		update_board();
 		draw_board();
 		draw_gui();
+
+		if (board.enemy_list.size() == 0 || board.ally_list.size() == 0)
+			ending_fight(&play);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -69,7 +77,8 @@ void				s_game_engine::enemy_turn()
 		}
 		render_screen(true);
 	}
-	next_turn();
+	if (play == true)
+		next_turn();
 }
 
 void				s_game_engine::next_turn()

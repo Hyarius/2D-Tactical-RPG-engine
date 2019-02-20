@@ -30,12 +30,20 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	myfile << "action:" + to_string(to_save->stat.pa.max) + "\n";
 	myfile << "mouvement:" + to_string(to_save->stat.pm.max) + "\n";
 	myfile << "initiative:" + to_string(to_save->stat.init) + "\n";
-	myfile << "spell1:" + to_save->spell[0]->name + "\n";
-	myfile << "spell2:" + to_save->spell[1]->name + "\n";
-	myfile << "spell3:" + to_save->spell[2]->name + "\n";
-	myfile << "spell4:" + to_save->spell[3]->name + "\n";
-	myfile << "spell5:" + to_save->spell[4]->name + "\n";
-	myfile << "spell6:" + to_save->spell[5]->name + "\n";
+	for (size_t i = 0; i < 6; i++)
+	{
+		myfile << "spell" + to_string(i) + ":" + to_save->spell[i]->name + "\n";
+	}
+	for (size_t i = 0; i < to_save->gambit.size(); i++)
+	{
+		for (size_t j = 0; j < to_save->gambit[i].value.size(); j++)
+		{
+			if (j != 0)
+				myfile << ":";
+			myfile << to_string(to_save->gambit[i].value[j]);
+		}
+		myfile << "\n";
+	}
 	myfile.close();
 }
 

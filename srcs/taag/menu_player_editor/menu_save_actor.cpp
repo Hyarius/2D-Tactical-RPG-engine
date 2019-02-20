@@ -8,13 +8,8 @@ static void			stand(t_data data)
 static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
-	string	p_path = ACTOR_PATH + *((string *)(data.data[1])) + ACTOR_EXT;
+	string	p_path = *((string *)(data.data[1]));
 	ofstream myfile;
-	if (check_file_exist(p_path) == true)
-	{
-		for (int i = 0; *((string *)(data.data[1])) == "default" && check_file_exist(p_path) == true; i++)
-			p_path = ACTOR_PATH + *((string *)(data.data[1])) + "(" + to_string(i) + ")" + ACTOR_EXT;
-	}
 	myfile.open (p_path);
 	myfile << "name:" + (to_save->name == "" ? "default" : to_save->name) + "\n";
 	map<string, t_tileset>::const_iterator i;
@@ -35,12 +30,20 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	myfile << "action:" + to_string(to_save->stat.pa.max) + "\n";
 	myfile << "mouvement:" + to_string(to_save->stat.pm.max) + "\n";
 	myfile << "initiative:" + to_string(to_save->stat.init) + "\n";
-	myfile << "spell1:" + to_save->spell[0]->name + "\n";
-	myfile << "spell2:" + to_save->spell[1]->name + "\n";
-	myfile << "spell3:" + to_save->spell[2]->name + "\n";
-	myfile << "spell4:" + to_save->spell[3]->name + "\n";
-	myfile << "spell5:" + to_save->spell[4]->name + "\n";
-	myfile << "spell6:" + to_save->spell[5]->name + "\n";
+	for (size_t i = 0; i < 6; i++)
+	{
+		myfile << "spell" + to_string(i) + ":" + to_save->spell[i]->name + "\n";
+	}
+	for (size_t i = 0; i < to_save->gambit.size(); i++)
+	{
+		for (size_t j = 0; j < to_save->gambit[i].value.size(); j++)
+		{
+			if (j != 0)
+				myfile << ":";
+			myfile << to_string(to_save->gambit[i].value[j]);
+		}
+		myfile << "\n";
+	}
 	myfile.close();
 }
 
@@ -87,7 +90,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						quit_save, t_data(3, data.data[1], &name, &play)));
+						quit_save, t_data(3, data.data[1], &full_path, &play)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info

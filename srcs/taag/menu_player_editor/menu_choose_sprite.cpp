@@ -98,7 +98,6 @@ void			menu_choose_sprite(t_data data)
 
 	while (play == true)
 	{
-		printf("tmp = %zu\n", tmp_index);
 		prepare_screen();
 
 		if (data.data.size() != 0)

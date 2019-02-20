@@ -230,7 +230,8 @@ typedef struct			s_game_board
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
 	vector<t_actor *>	actor_list;	//contain every actor
-	vector<t_actor *>	enemy_list;	//contain every enemy to kill
+	vector<t_actor *>	enemy_list;	//contain every enemy on the map
+	vector<t_actor *>	ally_list;	//contain every ally on the map
 
 	t_vect				offset;		//the offset of the center of the map
 	t_vect				target;		//utils for zooming/moving the camera
@@ -387,6 +388,8 @@ void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 void					change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 
+string					parse_gambit(t_ai_helper data);
+
 void					menu_start();
 void					menu_play(t_data data);
 void						menu_choose_map(t_data data);
@@ -414,6 +417,7 @@ void						menu_delete_spell(t_data data);
 void						menu_select_effect(t_data data);
 void						menu_edit_animation(t_data data);
 void							menu_select_anim(t_data data);
+void 					menu_gambit_editor(t_data data);
 void					menu_quit(t_data data);
 
 #endif

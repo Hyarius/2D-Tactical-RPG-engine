@@ -1,18 +1,18 @@
 #include "taag.h"
 
 /*
-#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
-#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
-#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3]
-#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] %
-#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3]
-#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3]
+	#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] % max mouvement value[2]
+#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
+#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
 #define ATTACK			6	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the closest enemy availible in range if possible
 #define ATTACK_WEAK		7	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less hp in range if possible
 #define ATTACK_PERCENT	8	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less % hp in range if possible
 #define HELP			9	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on an ally
 #define HELP_WEAK		10	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the ally with less % HP
-#define HELP_PERC		11	//cast the spell num value[2] (if value[2] PA and value[3] pm on caster) on the ally if HP % < value[1]
+#define HELP_PERC		11	//cast the spell num value[1] (if value[3] PA and value[4] pm on caster) on the ally if HP % < value[2]
 #define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
 */
 
@@ -557,7 +557,7 @@ bool				s_game_engine::attack(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor->team != actor->team)
 				{
@@ -608,6 +608,8 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 			target_actor = turn_order[i];
 		i++;
 	}
+	if (target_actor == NULL)
+		return (false);
 	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell
@@ -698,6 +700,8 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 			target_actor = turn_order[i];
 		i++;
 	}
+	if (target_actor == NULL)
+		return (false);
 	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell
@@ -734,7 +738,7 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;
@@ -813,7 +817,7 @@ bool				s_game_engine::help(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor->team == actor->team)
 				{
@@ -864,6 +868,8 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 			target_actor = turn_order[i];
 		i++;
 	}
+	if (target_actor == NULL)
+		return (false);
 	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell
@@ -900,7 +906,7 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;
@@ -927,17 +933,17 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 
 bool				s_game_engine::help_percent(t_ai_helper data)
 {
-	if (data.value.size() < 4)
+	if (data.value.size() < 5)
 		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
+	if (data.value.size() > 5)
 		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
 		actor->stat.pm.value < actor->spell[s_spell]->cost_pm ||
-		(data.value[2] != -1 && actor->stat.pa.value != data.value[2]) ||
-		(data.value[3] != -1 && actor->stat.pm.value != data.value[3]))
+		(data.value[3] != -1 && actor->stat.pa.value != data.value[3]) ||
+		(data.value[4] != -1 && actor->stat.pm.value != data.value[4]))
 		return (false);
 	board.reset_board();
 	calculated = false;
@@ -949,11 +955,13 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 	t_actor *target_actor = NULL;
 	while (i < turn_order.size())
 	{
-		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < target_actor->stat.hp.percent())) &&
+		if ((target_actor == NULL || (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < data.value[2])) &&
 			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
 			target_actor = turn_order[i];
 		i++;
 	}
+	if (target_actor == NULL)
+		return (false);
 	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell
@@ -990,7 +998,7 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 		for (size_t j = 0; j < target_list.size(); j++)
 		{
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
-			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
+			if (board.get_cell(tmp) && board.get_cell(actor->coord + to_look[i]) && board.get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && board.get_cell(tmp)->actor != NULL)
 			{
 				if (board.get_cell(tmp)->actor == target_actor)
 					find = 1;

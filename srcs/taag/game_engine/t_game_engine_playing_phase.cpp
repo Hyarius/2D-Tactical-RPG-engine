@@ -99,7 +99,7 @@ void			s_game_engine::game_loop()
 		draw_board();
 		draw_gui();
 
-		if (board.enemy_list.size() == 0)
+		if (board.enemy_list.size() == 0 || board.ally_list.size() == 0)
 			ending_fight(&play);
 
 		if (SDL_PollEvent(&event) == 1)

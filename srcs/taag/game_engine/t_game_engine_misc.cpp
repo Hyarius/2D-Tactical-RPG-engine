@@ -20,6 +20,8 @@ void				s_game_engine::invoke_actor(t_actor *new_actor, t_vect coord)
 		new_actor->coord = coord;
 		board.get_cell(coord)->actor = new_actor;
 		board.add_actor(new_actor);
+		if (new_actor->team == 1)
+			board.ally_list.push_back(new_actor);
 	}
 }
 

@@ -34,7 +34,9 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 		remove((MONSTER_PATH + *(text_list_delete_monster[i]) + MONSTER_EXT).c_str());
 		*player = t_actor();
 		*tile_index = 0;
-		*sprite_target = player->sprite;
+		while (sprite_name[*tile_index][0] != 'M')
+			(*tile_index)++;
+		*sprite_target = t_vect(0, 0);
 		*entry_path = "";
 		*entry_name = "";
 		*play = true;

@@ -76,6 +76,8 @@ s_game_board::s_game_board(string p_path)
 			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
 			if (cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team == 2)
 				enemy_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
+			else if (cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team == 1)
+				ally_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
 		}
 	}
 	while (!myfile.eof())
@@ -273,6 +275,13 @@ void				s_game_board::remove_actor(t_actor *old_actor)
 			count++;
 		if (count < enemy_list.size())
 			enemy_list.erase(enemy_list.begin() + count);
+	}
+	else if (old_actor->team == 1)
+	{
+		while (count < ally_list.size() && old_actor != ally_list[count])
+			count++;
+		if (count < ally_list.size())
+			ally_list.erase(ally_list.begin() + count);
 	}
 	count = 0;
 	while (count < actor_list.size() && old_actor != actor_list[count])

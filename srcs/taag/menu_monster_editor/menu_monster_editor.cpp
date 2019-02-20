@@ -109,7 +109,14 @@ void					menu_monster_editor(t_data data)
 	size_t	*tile_index;
 	t_vect	*sprite_target;
 
-	i += 3.4;
+	i += 2.4;
+	t_button	*gambit_button = new t_button(new s_text_button(
+			"Edit gambit", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_gambit_editor, t_data(2, &gui, &actor));//0 - gui / 1 - t_actor * / 2 - & file name
+	i++;
+
 	t_button	*save_button = new t_button(new s_text_button(
 			"Save monster", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -179,6 +186,7 @@ void					menu_monster_editor(t_data data)
 	gui.add(mouvement_iterator);
 	gui.add(initiative_iterator);
 	gui.add(tileset_selector);
+	gui.add(gambit_button);
 	gui.add(save_button);
 	gui.add(load_button);
 	gui.add(delete_button);

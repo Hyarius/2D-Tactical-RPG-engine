@@ -62,6 +62,8 @@ t_actor					read_actor(string p_path)
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map[get_strsplit(&myfile, ":", 2)[1]]);
 	t_actor result = s_actor(name, tile, sprite, t_stat(hp, pa, pm, init), spell);
+	if (!myfile.eof())
+		result.gambit.clear();
 	while (!(myfile.eof()))
 	{
 		tab = get_strsplit(&myfile, ":", -1);
@@ -83,6 +85,15 @@ s_actor::s_actor()
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map["NULL"]);
+	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
+	gambit.push_back(s_ai_helper({3, 25, -1}));
+	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
@@ -95,6 +106,15 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map["NULL"]);
+	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
+	gambit.push_back(s_ai_helper({3, 25, -1}));
+	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell)
@@ -107,6 +127,15 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = p_spell[i];
+	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
+	gambit.push_back(s_ai_helper({3, 25, -1}));
+	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
 
 void			s_actor::reset_value()
