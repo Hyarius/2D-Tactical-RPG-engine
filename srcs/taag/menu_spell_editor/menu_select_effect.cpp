@@ -90,7 +90,7 @@ void			menu_choose_effect(t_data data)
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
@@ -240,7 +240,7 @@ void menu_select_effect(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			menu_choose_effect, NULL);
 		entry[num] = &(button->button->text);
-		button->button->data = t_data(3, old_gui, &gui, &(button->button->text));
+		button->button->data_left = t_data(3, old_gui, &gui, &(button->button->text));
 		i++;
 
 		gui.add(button);
@@ -311,7 +311,7 @@ void menu_select_effect(t_data data)
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}

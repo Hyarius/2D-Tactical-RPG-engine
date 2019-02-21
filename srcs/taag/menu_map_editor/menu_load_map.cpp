@@ -94,7 +94,7 @@ void			menu_load_map(t_data data) // 0 - t_gui * / 1 - game_board * / 2 - &path
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))

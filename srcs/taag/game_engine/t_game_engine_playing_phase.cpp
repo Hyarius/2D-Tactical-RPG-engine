@@ -7,7 +7,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 		next_turn();
 	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
-		if (gui.click() == false)
+		if (gui.click(event) == false)
 		{
 			if (s_spell == -1)
 				move_actor(board.get_mouse_pos());

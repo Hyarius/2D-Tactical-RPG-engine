@@ -169,7 +169,7 @@ void					menu_monster_editor(t_data data)
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	((t_tileset_button *)(tileset_selector->container->button))->data = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &sprite_name);
+	((t_tileset_button *)(tileset_selector->container->button))->data_left = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &sprite_name);
 	i++;
 
 	tile_index = &(tileset_selector->i);
@@ -210,7 +210,7 @@ void					menu_monster_editor(t_data data)
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}

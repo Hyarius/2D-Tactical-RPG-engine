@@ -18,8 +18,10 @@ s_tileset_button::s_tileset_button(string p_text, int p_text_color,
 	tile = p_tile;
 	selected = p_selected;
 	anim = t_vect(1, 0);
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 	draw_funct = draw_centred_text;
 }
 
@@ -36,8 +38,10 @@ s_tileset_button::s_tileset_button(t_tileset *p_tile, t_vect p_selected,
 	tile = p_tile;
 	selected = p_selected;
 	anim = t_vect(1, 0);
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 	draw_funct = draw_centred_text;
 }
 
@@ -59,8 +63,10 @@ s_tileset_button::s_tileset_button(string p_text, int p_text_color,
 	tile = p_tile;
 	selected = p_selected;
 	anim = p_anim;
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 	draw_funct = draw_centred_text;
 }
 
@@ -77,8 +83,10 @@ s_tileset_button::s_tileset_button(t_tileset *p_tile, t_vect p_selected, t_vect 
 	tile = p_tile;
 	selected = p_selected;
 	anim = p_anim;
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 	draw_funct = draw_centred_text;
 }
 

@@ -177,6 +177,7 @@ typedef struct			s_ai_helper
 	vector<int>			value;
 						s_ai_helper();
 						s_ai_helper(vector<int> p_value);
+	void 				operator = (vector<int> data);
 }						t_ai_helper;
 
 typedef struct          s_actor

@@ -31,7 +31,7 @@ void		s_gui::draw_self()
 	}
 }
 
-bool		s_gui::click()
+bool		s_gui::click(SDL_Event *event)
 {
 	size_t i = 0;
 	size_t j = 0;
@@ -50,8 +50,16 @@ bool		s_gui::click()
 		j = 0;
 		while (j < object_list[i].size())
 		{
-			if (object_list[i].at(j)->click(mouse) == true)
-				return (true);
+			if (event->button.button == SDL_BUTTON_LEFT)
+			{
+				if (object_list[i].at(j)->click_left(mouse) == true)
+						return (true);
+			}
+			else if (event->button.button == SDL_BUTTON_RIGHT)
+			{
+				if (object_list[i].at(j)->click_right(mouse) == true)
+						return (true);
+			}
 			j++;
 		}
 		i++;

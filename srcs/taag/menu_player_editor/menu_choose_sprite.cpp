@@ -84,7 +84,7 @@ void			menu_choose_sprite(t_data data)
 						size * gui.unit,
 						5),
 						quit_choose_sprite, NULL);
-		button->button->data = t_data(7, index, target, &tmp_index, i / 8, &(((t_tileset_button *)(button->button))->selected), &play, vector_name);
+		button->button->data_left = t_data(7, index, target, &tmp_index, i / 8, &(((t_tileset_button *)(button->button))->selected), &play, vector_name);
 		tileset_list[i] = &(((t_tileset_button *)(button->button))->tile);
 		*(tileset_list[i]) = get_sprite_tile((*vector_name)[(tmp_index + i / 8) % (*vector_name).size()]);
 		gui.add(button);
@@ -114,7 +114,7 @@ void			menu_choose_sprite(t_data data)
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y < 0)
 				increment_index(t_data(3, &tmp_index, +1, vector_name));
 			else if (event.type == SDL_MOUSEWHEEL && event.wheel.y > 0)

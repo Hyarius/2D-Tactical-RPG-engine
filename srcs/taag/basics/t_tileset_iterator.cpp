@@ -1,6 +1,6 @@
 #include "taag.h"
 
-static void		increment_iterator(t_data data)
+static void		increment_tileset_iterator(t_data data)
 {
 	t_tileset *tile = (t_tileset *)(data.data[0]);
 	t_vect *selected = (t_vect *)(data.data[1]);
@@ -19,7 +19,7 @@ static void		increment_iterator(t_data data)
 	}
 }
 
-static void		decrement_iterator(t_data data)//0 - &tileset / 1 - &selected / 2 - &delta
+static void		decrement_tileset_iterator(t_data data)//0 - &tileset / 1 - &selected / 2 - &delta
 {
 	t_tileset *tile = (t_tileset *)(data.data[0]);
 	t_vect *selected = (t_vect *)(data.data[1]);
@@ -86,7 +86,7 @@ static void			menu_choose_tileset(t_data data)
 						size * gui.unit,
 						5),
 						quit_choose_tileset, NULL);
-		button->button->data = t_data(3, target, &(((t_tileset_button *)(button->button))->selected), &play);
+		button->button->data_left = t_data(3, target, &(((t_tileset_button *)(button->button))->selected), &play);
 		gui.add(button);
 		selected.x += increment.x;
 		if (selected.x >= tile->nb_sprite.x)
@@ -111,8 +111,8 @@ static void			menu_choose_tileset(t_data data)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+			else if (event.type == SDL_MOUSEBUTTONUP)
+				gui.click(&event);
 		}
 	}
 }
@@ -125,19 +125,19 @@ s_tileset_iterator::s_tileset_iterator(t_vect p_delta, t_button *p_desc, t_butto
 	container = p_contain;
 	if (container != NULL)
 	{
-		container->button->funct = menu_choose_tileset;
-		container->button->data = t_data(2, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(container->button))->selected); //0 - &index / 1 - &selected / 2 - &delta
+		container->button->funct_left = menu_choose_tileset;
+		container->button->data_left = t_data(2, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(container->button))->selected); //0 - &index / 1 - &selected / 2 - &delta
 	}
 	if (minus != NULL && container != NULL)
 	{
-		minus->button->funct = decrement_iterator;
-		minus->button->data = t_data(3, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(p_contain->button))->selected, &delta); //0 - &index / 1 - &selected / 2 - &delta
+		minus->button->funct_left = decrement_tileset_iterator;
+		minus->button->data_left = t_data(3, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(p_contain->button))->selected, &delta); //0 - &index / 1 - &selected / 2 - &delta
 	}
 	plus = p_plus;
 	if (plus != NULL && container != NULL)
 	{
-		plus->button->funct = increment_iterator;
-		plus->button->data = t_data(3, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(p_contain->button))->selected, &delta); //0 - &index / 1 - &selected / 2 - &delta
+		plus->button->funct_left = increment_tileset_iterator;
+		plus->button->data_left = t_data(3, ((t_tileset_button *)(container->button))->tile, &((t_tileset_button *)(p_contain->button))->selected, &delta); //0 - &index / 1 - &selected / 2 - &delta
 	}
 }
 
@@ -153,13 +153,24 @@ void			s_tileset_iterator::draw_self()
 		plus->draw_self();
 }
 
-bool			s_tileset_iterator::click(t_vect mouse)
+bool			s_tileset_iterator::click_left(t_vect mouse)
 {
-	if (minus != NULL && minus->click(mouse) == true)
+	if (minus != NULL && minus->click_left(mouse) == true)
 		return (true);
-	if (container != NULL && container->click(mouse) == true)
+	if (container != NULL && container->click_left(mouse) == true)
 		return (true);
-	if (plus != NULL && plus->click(mouse) == true)
+	if (plus != NULL && plus->click_left(mouse) == true)
+		return (true);
+	return (false);
+}
+
+bool			s_tileset_iterator::click_right(t_vect mouse)
+{
+	if (minus != NULL && minus->click_right(mouse) == true)
+		return (true);
+	if (container != NULL && container->click_right(mouse) == true)
+		return (true);
+	if (plus != NULL && plus->click_right(mouse) == true)
 		return (true);
 	return (false);
 }

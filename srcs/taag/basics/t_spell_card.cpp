@@ -22,11 +22,20 @@ void			s_spell_card::draw_self()
 	draw_spell_card(*spell, button->button->coord[0], button->button->size[0]);
 }
 
-bool			s_spell_card::click(t_vect mouse)
+bool			s_spell_card::click_left(t_vect mouse)
 {
 	size_t i = 0;
 
-	if (button != NULL && button->click(mouse) == true)
+	if (button != NULL && button->click_left(mouse) == true)
+		return (true);
+	return (false);
+}
+
+bool			s_spell_card::click_right(t_vect mouse)
+{
+	size_t i = 0;
+
+	if (button != NULL && button->click_left(mouse) == true)
 		return (true);
 	return (false);
 }

@@ -15,26 +15,8 @@
 #define TURN			12	//if turn == value[1] --> execute command num value[2] with value stocked after
 */
 
-vector<size_t> nb_param_gambit = {
-	5,
-	5,
-	5,
-	3,
-	5,
-	5,
-	4,
-	4,
-	4,
-	4,
-	4,
-	5,
-	3,
-};
-
 static string parse_charge(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "approach the closest enemy at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
@@ -43,8 +25,6 @@ static string parse_charge(t_ai_helper data)
 
 static string parse_charge_weak(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "approach the enemy with less hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
@@ -53,8 +33,6 @@ static string parse_charge_weak(t_ai_helper data)
 
 static string parse_charge_percent(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "approach the enemy with less % hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
@@ -63,8 +41,6 @@ static string parse_charge_percent(t_ai_helper data)
 
 static string parse_retreat(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "flee the enemy if hp < " + to_string(data.value[1]) + " %";
 	if (data.value[2] != -1)
 		text += " with max " + to_string(data.value[2]) + " PM used";
@@ -73,8 +49,6 @@ static string parse_retreat(t_ai_helper data)
 
 static string parse_support(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "approach the closest ally at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
@@ -83,8 +57,6 @@ static string parse_support(t_ai_helper data)
 
 static string parse_support_percent(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "approach the ally with less % hp " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
@@ -93,8 +65,6 @@ static string parse_support_percent(t_ai_helper data)
 
 static string parse_attack(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the closest enemy on range";
 	if (data.value[2] != -1)
 		text += " if PA == " + to_string(data.value[2]);
@@ -105,8 +75,6 @@ static string parse_attack(t_ai_helper data)
 
 static string parse_attack_weak(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the enemy with lower hp value on range";
 	if (data.value[2] != -1)
 		text += " if PA == " + to_string(data.value[2]);
@@ -117,8 +85,6 @@ static string parse_attack_weak(t_ai_helper data)
 
 static string parse_attack_percent(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the enemy with lower hp % on range";
 	if (data.value[2] != -1)
 		text += " if PA == " + to_string(data.value[2]);
@@ -130,8 +96,6 @@ static string parse_attack_percent(t_ai_helper data)
 
 static string parse_help(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the closest ally on range";
 	if (data.value[2] != -1)
 		text += " if PA == " + to_string(data.value[2]);
@@ -142,8 +106,6 @@ static string parse_help(t_ai_helper data)
 
 static string parse_help_weak(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the ally with the lowest HP value on range";
 	if (data.value[2] != -1)
 		text += " if PA == " + to_string(data.value[2]);
@@ -154,8 +116,6 @@ static string parse_help_weak(t_ai_helper data)
 
 static string parse_help_percent(t_ai_helper data)
 {
-	if (data.value.size() != nb_param_gambit[data.value[0]])
-		return ("ERROR");
 	string text = "cast the spell num " + to_string(data.value[1]) + " on the closest ally on range if him hp < " + to_string(data.value[2]) + " %";
 	if (data.value[3] != -1)
 		text += " if PA == " + to_string(data.value[3]);
@@ -193,7 +153,7 @@ f_gambit_parsor f_list[] = {
 
 string parse_gambit(t_ai_helper data)
 {
-	if (data.value.size() == 0)
+	if (data.value.size() == 0 || data.value[0] == -1)
 		return ("");
 	return (f_list[data.value[0]](data));
 }

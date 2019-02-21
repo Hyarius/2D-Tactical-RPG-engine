@@ -29,8 +29,10 @@ s_image_button::s_image_button(string p_text, int p_text_color,
 		text_image = NULL;
 	}
 	image = p_image;
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 	draw_funct = draw_centred_text;
 }
 
@@ -42,8 +44,10 @@ s_image_button::s_image_button(t_image p_image, t_vect p_coord, t_vect p_size)
 	coord[0] = p_coord;
 	size[0] = p_size;
 	image = p_image;
-	funct = NULL;
-	data = NULL;
+	funct_left = NULL;
+	data_left = NULL;
+	funct_right = NULL;
+	data_right = NULL;
 }
 
 void		s_image_button::draw_self()

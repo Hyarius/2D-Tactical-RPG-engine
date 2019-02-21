@@ -117,7 +117,7 @@ void				menu_place_monster(t_data data) //coord, engine, gui
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				gui.click();
+				gui.click(&event);
 				list_file_place_monster = list_files(MONSTER_PATH, ACTOR_EXT);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)

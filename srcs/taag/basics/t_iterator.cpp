@@ -3,52 +3,26 @@
 				s_iterator::s_iterator()
 {}
 
-static void		increment_iterator(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+void		increment_iterator(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 {
 	int *value = (int *)(data.data[0]);
 	int *pool = (int *)(data.data[1]);
 	int	delta = (int &)(data.data[2]);
 	int	cost = (int &)(data.data[3]);
+	int	min = (int &)(data.data[4]);
+	int	max = (int &)(data.data[5]);
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
 	if (state[SDL_SCANCODE_LCTRL])
 	{
 		delta = delta * 10;
 		cost = cost * 10;
 	}
-	int	min = (int &)(data.data[4]);
-	int	max = (int &)(data.data[5]);
 
 	if (value != NULL)
 	{
-		if (*value + delta <= max && ((pool != NULL && *pool - cost >= 0) || pool == NULL))
+		if (*value + delta <= max && *value + delta >= min && ((pool != NULL && *pool + cost >= 0) || pool == NULL))
 		{
 			*value += delta;
-			if (pool)
-				*pool -= cost;
-		}
-	}
-}
-
-static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
-{
-	int *value = (int *)(data.data[0]);
-	int *pool = (int *)(data.data[1]);
-	int	delta = (int &)(data.data[2]);
-	int	cost = (int &)(data.data[3]);
-	const Uint8 *state = SDL_GetKeyboardState(NULL);
-	if (state[SDL_SCANCODE_LCTRL])
-	{
-		delta = delta * 10;
-		cost = cost * 10;
-	}
-	int	min = (int &)(data.data[4]);
-	int	max = (int &)(data.data[5]);
-
-	if (value != NULL)
-	{
-		if (*value - delta >= min)
-		{
-			*value -= delta;
 			if (pool)
 				*pool += cost;
 		}
@@ -64,15 +38,15 @@ static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 	minus = p_minus;
 	if (minus != NULL)
 	{
-		minus->button->funct = decrement_iterator;
-		minus->button->data = t_data(6, &value, pool, delta, pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+		minus->button->funct_left = increment_iterator;
+		minus->button->data_left = t_data(6, &value, pool, -delta, pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	}
 	container = p_contain;
 	plus = p_plus;
 	if (plus != NULL)
 	{
-		plus->button->funct = increment_iterator;
-		plus->button->data = t_data(6, &value, pool, delta, pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost
+		plus->button->funct_left = increment_iterator;
+		plus->button->data_left = t_data(6, &value, pool, delta, -pool_cost, min, max); //0 - &value / 1 - &pool / 2 - increment / 3 - cost
 	}
 }
 
@@ -85,15 +59,15 @@ static void		decrement_iterator(t_data data) //0 - &value / 1 - &pool / 2 - incr
 	minus = p_minus;
 	if (minus != NULL)
 	{
-		minus->button->funct = decrement_iterator;
-		minus->button->data = t_data(6, linked_value, pool, delta, pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+		minus->button->funct_left = increment_iterator;
+		minus->button->data_left = t_data(6, linked_value, pool, -delta, pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	}
 	container = p_contain;
 	plus = p_plus;
 	if (plus != NULL)
 	{
-		plus->button->funct = increment_iterator;
-		plus->button->data = t_data(6, linked_value, pool, delta, pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+		plus->button->funct_left = increment_iterator;
+		plus->button->data_left = t_data(6, linked_value, pool, delta, -pool_cost, min, max); //0 - linked_value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	}
 }
 
@@ -114,11 +88,20 @@ void			s_iterator::draw_self()
 		plus->draw_self();
 }
 
-bool			s_iterator::click(t_vect mouse)
+bool			s_iterator::click_left(t_vect mouse)
 {
-	if (minus != NULL && minus->click(mouse) == true)
+	if (minus != NULL && minus->click_left(mouse) == true)
 		return (true);
-	if (plus != NULL && plus->click(mouse) == true)
+	if (plus != NULL && plus->click_left(mouse) == true)
+		return (true);
+	return (false);
+}
+
+bool			s_iterator::click_right(t_vect mouse)
+{
+	if (minus != NULL && minus->click_right(mouse) == true)
+		return (true);
+	if (plus != NULL && plus->click_right(mouse) == true)
 		return (true);
 	return (false);
 }

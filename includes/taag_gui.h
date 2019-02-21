@@ -18,9 +18,12 @@ typedef struct	s_iterator : t_gui_obj
 				s_iterator(int *p_linked_value, int *pool, int delta, int pool_cost, int min, int max,
 							t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
 	void		draw_self();
-	bool		click(t_vect mouse);
+	bool		click_left(t_vect mouse);
+	bool		click_right(t_vect mouse);
 	bool		key_press(SDL_Event *event);
 }				t_iterator;
+
+void		increment_iterator(t_data data);
 
 typedef struct	s_sprite_iterator : t_gui_obj
 {
@@ -34,7 +37,8 @@ typedef struct	s_sprite_iterator : t_gui_obj
 				s_sprite_iterator();
 				s_sprite_iterator(t_vect p_delta, vector<string> *p_vector_name, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
 	void		draw_self();
-	bool		click(t_vect mouse);
+	bool		click_left(t_vect mouse);
+	bool		click_right(t_vect mouse);
 	bool		key_press(SDL_Event *event);
 }				t_sprite_iterator;
 
@@ -50,7 +54,8 @@ typedef struct	s_tileset_iterator : t_gui_obj
 				s_tileset_iterator();
 				s_tileset_iterator(t_vect p_delta, t_button *p_desc, t_button *p_minus, t_button *p_contain, t_button *p_plus);
 	void		draw_self();
-	bool		click(t_vect mouse);
+	bool		click_left(t_vect mouse);
+	bool		click_right(t_vect mouse);
 	bool		key_press(SDL_Event *event);
 }				t_tileset_iterator;
 
@@ -62,7 +67,8 @@ typedef struct		s_spell_card : t_gui_obj
 					s_spell_card();
 					s_spell_card(struct s_spell **p_spell, t_vect coord, t_vect size, gui_funct p_funct, t_data p_data);
 	void			draw_self();
-	bool			click(t_vect mouse);
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_spell_card;
 

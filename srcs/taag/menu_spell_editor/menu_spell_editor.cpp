@@ -333,7 +333,7 @@ void menu_spell_editor(t_data data)
 			t_vect(9.2, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			menu_select_effect, NULL);
-		button->button->data = t_data(3, &gui, spell, text);
+		button->button->data_left = t_data(3, &gui, spell, text);
 		text[j] = &(button->button->text);
 		i += 1;
 		gui.add(button);
@@ -385,7 +385,7 @@ void menu_spell_editor(t_data data)
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}

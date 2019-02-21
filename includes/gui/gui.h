@@ -8,6 +8,9 @@ using namespace std;
 # define BUTTON_NUM		2
 # define ENTRY_NUM		2
 
+# define MOUSE_LEFT		0
+# define MOUSE_RIGHT	1
+
 typedef struct		s_data
 {
 	vector<void *>	data;
@@ -24,9 +27,10 @@ typedef				int(*d_funct)(string, int, t_vect, int);
 
 typedef struct		s_gui_comp
 {
-	virtual void	set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct) = 0;
+	virtual void	set_funct_param(int type, gui_funct p_funct, t_data p_data, d_funct p_draw_funct) = 0;
 	virtual void	draw_self() = 0;
-	virtual bool	click(t_vect mouse) = 0;
+	virtual bool	click_left(t_vect mouse) = 0;
+	virtual bool	click_right(t_vect mouse) = 0;
 }					t_gui_comp;
 
 typedef struct 		s_button_comp : t_gui_comp
@@ -41,15 +45,18 @@ typedef struct 		s_button_comp : t_gui_comp
 	t_vect 			image_size;
 	t_vect			coord[3]; //0 - coord first rect || 1 - coord second rect || 2 - text coord
 	t_vect			size[2]; //0 - size first rect || 1 - size second rect
-	gui_funct		funct; //function to use when clicked : initialized empty
-	t_data			data; // data to send to the function : initialized empty
+	gui_funct		funct_left; //function to use when clicked  with left click : initialized empty
+	t_data			data_left; // data to send to the function  with left click : initialized empty
+	gui_funct		funct_right; //function to use when clicked with right click : initialized empty
+	t_data			data_right; // data to send to the function with right click : initialized empty
 	d_funct			draw_funct;
 
-	void			set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
-	void			set_funct_param(gui_funct p_funct, t_data p_data);
+	void			set_funct_param(int type, gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
+	void			set_funct_param(int type, gui_funct p_funct, t_data p_data);
 	void			set_text(string text);
 	virtual void	draw_self() = 0;
-	bool			click(t_vect mouse);
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_button_comp;
 
@@ -105,13 +112,14 @@ typedef struct		s_entry_comp : t_gui_comp
 	bool			selected;
 	d_funct			draw_funct;
 
-	void			set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
+	void			set_funct_param(int type, gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
 	void			set_back(string p_back);
 	void			set_front(string p_front);
 	void			add_text(string new_text);
 	void			delete_text();
 	virtual void	draw_self() = 0; // draw the button
-	bool			click(t_vect mouse); // test if the mouse is in the button and start the funct if yes
+	bool			click_left(t_vect mouse); // test if the mouse is in the button and start the funct if yes
+	bool			click_right(t_vect mouse); // test if the mouse is in the button and start the funct if yes
 	bool			key_press(SDL_Event *event); // test if a key is pressed and react to it -> send true if we have done something with it
 }					t_entry_comp;
 
@@ -137,7 +145,8 @@ typedef struct		s_image_entry : t_entry_comp
 typedef struct		s_gui_obj
 {
 	virtual void	draw_self() = 0;
-	virtual bool	click(t_vect mouse) = 0;
+	virtual bool	click_left(t_vect mouse) = 0;
+	virtual bool	click_right(t_vect mouse) = 0;
 	virtual bool	key_press(SDL_Event *event) = 0;
 	virtual 		~s_gui_obj() {}
 }					t_gui_obj;
@@ -149,7 +158,8 @@ typedef struct		s_button : t_gui_obj
 					s_button(t_button_comp *p_button, gui_funct p_funct, t_data p_data);
 					s_button(t_button_comp *p_button, gui_funct p_funct, t_data p_data, d_funct p_draw_funct);
 	void			draw_self();
-	bool			click(t_vect mouse);
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_button;
 
@@ -159,7 +169,8 @@ typedef struct		s_entry : t_gui_obj
 
 					s_entry(t_entry_comp *p_entry);
 	void			draw_self();
-	bool			click(t_vect mouse);
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_entry;
 
@@ -176,7 +187,7 @@ typedef struct		s_gui
 	void			add(t_gui_obj *object);
 	void			add(int rep, t_gui_obj *object);
 	void			draw_self();
-	bool			click();
+	bool			click(SDL_Event *event);
 	bool			key_press(SDL_Event *event);
 }					t_gui;
 

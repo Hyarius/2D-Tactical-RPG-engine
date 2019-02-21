@@ -32,7 +32,7 @@ void menu_edit_animation(t_data data)
 
 	string *tile_name = &(tile_name_button->button->text);
 
-	tile_name_button->button->data = t_data(3, &gui, spell, tile_name); // 0 - t_gui * / 1 - t_spell * / 2 - &name
+	tile_name_button->button->data_left = t_data(3, &gui, spell, tile_name); // 0 - t_gui * / 1 - t_spell * / 2 - &name
 
 	*tile_name = "NULL";
 	for (map<string, t_tileset>::const_iterator i = animation_map.begin(); i != animation_map.end(); ++i)
@@ -201,7 +201,7 @@ void menu_edit_animation(t_data data)
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}

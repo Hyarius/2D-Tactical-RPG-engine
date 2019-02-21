@@ -233,7 +233,7 @@ void					menu_map_editor(t_data data)
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (gui.click() == false)
+				if (gui.click(&event) == false)
 					control_mouse_editor(&engine);
 				moved = false;
 			}

@@ -13,7 +13,7 @@ void			t_entry_comp::delete_text()
 		text.pop_back();
 }
 
-bool			t_entry_comp::click(t_vect mouse)
+bool			t_entry_comp::click_left(t_vect mouse)
 {
 	if (mouse.x > this->coord[0].x && mouse.x < this->coord[0].x + this->size[0].x &&
 		mouse.y > this->coord[0].y && mouse.y < this->coord[0].y + this->size[0].y)
@@ -22,6 +22,13 @@ bool			t_entry_comp::click(t_vect mouse)
 		SDL_StartTextInput();
 		return (true);
 	}
+	selected = false;
+	return (false);
+}
+
+bool			t_entry_comp::click_right(t_vect mouse)
+{
+	(void)mouse;
 	selected = false;
 	return (false);
 }
@@ -44,8 +51,9 @@ bool			t_entry_comp::key_press(SDL_Event *event)
 	return (false);
 }
 
-void			t_entry_comp::set_funct_param(gui_funct p_funct, t_data p_data, d_funct p_draw_funct)
+void			t_entry_comp::set_funct_param(int type, gui_funct p_funct, t_data p_data, d_funct p_draw_funct)
 {
+	(void)type;
 	(void)p_funct;
 	(void)p_data;
 	(void)p_draw_funct;

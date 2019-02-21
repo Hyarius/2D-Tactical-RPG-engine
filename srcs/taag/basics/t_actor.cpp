@@ -89,7 +89,7 @@ s_actor::s_actor()
 	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
-	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({-1}));
 	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
 	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));
@@ -110,7 +110,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
-	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({-1}));
 	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
 	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));
@@ -131,7 +131,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
 	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
-	gambit.push_back(s_ai_helper());
+	gambit.push_back(s_ai_helper({-1}));
 	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
 	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));

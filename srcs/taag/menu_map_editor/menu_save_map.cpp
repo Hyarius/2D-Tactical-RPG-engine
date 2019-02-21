@@ -111,7 +111,7 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click();
+				gui.click(&event);
 		}
 	}
 

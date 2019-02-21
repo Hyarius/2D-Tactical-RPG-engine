@@ -62,7 +62,7 @@ void			menu_quit(t_data data)
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
 				play = false;
 			if (event.type == SDL_MOUSEBUTTONUP)
-				gui.click();
+				gui.click(&event);
 		}
 	}
 }
