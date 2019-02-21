@@ -949,7 +949,6 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 		(data.value[3] != -1 && actor->stat.pa.value != data.value[3]) ||
 		(data.value[4] != -1 && actor->stat.pm.value != data.value[4]))
 		return (false);
-	printf("PA / PM value okay");
 	board.reset_board();
 	calculated = false;
 	if (actor->spell[s_spell]->range_type == R_CIRCLE)
@@ -967,21 +966,21 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 			tmp = turn_order[i];
 		if (tmp != NULL)
 		{
-			printf("looking at %s\n", tmp->name.c_str());
 			if (tmp->stat.hp.percent() > data.value[2])
 				tmp = NULL;
+			if(tmp == NULL)
+				break ;
 			if (tmp->team != turn_order[turn_index % turn_order.size()]->team)
 				tmp = NULL;
+			if(tmp == NULL)
+				break ;
 			if (tmp != NULL)
 				target_actor = tmp;
 		}
-		if (target_actor != NULL)
-			printf("target at %s\n", target_actor->name.c_str());
 		i++;
 	}
 	if (target_actor == NULL)
 		return (false);
-	printf(" - found a target below %d percent", data.value[2]);
 	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell

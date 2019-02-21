@@ -65,9 +65,9 @@ static string parse_support_percent(t_ai_helper data)
 
 static string parse_support_damaged(t_ai_helper data)
 {
-	string text = "approach the ally with < " + to_string(data.value[1]) + " % hp at " + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
-	if (data.value[4] != -1)
-		text += " with max " + to_string(data.value[4]) + " PM used";
+	string text = "approach the ally with < " + to_string(data.value[1]) + " % hp at " + (data.value[3] != 0 ? "-" + to_string(data.value[2] - data.value[3]) : "") + " tile of distance";
+	if (data.value[5] != -1)
+		text += " with max " + to_string(data.value[5]) + " PM used";
 	return (text);
 }
 

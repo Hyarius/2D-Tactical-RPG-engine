@@ -1,0 +1,23 @@
+name:Ghost healer
+tileset:M09
+sprite_pos:3:4
+health:50
+action:6
+mouvement:2
+initiative:3
+spell0:Freeze
+spell1:NULL
+spell2:NULL
+spell3:NULL
+spell4:Transfusion
+spell5:Heal
+6:75:3:0:1:-1:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+12:5:50:-1:-1:-1:0:0:0:0
+12:4:75:-1:-1:-1:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+7:0:-1:-1:1:-1:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+3:40:-1:1:-1:0:0:0:0:0
+0:3:1:1:-1:-1:0:0:0:0
+0:0:0:0:0:0:0:0:0:0
