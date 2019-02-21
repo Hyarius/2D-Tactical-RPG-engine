@@ -138,6 +138,7 @@ typedef struct			s_spell
 	t_vect				icon;			//the sprite to use to print the icon
 	int					cost_pa;		//cost in PA-
 	int					cost_pm;		//cost in PM -
+	int					cooldown;		//how many turn before re_casting it ?
 	int					range[2];		//0 - range min / 1 - range max -
 	int					block;			//did this spell need vision : 0 - he need vision / 1 - he can go over obs
 	int					on_target;		//0 - click on target only / 1 - click on target and empty tile / 2 - click only on empty tile
@@ -149,7 +150,7 @@ typedef struct			s_spell
 	int					anim_type; 		//0 - single anim on the clicked coord | 1 - anim on every cell | 2 - anim on every target
 						s_spell();
 						s_spell(string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
-								int p_cost_pa, int p_cost_pm,
+								int p_cost_pa, int p_cost_pm, int p_cooldown,
 								int range_min, int range_max, int p_block, int p_on_target,
 								int p_range_type, int p_zone_type, int p_zone_size,
 								vector<t_effect> p_effect, t_animation p_target_anim, int p_anim_type);
@@ -191,9 +192,10 @@ typedef struct          s_actor
 	t_stat				stat;		//stat of the actor
 	t_vect				coord;		//position of the actor in game_space
 	vector<t_vect>		destination;//list of coord the actor will take while moving
-	vector<t_visual_info>	visual_info; //list of every infos we need to print on screen
+	vector<t_visual_info>	*visual_info; //link to the visual info of the cell where we standing
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
+	int					cooldown[6];
 	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
 
 						s_actor();
@@ -201,7 +203,6 @@ typedef struct          s_actor
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
-	void				draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom); //draw the actor visual info on the screen
 }						t_actor;
 
 typedef struct			s_cell
@@ -244,6 +245,7 @@ typedef struct			s_game_board
 	t_cell				*get_cell(int x, int y);
 	t_cell				*get_cell(t_vect target);
 	bool				check_anim(); //check if an anim is ended
+	bool				check_visual(); //check if an anim is ended
 	void				add_actor(t_actor *new_actor);
 	void				remove_actor(t_actor *old_actor);
 	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
@@ -301,7 +303,7 @@ typedef struct			s_game_engine
 	vector<t_vect>		calc_line(int size, t_vect dir);	//calc the list of cell to hit with a line zone
 	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
 	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
-	void				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
+	bool				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
 	void				check_alive();				//check if an actor is dead
 	void				update_board();			//update the state of the screen, updating the actor_list.destination
 	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
@@ -327,6 +329,8 @@ typedef struct			s_game_engine
 	bool				help_weak(t_ai_helper data);
 	bool				help_percent(t_ai_helper data);
 	bool				action_on_turn(t_ai_helper data);
+	bool				attack_caster_hp(t_ai_helper data);
+	bool				help_caster_hp(t_ai_helper data);
 
 	bool				execute_gambit(t_actor *source);
 
@@ -389,6 +393,8 @@ void					move_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat
 void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					push_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void					pull_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
 
 string					parse_gambit(t_ai_helper data);
 

@@ -19,6 +19,7 @@ void				s_game_engine::invoke_actor(t_actor *new_actor, t_vect coord)
 	{
 		new_actor->coord = coord;
 		board.get_cell(coord)->actor = new_actor;
+		new_actor->visual_info = &(board.get_cell(coord)->visual_info);
 		board.add_actor(new_actor);
 		if (new_actor->team == 1)
 			board.ally_list.push_back(new_actor);
@@ -31,6 +32,7 @@ void				s_game_engine::outvoke_actor(t_actor *new_actor)
 	{
 		board.get_cell(new_actor->coord)->actor = NULL;
 		new_actor->coord = t_vect(-1, -1);
+		new_actor->visual_info = NULL;
 		board.remove_actor(new_actor);
 		delete new_actor;
 	}

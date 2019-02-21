@@ -22,19 +22,6 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 		draw_rectangle(bar_coord + 2, t_vect(size.x * 0.8 * percent / 100, size.y / 10) - 4, t_color(1.0, 0.0, 0.0));
 }
 
-void					s_actor::draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom)
-{
-	if (visual_info.size())
-	{
-		for (size_t i = 0; i < visual_info.size(); i++)
-		{
-			visual_info[i].draw_self(target, offset, size, zoom);
-			if (visual_info[i].index == (int)visual_info[i].text_coord.size())
-				visual_info.erase(visual_info.begin() + i);
-		}
-	}
-}
-
 t_actor					read_actor(string p_path)
 {
 	ifstream		myfile;
@@ -82,18 +69,13 @@ s_actor::s_actor()
 	tile = NULL;
 	sprite = t_vect(-1, -1);
 	stat = t_stat(t_value(50), t_value(6), t_value(3), 5);
+	visual_info = NULL;
 	dir = 0;
 	for (int i = 0; i < 6; i++)
+	{
 		spell[i] = &(spell_map["NULL"]);
-	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
-	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({3, 25, -1}));
-	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
+		cooldown[i] = 0;
+	}
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
@@ -104,17 +86,12 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	sprite = p_sprite;
 	stat = p_stat;
 	dir = 0;
+	visual_info = NULL;
 	for (int i = 0; i < 6; i++)
+	{
 		spell[i] = &(spell_map["NULL"]);
-	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
-	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({3, 25, -1}));
-	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
+		cooldown[i] = 0;
+	}
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell)
@@ -125,17 +102,12 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	sprite = p_sprite;
 	stat = p_stat;
 	dir = 0;
+	visual_info = NULL;
 	for (int i = 0; i < 6; i++)
+	{
 		spell[i] = p_spell[i];
-	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
-	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({3, 25, -1}));
-	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
+		cooldown[i] = 0;
+	}
 }
 
 void			s_actor::reset_value()

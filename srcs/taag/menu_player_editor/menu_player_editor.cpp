@@ -17,6 +17,7 @@ void					menu_player_editor(t_data data)
 	i++;
 
 	entry_path->entry->back = ACTOR_EXT;
+	entry_path->entry->max_len = 32;
 
 	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", "", BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -25,7 +26,7 @@ void					menu_player_editor(t_data data)
 
 	entry_name->entry->max_len = 32;
 
-	int		pool = 15;
+	int		pool = 30;
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
 		new t_button(new s_text_button(
 				"Attrib points (AtbP) left : ", DARK_GREY,
@@ -43,7 +44,7 @@ void					menu_player_editor(t_data data)
 	string *name = &(entry_name->entry->text);
 	string *path = &(entry_path->entry->text);
 
-	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 30, 75,
+	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 30, 150,
 		new t_button(new s_text_button(
 				"Health points (5 hp / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,

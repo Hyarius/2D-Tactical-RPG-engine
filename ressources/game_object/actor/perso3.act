@@ -1,0 +1,22 @@
+name:Perso 3
+tileset:H03
+sprite_pos:9:0
+health:80
+action:10
+mouvement:6
+initiative:4
+spell0:Heal major
+spell1:Heal minor
+spell2:Devotion
+spell3:Wind slash
+spell4:Tornado
+spell5:Fly
+7:0:-1:-1:0:0:0:0:0:0
+7:1:-1:-1:0:0:0:0:0:0
+7:2:-1:-1:0:0:0:0:0:0
+7:3:-1:-1:0:0:0:0:0:0
+7:4:-1:-1:0:0:0:0:0:0
+7:5:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+3:25:-1:0:0:0:0:0:0:0
+0:1:0:0:-1:0:0:0:0:0

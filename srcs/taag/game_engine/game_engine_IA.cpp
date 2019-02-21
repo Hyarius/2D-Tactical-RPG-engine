@@ -26,15 +26,18 @@ gambit_command command[] = {
 	&s_game_engine::attack, // 7
 	&s_game_engine::attack_weak, // 8
 	&s_game_engine::attack_percent, // 9
-	&s_game_engine::help, // 10
-	&s_game_engine::help_weak, // 11
-	&s_game_engine::help_percent, // 12
-	&s_game_engine::action_on_turn, // 13
+	&s_game_engine::attack_caster_hp, //10
+	&s_game_engine::help, // 11
+	&s_game_engine::help_weak, // 12
+	&s_game_engine::help_percent, // 13
+	&s_game_engine::help_caster_hp, //14
+	&s_game_engine::action_on_turn, // 15
 };
 
 bool					s_game_engine::execute_gambit(t_actor *source)
 {
-	if (board.check_anim() == false || source->destination.size() != 0 ||
+	if (board.check_anim() == false || board.check_visual() == false ||
+		source->destination.size() != 0 ||
 		board.enemy_list.size() == 0 || board.ally_list.size() == 0)
 		return (false);
 	size_t i = 0;
@@ -93,6 +96,12 @@ void				s_game_engine::next_turn()
 	if (turn_order.size())
 	{
 		turn_order[turn_index % turn_order.size()]->selected = true;
+		for (int i = 0; i < 6; i++)
+		{
+			if (turn_order[turn_index % turn_order.size()]->cooldown[i] > 0)
+				turn_order[turn_index % turn_order.size()]->cooldown[i]--;
+		}
+			
 	}
 	calculated = false;
 	s_spell = -1;

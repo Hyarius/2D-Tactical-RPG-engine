@@ -18,6 +18,7 @@ static void			save_spell(t_data data) // 0 - t_spell * / 1 - file name
 	myfile << "m_spell:" + to_string((spell->m_spell == false ? 0 : 1)) + "\n";
 	myfile << "pa:" + to_string(spell->cost_pa) + "\n";
 	myfile << "pm:" + to_string(spell->cost_pm) + "\n";
+	myfile << "cooldown:" + to_string(spell->cooldown) + "\n";
 	myfile << "range:" + to_string(spell->range[0]) + ":" + to_string(spell->range[1]) + ":" + to_string((spell->block == false ? 0 : 1)) + "\n";
 	myfile << "type:" + to_string((int)(spell->range_type)) + "\n";
 	myfile << "on target:" + to_string(spell->on_target) + "\n";

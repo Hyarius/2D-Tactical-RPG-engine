@@ -1,17 +1,17 @@
-name:First aid
-description:Heal 4 HP(s) to the target, heal the caster by 3 HP(s)
+name:Power up
+description:Heal the caster by 4 HP(s) and give 2 PM(s) to the caster
 icon:simple_iconset
-sprite:7:2
+sprite:6:1
 m_spell:0
-pa:5
+pa:2
 pm:0
 cooldown:0
-range:1:3:0
+range:0:0:0
 type:0
 on target:0
 zone:1:0
-effect1:1:4:0:0:0
-effect2:6:3:0:0:0
+effect1:6:4:0:0:0
+effect2:10:2:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0

@@ -136,7 +136,9 @@ string front_text[] = {
 	"move the caster to the targeted location\0",
 	"change position between caster and target\0",
 	"give ",
-	"give "
+	"give ",
+	"push the caster into the target by ",
+	"pull the caster into the target by ",
 };
 
 string back_text[] = {
@@ -150,8 +152,10 @@ string back_text[] = {
 	" damage(s) to the caster",
 	"",
 	"",
-	" PM(s) to the caster",
 	" PA(s) to the caster",
+	" PM(s) to the caster",
+	" square(s)",
+	" square(s)",
 };
 
 static string compute_text(size_t size, int count, t_effect *effect, int nb_effect)
@@ -178,7 +182,7 @@ static void save_effect(t_data data)
 
 	for (int i = 0; i < 6; i++)
 	{
-		if (*(entry[i]) != "")
+		if (*(entry[i]) != "Empty effect")
 			nb_effect++;
 	}
 

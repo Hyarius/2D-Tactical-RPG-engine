@@ -17,7 +17,7 @@
 
 static string parse_charge(t_ai_helper data)
 {
-	string text = "approach the closest enemy at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the closest enemy at " + (data.value[2] != 0 ? to_string(data.value[1] - data.value[2]) + "-": "") + to_string(data.value[1]) + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -25,7 +25,7 @@ static string parse_charge(t_ai_helper data)
 
 static string parse_charge_weak(t_ai_helper data)
 {
-	string text = "approach the enemy with less hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the enemy with less hp at " + (data.value[2] != 0 ? to_string(data.value[1] - data.value[2]) + "-" : "") + to_string(data.value[1]) + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -33,7 +33,7 @@ static string parse_charge_weak(t_ai_helper data)
 
 static string parse_charge_percent(t_ai_helper data)
 {
-	string text = "approach the enemy with less % hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the enemy with less % hp at " + (data.value[2] != 0 ? to_string(data.value[1] - data.value[2]) + "-" : "") + to_string(data.value[1]) + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -49,7 +49,7 @@ static string parse_retreat(t_ai_helper data)
 
 static string parse_support(t_ai_helper data)
 {
-	string text = "approach the closest ally at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the closest ally at " + (data.value[2] != 0 ? to_string(data.value[1] - data.value[2]) + "-" : "") + to_string(data.value[1]) + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -57,7 +57,7 @@ static string parse_support(t_ai_helper data)
 
 static string parse_support_percent(t_ai_helper data)
 {
-	string text = "approach the ally with less % hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the ally with less % hp at " + (data.value[2] != 0 ? to_string(data.value[1] - data.value[2]) + "-" : "") + to_string(data.value[1]) + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -65,7 +65,7 @@ static string parse_support_percent(t_ai_helper data)
 
 static string parse_support_damaged(t_ai_helper data)
 {
-	string text = "approach the ally with < " + to_string(data.value[1]) + " % hp at " + (data.value[3] != 0 ? "-" + to_string(data.value[2] - data.value[3]) : "") + " tile of distance";
+	string text = "approach the ally with < " + to_string(data.value[1]) + " % hp at " + (data.value[3] != 0 ? to_string(data.value[2] - data.value[3]) + "-" : "") + to_string(data.value[2]) + " tile of distance";
 	if (data.value[5] != -1)
 		text += " with max " + to_string(data.value[5]) + " PM used";
 	return (text);
@@ -140,6 +140,26 @@ static string parse_turn(t_ai_helper data)
 	return ("NULL");
 }
 
+static string parse_attack_caster_hp(t_ai_helper data)
+{
+	string text = "cast the spell num " + to_string(data.value[1]) + " on the closest enemy on range if caster hp < " + to_string(data.value[2]) + " %";
+	if (data.value[3] != -1)
+		text += " if PA == " + to_string(data.value[3]);
+	if (data.value[4] != -1)
+		text += " if PM == " + to_string(data.value[4]);
+	return (text);
+}
+
+static string parse_heal_caster_hp(t_ai_helper data)
+{
+	string text = "cast the spell num " + to_string(data.value[1]) + " on the closest ally on range if caster hp < " + to_string(data.value[2]) + " %";
+	if (data.value[3] != -1)
+		text += " if PA == " + to_string(data.value[3]);
+	if (data.value[4] != -1)
+		text += " if PM == " + to_string(data.value[4]);
+	return (text);
+}
+
 
 typedef string (*f_gambit_parsor)(t_ai_helper);
 
@@ -158,6 +178,8 @@ f_gambit_parsor f_list[] = {
 	&parse_help_weak,
 	&parse_help_percent,
 	&parse_turn,
+	&parse_attack_caster_hp,
+	&parse_heal_caster_hp,
 };
 
 string parse_gambit(t_ai_helper data)

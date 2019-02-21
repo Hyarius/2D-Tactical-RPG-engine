@@ -1,0 +1,17 @@
+name:Red mushroom
+tileset:M04
+sprite_pos:9:0
+health:54
+action:6
+mouvement:3
+initiative:4
+spell0:Devil slash
+spell1:Absorb
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:Regeneration
+14:5:65:-1:-1:-1:0:0:0:0
+7:0:-1:-1:1:-1:0:0:0:0
+0:2:1:0:-1:0:0:0:0:0
+7:1:-1:-1:1:-1:0:0:0:0

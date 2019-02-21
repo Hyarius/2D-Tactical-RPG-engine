@@ -25,42 +25,48 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 	{
 		if (event->key.keysym.sym == SDLK_q)
 		{
-			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
+			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm &&
+				player->cooldown[0] == 0)
 				s_spell = 0;
 			else
 				s_spell = -1;
 		}
 		else if (event->key.keysym.sym == SDLK_w)
 		{
-			if (player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm)
+			if (player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm &&
+				player->cooldown[1] == 0)
 				s_spell = 1;
 			else
 				s_spell = -1;
 		}
 		else if (event->key.keysym.sym == SDLK_e)
 		{
-			if (player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm)
+			if (player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm &&
+				player->cooldown[2] == 0)
 				s_spell = 2;
 			else
 				s_spell = -1;
 		}
 		else if (event->key.keysym.sym == SDLK_r)
 		{
-			if (player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm)
+			if (player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm &&
+				player->cooldown[3] == 0)
 				s_spell = 3;
 			else
 				s_spell = -1;
 		}
 		else if (event->key.keysym.sym == SDLK_t)
 		{
-			if (player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm)
+			if (player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm &&
+				player->cooldown[4] == 0)
 				s_spell = 4;
 			else
 				s_spell = -1;
 		}
 		else if (event->key.keysym.sym == SDLK_y)
 		{
-			if (player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm)
+			if (player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm &&
+				player->cooldown[5] == 0)
 				s_spell = 5;
 			else
 				s_spell = -1;
@@ -76,7 +82,7 @@ void			s_game_engine::ending_fight(bool *play)
 
 	while (count < board.actor_list.size())
 	{
-		if (board.actor_list[count]->visual_info.size())
+		if (board.actor_list[count]->visual_info->size())
 			leave_game = false;
 		count++;
 	}

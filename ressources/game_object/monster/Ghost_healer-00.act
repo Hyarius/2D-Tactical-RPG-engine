@@ -4,13 +4,13 @@ sprite_pos:3:4
 health:50
 action:6
 mouvement:2
-initiative:3
-spell0:Freeze
+initiative:6
+spell0:Absorb
 spell1:NULL
 spell2:NULL
 spell3:NULL
-spell4:Transfusion
-spell5:Heal
+spell4:First aid
+spell5:Heal minor
 6:75:3:0:1:-1:0:0:0:0
 -1:0:0:0:0:0:0:0:0:0
 12:5:50:-1:-1:-1:0:0:0:0

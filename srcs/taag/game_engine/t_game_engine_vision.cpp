@@ -67,6 +67,8 @@ void				s_game_engine::calculate_vision_circle()
 
 	to_calc.push_back(player->coord);
 	board.get_cell(to_calc[0])->v_dist = 0;
+	if (player->spell[s_spell]->range[0] <= 0)
+		board.get_cell(player->coord)->cursor = t_vect(0, 2);
 	i = 0;
 	while (i < to_calc.size())
 	{
@@ -90,6 +92,8 @@ void				s_game_engine::calculate_vision_line()
 	int i;
 
 	board.get_cell(player->coord)->v_dist = 0;
+	if (player->spell[s_spell]->range[0] <= 0)
+		board.get_cell(player->coord)->cursor = t_vect(0, 2);
 	i = 0;
 	while (i <= player->spell[s_spell]->range[1])
 	{

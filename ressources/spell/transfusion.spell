@@ -1,19 +1,20 @@
 name:Transfusion
-description:Deal 6 damages to the caster and heal target by 12
+description:Heal 12 HP(s) to the target, deal 4 damage(s) to the caster
 icon:simple_iconset
 sprite:10:4
 m_spell:0
-pa:2
+pa:3
 pm:0
-range:1:4:1
+cooldown:0
+range:1:7:1
 type:0
 on target:0
-zone:0:0
-effect1:7:6:0:0:0
-effect2:1:12:0:0:0
+zone:1:0
+effect1:1:12:0:0:0
+effect2:7:4:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_effect:XMMK01:1:33:1:1
-anim_type:2
+target_effect:NULL:0:0:1:1
+anim_type:0

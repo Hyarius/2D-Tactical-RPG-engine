@@ -1,16 +1,16 @@
-name:Fly
-description:Move the caster to the targeted location
+name:Regeneration
+description:Heal the caster by 25 HP(s)
 icon:simple_iconset
-sprite:6:2
-m_spell:0
-pa:2
-pm:1
-cooldown:0
-range:1:8:0
+sprite:5:4
+m_spell:1
+pa:0
+pm:0
+cooldown:5
+range:0:0:0
 type:0
-on target:2
-zone:0:0
-effect1:8:0:0:0:0
+on target:0
+zone:1:0
+effect1:6:25:0:0:0
 effect2:0:0:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0

@@ -17,6 +17,8 @@ static void			set_list_effect_name()
 	list_effect_name.push_back("swap actor");	//9
 	list_effect_name.push_back("change caster pa");	//10
 	list_effect_name.push_back("change caster pm");	//11
+	list_effect_name.push_back("push caster");	//12
+	list_effect_name.push_back("pull caster");	//13
 }
 
 void menu_spell_editor(t_data data)
@@ -38,7 +40,7 @@ void menu_spell_editor(t_data data)
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
 
-	entry_path->entry->back = ACTOR_EXT;
+	entry_path->entry->back = SPELL_EXT;
 
 	t_entry *entry_name = new s_entry(new s_text_entry("Name of your spell", "", BLACK,
 		t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -93,6 +95,26 @@ void menu_spell_editor(t_data data)
 	t_iterator *pm_iterator = new s_iterator(&(spell->cost_pm), NULL, 1, 1, 0, 10,
 		new t_button(new s_text_button(
 			"Cost PM: ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"-", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"+", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+	i += 0.89;
+
+
+	t_iterator *cooldown_iterator = new s_iterator(&(spell->cooldown), NULL, 1, 1, 0, 5,
+		new t_button(new s_text_button(
+			"Cooldown : ", DARK_GREY,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 0.78) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(
@@ -247,41 +269,42 @@ void menu_spell_editor(t_data data)
 			"+", DARK_GREY,
 			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	i += 0.89;
+	i += 0.81;
 
 	t_button	*save_button = new t_button(new s_text_button(
 		"Save spell", DARK_GREY,
-		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 0.78) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 		menu_save_spell, t_data(3, &gui, spell, &(entry_path->entry->text)));//0 - gui / 1 - t_spell * / 2 - & file name
-	i++;
+	i += 0.81;
 
 	t_vect *selected;
 	string		*text[6];
 
 	t_button	*load_button = new t_button(new s_text_button(
 		"Load spell", DARK_GREY,
-		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 0.78) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 		menu_load_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
-	i++;
+	i += 0.81;
 
 	t_button	*delete_button = new t_button(new s_text_button(
 		"Delete spell", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit,
-		t_vect(8, 1) * gui.unit,
+		t_vect(8, 0.78) * gui.unit,
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
 		menu_delete_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
-	i++;
+
+	i += 0.81;
 
 	t_button	*quit_button = new t_button(new s_text_button(
 		"Quit", DARK_GREY,
-		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 0.78) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 		menu_quit, t_data(2, &gui, &play));
-	i++;
+
 	i = 1;
 	t_tileset_button *tile_button = new s_tileset_button(&(interface_map["simple_iconset"]), t_vect(0, 0), t_vect(1, 0),
 		t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
@@ -356,6 +379,7 @@ void menu_spell_editor(t_data data)
 	gui.add(spell_type_iterator);
 	gui.add(pa_iterator);
 	gui.add(pm_iterator);
+	gui.add(cooldown_iterator);
 	gui.add(block_range_iterator);
 	gui.add(range_type_iterator);
 	gui.add(min_range_iterator);

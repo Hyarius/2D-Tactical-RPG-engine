@@ -42,7 +42,8 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 				myfile << ":";
 			myfile << to_string(to_save->gambit[i].value[j]);
 		}
-		myfile << "\n";
+		if (i != to_save->gambit.size() - 1)
+			myfile << "\n";
 	}
 	myfile.close();
 }

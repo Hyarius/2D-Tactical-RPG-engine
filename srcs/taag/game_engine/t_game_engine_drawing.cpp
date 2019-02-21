@@ -48,8 +48,10 @@ void				s_game_engine::draw_actor_info_on_gui()
 		if (player->spell[i]->tile != NULL)
 		{
 			player->spell[i]->tile->draw_self(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, player->spell[i]->icon);
-			if (player->spell[i]->cost_pa > player->stat.pa.value || player->spell[i]->cost_pm > player->stat.pm.value)
+			if (player->spell[i]->cost_pa > player->stat.pa.value || player->spell[i]->cost_pm > player->stat.pm.value || player->cooldown[i] != 0)
 				draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, t_color(0.3, 0.3, 0.3, 0.7));
+			if (player->cooldown[i] != 0)//int type, int outline, 
+				draw_centred_text(to_string(player->cooldown[i]), text_size, NORMAL, 4, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5) + gui.unit / 2, DARK_GREEN, BLACK);
 			if (player->spell[i]->cost_pa > 0)
 			{
 				interface_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));

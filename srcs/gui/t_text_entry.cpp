@@ -9,7 +9,7 @@ s_text_entry::s_text_entry(	string p_desc, string p_text, int p_text_color,
 	back = "";
 	front = "";
 	text_color = p_text_color;
-	max_len = 16;
+	max_len = 32;
 	coord[0] = p_coord;
 	size[0] = p_size;
 	coord[1] = p_coord + border;

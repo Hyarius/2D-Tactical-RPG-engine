@@ -13,6 +13,7 @@ s_spell::s_spell()
 	icon = t_vect(-1, -1);
 	cost_pa = 0;
 	cost_pm = 0;
+	cooldown = 0;
 	range[0] = 0;
 	range[1] = 0;
 	block = INT_FALSE;
@@ -28,7 +29,7 @@ s_spell::s_spell()
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
-					int p_cost_pa, int p_cost_pm, int range_min, int range_max, int p_block, int p_on_target,
+					int p_cost_pa, int p_cost_pm, int p_cooldown, int range_min, int range_max, int p_block, int p_on_target,
 					int p_range_type, int p_zone_type, int p_zone_size,
 					vector<t_effect> p_effect, t_animation p_target_anim, int p_anim_type)
 {
@@ -39,6 +40,7 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	icon = p_icon;
 	cost_pa = p_cost_pa;
 	cost_pm = p_cost_pm;
+	cooldown = p_cooldown;
 	range[0] = range_min;
 	range[1] = range_max;
 	block = p_block;
@@ -63,6 +65,7 @@ t_spell		read_one_spell(string path)
 	int				m_spell;
 	int				cost_pa;
 	int				cost_pm;
+	int				cooldown;
 	int				range[2];
 	int				block;
 	int				on_target;
@@ -82,6 +85,7 @@ t_spell		read_one_spell(string path)
 	m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+	cooldown = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	tab = get_strsplit(&myfile, ":", 4);
 	range[0] = atoi(tab[1].c_str());
 	range[1] = atoi(tab[2].c_str());
@@ -102,7 +106,7 @@ t_spell		read_one_spell(string path)
 	if (tab[1] != "NULL")
 		target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 	int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
+	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
 	effect.clear();
 	myfile.close();
 	return (spell);
@@ -120,6 +124,7 @@ void		read_spell()
 	int				m_spell;
 	int				cost_pa;
 	int				cost_pm;
+	int				cooldown;
 	int				range[2];
 	int				block;
 	int				on_target;
@@ -149,6 +154,7 @@ void		read_spell()
 		m_spell = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pa = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		cost_pm = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+		cooldown = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		tab = get_strsplit(&myfile, ":", 4);
 		range[0] = atoi(tab[1].c_str());
 		range[1] = atoi(tab[2].c_str());
@@ -169,7 +175,7 @@ void		read_spell()
 		if (tab[1] != "NULL")
 			target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 		int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
+		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
 		if (m_spell == INT_FALSE)
 			spell_heros_name.push_back(name);
 		spell_name.push_back(name);

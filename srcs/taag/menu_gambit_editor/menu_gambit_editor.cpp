@@ -18,9 +18,11 @@ vector<vector<string>> gambit_text_desc = {
 	{"Attack enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"Attack weak enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"Attack weak % enemy", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Attack if caster %", "Spell num to cast:", "Caster percent to trigger :", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"Help ally", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"Help weak ally", "Spell num to cast:", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"Help weak % ally", "Spell num to cast:", "Ally percent to trigger :", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
+	{"Help if caster %", "Spell num to cast:", "Caster percent to trigger :", "value PA (-1 for disable) : ", "value PM (-1 for disable) : "},
 	{"XXXX", "", ""},
 };
 
@@ -35,8 +37,10 @@ vector<vector<int>> gambit_starting_value = {
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
+	{0, 0, 50, -1, -1},
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
+	{0, 0, 50, -1, -1},
 	{0, 0, 50, -1, -1},
 	{0, 0, 0},
 };
@@ -52,8 +56,10 @@ vector<vector<int>> gambit_increment_value = {
 	{0, 1, 1, 1},
 	{0, 1, 1, 1},
 	{0, 1, 1, 1},
+	{0, 1, 5, 1, 1},
 	{0, 1, 1, 1},
 	{0, 1, 1, 1},
+	{0, 1, 5, 1, 1},
 	{0, 1, 5, 1, 1},
 	{0, 0, 0},
 };
@@ -69,8 +75,10 @@ vector<vector<int>> gambit_min_value = {
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
+	{0, 0, 5, -1, -1},
 	{0, 0, -1, -1},
 	{0, 0, -1, -1},
+	{0, 0, 5, -1, -1},
 	{0, 0, 5, -1, -1},
 	{0, 0, 0},
 };
@@ -86,8 +94,10 @@ vector<vector<int>> gambit_max_value = {
 	{0, 5, 10, 10},
 	{0, 5, 10, 10},
 	{0, 5, 10, 10},
+	{0, 5, 100, 10, 10},
 	{0, 5, 10, 10},
 	{0, 5, 10, 10},
+	{0, 5, 100, 10, 10},
 	{0, 5, 100, 10, 10},
 	{0, 0, 0},
 };

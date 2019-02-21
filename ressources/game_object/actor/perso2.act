@@ -1,0 +1,22 @@
+name:Perso 2
+tileset:H05
+sprite_pos:0:0
+health:105
+action:9
+mouvement:5
+initiative:6
+spell0:Burning slash
+spell1:Frozen slash
+spell2:Stunning slash
+spell3:Power up
+spell4:Fireball
+spell5:Rock fall
+7:0:-1:-1:0:0:0:0:0:0
+7:1:-1:-1:0:0:0:0:0:0
+7:2:-1:-1:0:0:0:0:0:0
+7:3:-1:-1:0:0:0:0:0:0
+7:4:-1:-1:0:0:0:0:0:0
+7:5:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+3:25:-1:0:0:0:0:0:0:0
+0:1:0:0:-1:0:0:0:0:0

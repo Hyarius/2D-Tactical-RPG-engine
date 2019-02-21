@@ -3,7 +3,7 @@
 s_ai_helper::s_ai_helper()
 {
 	value.resize(10);
-	for (size_t i; i < 10; i++)
+	for (size_t i = 0; i < 10; i++)
 		value[i] = 0;
 }
 

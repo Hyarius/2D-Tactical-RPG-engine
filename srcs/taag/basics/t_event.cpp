@@ -27,8 +27,10 @@ void			init_effects()
 	g_effects.push_back(dmg_caster);	//7
 	g_effects.push_back(move_caster); 	//8
 	g_effects.push_back(swap_actor);	//9
-	g_effects.push_back(change_caster_pa);	//10
-	g_effects.push_back(change_caster_pm);	//11
+	g_effects.push_back(change_caster_pm);	//10
+	g_effects.push_back(change_caster_pa);	//11
+	g_effects.push_back(push_caster);
+	g_effects.push_back(pull_caster);
 }
 
 void	swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
@@ -51,14 +53,15 @@ void	change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_sta
 	(void)target;
 	if (source != NULL)
 	{
-		int damage = (effect_stat.value[0] < source->stat.pa.value ? effect_stat.value[0] : source->stat.pa.value);
+		int damage = effect_stat.value[0];
+		if (effect_stat.value[0] < 0)
+		{
+			damage = (-(effect_stat.value[0]) < source->stat.pa.value ? effect_stat.value[0] : -source->stat.pa.value);
+		}
 		if (damage != 0)
 		{
 			source->stat.pa.value += damage;
-			if (source->stat.hp.value != 0)
-				source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-			else
-				game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }
@@ -69,14 +72,15 @@ void	change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_sta
 	(void)target;
 	if (source != NULL)
 	{
-		int damage = (effect_stat.value[0] < source->stat.pm.value ? effect_stat.value[0] : source->stat.pm.value);
+		int damage = effect_stat.value[0];
+		if (effect_stat.value[0] < 0)
+		{
+			damage = (-(effect_stat.value[0]) < source->stat.pm.value ? effect_stat.value[0] : -source->stat.pm.value);
+		}
 		if (damage != 0)
 		{
 			source->stat.pm.value += damage;
-			if (source->stat.hp.value != 0)
-				source->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-			else
-				game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }
@@ -104,7 +108,7 @@ void	heal_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		if (damage != 0)
 		{
 			source->stat.hp.value += damage;
-			source->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
+			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info->size())));
 		}
 	}
 }
@@ -115,10 +119,7 @@ void	dmg_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 	if (damage != 0)
 	{
 		source->stat.hp.value -= damage;
-		if (source->stat.hp.value != 0)
-			source->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * source->visual_info.size())));
-		else if (damage)
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info.size())));
+		game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0, 0.5 * target->visual_info->size())));
 	}
 }
 
@@ -126,8 +127,8 @@ void	push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
 	if (target != NULL)
 	{
-		t_vect delta = t_vect(	source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
-								source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
+		t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
+			source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
@@ -136,6 +137,7 @@ void	push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 				game->board.get_cell(target->coord)->actor = NULL;
 				target->coord = target->coord + delta;
 				game->board.get_cell(target->coord)->actor = target;
+				target->visual_info = &(game->board.get_cell(target->coord)->visual_info);
 			}
 			i++;
 		}
@@ -146,8 +148,8 @@ void	pull_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 {
 	if (target != NULL)
 	{
-		t_vect delta = t_vect(	source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
-								source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
+		t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
+			source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
@@ -156,6 +158,49 @@ void	pull_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 				game->board.get_cell(target->coord)->actor = NULL;
 				target->coord = target->coord + delta;
 				game->board.get_cell(target->coord)->actor = target;
+				target->visual_info = &(game->board.get_cell(target->coord)->visual_info);
+			}
+			i++;
+		}
+	}
+}
+
+void	push_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
+			source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
+		int i = 0;
+		while (i < effect_stat.value[0])
+		{
+			if (game->board.get_cell(source->coord + delta) && game->board.get_cell(source->coord + delta)->node->m_obs == false)
+			{
+				game->board.get_cell(source->coord)->actor = NULL;
+				source->coord = source->coord + delta;
+				game->board.get_cell(source->coord)->actor = target;
+				source->visual_info = &(game->board.get_cell(source->coord)->visual_info);
+			}
+			i++;
+		}
+	}
+}
+
+void	pull_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
+			source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
+		int i = 0;
+		while (i < effect_stat.value[0])
+		{
+			if (game->board.get_cell(source->coord + delta) && game->board.get_cell(source->coord + delta)->node->m_obs == false)
+			{
+				game->board.get_cell(source->coord)->actor = NULL;
+				source->coord = source->coord + delta;
+				game->board.get_cell(source->coord)->actor = target;
+				source->visual_info = &(game->board.get_cell(source->coord)->visual_info);
 			}
 			i++;
 		}
@@ -172,10 +217,7 @@ void deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		if (damage != 0)
 		{
 			target->stat.hp.value -= damage;
-			if (target->stat.hp.value != 0)
-				target->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-			else if (damage)
-				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }
@@ -190,7 +232,7 @@ void heal(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		if (damage != 0)
 		{
 			target->stat.hp.value += damage;
-			target->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }
@@ -209,10 +251,7 @@ void change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		if (damage != 0)
 		{
 			target->stat.pm.value += damage;
-			if (target->stat.hp.value != 0)
-				target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-			else if (damage)
-				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }
@@ -231,10 +270,7 @@ void change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat)
 		if (damage != 0)
 		{
 			target->stat.pa.value += damage;
-			if (target->stat.hp.value != 0)
-				target->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
-			else if (damage)
-				game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info.size())));
+			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0, 0.5 * target->visual_info->size())));
 		}
 	}
 }

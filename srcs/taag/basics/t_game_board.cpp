@@ -67,17 +67,18 @@ s_game_board::s_game_board(string p_path)
 		{
 			int team = atoi(tab[4].c_str());
 			if (team == 0)
-				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
+				get_cell(coord)->actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
 			else
-				cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
-			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->path =	tab[3];
-			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->coord = coord;
-			cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team = atoi(tab[4].c_str());
-			actor_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
-			if (cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team == 2)
-				enemy_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
-			else if (cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor->team == 1)
-				ally_list.push_back(cell_layer[(size_t)(coord.x)][(size_t)(coord.y)].actor);
+				get_cell(coord)->actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
+			get_cell(coord)->actor->path =	tab[3];
+			get_cell(coord)->actor->coord = coord;
+			get_cell(coord)->actor->visual_info = &(get_cell(coord)->visual_info);
+			get_cell(coord)->actor->team = atoi(tab[4].c_str());
+			actor_list.push_back(get_cell(coord)->actor);
+			if (get_cell(coord)->actor->team == 2)
+				enemy_list.push_back(get_cell(coord)->actor);
+			else if (get_cell(coord)->actor->team == 1)
+				ally_list.push_back(get_cell(coord)->actor);
 		}
 	}
 	while (!myfile.eof())
@@ -330,6 +331,33 @@ bool				s_game_board::check_anim()
 	return (true);
 }
 
+bool				s_game_board::check_visual()
+{
+	int i = 0;
+
+	while ((size_t)i < board_size.x)
+	{
+		int j = 0;
+		while ((size_t)j < board_size.y)
+		{
+
+			if (get_cell(i, j))
+			{
+				size_t k = 0;
+				while (k < get_cell(i, j)->visual_info.size())
+				{
+					if (get_cell(i, j)->visual_info[k].index < get_cell(i, j)->visual_info[k].text_coord.size())
+						return (false);
+					k++;
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
 void				s_game_board::draw_cell_layer()
 {
 	int i = 0;
@@ -354,12 +382,6 @@ void				s_game_board::draw_visual_info()
 {
 	size_t i = 0;
 	t_vect size = sprite_unit * zoom;
-
-	while (i < actor_list.size())
-	{
-		actor_list[i]->draw_visual_info(target, offset, size, zoom);
-		i++;
-	}
 
 	i = 0;
 	while (i < board_size.x)

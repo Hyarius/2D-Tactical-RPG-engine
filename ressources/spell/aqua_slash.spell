@@ -1,17 +1,17 @@
-name:First aid
-description:Heal 4 HP(s) to the target, heal the caster by 3 HP(s)
+name:Aqua-slash
+description:Deal 9 damage(s) to the target, pull the target by 1 square(s)
 icon:simple_iconset
-sprite:7:2
+sprite:2:8
 m_spell:0
-pa:5
+pa:3
 pm:0
 cooldown:0
-range:1:3:0
-type:0
+range:1:2:0
+type:1
 on target:0
 zone:1:0
-effect1:1:4:0:0:0
-effect2:6:3:0:0:0
+effect1:0:9:0:0:0
+effect2:5:1:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
