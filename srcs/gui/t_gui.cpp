@@ -44,25 +44,35 @@ bool		s_gui::click(SDL_Event *event)
 	}
 	entry = NULL;
 	SDL_StopTextInput();
-	i = 0;
-	while (i < object_list.size())
+	if (event->button.button == SDL_BUTTON_LEFT)
 	{
-		j = 0;
-		while (j < object_list[i].size())
+		i = 0;
+		while (i < object_list.size())
 		{
-			if (event->button.button == SDL_BUTTON_LEFT)
+			j = 0;
+			while (j < object_list[i].size())
 			{
 				if (object_list[i].at(j)->click_left(mouse) == true)
 						return (true);
+				j++;
 			}
-			else if (event->button.button == SDL_BUTTON_RIGHT)
+			i++;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < object_list.size())
+		{
+			j = 0;
+			while (j < object_list[i].size())
 			{
 				if (object_list[i].at(j)->click_right(mouse) == true)
-						return (true);
+					return (true);
+				j++;
 			}
-			j++;
+			i++;
 		}
-		i++;
 	}
 	return (false);
 }

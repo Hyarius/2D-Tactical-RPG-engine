@@ -3,7 +3,7 @@ description:Deal 4 damage
 icon:simple_iconset
 sprite:6:5
 m_spell:0
-pa:1
+pa:2
 pm:0
 range:1:1:0
 type:1

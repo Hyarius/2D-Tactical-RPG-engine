@@ -419,6 +419,8 @@ void						menu_select_effect(t_data data);
 void						menu_edit_animation(t_data data);
 void							menu_select_anim(t_data data);
 void 					menu_gambit_editor(t_data data);
+void 						menu_remove_gambit(t_data data);
+void 						menu_add_gambit(t_data data);
 void					menu_quit(t_data data);
 
 #endif

@@ -57,7 +57,10 @@ void		s_text_button::draw_self()
 			SDL_FreeSurface(surface);
 		}
 		else
+		{
+			saved_text = "";
 			text_image = NULL;
+		}
 	}
 	if (text_image != NULL)
 		text_image->draw_self(image_coord, image_size);

@@ -8,9 +8,9 @@ erase the increment function into iterator to allow a recalculation of every tex
 extern vector<size_t> nb_param_gambit;
 
 vector<vector<string>> gambit_text_desc = {
-	{"Approche enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
-	{"Approche weak enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
-	{"Approche weak % enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Approach enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Approach weak enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
+	{"Approach weak % enemy", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
 	{"Flee enemy", "Hp percent to start :", "Max mouvement"},
 	{"Support ally", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
 	{"Support weak % ally", "Range to reach :", "Range delta :", "Range type :", "Max mouvement :"},
@@ -93,6 +93,15 @@ t_button *gambit_desc;
 t_iterator *gambit_selector;
 t_iterator *value_iterator[10];
 
+static void		calc_left_panel(t_actor *actor, size_t index)
+{
+	for (size_t j = 0; j < 16; j++)
+	{
+		button_num_list[j]->button->text = ((j + index) < actor->gambit.size() ? "[" + to_string(j + index) + "]" : "");
+		button_desc_list[j]->button->text = ((j + index) < actor->gambit.size() ? parse_gambit((actor->gambit)[j + index]) : "");
+	}
+}
+
 static void		increment_index(t_data data)//actor, &index, delta
 {
 	t_actor			*actor = (t_actor *)(data.data[0]);
@@ -101,11 +110,7 @@ static void		increment_index(t_data data)//actor, &index, delta
 
 	if ((int)(*index) + delta >= 0 && ((int)(*index) + delta) < (int)(actor->gambit.size()))
 		*index += delta;
-	for (size_t j = 0; j < 16; j++)
-	{
-		button_num_list[j]->button->text = "[" + to_string(j + *index) + "]";
-		button_desc_list[j]->button->text = ((j + *index) < actor->gambit.size() ? parse_gambit((actor->gambit)[j + *index]) : "");
-	}
+	calc_left_panel(actor, *index);
 }
 
 static void		increment_value_iterator(t_data data)
@@ -226,12 +231,78 @@ static void select_gambit_editable(t_data data) //&gui, &actor, &index, selected
 	}
 }
 
+static void create_choice_menu(t_data data)
+{
+	t_gui		*gui_left = (t_gui *)(data.data[0]);
+	t_gui		*gui_right = (t_gui *)(data.data[1]);
+	t_actor		*actor = (t_actor *)(data.data[2]);
+	bool		*back_play = (bool *)(data.data[3]);
+	size_t		*index = (size_t *)(data.data[4]);
+	size_t		selected = (size_t &)(data.data[5]);
+	size_t		value = *index + selected;
+	t_gui		gui = t_gui();
+	SDL_Event	event;
+	bool		play = true;
+
+	t_vect		mouse = get_mouse_coord();
+
+	t_button	*back_button = new s_button(new s_text_button(
+		"", DARK_GREY,
+		mouse + (gui.unit * t_vect(0, -0.75)), gui.unit * t_vect(4, 1.45), 4,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		NULL, NULL);
+	gui.add(back_button);
+
+	t_button	*add_button = new s_button(new s_text_button(
+		"Insert a new gambit", DARK_GREY,
+		mouse + (gui.unit * t_vect(0.1, -0.65)), gui.unit * t_vect(3.8, 0.6), 3,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_add_gambit, t_data(2, actor, value));
+	gui.add(add_button);
+
+	t_button	*remove_button = new s_button(new s_text_button(
+		"Remove this gambit", DARK_GREY,
+		mouse + (gui.unit * t_vect(0.1, 0)), gui.unit * t_vect(3.8, 0.6), 3,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_remove_gambit, t_data(3, actor, value, gui_right));
+	gui.add(remove_button);
+
+	while (play == true)
+	{
+		prepare_screen();
+
+		gui_left->draw_self();
+		gui_right->draw_self();
+		gui.draw_self();
+
+		render_screen(true);
+
+		if (SDL_PollEvent(&(event)) == 1)
+		{
+			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				*back_play = false;
+				play = false;
+			}
+			else if (event.type == SDL_MOUSEBUTTONUP)
+			{
+				gui.click(&event);
+				play = false;
+			}
+		}
+	}
+	calc_left_panel(actor, *index);
+	calc_left_panel(actor, *index);
+}
+
 void menu_gambit_editor(t_data data)
 {
 	t_actor		*actor = (t_actor *)(data.data[1]);
 	t_gui		gui_left = t_gui();
 	t_gui		gui_right = t_gui();
 	SDL_Event	event;
+	bool		play = true;
+	size_t 		index = 0;
 
 	s_button *button = new s_button(new s_text_button(
 		"", DARK_GREY,
@@ -254,8 +325,6 @@ void menu_gambit_editor(t_data data)
 		NULL, NULL);
 	gui_left.add(right_part);
 
-	size_t index = 0;
-
 	s_button *button_up = new s_button(new s_text_button(
 		"UP", DARK_GREY,
 		gui_left.unit * t_vect(6.375, 0.5), gui_left.unit * t_vect(3, 1), 4,
@@ -274,7 +343,7 @@ void menu_gambit_editor(t_data data)
 	for (size_t j = 0; j < 16; j++)
 	{
 		button_num_list[j] = new t_button(new s_text_button(
-				"[" + to_string(j + index) + "]", DARK_GREY,
+				((j + index) < actor->gambit.size() ? "[" + to_string(j + index) + "]" : ""), DARK_GREY,
 				t_vect(1.5, 1.5 + (1.1 * i)) * gui_left.unit, t_vect(1, 0.95) * gui_left.unit, 3,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 				NULL, NULL);
@@ -283,23 +352,15 @@ void menu_gambit_editor(t_data data)
 				t_vect(2.75, 1.5 + (1.1 * i)) * gui_left.unit, t_vect(11.5, 0.95) * gui_left.unit, 3,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 				select_gambit_editable, t_data(4, &gui_right, actor, &index, j)); //&gui, &actor, &index, selected
+		button_desc_list[j]->button->funct_right = create_choice_menu;
+		button_desc_list[j]->button->data_right = t_data(6, &gui_left, &gui_right, actor, &play, &index, j);
 		i += 0.95;
 		gui_left.add(button_num_list[j]);
 		gui_left.add(button_desc_list[j]);
 	}
 
-	bool		play = true;
-
 	while (play == true)
 	{
-		/*
-		system("clear");
-		for (size_t i = 0; i < actor->gambit.size(); i++)
-		{
-			if (actor->gambit[i].value.size())
-				printf("gambit [%zu] -> type = %d -> size = %zu\n", i, actor->gambit[i].value[0], actor->gambit[i].value.size());
-		}
-		*/
 		prepare_screen();
 
 		if (data.data.size() != 0)
