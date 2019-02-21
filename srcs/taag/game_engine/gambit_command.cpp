@@ -59,10 +59,6 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 5)
-		error_exit("not enought arg into get_close_enemy_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into get_close_enemy_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
@@ -129,10 +125,6 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 5)
-		error_exit("not enought arg into get_close_enemy_weak [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into get_close_enemy_weak [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
@@ -199,10 +191,6 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 5)
-		error_exit("not enought arg into get_close_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into get_close_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
@@ -265,10 +253,6 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 5)
-		error_exit("not enought arg into get_close_ally [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into get_close_ally [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
@@ -332,10 +316,6 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 5)
-		error_exit("not enought arg into get_close_ally_percent [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into get_close_ally_percents [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
 	int distance = data.value[1];
 	int delta = data.value[2];
@@ -404,10 +384,6 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 {
 	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
 		return (false);
-	if (data.value.size() < 3)
-		error_exit("not enought arg into flee_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 3)
-		error_exit("too much arg into flee_enemy [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	if (turn_order[turn_index % turn_order.size()]->stat.hp.percent() > data.value[1])
 		return (false);
 	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
@@ -505,10 +481,6 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 
 bool				s_game_engine::attack(t_ai_helper data)
 {
-	if (data.value.size() < 4)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -582,10 +554,6 @@ bool				s_game_engine::attack(t_ai_helper data)
 
 bool				s_game_engine::attack_weak(t_ai_helper data)
 {
-	if (data.value.size() < 4)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -673,10 +641,6 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 
 bool				s_game_engine::attack_percent(t_ai_helper data)
 {
-	if (data.value.size() < 4)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 
@@ -765,10 +729,6 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 
 bool				s_game_engine::help(t_ai_helper data)
 {
-	if (data.value.size() < 4)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -842,10 +802,6 @@ bool				s_game_engine::help(t_ai_helper data)
 
 bool				s_game_engine::help_weak(t_ai_helper data)
 {
-	if (data.value.size() < 4)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 4)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 	if (actor->stat.pa.value < actor->spell[s_spell]->cost_pa ||
@@ -933,10 +889,6 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 
 bool				s_game_engine::help_percent(t_ai_helper data)
 {
-	if (data.value.size() < 5)
-		error_exit("not enought arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
-	if (data.value.size() > 5)
-		error_exit("too much arg into attack [" + to_string(data.value[0]) + "] for enemy " + turn_order[turn_index % turn_order.size()]->name, 2567);
 	s_spell = data.value[1];
 	t_actor *actor = turn_order[turn_index % turn_order.size()];
 
