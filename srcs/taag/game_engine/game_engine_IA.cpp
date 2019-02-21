@@ -15,20 +15,21 @@
 #define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
 */
 
-gambit_command command[13] = {
-	&s_game_engine::get_close_enemy,
-	&s_game_engine::get_close_enemy_weak,
-	&s_game_engine::get_close_enemy_percent,
-	&s_game_engine::flee_enemy,
-	&s_game_engine::get_close_ally,
-	&s_game_engine::get_close_ally_percent,
-	&s_game_engine::attack,
-	&s_game_engine::attack_weak,
-	&s_game_engine::attack_percent,
-	&s_game_engine::help,
-	&s_game_engine::help_weak,
-	&s_game_engine::help_percent,
-	&s_game_engine::action_on_turn,
+gambit_command command[] = {
+	&s_game_engine::get_close_enemy, // 0
+	&s_game_engine::get_close_enemy_weak, //1
+	&s_game_engine::get_close_enemy_percent, // 2
+	&s_game_engine::flee_enemy, //3
+	&s_game_engine::get_close_ally, //4
+	&s_game_engine::get_close_ally_percent, // 5
+	&s_game_engine::get_close_ally_damaged, // 6
+	&s_game_engine::attack, // 7
+	&s_game_engine::attack_weak, // 8
+	&s_game_engine::attack_percent, // 9
+	&s_game_engine::help, // 10
+	&s_game_engine::help_weak, // 11
+	&s_game_engine::help_percent, // 12
+	&s_game_engine::action_on_turn, // 13
 };
 
 bool					s_game_engine::execute_gambit(t_actor *source)
@@ -37,6 +38,7 @@ bool					s_game_engine::execute_gambit(t_actor *source)
 		board.enemy_list.size() == 0 || board.ally_list.size() == 0)
 		return (false);
 	size_t i = 0;
+	printf("\n");
 	while (i < source->gambit.size())
 	{
 		int index = source->gambit[i].value[0];

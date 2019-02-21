@@ -57,7 +57,15 @@ static string parse_support(t_ai_helper data)
 
 static string parse_support_percent(t_ai_helper data)
 {
-	string text = "approach the ally with less % hp " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	string text = "approach the ally with less % hp at " + to_string(data.value[1]) + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
+	if (data.value[4] != -1)
+		text += " with max " + to_string(data.value[4]) + " PM used";
+	return (text);
+}
+
+static string parse_support_damaged(t_ai_helper data)
+{
+	string text = "approach the ally with < " + to_string(data.value[1]) + " % hp at " + (data.value[2] != 0 ? "-" + to_string(data.value[1] - data.value[2]) : "") + " tile of distance";
 	if (data.value[4] != -1)
 		text += " with max " + to_string(data.value[4]) + " PM used";
 	return (text);
@@ -142,6 +150,7 @@ f_gambit_parsor f_list[] = {
 	&parse_retreat,
 	&parse_support,
 	&parse_support_percent,
+	&parse_support_damaged,
 	&parse_attack,
 	&parse_attack_weak,
 	&parse_attack_percent,

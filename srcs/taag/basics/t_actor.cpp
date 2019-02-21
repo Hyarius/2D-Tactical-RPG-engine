@@ -85,13 +85,13 @@ s_actor::s_actor()
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map["NULL"]);
-	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
 	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));
 	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
@@ -106,13 +106,13 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = &(spell_map["NULL"]);
-	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
 	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));
 	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
@@ -127,13 +127,13 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	dir = 0;
 	for (int i = 0; i < 6; i++)
 		spell[i] = p_spell[i];
-	gambit.push_back(s_ai_helper({6, 0, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 1, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 2, -1, -1}));
-	gambit.push_back(s_ai_helper({6, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
 	gambit.push_back(s_ai_helper({-1}));
-	gambit.push_back(s_ai_helper({6, 4, -1, -1}));
-	gambit.push_back(s_ai_helper({11, 5, 75, -1, -1}));
 	gambit.push_back(s_ai_helper({3, 25, -1}));
 	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }

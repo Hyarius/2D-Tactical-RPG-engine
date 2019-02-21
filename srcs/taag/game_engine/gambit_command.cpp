@@ -1,21 +1,5 @@
 #include "taag.h"
 
-/*
-	#define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define CHARGE_PERCENT	2	//run to the enemy with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define RETREAT			3	//retreat to the safest tile if stat hp < value[1] % max mouvement value[2]
-#define SUPPORT			4	//run to closest ally at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define SUPPORT_PERCENT	5	//run to closest ally with less % hp at range value[1], delta value[2] and range type value[3] with max mouvement value[4]
-#define ATTACK			6	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the closest enemy availible in range if possible
-#define ATTACK_WEAK		7	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less hp in range if possible
-#define ATTACK_PERCENT	8	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the enemy with the less % hp in range if possible
-#define HELP			9	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on an ally
-#define HELP_WEAK		10	//cast the spell num value[1] (if value[2] PA and value[3] pm on caster) on the ally with less % HP
-#define HELP_PERC		11	//cast the spell num value[1] (if value[3] PA and value[4] pm on caster) on the ally if HP % < value[2]
-#define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
-*/
-
 static vector<t_vect>	AI_calc_diam(int size_min, int size_max)
 {
 	vector<t_vect>	result;
@@ -330,6 +314,74 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 		if (turn_order[i] != turn_order[turn_index % turn_order.size()] &&
 			turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team &&
 			(saved == NULL || saved->stat.hp.percent() > turn_order[i]->stat.hp.percent()))
+			saved = turn_order[i];
+		i++;
+	}
+	if (saved == NULL)
+		return (false);
+	to_calc.push_back(saved->coord);
+	if (type == R_CIRCLE)
+		range = AI_calc_diam(distance - 1, distance);
+	if (type == R_LINE)
+		range = AI_calc_cross(distance - 1, distance);
+	t_vect result = t_vect(-1, -1);
+	j = 999;
+	i = 0;
+	while (i < to_calc.size())
+	{
+		size_t count = 0;
+		while (count < range.size())
+		{
+			if (board.get_cell(to_calc[i] + range[count]) && board.get_cell(to_calc[i] + range[count])->node->m_obs == false)
+			{
+				if (board.get_cell(to_calc[i] + range[count])->actor == NULL || board.get_cell(to_calc[i] + range[count])->actor == turn_order[turn_index % turn_order.size()] || board.get_cell(to_calc[i] + range[count])->actor->team == turn_order[turn_index % turn_order.size()]->team)
+				{
+					board.get_cell(to_calc[i] + range[count])->cursor = t_vect(2, 2);
+					vector<t_vect> path = calc_path(to_calc[i] + range[count]);
+					if (path.size() < j)
+					{
+						j = path.size();
+						result = to_calc[i] + range[count];
+					}
+				}
+			}
+			count++;
+		}
+		i++;
+	}
+
+	vector<t_vect> path = calc_path(result);
+	if (data.value[4] != -1 && (int)(path.size()) >= data.value[4] + 1)
+		result = path[data.value[4]];
+	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
+	{
+		move_actor(result);
+		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
+			return (false);
+		return (true);
+	}
+	else
+		return (false);
+}
+
+bool				s_game_engine::get_close_ally_damaged(t_ai_helper data)
+{
+	if (turn_order[turn_index % turn_order.size()]->stat.pm.value == 0)
+		return (false);
+	int old_pm = turn_order[turn_index % turn_order.size()]->stat.pm.value;
+	int distance = data.value[2];
+	int delta = data.value[3];
+	int type = data.value[4];
+	calculate_distance();
+	vector<t_vect>	range;
+	vector<t_vect> 	to_calc;
+	size_t i = 0, j;
+	t_actor *saved = NULL;
+	while (i < turn_order.size())
+	{
+		if (turn_order[i] != turn_order[turn_index % turn_order.size()] &&
+			turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team &&
+			(saved == NULL || (saved->stat.hp.percent() > turn_order[i]->stat.hp.percent() && turn_order[i]->stat.hp.percent() < data.value[1])))
 			saved = turn_order[i];
 		i++;
 	}
@@ -911,15 +963,20 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 		t_actor *tmp = NULL;
 		if (target_actor == NULL && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
 			tmp = turn_order[i];
-		else if (board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
+		else if (target_actor != NULL && board.get_cell(turn_order[i]->coord)->v_dist < board.get_cell(target_actor->coord)->v_dist && board.get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
 			tmp = turn_order[i];
-		printf("looking at %s\n");
-		if (tmp->stat.hp.percent() > data.value[2])
-			tmp = NULL;
-		if (tmp->team != turn_order[turn_index % turn_order.size()]->team)
-			tmp = NULL;
 		if (tmp != NULL)
-			target_actor = tmp;
+		{
+			printf("looking at %s\n", tmp->name.c_str());
+			if (tmp->stat.hp.percent() > data.value[2])
+				tmp = NULL;
+			if (tmp->team != turn_order[turn_index % turn_order.size()]->team)
+				tmp = NULL;
+			if (tmp != NULL)
+				target_actor = tmp;
+		}
+		if (target_actor != NULL)
+			printf("target at %s\n", target_actor->name.c_str());
 		i++;
 	}
 	if (target_actor == NULL)

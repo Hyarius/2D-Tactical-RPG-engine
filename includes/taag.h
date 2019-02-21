@@ -318,6 +318,7 @@ typedef struct			s_game_engine
 	bool				get_close_enemy_percent(t_ai_helper data);
 	bool				get_close_ally(t_ai_helper data);
 	bool				get_close_ally_percent(t_ai_helper data);
+	bool				get_close_ally_damaged(t_ai_helper data);
 	bool				flee_enemy(t_ai_helper data);
 	bool				attack(t_ai_helper data);
 	bool				attack_weak(t_ai_helper data);
