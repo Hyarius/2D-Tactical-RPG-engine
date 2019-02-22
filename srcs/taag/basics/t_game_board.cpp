@@ -66,14 +66,16 @@ s_game_board::s_game_board(string p_path)
 		if (tab.size() >= 5)
 		{
 			int team = atoi(tab[4].c_str());
+			t_actor *new_actor;
 			if (team == 0)
-				get_cell(coord)->actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
+				new_actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
 			else
-				get_cell(coord)->actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
-			get_cell(coord)->actor->path =	tab[3];
-			get_cell(coord)->actor->coord = coord;
-			get_cell(coord)->actor->visual_info = &(get_cell(coord)->visual_info);
-			get_cell(coord)->actor->team = atoi(tab[4].c_str());
+				new_actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
+			new_actor->path =	tab[3];
+			new_actor->coord = coord;
+			new_actor->visual_info = &(get_cell(coord)->visual_info);
+			new_actor->team = atoi(tab[4].c_str());
+			get_cell(coord)->actor = new_actor;
 			actor_list.push_back(get_cell(coord)->actor);
 			if (get_cell(coord)->actor->team == 2)
 				enemy_list.push_back(get_cell(coord)->actor);

@@ -264,34 +264,40 @@ static string parse_effect_apply_pm_change(t_action *effect)
 		text = "apply a " + type + "that had no effect";
 	return (text);
 }
+
 static string parse_effect_cure_poison(t_action *effect)
 {
-	string text = "Cure every poison effect of the target";
+	string text = "cure every poison effect of the target";
 	return (text);
 }
+
 static string parse_effect_cure_regeneration(t_action *effect)
 {
-	string text = "Cure every regeneration effect of the target";
+	string text = "cure every regeneration effect of the target";
 	return (text);
 }
+
 static string parse_effect_cure_pa_malus(t_action *effect)
 {
-	string text = "Cure every malus PA effect of the target";
+	string text = "cure every malus PA effect of the target";
 	return (text);
 }
+
 static string parse_effect_cure_pm_malus(t_action *effect)
 {
-	string text = "Cure every malus PM effect of the target";
+	string text = "cure every malus PM effect of the target";
 	return (text);
 }
+
 static string parse_effect_cure_pa_bonus(t_action *effect)
 {
-	string text = "Cure every bonus PA effect of the target";
+	string text = "cure every bonus PA effect of the target";
 	return (text);
 }
+
 static string parse_effect_cure_pm_bonus(t_action *effect)
 {
-	string text = "Cure every bonus PM effect of the target";
+	string text = "cure every bonus PM effect of the target";
 	return (text);
 }
 

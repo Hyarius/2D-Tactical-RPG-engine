@@ -93,7 +93,8 @@ void				s_game_engine::next_turn()
 		turn_order[turn_index % turn_order.size()]->reset_value();
 	}
 	turn_index = (turn_index + 1) % turn_order.size();
-	turn_order[turn_index % turn_order.size()]->handle_effect();
+	turn_order[turn_index % turn_order.size()]->handle_effect_duration();
+	turn_order[turn_index % turn_order.size()]->apply_effect(0);
 	if (turn_order.size())
 	{
 		turn_order[turn_index % turn_order.size()]->selected = true;

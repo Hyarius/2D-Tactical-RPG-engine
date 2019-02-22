@@ -222,7 +222,8 @@ typedef struct          s_actor
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
-	void				handle_effect();
+	void				apply_effect(int type);
+	void				handle_effect_duration();
 }						t_actor;
 
 typedef struct			s_cell

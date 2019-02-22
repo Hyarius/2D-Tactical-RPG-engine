@@ -19,18 +19,17 @@ bool				s_game_engine::cast_spell(t_vect mouse)
 		player->stat.pm.value >= player->spell[s_spell]->cost_pm &&
 		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
+		turn_order[turn_index % turn_order.size()]->apply_effect(1);
 		vector<t_vect>	text_coord;
 		if (player->spell[s_spell]->cost_pa > 0)
 		{
-			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info->size() + board.get_cell(player->coord)->visual_info.size()) / 2.0);
-			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, tmp));
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pa) + "pa", BLUE, 10, player->coord - t_vect(0, 0.5 * (double)(player->visual_info->size()))));
 			player->stat.pa.value -= player->spell[s_spell]->cost_pa;
 		}
 		text_coord.clear();
 		if (player->spell[s_spell]->cost_pm > 0)
 		{
-			t_vect tmp = t_vect(player->coord.x, player->coord.y + (double)(player->visual_info->size() + board.get_cell(player->coord)->visual_info.size()) / 2.0);
-			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, tmp));
+			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(player->spell[s_spell]->cost_pm) + "pm", DARK_GREEN, 10, player->coord - t_vect(0, 0.5 * (double)(player->visual_info->size()))));
 			player->stat.pm.value -= player->spell[s_spell]->cost_pm;
 		}
 		size_t i = 0;
@@ -89,12 +88,25 @@ void				s_game_engine::move_actor(t_vect dest)
 		{
 			t_vect final_dest = player->destination[player->destination.size() - 1];
 			player->stat.pm.value -= board.get_cell(final_dest.x, final_dest.y)->m_dist;
-	
-			board.get_cell(player->coord)->visual_info.push_back(create_visual_info("-" + to_string(board.get_cell(final_dest.x, final_dest.y)->m_dist) + "pm", RED, 10, player->coord - t_vect(0, 0.5 * player->visual_info->size())));
+
+			printf("size 1 = %zu\n", player->visual_info->size());
+
+			player->apply_effect(2);
+
+			printf("size 2 = %zu\n", player->visual_info->size());
+
+			t_vect tmp = player->coord - t_vect(0.0, 0.5 * (double)(player->visual_info->size()));
+			player->visual_info->push_back(create_visual_info("-" + to_string(board.get_cell(final_dest.x, final_dest.y)->m_dist) + "pm", RED, 10, player->coord - t_vect(0.0, 0.5 * (double)(player->visual_info->size()))));
+
+
+			printf("size 3 = %zu\n", player->visual_info->size()); 
+			
 			board.get_cell(final_dest)->actor = player;
 			board.get_cell(player->coord.x, player->coord.y)->actor = NULL;
 			player->visual_info = &(board.get_cell(final_dest)->visual_info);
 			board.reset_board();
+
+			printf("size 4 = %zu\n", player->visual_info->size());
 		}
 	}
 }
