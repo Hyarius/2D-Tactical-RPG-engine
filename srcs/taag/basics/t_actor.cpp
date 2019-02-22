@@ -71,6 +71,7 @@ s_actor::s_actor()
 	stat = t_stat(t_value(50), t_value(6), t_value(3), 5);
 	visual_info = NULL;
 	dir = 0;
+	effect_list = s_effect_list();
 	for (int i = 0; i < 6; i++)
 	{
 		spell[i] = &(spell_map["NULL"]);
@@ -86,6 +87,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	sprite = p_sprite;
 	stat = p_stat;
 	dir = 0;
+	effect_list = s_effect_list();
 	visual_info = NULL;
 	for (int i = 0; i < 6; i++)
 	{
@@ -102,6 +104,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	sprite = p_sprite;
 	stat = p_stat;
 	dir = 0;
+	effect_list = s_effect_list();
 	visual_info = NULL;
 	for (int i = 0; i < 6; i++)
 	{
@@ -114,4 +117,68 @@ void			s_actor::reset_value()
 {
 	stat.pa.value = stat.pa.max;
 	stat.pm.value = stat.pm.max;
+}
+
+void			s_actor::handle_effect()
+{
+	size_t i = 0;
+	t_action poison_effect = s_action(deal_dmg, 0, 0, 0, 0);
+	t_action heal_effect = s_action(heal, 0, 0, 0, 0);
+	t_action pa_effect = s_action(change_pa, 0, 0, 0, 0);
+	t_action pm_effect = s_action(change_pm, 0, 0, 0, 0);
+	while (i < this->effect_list.poison.size())
+	{
+		if (this->effect_list.poison[i].duration != 0 && this->effect_list.poison[i].effect_type == 0)
+			poison_effect.stat.value[0] += this->effect_list.poison[i].action[0].stat.value[0];
+		if (this->effect_list.poison[i].duration == 0)
+			this->effect_list.poison.erase(this->effect_list.poison.begin() + i);
+		else
+		{
+			this->effect_list.poison[i].duration--;
+			i++;
+		}
+	}
+	i = 0;
+	while (i < this->effect_list.regeneration.size())
+	{
+		if (this->effect_list.regeneration[i].duration != 0 && this->effect_list.regeneration[i].effect_type == 0)
+			heal_effect.stat.value[0] += this->effect_list.regeneration[i].action[0].stat.value[0];
+		if (this->effect_list.regeneration[i].duration == 0)
+			this->effect_list.regeneration.erase(this->effect_list.regeneration.begin() + i);
+		else
+		{
+			this->effect_list.regeneration[i].duration--;
+			i++;
+		}
+	}
+	i = 0;
+	while (i < this->effect_list.change_pa.size())
+	{
+		if (this->effect_list.change_pa[i].duration != 0 && this->effect_list.change_pa[i].effect_type == 0)
+			pa_effect.stat.value[0] += this->effect_list.change_pa[i].action[0].stat.value[0];
+		if (this->effect_list.change_pa[i].duration == 0)
+			this->effect_list.change_pa.erase(this->effect_list.change_pa.begin() + i);
+		else
+		{
+			this->effect_list.change_pa[i].duration--;
+			i++;
+		}
+	}
+	i = 0;
+	while (i < this->effect_list.change_pm.size())
+	{
+		if (this->effect_list.change_pm[i].duration != 0 && this->effect_list.change_pm[i].effect_type == 0)
+			pm_effect.stat.value[0] += this->effect_list.change_pm[i].action[0].stat.value[0];
+		if (this->effect_list.change_pm[i].duration == 0)
+			this->effect_list.change_pm.erase(this->effect_list.change_pm.begin() + i);
+		else
+		{
+			this->effect_list.change_pm[i].duration--;
+			i++;
+		}
+	}
+	poison_effect.effect(NULL, this, poison_effect.stat);
+	heal_effect.effect(NULL, this, heal_effect.stat);
+	pa_effect.effect(NULL, this, pa_effect.stat);
+	pm_effect.effect(NULL, this, pm_effect.stat);
 }

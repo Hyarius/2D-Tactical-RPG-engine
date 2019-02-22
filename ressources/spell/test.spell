@@ -1,16 +1,16 @@
-name:Fireball
-description:Deal 7 damage(s) to the target
+name:test
+description:Apply a poison effect that deal 2 damage(s) per turn for the next 2 turn(s)
 icon:simple_iconset
-sprite:1:0
+sprite:7:4
 m_spell:0
-pa:4
+pa:0
 pm:0
 cooldown:0
-range:1:5:0
-type:1
-on target:1
-zone:0:1
-effect1:0:7:0:0:0
+range:1:4:1
+type:0
+on target:0
+zone:1:0
+effect1:14:0:2:2:0
 effect2:0:0:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0

@@ -97,25 +97,25 @@ typedef struct			s_stat
 #define Z_LINE 2
 #define Z_SQUARE 3
 
-typedef struct			s_effect_stat
+typedef struct			s_action_stat
 {
 	int					value[4];
-						s_effect_stat();
-						s_effect_stat(int value0, int value1, int value2, int value3);
-}						t_effect_stat;
+						s_action_stat();
+						s_action_stat(int value0, int value1, int value2, int value3);
+}						t_action_stat;
 
-typedef void	(*event)(struct s_actor*, struct s_actor*, s_effect_stat);
+typedef void	(*event)(struct s_actor*, struct s_actor*, s_action_stat);
 
-extern vector<string>	list_effect_name;
+extern vector<string>	list_action_name;
 extern vector<event>	g_effects;
 
-typedef struct			s_effect
+typedef struct			s_action
 {
 	event				effect;
-	t_effect_stat		stat;
-						s_effect();
-						s_effect(event p_effect, int value0, int value1, int value2, int value3);
-}						t_effect;
+	t_action_stat		stat;
+						s_action();
+						s_action(event p_effect, int value0, int value1, int value2, int value3);
+}						t_action;
 
 typedef struct			s_animation
 {
@@ -145,7 +145,7 @@ typedef struct			s_spell
 	int					range_type;		//what kind of vision is it ? -
 	int					zone_type;		//what kind of zone is it ? -
 	int					zone_size;		//size of the zone
-	vector<t_effect>	effect;			//list of effect
+	vector<t_action>	effect;			//list of effect
 	s_animation			target_anim;	//anim to display on the target zone
 	int					anim_type; 		//0 - single anim on the clicked coord | 1 - anim on every cell | 2 - anim on every target
 						s_spell();
@@ -153,7 +153,7 @@ typedef struct			s_spell
 								int p_cost_pa, int p_cost_pm, int p_cooldown,
 								int range_min, int range_max, int p_block, int p_on_target,
 								int p_range_type, int p_zone_type, int p_zone_size,
-								vector<t_effect> p_effect, t_animation p_target_anim, int p_anim_type);
+								vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type);
 }						t_spell;
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
@@ -181,6 +181,24 @@ typedef struct			s_ai_helper
 	void 				operator = (vector<int> data);
 }						t_ai_helper;
 
+typedef struct			s_effect
+{
+	int					effect_type; //-1 - ignore / 0 - on turn begin / 1 - on action / 2 - on mouvement
+	vector<t_action>	action; //list every action this effect had
+	int					duration; //how many time left
+						s_effect();
+						s_effect(int p_effect_type, vector<t_action> p_action, int duration);
+}						t_effect;
+
+typedef struct			s_effect_list
+{
+	vector<t_effect>	poison;
+	vector<t_effect>	regeneration;
+	vector<t_effect>	change_pa;
+	vector<t_effect>	change_pm;
+						s_effect_list();
+}						t_effect_list;
+
 typedef struct          s_actor
 {
 	string				path;	//path for the file where it came from, utils for saving map
@@ -196,6 +214,7 @@ typedef struct          s_actor
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
 	int					cooldown[6];
+	t_effect_list		effect_list;	//list every effect this player is affected by
 	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
 
 						s_actor();
@@ -203,6 +222,7 @@ typedef struct          s_actor
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
 	void				reset_value();//reset the value of PA and PM to max
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
+	void				handle_effect();
 }						t_actor;
 
 typedef struct			s_cell
@@ -358,7 +378,7 @@ t_node					read_node(string p_path); 	//read one .node file and return a t_node
 t_actor					read_actor(string p_path);	//read one .act file and return a t_actor
 t_spell					read_one_spell(string path);//read one spell and return it
 void					read_spell();				//read every spell and place it into the spell_map
-void					init_effects();				//initialize every effect spell can use
+void					init_actions();				//initialize every effect spell can use
 t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_size, t_vect p_starting_coord); //creating one visual_info
 
 void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one card info on the top-left corner
@@ -381,20 +401,32 @@ t_tileset				*get_animation_tile(size_t name_num);
 
 t_game_board			board_generator(int size_x, int size_y, int node);
 
-void 					deal_dmg(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void 					heal(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void 					change_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void 					change_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					heal_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					dmg_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					push_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					pull_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					move_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					swap_actor(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					change_caster_pa(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					change_caster_pm(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					push_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
-void					pull_caster(t_actor *source, t_actor *target, t_effect_stat effect_stat);
+void 					deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void 					heal(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void 					change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void 					change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+
+void					apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_stat);
+
+void					cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
 
 string					parse_gambit(t_ai_helper data);
 
@@ -422,7 +454,7 @@ void					menu_spell_editor(t_data data);
 void						menu_save_spell(t_data data);
 void						menu_load_spell(t_data data);
 void						menu_delete_spell(t_data data);
-void						menu_select_effect(t_data data);
+void						menu_select_action(t_data data);
 void						menu_edit_animation(t_data data);
 void							menu_select_anim(t_data data);
 void 					menu_gambit_editor(t_data data);

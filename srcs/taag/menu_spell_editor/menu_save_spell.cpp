@@ -49,7 +49,7 @@ static void			save_spell(t_data data) // 0 - t_spell * / 1 - file name
 			break;
 		}
 	}
-	myfile << "target_effect:" + tile_name + ":" + to_string(spell->target_anim.start) + ":" + to_string(spell->target_anim.len) + ":" + to_string((int)(spell->target_anim.anim_size.x)) + ":" + to_string((int)(spell->target_anim.anim_size.y)) + "\n";
+	myfile << "target_action:" + tile_name + ":" + to_string(spell->target_anim.start) + ":" + to_string(spell->target_anim.len) + ":" + to_string((int)(spell->target_anim.anim_size.x)) + ":" + to_string((int)(spell->target_anim.anim_size.y)) + "\n";
 	myfile << "anim_type:" + to_string(spell->anim_type) + "\n";
 	myfile.close();
 }

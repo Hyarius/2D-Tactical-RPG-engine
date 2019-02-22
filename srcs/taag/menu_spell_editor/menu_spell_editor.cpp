@@ -1,24 +1,34 @@
 #include "taag.h"
 
-vector<string>		list_effect_name;
+vector<string>		list_action_name;
 
-static void			set_list_effect_name()
+static void			set_list_action_name()
 {
-	list_effect_name.push_back("Empty effect");
-	list_effect_name.push_back("deal dmg"); 		//0
-	list_effect_name.push_back("heal");			//1
-	list_effect_name.push_back("change pm");		//2
-	list_effect_name.push_back("change pa");		//3
-	list_effect_name.push_back("push actor");	//4
-	list_effect_name.push_back("pull actor");	//5
-	list_effect_name.push_back("heal caster");	//6
-	list_effect_name.push_back("dmg caster");	//7
-	list_effect_name.push_back("move caster"); 	//8
-	list_effect_name.push_back("swap actor");	//9
-	list_effect_name.push_back("change caster pa");	//10
-	list_effect_name.push_back("change caster pm");	//11
-	list_effect_name.push_back("push caster");	//12
-	list_effect_name.push_back("pull caster");	//13
+	list_action_name.push_back("Empty effect");
+	list_action_name.push_back("deal dmg"); 		//0
+	list_action_name.push_back("heal");			//1
+	list_action_name.push_back("change pm");		//2
+	list_action_name.push_back("change pa");		//3
+	list_action_name.push_back("push actor");	//4
+	list_action_name.push_back("pull actor");	//5
+	list_action_name.push_back("heal caster");	//6
+	list_action_name.push_back("dmg caster");	//7
+	list_action_name.push_back("move caster"); 	//8
+	list_action_name.push_back("swap actor");	//9
+	list_action_name.push_back("change caster pa");	//10
+	list_action_name.push_back("change caster pm");	//11
+	list_action_name.push_back("push caster");	//12
+	list_action_name.push_back("pull caster");	//13
+	list_action_name.push_back("apply poison");	//13
+	list_action_name.push_back("apply regeneration");	//13
+	list_action_name.push_back("apply change PA");	//13
+	list_action_name.push_back("apply change PM");	//13
+	list_action_name.push_back("cure poison");	//13
+	list_action_name.push_back("cure regeneration");	//13
+	list_action_name.push_back("cure malus pa");	//13
+	list_action_name.push_back("cure malus pm");	//13
+	list_action_name.push_back("cure bonus pa");	//13
+	list_action_name.push_back("cure bonus pm");	//13
 }
 
 void menu_spell_editor(t_data data)
@@ -30,8 +40,8 @@ void menu_spell_editor(t_data data)
 
 	double i = 0;
 
-	if (list_effect_name.size() == 0)
-		set_list_effect_name();
+	if (list_action_name.size() == 0)
+		set_list_action_name();
 
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
@@ -350,12 +360,12 @@ void menu_spell_editor(t_data data)
 			count = -1;
 		else
 			count++;
-		string tmp_text = (count != -1 ? list_effect_name[count] : list_effect_name[0]);
+		string tmp_text = (count != -1 ? list_action_name[count] : list_action_name[0]);
 		button = new t_button(new s_text_button(
 			tmp_text, DARK_GREY,
 			t_vect(9.2, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_select_effect, NULL);
+			menu_select_action, NULL);
 		button->button->data_left = t_data(3, &gui, spell, text);
 		text[j] = &(button->button->text);
 		i += 1;

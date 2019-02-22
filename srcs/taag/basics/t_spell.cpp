@@ -23,7 +23,7 @@ s_spell::s_spell()
 	zone_size = 0;
 	effect.resize(6);
 	for (int i = 0; i < 6; i++)
-		effect[i] = s_effect();
+		effect[i] = s_action();
 	target_anim = t_animation();
 	anim_type = 0;
 }
@@ -31,7 +31,7 @@ s_spell::s_spell()
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
 					int p_cost_pa, int p_cost_pm, int p_cooldown, int range_min, int range_max, int p_block, int p_on_target,
 					int p_range_type, int p_zone_type, int p_zone_size,
-					vector<t_effect> p_effect, t_animation p_target_anim, int p_anim_type)
+					vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type)
 {
 	name = p_name;
 	desc = p_desc;
@@ -72,7 +72,7 @@ t_spell		read_one_spell(string path)
 	int				range_type;
 	int				zone_type;
 	int				zone_size;
-	vector<t_effect> effect;
+	vector<t_action> effect;
 
 	myfile.open(path);
 	if (myfile.fail())
@@ -99,7 +99,7 @@ t_spell		read_one_spell(string path)
 	{
 		tab = get_strsplit(&myfile, ":", -1);
 		if (tab.size() == 6)
-			effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
+			effect.push_back(t_action(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
 	}
 	tab = get_strsplit(&myfile, ":", 6);
 	t_animation target_anim;
@@ -131,7 +131,7 @@ void		read_spell()
 	int				range_type;
 	int				zone_type;
 	int				zone_size;
-	vector<t_effect> effect;
+	vector<t_action> effect;
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
 	spell_map.clear();
@@ -168,7 +168,7 @@ void		read_spell()
 		{
 			tab = get_strsplit(&myfile, ":", 6);
 			if (tab.size() == 6)
-				effect.push_back(t_effect(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
+				effect.push_back(t_action(g_effects[atoi(tab[1].c_str())], atoi(tab[2].c_str()), atoi(tab[3].c_str()), atoi(tab[4].c_str()), atoi(tab[5].c_str())));
 		}
 		tab = get_strsplit(&myfile, ":", 6);
 		t_animation target_anim;

@@ -1,29 +1,21 @@
 #include "taag.h"
 
-s_effect_stat::s_effect_stat()
-{
-	value[0] = 0;
-	value[1] = 0;
-	value[2] = 0;
-	value[3] = 0;
-}
-
-s_effect_stat::s_effect_stat(int p_value0, int p_value1, int p_value2, int p_value3)
-{
-	value[0] = p_value0;
-	value[1] = p_value1;
-	value[2] = p_value2;
-	value[3] = p_value3;
-}
-
 s_effect::s_effect()
 {
-	effect = NULL;
-	stat = s_effect_stat();
+	effect_type = -1;
+	action.resize(0);
+	duration = 0;
 }
 
-	s_effect::s_effect(event p_effect, int p_value0, int p_value1, int p_value2, int p_value3)
+s_effect::s_effect(int p_effect_type, vector<t_action> p_action, int p_duration)
 {
-	effect = p_effect;
-	stat = s_effect_stat(p_value0, p_value1, p_value2, p_value3);
+	effect_type = p_effect_type;
+	action = p_action;
+	duration = p_duration;
 }
+
+s_effect_list::s_effect_list()
+{
+	poison.resize(0);
+	regeneration.resize(0);
+};

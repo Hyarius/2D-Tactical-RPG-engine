@@ -1,20 +1,20 @@
 #include "taag.h"
 
-string 				*text_list_effect_name[30];
+string 				*text_list_action_name[30];
 
 static void	modify_index(t_data data)
 {
 	int *index = (int *)(data.data[0]);
 	int delta = (int &)(data.data[1]);
 
-	if (*index + delta >= -27 && *index + delta < (int)(((list_effect_name.size() / 3) * 3 + 3)))
+	if (*index + delta >= -27 && *index + delta < (int)(((list_action_name.size() / 3) * 3 + 3)))
 		*index += delta;
 	for (int i = 0; i < 30; i++)
 	{
-		if (*index + i >= (int)(list_effect_name.size()) || *index + i < 0)
-			*(text_list_effect_name[i]) = "";
+		if (*index + i >= (int)(list_action_name.size()) || *index + i < 0)
+			*(text_list_action_name[i]) = "";
 		else
-			*(text_list_effect_name[i]) = list_effect_name[i + *index];
+			*(text_list_action_name[i]) = list_action_name[i + *index];
 	}
 }
 
@@ -24,9 +24,9 @@ static void		quit_choose(t_data data)// string * / bool * / num
 	bool 		*play = (bool *)(data.data[1]);
 	int			i = (int &)(data.data[2]);
 
-	if (*(text_list_effect_name[i]) != "")
+	if (*(text_list_action_name[i]) != "")
 	{
-		*entry_name = *(text_list_effect_name[i]);
+		*entry_name = *(text_list_action_name[i]);
 		*play = false;
 	}
 }
@@ -58,14 +58,14 @@ void			menu_choose_effect(t_data data)
 	while (i < 30)
 	{
 		t_button *button = new t_button(new t_text_button(
-			(i < (int)(list_effect_name.size()) ? list_effect_name[i] : ""), BLACK,
+			(i < (int)(list_action_name.size()) ? list_action_name[i] : ""), BLACK,
 			gui.unit * t_vect(1.5 + ((i % 3) * 8.3 + (i % 3)), 4 + ((i / 3) * 1.3)),
 			gui.unit * t_vect(8.3, 1.1),
 			8,
 			t_color(0.4, 0.4, 0.4),
 			t_color(0.6, 0.6, 0.6)),
 			quit_choose, t_data(3, str, &play, i));
-		text_list_effect_name[i] = &(button->button->text);
+		text_list_action_name[i] = &(button->button->text);
 		gui.add(button);
 		i++;
 	}
@@ -112,7 +112,7 @@ void			menu_choose_effect(t_data data)
 	}
 }
 
-static void quit_effect_select(t_data data)
+static void quit_action_select(t_data data)
 {
 	bool *play = (bool *)(data.data[0]);
 
@@ -124,51 +124,215 @@ static void quit_effect_select(t_data data)
 int *value[6][4];
 string *entry[6];
 
-string front_text[] = {
-	"deal ",
-	"heal ",
-	"give ",
-	"give ",
-	"push the target by ",
-	"pull the target by ",
-	"heal the caster by ",
-	"deal ",
-	"move the caster to the targeted location\0",
-	"change position between caster and target\0",
-	"give ",
-	"give ",
-	"push the caster into the target by ",
-	"pull the caster into the target by ",
+static string parse_effect_dmg(t_action *effect)
+{
+	string text = "deal " + to_string(effect->stat.value[0]) + " damage(s) to the target";
+	return (text);
+}
+static string parse_effect_heal(t_action *effect)
+{
+	string text = "heal the target by " + to_string(effect->stat.value[0]) + " HP(s)";
+	return (text);
+}
+static string parse_effect_change_pm(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] < 0)
+		text = "reduce target's PM(s) by " + to_string(effect->stat.value[0]);
+	else
+		text = "give " + to_string(effect->stat.value[0]) + " PM(s) to the target" ;
+	return (text);
+}
+static string parse_effect_change_pa(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] < 0)
+		text = "reduce target's PA(s) by " + to_string(effect->stat.value[0]);
+	else
+		text = "give " + to_string(effect->stat.value[0]) + " PA(s) to the target";
+	return (text);
+}
+static string parse_effect_heal_caster(t_action *effect)
+{
+	string text = "heal the caster by " + to_string(effect->stat.value[0]) + " HP(s)";
+	return (text);
+}
+static string parse_effect_dmg_caster(t_action *effect)
+{
+	string text = "deal " + to_string(effect->stat.value[0]) + " damage(s) to the caster";
+	return (text);
+}
+static string parse_effect_push_actor(t_action *effect)
+{
+	string text = "push the target by " + to_string(effect->stat.value[0]) + " square(s)";
+	return (text);
+}
+static string parse_effect_pull_actor(t_action *effect)
+{
+	string text = "pull the target by " + to_string(effect->stat.value[0]) + " square(s)";
+	return (text);
+}
+static string parse_effect_move_caster(t_action *effect)
+{
+	string text = "move the caster to the targeted location";
+	return (text);
+}
+static string parse_effect_swap_actor(t_action *effect)
+{
+	string text = "swap caster and target location";
+	return (text);
+}
+static string parse_effect_change_caster_pa(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] < 0)
+		text = "reduce caster's PA(s) by " + to_string(effect->stat.value[0]);
+	else
+		text = "give " + to_string(effect->stat.value[0]) + " PA(s) to the caster";
+	return (text);
+}
+static string parse_effect_change_caster_pm(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] < 0)
+		text = "reduce caster's PM(s) by " + to_string(effect->stat.value[0]);
+	else
+		text = "give " + to_string(effect->stat.value[0]) + " PM(s) to the caster";
+	return (text);
+}
+static string parse_effect_push_caster(t_action *effect)
+{
+	string text = "push the caster toward the target by " + to_string(effect->stat.value[0]) + " square(s)";
+	return (text);
+}
+static string parse_effect_pull_caster(t_action *effect)
+{
+	string text = "push the caster away from the target by " + to_string(effect->stat.value[0]) + " square(s)";
+	return (text);
+}
+static string parse_effect_apply_poison(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] == 0)
+		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 1)
+		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 2)
+		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == -1)
+		text = "apply a poison effect that had no effect";
+	return (text);
+}
+static string parse_effect_apply_regeneration(t_action *effect)
+{
+	string text;
+	if (effect->stat.value[0] == 0)
+		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 1)
+		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 2)
+		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == -1)
+		text = "apply a regeneration effect that had no effect";
+	return (text);
+}
+static string parse_effect_apply_pa_change(t_action *effect)
+{
+	string type = effect->stat.value[1] < 0 ? "malus PA " : "bonus PA ";
+	string text;
+	if (effect->stat.value[0] == 0)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PA(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 1)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PA(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 2)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PA(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == -1)
+		text = "apply a " + type + "that had no effect";
+	return (text);
+}
+static string parse_effect_apply_pm_change(t_action *effect)
+{
+	string type = effect->stat.value[1] < 0 ? "malus PM " : "bonus PM ";
+	string text;
+	if (effect->stat.value[0] == 0)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PM(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 1)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PM(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == 2)
+		text = "apply a " + type + "off " + to_string(effect->stat.value[1]) + " PM(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+	else if (effect->stat.value[0] == -1)
+		text = "apply a " + type + "that had no effect";
+	return (text);
+}
+static string parse_effect_cure_poison(t_action *effect)
+{
+	string text = "Cure every poison effect of the target";
+	return (text);
+}
+static string parse_effect_cure_regeneration(t_action *effect)
+{
+	string text = "Cure every regeneration effect of the target";
+	return (text);
+}
+static string parse_effect_cure_pa_malus(t_action *effect)
+{
+	string text = "Cure every malus PA effect of the target";
+	return (text);
+}
+static string parse_effect_cure_pm_malus(t_action *effect)
+{
+	string text = "Cure every malus PM effect of the target";
+	return (text);
+}
+static string parse_effect_cure_pa_bonus(t_action *effect)
+{
+	string text = "Cure every bonus PA effect of the target";
+	return (text);
+}
+static string parse_effect_cure_pm_bonus(t_action *effect)
+{
+	string text = "Cure every bonus PM effect of the target";
+	return (text);
+}
+
+typedef string(*f_effect_parsor)(t_action *effect);
+
+f_effect_parsor f_list[] = {
+	&parse_effect_dmg,
+	&parse_effect_heal,
+	&parse_effect_change_pm,
+	&parse_effect_change_pa,
+	&parse_effect_push_actor,
+	&parse_effect_pull_actor,
+	&parse_effect_heal_caster,
+	&parse_effect_dmg_caster,
+	&parse_effect_move_caster,
+	&parse_effect_swap_actor,
+	&parse_effect_change_caster_pm,
+	&parse_effect_change_caster_pa,
+	&parse_effect_push_caster,
+	&parse_effect_pull_caster,
+	&parse_effect_apply_poison,
+	&parse_effect_apply_regeneration,
+	&parse_effect_apply_pa_change,
+	&parse_effect_apply_pm_change,
+	&parse_effect_cure_poison,
+	&parse_effect_cure_regeneration,
+	&parse_effect_cure_pa_malus,
+	&parse_effect_cure_pm_malus,
+	&parse_effect_cure_pa_bonus,
+	&parse_effect_cure_pm_bonus,
 };
 
-string back_text[] = {
-	" damage(s) to the target",
-	" HP(s) to the target",
-	" PM(s) to the target",
-	" PA(s) to the target",
-	" square(s)",
-	" square(s)",
-	" HP(s)",
-	" damage(s) to the caster",
-	"",
-	"",
-	" PA(s) to the caster",
-	" PM(s) to the caster",
-	" square(s)",
-	" square(s)",
-};
-
-static string compute_text(size_t size, int count, t_effect *effect, int nb_effect)
+static string compute_text(size_t size, int count, t_action *effect, int nb_effect)
 {
 	if (count == -1)
 		return "";
-	string pre_part = (size != 0 ? (nb_effect == 1 ? " and " : ", ") : "");
-	string front_part = front_text[count];
+	string text = (size != 0 ? (nb_effect == 1 ? " and " : ", ") : "");
+	text += f_list[count](effect);
 	if (size == 0)
-		front_part[0] = front_part[0] + ('A' - 'a');
-	string back_part = back_text[count];
-	string value = (effect->stat.value[0] != 0 ? to_string(effect->stat.value[0]) : "");
-	return (pre_part + front_part + value + back_part);
+		text[0] = text[0] + ('A' - 'a');
+	return (text);
 
 }
 
@@ -190,15 +354,15 @@ static void save_effect(t_data data)
 	{
 		int count = 0;
 
-		while (count < (int)(list_effect_name.size()) && list_effect_name[count] != *(entry[i]))
+		while (count < (int)(list_action_name.size()) && list_action_name[count] != *(entry[i]))
 			count++;
-		if (count == (int)(list_effect_name.size()))
+		if (count == (int)(list_action_name.size()))
 			count = -1;
 		else
 			count--;
 		if (count != -1)
 			spell->effect[i].effect = g_effects[count];
-		*(text[i]) = list_effect_name[count + 1];
+		*(text[i]) = list_action_name[count + 1];
 		for (int j = 0; j < 4; j++)
 		{
 			spell->effect[i].stat.value[j] = *(value[i][j]);
@@ -210,7 +374,7 @@ static void save_effect(t_data data)
 	*play = false;
 }
 
-void menu_select_effect(t_data data)
+void menu_select_action(t_data data)
 {
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	t_spell		*spell = (t_spell *)(data.data[1]);
@@ -293,7 +457,7 @@ void menu_select_effect(t_data data)
 		"Quit", BLACK,
 		gui.unit * (t_vect(18, 1.0 + (1.2 * (i))) + coord), gui.unit * t_vect(10, 1), 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		quit_effect_select, &play);
+		quit_action_select, &play);
 
 	gui.add(button);
 

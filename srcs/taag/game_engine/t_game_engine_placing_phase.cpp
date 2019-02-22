@@ -54,7 +54,7 @@ void			s_game_engine::placement_phase()
 	}
 
 	while (play)
-	{
+	{		
 		prepare_screen();
 
 		draw_board();

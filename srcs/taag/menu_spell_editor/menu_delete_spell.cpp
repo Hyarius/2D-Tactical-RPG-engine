@@ -41,7 +41,7 @@ static void		quit_delete(t_data data)// spell / entry_name / entry_path / play /
 		for (i = 0; i < 30; i++)
 			*(text_list_delete_spell[i]) = (i < (int)(list_file_delete_spell.size()) ? list_file_delete_spell[i] : "");
 		for (i = 0; i < 6; i++)
-			*(text[i]) = list_effect_name[0];
+			*(text[i]) = list_action_name[0];
 	}
 }
 

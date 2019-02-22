@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	//generate_animation_tileset();
 
 	read_tileset();
-	init_effects();
+	init_actions();
 	read_spell();
 
 	menu_start();

@@ -46,7 +46,7 @@ static void		quit_load(t_data data)// spell / entry_name / entry_path / pool / p
 				count = -1;
 			else
 				count++;
-			*(text[i]) = (count != -1 ? list_effect_name[count] : list_effect_name[0]);
+			*(text[i]) = (count != -1 ? list_action_name[count] : list_action_name[0]);
 		}
 	}
 }

@@ -34,6 +34,8 @@ void				s_game_engine::draw_board()
 void				s_game_engine::draw_actor_info_on_gui()
 {
 	t_actor *player = turn_order[turn_index % turn_order.size()];
+	if (player->team != 1)
+		return ;
 	string text = to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
 	static int text_size = calc_text_max_size(text, gui.unit * t_vect(1.7, 0.9));
 	draw_centred_text(text, text_size, gui.unit * t_vect(15, 19), BLACK);
@@ -66,6 +68,50 @@ void				s_game_engine::draw_actor_info_on_gui()
 	}
 }
 
+static string parse_effect_poison_desc(s_effect *effect)
+{
+	if (effect->effect_type == 0)
+		return ("poison when turn begin");
+	else if (effect->effect_type == 1)
+		return ("poison when attack");
+	else if (effect->effect_type == 2)
+		return ("poison when move");
+	return ("poison never");
+}
+
+static string parse_effect_regeneration_desc(s_effect *effect)
+{
+	if (effect->effect_type == 0)
+		return ("regeneration when turn begin");
+	else if (effect->effect_type == 1)
+		return ("regeneration when attack");
+	else if (effect->effect_type == 2)
+		return ("regeneration when move");
+	return ("regeneration never");
+}
+
+static string parse_effect_change_pm_desc(s_effect *effect)
+{
+	if (effect->effect_type == 0)
+		return ("change pm when turn begin");
+	else if (effect->effect_type == 1)
+		return ("change pm when attack");
+	else if (effect->effect_type == 2)
+		return ("change pm when move");
+	return ("change pm never");
+}
+
+static string parse_effect_change_pa_desc(s_effect *effect)
+{
+	if (effect->effect_type == 0)
+		return ("change pa when turn begin");
+	else if (effect->effect_type == 1)
+		return ("change pa when attack");
+	else if (effect->effect_type == 2)
+		return ("change pa when move");
+	return ("change pa never");
+}
+
 void				s_game_engine::draw_cell_info_on_gui()
 {
 	t_vect mouse = board.get_mouse_pos();
@@ -73,8 +119,11 @@ void				s_game_engine::draw_cell_info_on_gui()
 
 	if (mouse != t_vect(-1, -1))
 	{
-		draw_border_rectangle(gui.unit * t_vect(22, 0), gui.unit * t_vect(8, 5), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6));
 		t_cell *cell = board.get_cell(mouse.x, mouse.y);
+		t_actor *player = cell->actor;
+		size_t j = (player != NULL ? player->effect_list.change_pa.size() + player->effect_list.change_pm.size() + player->effect_list.regeneration.size() + player->effect_list.poison.size() : 0) ;
+		draw_border_rectangle(gui.unit * t_vect(22, 0), gui.unit * t_vect(8, (4 + (double)j / 2.0)), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6));
+		
 		string text = "Coord : " + to_string((int)(mouse.x)) + " / " + to_string((int)(mouse.y)) + " - " + (cell ? cell->node->name : "Empty tile");
 		static int text_size = calc_text_max_size(text, gui.unit * t_vect(7, 0.5));
 		draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
@@ -91,7 +140,6 @@ void				s_game_engine::draw_cell_info_on_gui()
 		if (cell && cell->actor != NULL && cell->actor->team != 0)
 		{
 			i++;
-			t_actor *player = cell->actor;
 			text = "Actor : " + player->name;
 			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			string text = "Health : " + to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
@@ -100,6 +148,14 @@ void				s_game_engine::draw_cell_info_on_gui()
 			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			text = "Mouvement points : " + to_string(player->stat.pm.value);
 			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			for (size_t j = 0; j < player->effect_list.poison.size(); j++)
+				draw_lined_text(parse_effect_poison_desc(&(player->effect_list.poison[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			for (size_t j = 0; j < player->effect_list.regeneration.size(); j++)
+				draw_lined_text(parse_effect_regeneration_desc(&(player->effect_list.regeneration[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			for (size_t j = 0; j < player->effect_list.change_pa.size(); j++)
+				draw_lined_text(parse_effect_change_pm_desc(&(player->effect_list.change_pa[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			for (size_t j = 0; j < player->effect_list.change_pm.size(); j++)
+				draw_lined_text(parse_effect_change_pm_desc(&(player->effect_list.change_pm[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 		}
 		else if (cell && cell->actor != NULL && cell->actor->team == 0)
 		{
