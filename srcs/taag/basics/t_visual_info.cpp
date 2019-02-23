@@ -45,7 +45,7 @@ t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_s
 		text_coord.push_back(t_vect(p_starting_coord.x + 0.5, p_starting_coord.y - 0.5 - 0.05 * i / 2));
 	for (int i = 25; i; i--)
 		text_coord.push_back(t_vect(p_starting_coord.x + 0.5, p_starting_coord.y - 0.5 - 0.05 * i / 2));
-	for (int i = 10; i; i--)
+	for (int i = 25; i; i--)
 		text_coord.push_back(t_vect(p_starting_coord.x + 0.5, p_starting_coord.y - 0.5));
 
 	t_visual_info	result = t_visual_info(p_text, p_text_color, p_text_size, text_coord);

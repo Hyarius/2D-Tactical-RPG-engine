@@ -71,9 +71,8 @@ s_game_board::s_game_board(string p_path)
 				new_actor = new t_actor(read_actor(OBS_PATH + tab[3] + OBS_EXT));
 			else
 				new_actor = new t_actor(read_actor(MONSTER_PATH + tab[3] + ACTOR_EXT));
-			new_actor->path =	tab[3];
+			new_actor->path = tab[3];
 			new_actor->coord = coord;
-			new_actor->visual_info = &(get_cell(coord)->visual_info);
 			new_actor->team = atoi(tab[4].c_str());
 			get_cell(coord)->actor = new_actor;
 			actor_list.push_back(get_cell(coord)->actor);
@@ -335,28 +334,9 @@ bool				s_game_board::check_anim()
 
 bool				s_game_board::check_visual()
 {
-	int i = 0;
-
-	while ((size_t)i < board_size.x)
-	{
-		int j = 0;
-		while ((size_t)j < board_size.y)
-		{
-
-			if (get_cell(i, j))
-			{
-				size_t k = 0;
-				while (k < get_cell(i, j)->visual_info.size())
-				{
-					if (get_cell(i, j)->visual_info[k].index < get_cell(i, j)->visual_info[k].text_coord.size())
-						return (false);
-					k++;
-				}
-			}
-			j++;
-		}
-		i++;
-	}
+	for (size_t i = 0; i < actor_list.size(); i++)
+		if (actor_list[i]->visual_info.size() != 0)
+			return (false);
 	return (true);
 }
 
@@ -385,16 +365,17 @@ void				s_game_board::draw_visual_info()
 	size_t i = 0;
 	t_vect size = sprite_unit * zoom;
 
-	i = 0;
-	while (i < board_size.x)
+	for (size_t i = 0; i < actor_list.size(); i++)
 	{
-		int j = 0;
-		while (j < board_size.y)
+		for (int j = 0; j < actor_list[i]->visual_info.size(); j++)
 		{
-			cell_layer[i][j].draw_visual_info(target, offset, size, zoom);
-			j++;
+			actor_list[i]->visual_info[j].draw_self(target, offset, size, zoom);
+			if (actor_list[i]->visual_info[j].index >= actor_list[i]->visual_info[j].text_coord.size())
+			{
+				actor_list[i]->visual_info.erase(actor_list[i]->visual_info.begin() + j);
+				j--;
+			}
 		}
-		i++;
 	}
 }
 

@@ -19,7 +19,6 @@ void				s_game_engine::invoke_actor(t_actor *new_actor, t_vect coord)
 	{
 		new_actor->coord = coord;
 		board.get_cell(coord)->actor = new_actor;
-		new_actor->visual_info = &(board.get_cell(coord)->visual_info);
 		board.add_actor(new_actor);
 		if (new_actor->team == 1)
 			board.ally_list.push_back(new_actor);
@@ -32,7 +31,6 @@ void				s_game_engine::outvoke_actor(t_actor *new_actor)
 	{
 		board.get_cell(new_actor->coord)->actor = NULL;
 		new_actor->coord = t_vect(-1, -1);
-		new_actor->visual_info = NULL;
 		board.remove_actor(new_actor);
 		delete new_actor;
 	}
@@ -57,7 +55,7 @@ void				s_game_engine::check_alive()
 	size_t i = 0;
 	while (i < board.actor_list.size())
 	{
-		if (board.actor_list[i]->stat.hp.value <= 0)
+		if (board.actor_list[i]->stat.hp.value <= 0 && board.check_visual() == true && board.check_anim() == true)
 			delete_actor(board.actor_list[i]);
 		else
 			i++;
@@ -109,6 +107,7 @@ void				s_game_engine::update_board()
 {
 	size_t i = 0;
 
+	check_alive();
 	t_actor *player = turn_order[turn_index % turn_order.size()];
 	while (i < turn_order.size())
 	{

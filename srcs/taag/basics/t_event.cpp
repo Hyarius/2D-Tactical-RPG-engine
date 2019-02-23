@@ -43,211 +43,63 @@ void			init_actions()
 	g_effects.push_back(cure_bonus_pm);
 }
 
-void					cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		target->effect_list.poison.clear();
-	}
-}
-
-void					cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		target->effect_list.regeneration.clear();
-	}
-}
-
-void					cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		for (size_t i = 0; i < target->effect_list.change_pa.size(); i++)
-		{
-			if (target->effect_list.change_pa[i].action[0].stat.value[0] < 0)
-			{
-				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
-				i--;
-			}
-		}
-	}
-}
-
-void					cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		for (size_t i = 0; i < target->effect_list.change_pm.size(); i++)
-		{
-			if (target->effect_list.change_pm[i].action[0].stat.value[0] < 0)
-			{
-				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
-				i--;
-			}
-		}
-	}
-}
-
-void					cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-
-	if (target != NULL)
-	{
-		for (size_t i = 0; i < target->effect_list.change_pa.size(); i++)
-		{
-			if (target->effect_list.change_pa[i].action[0].stat.value[0] >= 0)
-			{
-				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
-				i--;
-			}
-		}
-	}
-}
-
-void					cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		for (size_t i = 0; i < target->effect_list.change_pm.size(); i++)
-		{
-			if (target->effect_list.change_pm[i].action[0].stat.value[0] >= 0)
-			{
-				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
-				i--;
-			}
-		}
-	}
-}
-
-void					apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
-		target->effect_list.poison.push_back(new_effect);
-	}
-}
-
-void					apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
-		target->effect_list.regeneration.push_back(new_effect);
-	}
-}
-
-void					apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
-		target->effect_list.change_pa.push_back(new_effect);
-	}
-}
-
-void					apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	if (target != NULL)
-	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
-		target->effect_list.change_pm.push_back(new_effect);
-	}
-}
-
-
-void	swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	(void)effect_stat;
-	t_vect tmp;
-	if (target != NULL)
-	{
-		tmp = target->coord;
-		target->coord = source->coord;
-		source->coord = tmp;
-		game->board.get_cell(target->coord)->actor = target;
-		game->board.get_cell(source->coord)->actor = source;
-	}
-}
-
-void	change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	vector<t_vect>	text_coord;
-	(void)target;
-	if (source != NULL)
+	(void)source;
+	if (target != NULL)
 	{
-		int damage = effect_stat.value[0];
-		if (effect_stat.value[0] < 0)
-		{
-			damage = (-(effect_stat.value[0]) < source->stat.pa.value ? effect_stat.value[0] : -source->stat.pa.value);
-		}
+		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
 		if (damage != 0)
-		{
-			source->stat.pa.value += damage;
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", RED, 10, source->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
-		}
+			target->change_stat_hp(-damage);
 	}
 }
 
-void	change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		heal(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	vector<t_vect>	text_coord;
-	(void)target;
-	if (source != NULL)
+	(void)source;
+	if (target != NULL)
 	{
-		int damage = effect_stat.value[0];
-		if (effect_stat.value[0] < 0)
-		{
-			damage = (-(effect_stat.value[0]) < source->stat.pm.value ? effect_stat.value[0] : -source->stat.pm.value);
-		}
+		int damage = (effect_stat.value[0] + target->stat.hp.value < target->stat.hp.max ? effect_stat.value[0] : target->stat.hp.max - target->stat.hp.value);
 		if (damage != 0)
-		{
-			source->stat.pm.value += damage;
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", RED, 10, source->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
-		}
+			target->change_stat_hp(damage);
 	}
 }
 
-void	move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)effect_stat;
-	if (target == NULL)
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
 	{
-		if (game->board.get_cell(coord)->node->m_obs == false)
-		{
-			game->board.get_cell(source->coord)->actor = NULL;
-			source->coord = coord;
-			game->board.get_cell(source->coord)->actor = source;
-		}
-	}
-}
-
-void	heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
-{
-	(void)target;
-	if (source != NULL)
-	{
-		int damage = (effect_stat.value[0] + source->stat.hp.value < source->stat.hp.max ? effect_stat.value[0] : source->stat.hp.max - source->stat.hp.value);
+		int damage;
+		if (target->stat.pm.value + effect_stat.value[0] < 0)
+			damage = target->stat.pm.value;
+		else
+			damage = effect_stat.value[0];
 		if (damage != 0)
-		{
-			source->stat.hp.value += damage;
-			game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0.0, 0.5 * source->visual_info->size())));
-		}
+			target->change_stat_pm(damage);
 	}
 }
 
-void	dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
-	if (damage != 0)
+	vector<t_vect>	text_coord;
+	(void)source;
+	if (target != NULL)
 	{
-		source->stat.hp.value -= damage;
-		game->board.get_cell(source->coord)->visual_info.push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, source->coord - t_vect(0.0, 0.5 * source->visual_info->size())));
+		int damage;
+		if (target->stat.pa.value + effect_stat.value[0] < 0)
+			damage = target->stat.pa.value;
+		else
+			damage = effect_stat.value[0];
+		if (damage != 0)
+			target->change_stat_pa(damage);
 	}
 }
 
-void	push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	if (target != NULL)
 	{
@@ -261,14 +113,13 @@ void	push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 				game->board.get_cell(target->coord)->actor = NULL;
 				target->coord = target->coord + delta;
 				game->board.get_cell(target->coord)->actor = target;
-				target->visual_info = &(game->board.get_cell(target->coord)->visual_info);
 			}
 			i++;
 		}
 	}
 }
 
-void	pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	if (target != NULL)
 	{
@@ -282,14 +133,95 @@ void	pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 				game->board.get_cell(target->coord)->actor = NULL;
 				target->coord = target->coord + delta;
 				game->board.get_cell(target->coord)->actor = target;
-				target->visual_info = &(game->board.get_cell(target->coord)->visual_info);
 			}
 			i++;
 		}
 	}
 }
 
-void	push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	(void)target;
+	if (source != NULL)
+	{
+		int damage = (effect_stat.value[0] + source->stat.hp.value < source->stat.hp.max ? effect_stat.value[0] : source->stat.hp.max - source->stat.hp.value);
+		if (damage != 0)
+			source->change_stat_hp(damage);
+	}
+}
+
+void		dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	(void)target;
+	if (source != NULL)
+	{
+		int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
+		if (damage != 0)
+			source->change_stat_hp(-damage);
+	}
+}
+
+void		move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	(void)effect_stat;
+	if (target == NULL)
+	{
+		if (game->board.get_cell(coord)->node->m_obs == false)
+		{
+			game->board.get_cell(source->coord)->actor = NULL;
+			source->coord = coord;
+			game->board.get_cell(source->coord)->actor = source;
+		}
+	}
+}
+
+void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	(void)effect_stat;
+	t_vect tmp;
+	if (target != NULL)
+	{
+		tmp = target->coord;
+		target->coord = source->coord;
+		source->coord = tmp;
+		game->board.get_cell(target->coord)->actor = target;
+		game->board.get_cell(source->coord)->actor = source;
+	}
+}
+
+void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	vector<t_vect>	text_coord;
+	(void)target;
+	if (source != NULL)
+	{
+		int damage;
+		if (source->stat.pm.value + effect_stat.value[0] < 0)
+			damage = source->stat.pm.value;
+		else
+			damage = effect_stat.value[0];
+		if (damage != 0)
+			source->change_stat_pm(damage);
+	}
+}
+
+void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	vector<t_vect>	text_coord;
+	(void)target;
+	if (source != NULL)
+	{
+		int damage;
+		if (source->stat.pa.value + effect_stat.value[0] < 0)
+			damage = source->stat.pa.value;
+		else
+			damage = effect_stat.value[0];
+		if (damage != 0)
+			source->change_stat_pa(damage);
+	}
+}
+
+void		push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	if (target != NULL)
 	{
@@ -303,14 +235,13 @@ void	push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 				game->board.get_cell(source->coord)->actor = NULL;
 				source->coord = source->coord + delta;
 				game->board.get_cell(source->coord)->actor = target;
-				source->visual_info = &(game->board.get_cell(source->coord)->visual_info);
 			}
 			i++;
 		}
 	}
 }
 
-void	pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	if (target != NULL)
 	{
@@ -324,77 +255,144 @@ void	pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 				game->board.get_cell(source->coord)->actor = NULL;
 				source->coord = source->coord + delta;
 				game->board.get_cell(source->coord)->actor = target;
-				source->visual_info = &(game->board.get_cell(source->coord)->visual_info);
 			}
 			i++;
 		}
 	}
 }
 
-void deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
-	(void)source;
 	if (target != NULL)
 	{
-		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
-		if (damage != 0)
-		{
-			target->stat.hp.value -= damage;
-			target->visual_info->push_back(create_visual_info("-" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
-		}
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		target->effect_list.poison.push_back(new_effect);
+		target->apply_effect("+ Poison");
 	}
 }
 
-void heal(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
-	(void)source;
 	if (target != NULL)
 	{
-		int damage = (effect_stat.value[0] + target->stat.hp.value < target->stat.hp.max ? effect_stat.value[0] : target->stat.hp.max - target->stat.hp.value);
-		if (damage != 0)
-		{
-			target->stat.hp.value += damage;
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info("+" + to_string((int)(effect_stat.value[0])) + "hp", RED, 10, target->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
-		}
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		target->effect_list.regeneration.push_back(new_effect);
+		target->apply_effect("+ Regeneration");
 	}
 }
 
-void change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
-	(void)source;
 	if (target != NULL)
 	{
-		int damage;
-		if (target->stat.pm.value + effect_stat.value[0] < 0)
-			damage = target->stat.pm.value;
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		target->effect_list.change_pa.push_back(new_effect);
+		if (effect_stat.value[1] < 0)
+			target->apply_effect("+ Malus PA");
 		else
-			damage = effect_stat.value[0];
-		if (damage != 0)
+			target->apply_effect("+ Bonus PA");
+	}
+}
+
+void		apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		target->effect_list.change_pm.push_back(new_effect);
+		if (effect_stat.value[1] < 0)
+			target->apply_effect("+ Malus PM");
+		else
+			target->apply_effect("+ Bonus PM");
+
+	}
+}
+
+void		cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		if (target->effect_list.poison.size() != 0)
+			target->apply_effect("- Poison");
+		target->effect_list.poison.clear();
+	}
+}
+
+void		cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		if (target->effect_list.regeneration.size() != 0)
+			target->apply_effect("- Regeneration");
+		target->effect_list.regeneration.clear();
+	}
+}
+
+void		cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		if (target->effect_list.change_pa.size() != 0)
+			target->apply_effect("- Malus PA");
+		for (size_t i = 0; i < target->effect_list.change_pa.size(); i++)
 		{
-			target->stat.pm.value += damage;
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pm", GREEN, 10, target->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
+			if (target->effect_list.change_pa[i].action[0].stat.value[0] < 0)
+			{
+				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
+				i--;
+			}
 		}
 	}
 }
 
-void change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
+void		cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
-	(void)source;
 	if (target != NULL)
 	{
-		int damage;
-		if (target->stat.pa.value + effect_stat.value[0] < 0)
-			damage = target->stat.pa.value;
-		else
-			damage = effect_stat.value[0];
-		if (damage != 0)
+		if (target->effect_list.change_pm.size() != 0)
+			target->apply_effect("- Malus PM");
+		for (size_t i = 0; i < target->effect_list.change_pm.size(); i++)
 		{
-			target->stat.pa.value += damage;
-			game->board.get_cell(target->coord)->visual_info.push_back(create_visual_info(to_string((int)(effect_stat.value[0])) + "pa", BLUE, 10, target->coord - t_vect(0.0, 0.5 * target->visual_info->size())));
+			if (target->effect_list.change_pm[i].action[0].stat.value[0] < 0)
+			{
+				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
+				i--;
+			}
+		}
+	}
+}
+
+void		cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+
+	if (target != NULL)
+	{
+		if (target->effect_list.change_pa.size() != 0)
+			target->apply_effect("- Bonus PA");
+		for (size_t i = 0; i < target->effect_list.change_pa.size(); i++)
+		{
+			if (target->effect_list.change_pa[i].action[0].stat.value[0] >= 0)
+			{
+				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
+				i--;
+			}
+		}
+	}
+}
+
+void		cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		if (target->effect_list.change_pm.size() != 0)
+			target->apply_effect("- Bonus PM");
+		for (size_t i = 0; i < target->effect_list.change_pm.size(); i++)
+		{
+			if (target->effect_list.change_pm[i].action[0].stat.value[0] >= 0)
+			{
+				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
+				i--;
+			}
 		}
 	}
 }

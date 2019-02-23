@@ -77,16 +77,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 
 void			s_game_engine::ending_fight(bool *play)
 {
-	size_t count = 0;
-	bool	leave_game = true;
-
-	while (count < board.actor_list.size())
-	{
-		if (board.actor_list[count]->visual_info->size())
-			leave_game = false;
-		count++;
-	}
-	if (leave_game == true)
+	if (board.check_anim() == true && board.check_visual() == true)
 		*play = false;
 }
 

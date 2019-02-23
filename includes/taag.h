@@ -210,7 +210,7 @@ typedef struct          s_actor
 	t_stat				stat;		//stat of the actor
 	t_vect				coord;		//position of the actor in game_space
 	vector<t_vect>		destination;//list of coord the actor will take while moving
-	vector<t_visual_info>	*visual_info; //link to the visual info of the cell where we standing
+	vector<t_visual_info>	visual_info; //link to the visual info of the cell where we standing
 	int					team;		//0 - neutral / 1 - team / 2 - enemy / 3 - ally
 	t_spell				*spell[6];
 	int					cooldown[6];
@@ -224,6 +224,10 @@ typedef struct          s_actor
 	void				draw_self(t_vect target, t_vect offset, t_vect size); //draw the actor on him place on the screen
 	void				apply_effect(int type);
 	void				handle_effect_duration();
+	void				change_stat_hp(int value);
+	void				change_stat_pa(int value);
+	void				change_stat_pm(int value);
+	void				apply_effect(string text);
 }						t_actor;
 
 typedef struct			s_cell

@@ -69,9 +69,9 @@ s_actor::s_actor()
 	tile = NULL;
 	sprite = t_vect(-1, -1);
 	stat = t_stat(t_value(50), t_value(6), t_value(3), 5);
-	visual_info = NULL;
 	dir = 0;
 	effect_list = s_effect_list();
+	visual_info = {};
 	for (int i = 0; i < 6; i++)
 	{
 		spell[i] = &(spell_map["NULL"]);
@@ -88,7 +88,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	stat = p_stat;
 	dir = 0;
 	effect_list = s_effect_list();
-	visual_info = NULL;
+	visual_info = {};
 	for (int i = 0; i < 6; i++)
 	{
 		spell[i] = &(spell_map["NULL"]);
@@ -105,7 +105,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	stat = p_stat;
 	dir = 0;
 	effect_list = s_effect_list();
-	visual_info = NULL;
+	visual_info = {};
 	for (int i = 0; i < 6; i++)
 	{
 		spell[i] = p_spell[i];
@@ -207,3 +207,27 @@ void			s_actor::handle_effect_duration()
 		}
 	}
 }
+
+void				s_actor::change_stat_hp(int value)
+{
+	this->stat.hp.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "hp", RED, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_pa(int value)
+{
+	this->stat.pa.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "pa", BLUE, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_pm(int value)
+{
+	this->stat.pm.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "pm", GREEN, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::apply_effect(string text)
+{
+	this->visual_info.push_back(create_visual_info(text, GREY, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
