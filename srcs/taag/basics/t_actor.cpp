@@ -129,28 +129,28 @@ void			s_actor::apply_effect(int type)
 	t_action pm_effect = s_action(change_pm, 0, 0, 0, 0);
 	while (i < this->effect_list.poison.size())
 	{
-		if (this->effect_list.poison[i].duration != 0 && this->effect_list.poison[i].effect_type == type)
+		if (this->effect_list.poison[i].effect_type == type)
 			poison_effect.stat.value[0] += this->effect_list.poison[i].action[0].stat.value[0];
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.regeneration.size())
 	{
-		if (this->effect_list.regeneration[i].duration != 0 && this->effect_list.regeneration[i].effect_type == type)
+		if (this->effect_list.regeneration[i].effect_type == type)
 			heal_effect.stat.value[0] += this->effect_list.regeneration[i].action[0].stat.value[0];
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.change_pa.size())
 	{
-		if (this->effect_list.change_pa[i].duration != 0 && this->effect_list.change_pa[i].effect_type == type)
+		if (this->effect_list.change_pa[i].effect_type == type)
 			pa_effect.stat.value[0] += this->effect_list.change_pa[i].action[0].stat.value[0];
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.change_pm.size())
 	{
-		if (this->effect_list.change_pm[i].duration != 0 && this->effect_list.change_pm[i].effect_type == type)
+		if (this->effect_list.change_pm[i].effect_type == type)
 			pm_effect.stat.value[0] += this->effect_list.change_pm[i].action[0].stat.value[0];
 		i++;
 	}
@@ -210,24 +210,43 @@ void			s_actor::handle_effect_duration()
 
 void				s_actor::change_stat_hp(int value)
 {
-	this->stat.hp.value += value;
-	this->visual_info.push_back(create_visual_info(to_string(value) + "hp", RED, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	change_stat_hp(value, RED);
 }
 
 void				s_actor::change_stat_pa(int value)
 {
-	this->stat.pa.value += value;
-	this->visual_info.push_back(create_visual_info(to_string(value) + "pa", BLUE, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	change_stat_pa(value, BLUE);
 }
 
 void				s_actor::change_stat_pm(int value)
 {
-	this->stat.pm.value += value;
-	this->visual_info.push_back(create_visual_info(to_string(value) + "pm", GREEN, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	change_stat_pm(value, GREEN);
 }
 
 void				s_actor::apply_effect(string text)
 {
-	this->visual_info.push_back(create_visual_info(text, GREY, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	apply_effect(text, GREY);
 }
 
+void				s_actor::change_stat_hp(int value, int color)
+{
+	this->stat.hp.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "hp", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_pa(int value, int color)
+{
+	this->stat.pa.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "pa", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_pm(int value, int color)
+{
+	this->stat.pm.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "pm", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::apply_effect(string text, int color)
+{
+	this->visual_info.push_back(create_visual_info(text, color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}

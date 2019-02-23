@@ -203,8 +203,6 @@ void					menu_player_editor(t_data data)
 
 	while (play)
 	{
-		//printf("index = %zu / %zu\n", *tile_index, tileset_selector->vector_name->size());
-		//printf("sprite_target = [%.2f / %.2f]\n", sprite_target->x, sprite_target->y);
 		actor.name = *name;
 		actor.tile = &(sprite_map[human_sprite_name[*tile_index]]);
 		actor.sprite = *sprite_target;
@@ -217,11 +215,12 @@ void					menu_player_editor(t_data data)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+			else if (event.type == SDL_MOUSEBUTTONUP)
 				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
+
 		}
-		render_screen(true);
+		render_screen();
 	}
 }

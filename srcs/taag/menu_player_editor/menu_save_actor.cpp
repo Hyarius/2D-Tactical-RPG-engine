@@ -106,7 +106,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 			(*((t_gui *)(data.data[0]))).draw_self();
 		gui.draw_self();
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{

@@ -174,25 +174,10 @@ int					calc_paragraphe_size(string text, t_vect size)
 
 void				draw_paragraphe(string text, t_vect coord, t_vect size, int color_type)
 {
-	size_t			i = 0;
-	vector<string>	line;
-	t_vect			tmp = t_vect(0, 0);
 	size_t			text_size;
 
-	if (text == "")
-		return ;
-	line = strsplit(text, " ");
 	text_size = calc_paragraphe_size(text, size);
-	while (i < line.size())
-	{
-		if (tmp.x + calc_text_len(line[i], text_size) > size.x)
-		{
-			tmp.x = 0;
-			tmp.y = tmp.y + get_char(text_size, BLACK, 'M')->surface->h;
-		}
-		tmp.x += draw_text(line[i] + " ", text_size, tmp + coord, color_type);
-		i++;
-	}
+	draw_paragraphe(text, text_size, coord, size, color_type);
 }
 
 void				draw_paragraphe(string text, int text_size, t_vect coord, t_vect size, int color_type)
@@ -204,14 +189,57 @@ void				draw_paragraphe(string text, int text_size, t_vect coord, t_vect size, i
 	if (text == "")
 		return ;
 	line = strsplit(text, " ");
+	string text_line = "";
+	int height = get_char(text_size, BLACK, 'M')->surface->h;
 	while (i < line.size())
 	{
-		if (tmp.x + calc_text_len(line[i], text_size) > size.x)
+		int len = calc_text_len(line[i] + " ", text_size);
+		if (tmp.x + len > size.x)
 		{
 			tmp.x = 0;
-			tmp.y = tmp.y + get_char(text_size, BLACK, 'M')->surface->h;
+			draw_text(text_line, text_size, tmp + coord, color_type);
+			tmp.y = tmp.y + height;
+			text_line = "";
 		}
-		tmp.x += draw_text(line[i] + " ", text_size, tmp + coord, color_type);
+		else
+		{
+			tmp.x += len;
+			text_line += line[i] + " ";
+		}
 		i++;
 	}
+	tmp.x = 0;
+	draw_text(text_line, text_size, tmp + coord, color_type);
+}
+
+vector<string>		prepare_paragraphe(string text, int text_size, t_vect size)
+{
+	size_t			i = 0;
+	vector<string>	result;
+	vector<string>	line;
+	t_vect			tmp = t_vect(0, 0);
+
+	if (text == "")
+		return result;
+	line = strsplit(text, " ");
+	string text_line = "";
+	int height = get_char(text_size, BLACK, 'M')->surface->h;
+	while (i < line.size())
+	{
+		int len = calc_text_len(line[i] + " ", text_size);
+		if (tmp.x + len < size.x)
+		{
+			text_line += line[i] + " ";
+			tmp.x += len;
+		}
+		else
+		{
+			result.push_back(text_line);
+			text_line = line[i] + " ";
+			tmp.x = 0;
+		}
+		i++;
+	}
+	result.push_back(text_line);
+	return (result);
 }

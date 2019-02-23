@@ -99,7 +99,6 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the enemy with less HP %\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -166,7 +165,6 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the enemy with less HP value\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -229,7 +227,6 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the closest enemy\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -293,7 +290,6 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the closest ally\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -362,7 +358,6 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the ally with less HP %\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -431,7 +426,6 @@ bool				s_game_engine::get_close_ally_damaged(t_ai_helper data)
 		move_actor(result);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s move to the ally with HP % < %d\n", turn_order[turn_index % turn_order.size()]->name.c_str(), data.value[1]);
 		return (true);
 	}
 	else
@@ -531,7 +525,6 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 		move_actor(actual);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
-		printf("%s flee\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 		return (true);
 	}
 	else
@@ -697,7 +690,6 @@ bool				s_game_engine::attack_weak(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s atttack the enemy with the lower HP value\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 	return (true);
 }
 
@@ -787,7 +779,6 @@ bool				s_game_engine::attack_percent(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s atttack the enemy with lower HP %\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 	return (true);
 }
 
@@ -862,7 +853,6 @@ bool				s_game_engine::help(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s help the closest ally\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 	return (true);
 }
 
@@ -951,7 +941,6 @@ bool				s_game_engine::help_weak(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s help the closest ally with lower HP value\n", turn_order[turn_index % turn_order.size()]->name.c_str());
 	return (true);
 }
 
@@ -1056,7 +1045,6 @@ bool				s_game_engine::help_percent(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s help the closest ally with HP % < %d\n", turn_order[turn_index % turn_order.size()]->name.c_str(), data.value[0]);
 	return (true);
 }
 
@@ -1162,7 +1150,6 @@ bool				s_game_engine::help_caster_hp(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s (with > %d % HP) help the closest ally with lower HP %\n", turn_order[turn_index % turn_order.size()]->name.c_str(), data.value[2]);
 	return (true);
 }
 
@@ -1238,7 +1225,6 @@ bool				s_game_engine::attack_caster_hp(t_ai_helper data)
 	if (cast_spell(target) == false)
 		return (false);
 	board.reset_board();
-	printf("%s (with less than %d % HP) atttack the closest enemy\n", turn_order[turn_index % turn_order.size()]->name.c_str(), data.value[2]);
 	return (true);
 }
 

@@ -106,6 +106,6 @@ void			s_game_engine::game_loop()
 			handle_control_camera(&event);
 			handle_control_game(&event);
 		}
-		render_screen(true);
+		render_screen();
 	}
 }

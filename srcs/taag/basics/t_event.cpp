@@ -263,9 +263,10 @@ void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
 	if (target != NULL)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.poison.push_back(new_effect);
 		target->apply_effect("+ Poison");
 	}
@@ -273,9 +274,10 @@ void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
 	if (target != NULL)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.regeneration.push_back(new_effect);
 		target->apply_effect("+ Regeneration");
 	}
@@ -283,9 +285,10 @@ void		apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_
 
 void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
 	if (target != NULL)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pa.push_back(new_effect);
 		if (effect_stat.value[1] < 0)
 			target->apply_effect("+ Malus PA");
@@ -296,9 +299,10 @@ void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_sta
 
 void		apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
 	if (target != NULL)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, 0) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pm.push_back(new_effect);
 		if (effect_stat.value[1] < 0)
 			target->apply_effect("+ Malus PM");
@@ -310,6 +314,8 @@ void		apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_sta
 
 void		cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 	if (target != NULL)
 	{
 		if (target->effect_list.poison.size() != 0)
@@ -320,6 +326,8 @@ void		cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 	if (target != NULL)
 	{
 		if (target->effect_list.regeneration.size() != 0)
@@ -330,6 +338,8 @@ void		cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_s
 
 void		cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 	if (target != NULL)
 	{
 		if (target->effect_list.change_pa.size() != 0)
@@ -347,6 +357,8 @@ void		cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 	if (target != NULL)
 	{
 		if (target->effect_list.change_pm.size() != 0)
@@ -364,6 +376,8 @@ void		cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 
 	if (target != NULL)
 	{
@@ -382,6 +396,8 @@ void		cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
+	(void)source;
+	(void)effect_stat;
 	if (target != NULL)
 	{
 		if (target->effect_list.change_pm.size() != 0)

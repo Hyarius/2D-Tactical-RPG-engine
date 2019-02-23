@@ -2,8 +2,8 @@
 # define TEXT_DEFINE_H
 
 # define NB_SIZE		30
+# define NB_COLOR		26
 
-# define NB_COLOR		23
 # define BLACK			0
 # define WHITE			1
 # define LIGHT_BLUE		2
@@ -27,6 +27,9 @@
 # define LIGHT_YELLOW	20
 # define YELLOW			21
 # define DARK_YELLOW	22
+# define LIGHT_PURPLE	23
+# define PURPLE			24
+# define DARK_PURPLE	25
 
 # define NORMAL			TTF_STYLE_NORMAL
 # define BOLD			TTF_STYLE_BOLD

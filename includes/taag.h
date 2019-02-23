@@ -228,6 +228,10 @@ typedef struct          s_actor
 	void				change_stat_pa(int value);
 	void				change_stat_pm(int value);
 	void				apply_effect(string text);
+	void				change_stat_hp(int value, int color);
+	void				change_stat_pa(int value, int color);
+	void				change_stat_pm(int value,int color);
+	void				apply_effect(string text, int color);
 }						t_actor;
 
 typedef struct			s_cell

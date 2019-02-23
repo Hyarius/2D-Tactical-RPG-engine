@@ -192,7 +192,7 @@ void menu_edit_animation(t_data data)
 			}
 		}
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&event) == 1)
 		{

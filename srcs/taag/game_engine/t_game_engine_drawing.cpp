@@ -52,7 +52,7 @@ void				s_game_engine::draw_actor_info_on_gui()
 			player->spell[i]->tile->draw_self(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, player->spell[i]->icon);
 			if (player->spell[i]->cost_pa > player->stat.pa.value || player->spell[i]->cost_pm > player->stat.pm.value || player->cooldown[i] != 0)
 				draw_rectangle(gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, t_color(0.3, 0.3, 0.3, 0.7));
-			if (player->cooldown[i] != 0)//int type, int outline, 
+			if (player->cooldown[i] != 0)//int type, int outline,
 				draw_centred_text(to_string(player->cooldown[i]), text_size, NORMAL, 4, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5) + gui.unit / 2, DARK_GREEN, BLACK);
 			if (player->spell[i]->cost_pa > 0)
 			{
@@ -71,45 +71,71 @@ void				s_game_engine::draw_actor_info_on_gui()
 static string parse_effect_poison_desc(s_effect *effect)
 {
 	if (effect->effect_type == 0)
-		return ("poison when turn begin");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " damage(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 	else if (effect->effect_type == 1)
-		return ("poison when attack");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " damage(s) when attack (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 	else if (effect->effect_type == 2)
-		return ("poison when move");
-	return ("poison never");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " damage(s) when move (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+	return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " damage(s) never (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 }
 
 static string parse_effect_regeneration_desc(s_effect *effect)
 {
 	if (effect->effect_type == 0)
-		return ("regeneration when turn begin");
+		return ("Effect : +" + to_string(effect->action[0].stat.value[0]) + " hp(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 	else if (effect->effect_type == 1)
-		return ("regeneration when attack");
+		return ("Effect : +" + to_string(effect->action[0].stat.value[0]) + " hp(s) when attack (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 	else if (effect->effect_type == 2)
-		return ("regeneration when move");
-	return ("regeneration never");
+		return ("Effect : +" + to_string(effect->action[0].stat.value[0]) + " hp(s) when move (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+	return ("Effect : +" + to_string(effect->action[0].stat.value[0]) + " hp(s) never (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
 }
 
 static string parse_effect_change_pm_desc(s_effect *effect)
 {
-	if (effect->effect_type == 0)
-		return ("change pm when turn begin");
-	else if (effect->effect_type == 1)
-		return ("change pm when attack");
-	else if (effect->effect_type == 2)
-		return ("change pm when move");
-	return ("change pm never");
+	if (effect->action[0].stat.value[0] < 0)
+	{
+		if (effect->effect_type == 0)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 1)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when attack (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 2)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when move (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) never (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+	}
+	else
+	{
+		if (effect->effect_type == 0)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 1)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when attack (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 2)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) when move (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PM(s) never (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+	}
 }
 
 static string parse_effect_change_pa_desc(s_effect *effect)
 {
-	if (effect->effect_type == 0)
-		return ("change pa when turn begin");
-	else if (effect->effect_type == 1)
-		return ("change pa when attack");
-	else if (effect->effect_type == 2)
-		return ("change pa when move");
-	return ("change pa never");
+	if (effect->action[0].stat.value[0] < 0)
+	{
+		if (effect->effect_type == 0)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 1)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when attack (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 2)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when move (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) never (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+	}
+	else
+	{
+		if (effect->effect_type == 0)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when turn begin (" + to_string(effect->action[0].stat.value[3]) + " turn(s) left)");
+		else if (effect->effect_type == 1)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when attack");
+		else if (effect->effect_type == 2)
+			return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) when move");
+		return ("Effect : " + to_string(effect->action[0].stat.value[0]) + " PA(s) never");
+	}
 }
 
 void				s_game_engine::draw_cell_info_on_gui()
@@ -123,7 +149,7 @@ void				s_game_engine::draw_cell_info_on_gui()
 		t_actor *player = cell->actor;
 		size_t j = (player != NULL ? player->effect_list.change_pa.size() + player->effect_list.change_pm.size() + player->effect_list.regeneration.size() + player->effect_list.poison.size() : 0) ;
 		draw_border_rectangle(gui.unit * t_vect(22, 0), gui.unit * t_vect(8, (4 + (double)j / 2.0)), 4, t_color(0.3, 0.3, 0.3, 0.6), t_color(0.6, 0.6, 0.6, 0.6));
-		
+
 		string text = "Coord : " + to_string((int)(mouse.x)) + " / " + to_string((int)(mouse.y)) + " - " + (cell ? cell->node->name : "Empty tile");
 		static int text_size = calc_text_max_size(text, gui.unit * t_vect(7, 0.5));
 		draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);

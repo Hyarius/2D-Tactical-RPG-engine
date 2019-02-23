@@ -63,7 +63,17 @@ typedef struct		s_spell_card : t_gui_obj
 {
 	t_button		*button; //0 - background | 1 - image | 2 - name | 3 - desc
 	struct s_spell	**spell;		//spell of the card
-
+	t_vect			coord;
+	t_vect			size;
+	t_vect			unit;
+	int				text_size;
+	vector<string>	text;
+	vector<t_image *>
+					text_image;
+	vector<t_vect>	image_coord;
+	vector<t_vect>	image_size;
+	vector<t_vect>	text_coord;
+	t_vect			paragraphe_size;
 					s_spell_card();
 					s_spell_card(struct s_spell **p_spell, t_vect coord, t_vect size, gui_funct p_funct, t_data p_data);
 	void			draw_self();

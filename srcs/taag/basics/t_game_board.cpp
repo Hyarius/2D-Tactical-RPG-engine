@@ -367,10 +367,10 @@ void				s_game_board::draw_visual_info()
 
 	for (size_t i = 0; i < actor_list.size(); i++)
 	{
-		for (int j = 0; j < actor_list[i]->visual_info.size(); j++)
+		for (int j = 0; j < (int)(actor_list[i]->visual_info.size()); j++)
 		{
 			actor_list[i]->visual_info[j].draw_self(target, offset, size, zoom);
-			if (actor_list[i]->visual_info[j].index >= actor_list[i]->visual_info[j].text_coord.size())
+			if (actor_list[i]->visual_info[j].index >= (int)(actor_list[i]->visual_info[j].text_coord.size()))
 			{
 				actor_list[i]->visual_info.erase(actor_list[i]->visual_info.begin() + j);
 				j--;

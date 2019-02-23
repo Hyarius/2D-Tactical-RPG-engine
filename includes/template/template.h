@@ -94,6 +94,7 @@ int					draw_lined_text(string text, int text_size, t_vect coord, int color_type
 int					calc_paragraphe_size(string text, t_vect size);
 void				draw_paragraphe(string text, t_vect coord, t_vect size, int color_type);
 void				draw_paragraphe(string text, int text_size, t_vect coord, t_vect size, int color_type);
+vector<string>		prepare_paragraphe(string text, int text_size, t_vect size);
 
 void				set_color_tab();
 t_image				*get_char(int size, int p_color, char c);

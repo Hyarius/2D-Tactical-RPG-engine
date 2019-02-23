@@ -104,7 +104,7 @@ void			menu_load_spell(t_data data) // 0 - t_gui * / 1 - t_spell * / 2 - &name /
 
 		gui.draw_self();
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&event) == 1)
 		{

@@ -74,14 +74,14 @@ void			menu_choose_effect(t_data data)
 	{
 		prepare_screen();
 
-		if (old_gui != NULL)
-			old_gui->draw_self();
-		if (back_gui != NULL)
-			back_gui->draw_self();
+		//if (old_gui != NULL)
+		//	old_gui->draw_self();
+		//if (back_gui != NULL)
+		//	back_gui->draw_self();
 
 		gui.draw_self();
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -174,11 +174,13 @@ static string parse_effect_pull_actor(t_action *effect)
 }
 static string parse_effect_move_caster(t_action *effect)
 {
+	(void)effect;
 	string text = "move the caster to the targeted location";
 	return (text);
 }
 static string parse_effect_swap_actor(t_action *effect)
 {
+	(void)effect;
 	string text = "swap caster and target location";
 	return (text);
 }
@@ -267,43 +269,49 @@ static string parse_effect_apply_pm_change(t_action *effect)
 
 static string parse_effect_cure_poison(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every poison effect of the target";
 	return (text);
 }
 
 static string parse_effect_cure_regeneration(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every regeneration effect of the target";
 	return (text);
 }
 
 static string parse_effect_cure_pa_malus(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every malus PA effect of the target";
 	return (text);
 }
 
 static string parse_effect_cure_pm_malus(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every malus PM effect of the target";
 	return (text);
 }
 
 static string parse_effect_cure_pa_bonus(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every bonus PA effect of the target";
 	return (text);
 }
 
 static string parse_effect_cure_pm_bonus(t_action *effect)
 {
+	(void)effect;
 	string text = "cure every bonus PM effect of the target";
 	return (text);
 }
 
 typedef string(*f_effect_parsor)(t_action *effect);
 
-f_effect_parsor f_list[] = {
+f_effect_parsor f_effect_list[] = {
 	&parse_effect_dmg,
 	&parse_effect_heal,
 	&parse_effect_change_pm,
@@ -335,7 +343,7 @@ static string compute_text(size_t size, int count, t_action *effect, int nb_effe
 	if (count == -1)
 		return "";
 	string text = (size != 0 ? (nb_effect == 1 ? " and " : ", ") : "");
-	text += f_list[count](effect);
+	text += f_effect_list[count](effect);
 	if (size == 0)
 		text[0] = text[0] + ('A' - 'a');
 	return (text);
@@ -476,7 +484,7 @@ void menu_select_action(t_data data)
 
 		gui.draw_self();
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&event) == 1)
 		{

@@ -1,16 +1,16 @@
 name:Perso 1
 tileset:H58
 sprite_pos:0:0
-health:80
+health:115
 action:9
 mouvement:4
-initiative:5
+initiative:7
 spell0:Absorb
 spell1:Devil slash
 spell2:Attraction
 spell3:Heal major
-spell4:test 2
-spell5:test
+spell4:Frozen slash
+spell5:Devotion
 7:0:-1:-1:0:0:0:0:0:0
 7:1:-1:-1:0:0:0:0:0:0
 7:2:-1:-1:0:0:0:0:0:0
@@ -20,6 +20,10 @@ spell5:test
 -1:0:0:0:0:0:0:0:0:0
 3:25:-1:0:0:0:0:0:0:0
 0:1:0:0:-1:0:0:0:0:0
+0:0:0:0:0:0:0:0:0:0
+0:0:0:0:0:0:0:0:0:0
+0:0:0:0:0:0:0:0:0:0
+0:0:0:0:0:0:0:0:0:0
 0:0:0:0:0:0:0:0:0:0
 0:0:0:0:0:0:0:0:0:0
 0:0:0:0:0:0:0:0:0:0

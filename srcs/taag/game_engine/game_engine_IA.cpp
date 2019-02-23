@@ -79,7 +79,7 @@ void				s_game_engine::enemy_turn()
 				exit(0);
 			handle_control_camera(&event);
 		}
-		render_screen(true);
+		render_screen();
 	}
 	if (play == true)
 		next_turn();
@@ -103,7 +103,7 @@ void				s_game_engine::next_turn()
 			if (turn_order[turn_index % turn_order.size()]->cooldown[i] > 0)
 				turn_order[turn_index % turn_order.size()]->cooldown[i]--;
 		}
-			
+
 	}
 	calculated = false;
 	s_spell = -1;

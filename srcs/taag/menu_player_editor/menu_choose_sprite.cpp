@@ -105,7 +105,7 @@ void			menu_choose_sprite(t_data data)
 		gui.draw_self();
 
 
-		render_screen(true);
+		render_screen();
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{

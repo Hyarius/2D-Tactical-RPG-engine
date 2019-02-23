@@ -423,7 +423,7 @@ void menu_spell_editor(t_data data)
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}
-		render_screen(true);
+		render_screen();
 	}
 
 	read_spell();

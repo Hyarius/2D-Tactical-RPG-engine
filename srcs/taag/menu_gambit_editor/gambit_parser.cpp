@@ -163,7 +163,7 @@ static string parse_heal_caster_hp(t_ai_helper data)
 
 typedef string (*f_gambit_parsor)(t_ai_helper);
 
-f_gambit_parsor f_list[] = {
+f_gambit_parsor f_gambit_list[] = {
 	&parse_charge,
 	&parse_charge_weak,
 	&parse_charge_percent,
@@ -186,5 +186,5 @@ string parse_gambit(t_ai_helper data)
 {
 	if (data.value.size() == 0 || data.value[0] == -1)
 		return ("");
-	return (f_list[data.value[0]](data));
+	return (f_gambit_list[data.value[0]](data));
 }

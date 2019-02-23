@@ -64,6 +64,9 @@ void				set_color_tab(void)
 	g_color_tab[LIGHT_YELLOW] = create_color(255, 250, 205, 255);
 	g_color_tab[YELLOW] = create_color(255, 228, 181, 255);
 	g_color_tab[DARK_YELLOW] = create_color(255, 255, 0, 255);
+	g_color_tab[LIGHT_PURPLE] = create_color(186, 85, 211, 255);
+	g_color_tab[PURPLE] = create_color(138, 43, 226, 255);
+	g_color_tab[DARK_PURPLE] = create_color(130, 0, 130, 255);
 }
 
 SDL_Color			get_color(int i)

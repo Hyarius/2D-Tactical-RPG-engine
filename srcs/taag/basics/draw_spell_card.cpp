@@ -2,7 +2,6 @@
 
 void			draw_spell_card(t_spell *spell, t_vect coord, t_vect size)
 {
-	t_gui gui;
 	(void)spell;
 	t_vect unit = size / t_vect(40, 60); //unit inside the card
 

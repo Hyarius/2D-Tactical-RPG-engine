@@ -257,6 +257,6 @@ void					menu_map_editor(t_data data)
 				gui.key_press(&event);
 			engine.handle_control_camera(&event);
 		}
-		render_screen(true);
+		render_screen();
 	}
 }

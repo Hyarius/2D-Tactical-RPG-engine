@@ -70,7 +70,7 @@ void			s_game_engine::placement_phase()
 			handle_control_camera(&event);
 			handle_actor_placement(&event, &index);
 		}
-		render_screen(true);
+		render_screen();
 	}
 	board.placement_list.clear();
 	board.enemy_placement_list.clear();

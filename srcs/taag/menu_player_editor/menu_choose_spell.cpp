@@ -17,11 +17,6 @@ static void	modify_index(t_data data)
 		else
 			spell_list[i] = &(spell_map[spell_heros_name[(*index + i) % spell_heros_name.size()]]);
 	}
-	prepare_screen();
-
-	gui->draw_self();
-
-	render_screen(true);
 }
 
 static void	quit_select_spell(t_data data)// &actor | num spell | i | &play
@@ -67,22 +62,22 @@ void		menu_choose_spell(t_data data)
 						gui.unit * t_vect(26, 1), gui.unit * t_vect(3, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						modify_index, t_data(2, &index, -6)));
+						modify_index, t_data(3, &index, -6, &gui)));
 
 	gui.add(new t_button(new t_text_button(
 						"down", BLACK,
 						gui.unit * t_vect(26, 14), gui.unit * t_vect(3, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						modify_index, t_data(2, &index, 6)));
-	prepare_screen();
-
-	gui.draw_self();
-
-	render_screen(true);
+						modify_index, t_data(3, &index, 6, &gui)));
 
 	while (play == true)
 	{
+		prepare_screen();
+
+		gui.draw_self();
+
+		render_screen();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
