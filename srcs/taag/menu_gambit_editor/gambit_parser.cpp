@@ -174,12 +174,12 @@ f_gambit_parsor f_gambit_list[] = {
 	&parse_attack,
 	&parse_attack_weak,
 	&parse_attack_percent,
+	&parse_attack_caster_hp,
 	&parse_help,
 	&parse_help_weak,
 	&parse_help_percent,
-	&parse_turn,
-	&parse_attack_caster_hp,
 	&parse_heal_caster_hp,
+	&parse_turn,
 };
 
 string parse_gambit(t_ai_helper data)

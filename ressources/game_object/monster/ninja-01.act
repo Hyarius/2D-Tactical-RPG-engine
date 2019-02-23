@@ -1,0 +1,18 @@
+name:Ninja
+tileset:H37
+sprite_pos:0:4
+health:62
+action:8
+mouvement:4
+initiative:7
+spell0:Fire-sword
+spell1:Fire-dagger
+spell2:Fire arrow
+spell3:Charge
+spell4:NULL
+spell5:NULL
+7:3:-1:-1:1:-1:0:0:0:0
+8:0:-1:-1:1:-1:0:0:0:0
+8:1:-1:-1:1:-1:0:0:0:0
+8:2:-1:-1:1:-1:0:0:0:0
+1:1:0:1:-1:0:0:0:0:0

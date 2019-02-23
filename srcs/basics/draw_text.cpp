@@ -236,7 +236,7 @@ vector<string>		prepare_paragraphe(string text, int text_size, t_vect size)
 		{
 			result.push_back(text_line);
 			text_line = line[i] + " ";
-			tmp.x = 0;
+			tmp.x = len;
 		}
 		i++;
 	}

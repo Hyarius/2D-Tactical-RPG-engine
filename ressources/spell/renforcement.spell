@@ -1,0 +1,20 @@
+name:Renforcement
+description:Cure every poison effect of the target, cure every malus PA effect of the target and cure every malus PM effect of the target
+icon:simple_iconset
+sprite:7:6
+m_spell:0
+pa:2
+pm:0
+cooldown:0
+range:0:0:0
+type:0
+on target:0
+zone:0:0
+effect1:18:0:0:0:0
+effect2:20:6:1:2:0
+effect3:21:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

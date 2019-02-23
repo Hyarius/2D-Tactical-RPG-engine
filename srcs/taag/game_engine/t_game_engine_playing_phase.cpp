@@ -10,7 +10,7 @@ void				s_game_engine::handle_control_game(SDL_Event *event)
 		if (gui.click(event) == false)
 		{
 			if (s_spell == -1)
-				move_actor(board.get_mouse_pos());
+				move_actor(player, board.get_mouse_pos(), 1.0);
 			else
 				cast_spell(board.get_mouse_pos());
 			check_alive();

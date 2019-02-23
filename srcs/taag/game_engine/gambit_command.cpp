@@ -47,7 +47,7 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
 	t_actor *saved = NULL;
@@ -96,7 +96,7 @@ bool				s_game_engine::get_close_enemy_percent(t_ai_helper data)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -113,7 +113,7 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
@@ -162,7 +162,7 @@ bool				s_game_engine::get_close_enemy_weak(t_ai_helper data)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -179,7 +179,7 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
@@ -224,7 +224,7 @@ bool				s_game_engine::get_close_enemy(t_ai_helper data)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -241,7 +241,7 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
@@ -287,7 +287,7 @@ bool				s_game_engine::get_close_ally(t_ai_helper data)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -304,7 +304,7 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 	int distance = data.value[1];
 	int delta = data.value[2];
 	int type = data.value[3];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
@@ -355,7 +355,7 @@ bool				s_game_engine::get_close_ally_percent(t_ai_helper data)
 		result = path[data.value[4]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -372,7 +372,7 @@ bool				s_game_engine::get_close_ally_damaged(t_ai_helper data)
 	int distance = data.value[2];
 	int delta = data.value[3];
 	int type = data.value[4];
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 	vector<t_vect>	range;
 	vector<t_vect> 	to_calc;
 	size_t i = 0, j;
@@ -423,7 +423,7 @@ bool				s_game_engine::get_close_ally_damaged(t_ai_helper data)
 		result = path[data.value[5]];
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && result != t_vect(-1, -1))
 	{
-		move_actor(result);
+		move_actor(turn_order[turn_index % turn_order.size()], result, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);
@@ -518,11 +518,11 @@ bool				s_game_engine::flee_enemy(t_ai_helper data)
 		}
 		actual = to_look;
 	}
-	calculate_distance();
+	calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 
 	if (board.get_cell(turn_order[turn_index % turn_order.size()]->coord)->cursor != t_vect(2, 2) && actual != t_vect(-1, -1))
 	{
-		move_actor(actual);
+		move_actor(turn_order[turn_index % turn_order.size()], actual, 1);
 		if (turn_order[turn_index % turn_order.size()]->stat.pm.value == old_pm)
 			return (false);
 		return (true);

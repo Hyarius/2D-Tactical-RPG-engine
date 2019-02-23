@@ -65,21 +65,21 @@ bool				s_game_engine::cast_spell(t_vect mouse)
 	return (true);
 }
 
-void				s_game_engine::move_actor(t_vect dest)
+void				s_game_engine::move_actor(t_actor *player, t_vect dest, double speed)
 {
 	if (board.get_cell(dest.x, dest.y) &&
-		turn_order[turn_index % turn_order.size()]->destination.size() == 0 &&
-		turn_order[turn_index % turn_order.size()]->stat.pm.value != 0 &&
-		(board.get_cell(dest.x, dest.y)->m_dist != 999 ||
-		(board.get_cell(dest.x, dest.y)->m_dist == 999 && board.get_cell(dest.x, dest.y)->actor != NULL)))
+		((board.get_cell(dest.x, dest.y)->m_dist != 999 ||
+		(board.get_cell(dest.x, dest.y)->m_dist == 999 && board.get_cell(dest.x, dest.y)->actor != NULL)) || speed != 1))
 	{
-		t_actor *player = turn_order[turn_index % turn_order.size()];
-		player->destination = pathfinding(dest);
+		player->destination = pathfinding(player, dest, speed);
 		if (player->destination.size() != 0)
 		{
 			t_vect final_dest = player->destination[player->destination.size() - 1];
-			player->change_stat_pm(-board.get_cell(final_dest)->m_dist);
-			player->apply_effect(2);
+			if (speed == 1)
+			{
+				player->change_stat_pm(-board.get_cell(final_dest)->m_dist);
+				player->apply_effect(2);
+			}
 			board.get_cell(final_dest)->actor = player;
 			board.get_cell(player->coord)->actor = NULL;
 			board.reset_board();

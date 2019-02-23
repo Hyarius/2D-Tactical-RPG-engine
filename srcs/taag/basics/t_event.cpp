@@ -105,17 +105,16 @@ void		push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
 			source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
+		t_vect tmp = t_vect(target->coord);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(target->coord + delta) && game->board.get_cell(target->coord + delta)->node->m_obs == false && game->board.get_cell(target->coord + delta)->actor == NULL)
-			{
-				game->board.get_cell(target->coord)->actor = NULL;
-				target->coord = target->coord + delta;
-				game->board.get_cell(target->coord)->actor = target;
-			}
+			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+				tmp = tmp + delta;
 			i++;
 		}
+		game->calculate_distance(target->coord);
+		game->move_actor(target, tmp, 0.4);
 	}
 }
 
@@ -125,17 +124,16 @@ void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
 			source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
+		t_vect tmp = t_vect(target->coord);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(target->coord + delta)->node->m_obs == false && game->board.get_cell(target->coord + delta)->actor == NULL)
-			{
-				game->board.get_cell(target->coord)->actor = NULL;
-				target->coord = target->coord + delta;
-				game->board.get_cell(target->coord)->actor = target;
-			}
+			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+				tmp = tmp + delta;
 			i++;
 		}
+		game->calculate_distance(target->coord);
+		game->move_actor(target, tmp, 0.4);
 	}
 }
 
@@ -227,17 +225,16 @@ void		push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
 			source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
+		t_vect tmp = t_vect(source->coord);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(source->coord + delta) && game->board.get_cell(source->coord + delta)->node->m_obs == false && game->board.get_cell(source->coord + delta)->actor == NULL)
-			{
-				game->board.get_cell(source->coord)->actor = NULL;
-				source->coord = source->coord + delta;
-				game->board.get_cell(source->coord)->actor = target;
-			}
+			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+				tmp = tmp + delta;
 			i++;
 		}
+		game->calculate_distance(source->coord);
+		game->move_actor(source, tmp, 0.4);
 	}
 }
 
@@ -247,24 +244,23 @@ void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
 			source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
+		t_vect tmp = t_vect(source->coord);
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(source->coord + delta) && game->board.get_cell(source->coord + delta)->node->m_obs == false && game->board.get_cell(source->coord + delta)->actor == NULL)
-			{
-				game->board.get_cell(source->coord)->actor = NULL;
-				source->coord = source->coord + delta;
-				game->board.get_cell(source->coord)->actor = target;
-			}
+			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+				tmp = tmp + delta;
 			i++;
 		}
+		game->calculate_distance(source->coord);
+		game->move_actor(source, tmp, 0.4);
 	}
 }
 
 void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	(void)source;
-	if (target != NULL)
+	if (target != NULL && target != source)
 	{
 		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.poison.push_back(new_effect);
@@ -288,6 +284,8 @@ void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_sta
 	(void)source;
 	if (target != NULL)
 	{
+		if (effect_stat.value[1] < 0 && target == source)
+			return;
 		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pa.push_back(new_effect);
 		if (effect_stat.value[1] < 0)
@@ -302,6 +300,8 @@ void		apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_sta
 	(void)source;
 	if (target != NULL)
 	{
+		if (effect_stat.value[1] < 0 && target == source)
+			return;
 		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pm.push_back(new_effect);
 		if (effect_stat.value[1] < 0)

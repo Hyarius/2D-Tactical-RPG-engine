@@ -34,6 +34,7 @@ gambit_command command[] = {
 	&s_game_engine::action_on_turn, // 15
 };
 
+
 bool					s_game_engine::execute_gambit(t_actor *source)
 {
 	if (board.check_anim() == false || board.check_visual() == false ||

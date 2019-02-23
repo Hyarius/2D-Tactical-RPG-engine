@@ -321,17 +321,17 @@ typedef struct			s_game_engine
 	void				outvoke_actor(t_actor *new_actor);	//outvoke an actor
 	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
 	bool				v_calc_cell(t_vect source, t_vect target, int prev_dist); //utils to check if a cell can be seen
-	void				calculate_distance();		//compute what tile the current actor can acces by foot
+	void				calculate_distance(t_vect start);		//compute what tile we can assec from a specifia tile by foot
 	void				calculate_vision_circle();	//compute what tile the current actir can see
 	void				calculate_vision_line();	//compute what tile the current actir can see
 	void				calculate_zone();			//compute what tile gonna been affected by the active spell
-	vector<t_vect>		pathfinding(t_vect dest);	//get the list of destination the actor gonna pass to go on the dest tile
+	vector<t_vect>		pathfinding(t_actor *player, t_vect dest, double speed);	//get the list of destination the actor gonna pass to go on the dest tile
 	vector<t_vect>		calc_path(t_vect dest);		//get the list of tile to go to targeted tile
 	vector<t_vect>		calc_diam(int size);		//calc the list of cell to hit with a cross zone
 	vector<t_vect>		calc_cross(int size);		//calc the list of cell to hit with a cross_line zone
 	vector<t_vect>		calc_line(int size, t_vect dir);	//calc the list of cell to hit with a line zone
 	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
-	void				move_actor(t_vect dest);	//check if the distance is close enought than start the pathfinding for the actor
+	void				move_actor(t_actor *player, t_vect dest, double speed);	//check if the distance is close enought than start the pathfinding for the actor
 	bool				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
 	void				check_alive();				//check if an actor is dead
 	void				update_board();			//update the state of the screen, updating the actor_list.destination

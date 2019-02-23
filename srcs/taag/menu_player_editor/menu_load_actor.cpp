@@ -41,7 +41,7 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 		*entry_path = *(text_list_load[i]);
 		*entry_name = player->name;
 		t_actor base;
-		*pool_value = 30 - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 4 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
+		*pool_value = 30 - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
 		*play = false;
 	}
 }

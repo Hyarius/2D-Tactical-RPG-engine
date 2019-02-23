@@ -11,14 +11,13 @@ void				s_game_engine::m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j,
 	}
 }
 
-void				s_game_engine::calculate_distance()
+void				s_game_engine::calculate_distance(t_vect start)
 {
 	board.reset_board();
-	t_actor 		*player = turn_order[turn_index % turn_order.size()];
 	vector<t_vect>	to_calc;
 	size_t i;
 
-	to_calc.push_back(player->coord);
+	to_calc.push_back(start);
 
 	i = 0;
 	board.get_cell(to_calc[i].x, to_calc[i].y)->m_dist = 0;
@@ -31,6 +30,7 @@ void				s_game_engine::calculate_distance()
 		i++;
 	}
 	i = 1;
+	t_actor *player = turn_order[turn_index % turn_order.size()];
 	while (i < to_calc.size() && player->team == 1)
 	{
 		if (board.get_cell(to_calc[i].x, to_calc[i].y)->m_dist <= turn_order[turn_index % turn_order.size()]->stat.pm.value)
@@ -40,12 +40,12 @@ void				s_game_engine::calculate_distance()
 	calculated = true;
 }
 
-vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
+vector<t_vect>		s_game_engine::pathfinding(t_actor *player, t_vect dest, double speed)
 {
 	vector<t_vect>	path;
 	t_vect			actual = dest;
 	t_vect			to_look = actual;
-	t_vect			source = turn_order[turn_index % turn_order.size()]->coord;
+	t_vect			source = player->coord;
 
 	if (board.get_cell(dest) && board.get_cell(dest)->actor != NULL &&
 		((abs(source.x - dest.x) == 1 && source.y - dest.y == 0) ||
@@ -64,11 +64,11 @@ vector<t_vect>		s_game_engine::pathfinding(t_vect dest)
 			to_look = t_vect((int)(actual.x), (int)(actual.y) - 1);
 		if (actual == to_look)
 			break;
-		if (board.get_cell((int)(actual.x), (int)(actual.y))->m_dist <= turn_order[turn_index % turn_order.size()]->stat.pm.value && actual != source)
+		if ((board.get_cell(actual)->m_dist <= player->stat.pm.value && actual != source) || speed != 1)
 		{
 			int i = 0;
-			t_vect delta = ((to_look - actual) / (15 * board.get_cell((int)(actual.x), (int)(actual.y))->node->cost));
-			while (i < 15 * board.get_cell((int)(actual.x), (int)(actual.y))->node->cost)
+			t_vect delta = ((to_look - actual) / ((15.0 * speed) * (speed != 1 ? board.get_cell(actual)->node->cost : 1)));
+			while (i < (15.0 * speed) * (speed != 1 ? board.get_cell(actual)->node->cost : 1))
 			{
 				path.insert(path.begin(), actual + delta * i);
 				i++;

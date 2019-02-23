@@ -36,7 +36,7 @@ s_spell_card::s_spell_card(t_spell **p_spell, t_vect p_coord, t_vect p_size, gui
 	text_coord[2] = (((coord + unit * t_vect(14, 13)) + unit * t_vect(12, 5.5) / 2));
 	text_coord[3] = (((coord + unit * t_vect(27, 13)) + unit * t_vect(12, 5.5) / 2));
 	text_coord[4] = (((coord + unit * t_vect(14, 43)) + unit * t_vect(12, 5.5) / 2));
-	paragraphe_size = unit * t_vect(36.6, 35);
+	paragraphe_size = unit * t_vect(36, 22);
 	text_coord[5] = (coord + unit * t_vect(2, 20.5));
 	for (size_t i = 6; i < 15; i++)
 	{
@@ -65,11 +65,11 @@ void			s_spell_card::draw_self()
 		actual.push_back(to_string((*spell)->cost_pa) + " PA");
 		actual.push_back(to_string((*spell)->cost_pm) + " PM");
 		actual.push_back(to_string((*spell)->range[0]) + "-" + to_string((*spell)->range[1]) + " PO");
-		actual.push_back("(cooldown : " + to_string((*spell)->cooldown) + " turns)");
+		actual.push_back(((*spell)->cooldown != 0 ? "(cooldown : " + to_string((*spell)->cooldown) + " turns)" : " "));
 		actual.push_back((*spell)->desc);
 		for (size_t i = 0; i < actual.size(); i++)
 		{
-			if (text[i] != actual[i] && i != 5)
+			if (text[i] != actual[i] && i != 5 && actual[i] != "")
 			{
 				SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), actual[i].c_str(), get_color(BLACK));
 				if (surface == NULL)
@@ -80,7 +80,7 @@ void			s_spell_card::draw_self()
 				image_size[i] = t_vect(surface->w, surface->h);
 				SDL_FreeSurface(surface);
 			}
-			else if (text[i] != actual[i] && i == 5)
+			else if (text[i] != actual[i] && i == 5 && actual[i] != "")
 			{
 				text[i] = actual[i];
 				vector<string> lines = prepare_paragraphe(text[i], text_size, paragraphe_size);

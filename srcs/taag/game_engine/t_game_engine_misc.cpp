@@ -100,7 +100,7 @@ void				s_game_engine::initiate_turn_order()
 		turn_order[turn_index % turn_order.size()]->selected = true;
 	board.reset_board();
 	if (turn_order.size())
-		calculate_distance();
+		calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 }
 
 void				s_game_engine::update_board()
@@ -130,7 +130,7 @@ void				s_game_engine::update_board()
 	if (player->team == 1)
 	{
 		if (turn_order.size() && player->destination.size() == 0 && calculated == false && s_spell == -1)
-			calculate_distance();
+			calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
 		if (turn_order.size() && player->destination.size() == 0 && s_spell != -1 && calculated == false)
 		{
 			if (player->spell[s_spell]->range_type == R_CIRCLE)

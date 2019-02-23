@@ -63,9 +63,9 @@ void					menu_player_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), &pool, 1, 4, 5, 12,
+	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), &pool, 1, 3, 5, 12,
 		new t_button(new s_text_button(
-				"Action points (1 act / 4 AtbP): ", DARK_GREY,
+				"Action points (1 act / 3 AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(

@@ -1,22 +1,15 @@
 name:Perso 2
-tileset:H05
+tileset:H58
 sprite_pos:0:0
-health:105
-action:9
-mouvement:5
-initiative:6
-spell0:Burning slash
-spell1:Frozen slash
-spell2:Stunning slash
-spell3:Power up
-spell4:Fireball
-spell5:Rock fall
-7:0:-1:-1:0:0:0:0:0:0
-7:1:-1:-1:0:0:0:0:0:0
-7:2:-1:-1:0:0:0:0:0:0
-7:3:-1:-1:0:0:0:0:0:0
-7:4:-1:-1:0:0:0:0:0:0
-7:5:-1:-1:0:0:0:0:0:0
--1:0:0:0:0:0:0:0:0:0
-3:25:-1:0:0:0:0:0:0:0
-0:1:0:0:-1:0:0:0:0:0
+health:95
+action:12
+mouvement:4
+initiative:5
+spell0:Fire-sword
+spell1:Fire-dagger
+spell2:Fire arrow
+spell3:Consecration
+spell4:Shadow step
+spell5:Cheering
+0:0:0:0:0:0:0:0:0:0
+0:0:0:0:0:0:0:0:0:0

@@ -1,32 +1,14 @@
 name:Perso 1
-tileset:H58
+tileset:H00
 sprite_pos:0:0
-health:115
-action:9
+health:90
+action:12
 mouvement:4
-initiative:7
-spell0:Absorb
-spell1:Devil slash
-spell2:Attraction
-spell3:Heal major
-spell4:Frozen slash
-spell5:Devotion
-7:0:-1:-1:0:0:0:0:0:0
-7:1:-1:-1:0:0:0:0:0:0
-7:2:-1:-1:0:0:0:0:0:0
-7:3:-1:-1:0:0:0:0:0:0
-7:4:-1:-1:0:0:0:0:0:0
-7:5:-1:-1:0:0:0:0:0:0
--1:0:0:0:0:0:0:0:0:0
-3:25:-1:0:0:0:0:0:0:0
-0:1:0:0:-1:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
-0:0:0:0:0:0:0:0:0:0
+initiative:6
+spell0:Absord-sword
+spell1:Charge
+spell2:Consecration
+spell3:Congelation
+spell4:Major heal
+spell5:Transposition
 0:0:0:0:0:0:0:0:0:0
