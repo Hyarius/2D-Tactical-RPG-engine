@@ -1,6 +1,6 @@
 name:Sand tile - empty
 tileset:simple_tile
-sprite:1:2
+sprite:1:0
 cost:1
 m_obstacle:0
 v_obstacle:0

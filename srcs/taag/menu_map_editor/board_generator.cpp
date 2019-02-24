@@ -131,7 +131,7 @@ void	menu_generate_board(t_data data)
 	t_vect coord = t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit;
 	t_vect size = t_vect(1, 1) * gui.unit;
 
-	t_iterator *node_iterator = new s_iterator(&node_type, NULL, 8, 1, 0, engine->board.node_list.size() - 1,
+	t_iterator *node_iterator = new s_iterator(&node_type, NULL, 10, 1, 0, engine->board.node_list.size() - 1,
 		new t_button(new s_text_button(
 			"Node : ", DARK_GREY,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,

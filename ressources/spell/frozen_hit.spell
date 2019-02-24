@@ -6,7 +6,7 @@ m_spell:0
 pa:3
 pm:0
 cooldown:0
-range:1:4:1
+range:1:4:0
 type:0
 on target:0
 zone:1:0

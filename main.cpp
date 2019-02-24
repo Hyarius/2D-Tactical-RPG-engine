@@ -14,15 +14,22 @@ int main(int argc, char **argv)
 	if (argc != 1)
 		return (0);
 
-	window_initialisation(argv[0]);
 
+	//generate_charset_tileset();
 	//generate_animation_tileset();
+	//generate_node_file();
 
-	read_tileset();
-	init_actions();
-	read_spell();
+	bool play = true;
 
-	menu_start();
+	if (play == true)
+	{
+		window_initialisation(argv[0]);
+		read_tileset();
+		init_actions();
+		read_spell();
+
+		menu_start();
+	}
 
 	return (0);
 }

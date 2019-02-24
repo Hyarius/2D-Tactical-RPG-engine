@@ -1,6 +1,6 @@
-name:Stone tile - Move blocked
+name:Water tile - Move and vision blocked
 tileset:simple_tile
-sprite:4:5
-cost:1
+sprite:3:7
+cost:2
 m_obstacle:1
-v_obstacle:0
+v_obstacle:1

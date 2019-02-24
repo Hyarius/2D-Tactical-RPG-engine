@@ -53,23 +53,23 @@ void			generate_node_file()
 	while (i < 8)
 	{
 		size_t j = 0;
-		while (j < 8)
+		while (j < 10)
 		{
-			string text = to_string(i * 8 + j);
+			string text = to_string(i * 10 + j);
 			if (text.size() != 2)
 				text = "0" + text;
 			myfile.open(NODE_PATH + text + NODE_EXT);
 			if (myfile.fail())
 				printf("can't open such file : %s%s%s\n", NODE_PATH, text.c_str(), NODE_EXT);
-			string text_type = (j == 3 ? type[1] : (j == 4 || j == 5 ? type[2] : (j == 6 || j == 7 ? type[3] : type[0])));
+			string text_type = (j == 3 ? type[1] : (j == 4 || j == 5 ? type[2] : (j == 6 || j == 7 || j == 8 || j == 9 ? type[3] : type[0])));
 			myfile << "name:" + name[i] + text_type + "\n";
 			myfile << "tileset:simple_tile\n";
 			myfile << "sprite:" + to_string(i) + ":" + to_string(j) + "\n";
 			int cost = (i == 3 ? 2 : 1) + (j == 3 ? 1 : 0);
 			myfile << "cost:" + to_string(cost) + "\n";
-			int m_obs = (j == 4 || j == 5 || j == 6 || j == 7 ? 1 : 0);
+			int m_obs = (j == 4 || j == 5 || j == 6 || j == 7 || j == 8 || j == 9 ? 1 : 0);
 			myfile << "m_obstacle:" + to_string(m_obs) + "\n";
-			int v_obs = (j == 6 || j == 7 ? 1 : 0);
+			int v_obs = (j == 6 || j == 7 || j == 8 || j == 9 ? 1 : 0);
 			myfile << "v_obstacle:" + to_string(v_obs) + "\n";
 			myfile.close();
 			j++;

@@ -1,6 +1,6 @@
-name:Dirt tile - Move and vision blocked
+name:Dirt tile - empty
 tileset:simple_tile
-sprite:2:6
+sprite:2:2
 cost:1
-m_obstacle:1
-v_obstacle:1
+m_obstacle:0
+v_obstacle:0

@@ -1,0 +1,20 @@
+name:Mushroom gaz 01
+description:Apply a poison effect that deal 6 damage(s) per turn for the next 3 turn(s)
+icon:simple_iconset
+sprite:2:4
+m_spell:1
+pa:4
+pm:0
+cooldown:4
+range:2:3:0
+type:1
+on target:1
+zone:3:1
+effect1:14:0:6:3:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

@@ -1,6 +1,6 @@
-name:Tiled tile - empty
+name:Stone tile - empty
 tileset:simple_tile
-sprite:5:0
+sprite:4:0
 cost:1
 m_obstacle:0
 v_obstacle:0

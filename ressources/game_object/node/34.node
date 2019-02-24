@@ -1,6 +1,6 @@
-name:Stone tile - empty
+name:Water tile - Move blocked
 tileset:simple_tile
-sprite:4:2
-cost:1
-m_obstacle:0
+sprite:3:4
+cost:2
+m_obstacle:1
 v_obstacle:0

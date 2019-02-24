@@ -1,6 +1,6 @@
-name:Dirt tile - Move blocked
+name:Dirt tile - empty
 tileset:simple_tile
-sprite:2:4
+sprite:2:0
 cost:1
-m_obstacle:1
+m_obstacle:0
 v_obstacle:0

@@ -98,9 +98,16 @@ void				s_game_engine::initiate_turn_order()
 	}
 	if (turn_order.size())
 		turn_order[turn_index % turn_order.size()]->selected = true;
-	board.reset_board();
-	if (turn_order.size())
-		calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
+	if (turn_order[turn_index % turn_order.size()]->team != 1)
+	{
+		enemy_turn();
+	}
+	else
+	{
+		board.reset_board();
+		if (turn_order.size())
+			calculate_distance(turn_order[turn_index % turn_order.size()]->coord);
+	}
 }
 
 void				s_game_engine::update_board()
@@ -113,13 +120,13 @@ void				s_game_engine::update_board()
 	{
 		if (turn_order[i]->destination.size() != 0)
 		{
-			if (turn_order[i]->destination[0].x > turn_order[i]->coord.x)
+			if (turn_order[i]->destination[0].x > turn_order[i]->coord.x && turn_order[i] == player)
 				turn_order[i]->dir = 2;
-			else if (turn_order[i]->destination[0].x < turn_order[i]->coord.x)
+			else if (turn_order[i]->destination[0].x < turn_order[i]->coord.x && turn_order[i] == player)
 				turn_order[i]->dir = 1;
-			else if (turn_order[i]->destination[0].y < turn_order[i]->coord.y)
+			else if (turn_order[i]->destination[0].y < turn_order[i]->coord.y && turn_order[i] == player)
 				turn_order[i]->dir = 3;
-			else if (turn_order[i]->destination[0].y > turn_order[i]->coord.y)
+			else if (turn_order[i]->destination[0].y > turn_order[i]->coord.y && turn_order[i] == player)
 				turn_order[i]->dir = 0;
 			turn_order[i]->coord = turn_order[i]->destination[0];
 			turn_order[i]->destination.erase(turn_order[i]->destination.begin());

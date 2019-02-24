@@ -1,6 +1,6 @@
-name:??? tile - Move blocked
+name:Tiled tile - Slowed
 tileset:simple_tile
-sprite:6:5
-cost:1
-m_obstacle:1
+sprite:5:3
+cost:2
+m_obstacle:0
 v_obstacle:0

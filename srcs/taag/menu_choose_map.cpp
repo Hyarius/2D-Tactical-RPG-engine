@@ -25,7 +25,7 @@ static void		quit_load(t_data data)// entry_path / play / num
 	bool 		*play = (bool *)(data.data[1]);
 	int			i = (int &)(data.data[2]);
 
-	if (*(text_list_choose_map[i]) != "")
+	if (*(text_list_choose_map[i]) != "" && list_files(ACTOR_PATH, ACTOR_EXT).size() != 0)
 	{
 		*entry_path = *(text_list_choose_map[i]);
 		*play = false;

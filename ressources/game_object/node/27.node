@@ -1,6 +1,6 @@
-name:Water tile - Slowed
+name:Dirt tile - Move and vision blocked
 tileset:simple_tile
-sprite:3:3
-cost:3
-m_obstacle:0
-v_obstacle:0
+sprite:2:7
+cost:1
+m_obstacle:1
+v_obstacle:1

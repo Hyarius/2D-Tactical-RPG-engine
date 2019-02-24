@@ -1,6 +1,7 @@
 #include "taag.h"
 
 vector<t_cell *>		cell_list;
+t_gui					gui_part[3];
 
 static void				select_node(t_data data)
 {
@@ -94,6 +95,31 @@ static void				reset_selection()
 	cell_list.clear();
 }
 
+vector<string> text_type = {
+	"nothing",
+	"node",
+	"placement",
+};
+
+static void		increment_iterator_text(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+{
+	int *value = (int *)(data.data[0]);
+	int	delta = (int &)(data.data[1]);
+	int	min = (int &)(data.data[2]);
+	int	max = (int &)(data.data[3]);
+	string *text = (string *)(data.data[4]);
+
+	if (value != NULL)
+	{
+		if (*value + delta <= max && *value + delta >= min)
+		{
+			*value += delta;
+			printf("here\n");
+		}
+	}
+	*text = text_type[*value];
+}
+
 void					menu_map_editor(t_data data)
 {
 	(void)data;
@@ -101,6 +127,11 @@ void					menu_map_editor(t_data data)
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
+
+	int index = 1;
+	gui_part[0] = t_gui();
+	gui_part[1] = t_gui();
+	gui_part[2] = t_gui();
 
 	double i = 0;
 
@@ -112,14 +143,28 @@ void					menu_map_editor(t_data data)
 
 	i++;
 
-	t_button	*button = new t_button(new s_text_button(
-	"Node buttons :", DARK_GREY,
-	t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,
-	t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-	NULL, NULL);
-	gui.add(button);
+	t_iterator *gui_iterator = new s_iterator(&index, NULL, 1, 0, 0, 2,
+		new t_button(new s_text_button(
+			text_type[index], DARK_GREY,
+			t_vect(2.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"-", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		NULL,
+		new t_button(new s_text_button(
+			"+", DARK_GREY,
+			t_vect(6.65, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+	gui_iterator->minus->button->funct_left = increment_iterator;
+	gui_iterator->minus->button->data_left = t_data(5, &index, -1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+	gui_iterator->plus->button->funct_left = increment_iterator;
+	gui_iterator->plus->button->data_left = t_data(5, &index, 1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 
-	i += 0.7;
+	i++;
+
+	double saved_pos = i;
 
 	size_t j = 0;
 	t_vect size = t_vect(gui.unit.y / gui.unit.x, 1);
@@ -132,30 +177,23 @@ void					menu_map_editor(t_data data)
 				5),
 				select_node, t_data(2, &engine, ((int)j) - 1));
 
-	gui.add(node_button);
+	gui_part[1].add(node_button);
 	while (j < engine.board.node_list.size())
 	{
 		node_button = new t_button(new s_tileset_button(
 					"", DARK_GREY,
 					engine.board.node_list[j].tile,
 					engine.board.node_list[j].sprite,
-					t_vect(1 + ((size.x + 0.2) * (j % 8)), 2.2 + ((size.y + 0.2) * (i + j / 8))) * gui.unit,
+					t_vect(1 + ((size.x + 0.2) * (j % 10)), 2.2 + ((size.y + 0.2) * (i + j / 10))) * gui.unit,
 					size * gui.unit,
 					5),
 					select_node, t_data(2, &engine, j));
 
-		gui.add(node_button);
+		gui_part[1].add(node_button);
 		j++;
 	}
-	i += engine.board.node_list.size() / 8 + 1;
+	i = saved_pos;
 
-	button = new t_button(new s_text_button(
-		"Placement buttons :", DARK_GREY,
-		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(5, 0.7) * gui.unit, 5,
-		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		NULL, NULL);
-		gui.add(button);
-			i += 0.7;
 	j = 0;
 	while (j < 3)
 	{
@@ -168,7 +206,7 @@ void					menu_map_editor(t_data data)
 				5),
 				select_placement, t_data(2, &engine, ((int)j)));
 
-				gui.add(placement_button);
+			gui_part[2].add(placement_button);
 			j++;
 	}
 
@@ -208,6 +246,7 @@ void					menu_map_editor(t_data data)
 	i++;
 
 	gui.add(save_button);
+	gui.add(gui_iterator);
 	gui.add(ENTRY_NUM, entry_path);
 	gui.add(generate_button);
 	gui.add(load_button);
@@ -221,6 +260,7 @@ void					menu_map_editor(t_data data)
 		engine.draw_board();
 
 		gui.draw_self();
+		gui_part[index].draw_self();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -233,7 +273,7 @@ void					menu_map_editor(t_data data)
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (gui.click(&event) == false)
+				if (gui.click(&event) == false && gui_part[index].click(&event) == false)
 					control_mouse_editor(&engine);
 				moved = false;
 			}
@@ -254,7 +294,10 @@ void					menu_map_editor(t_data data)
 				}
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
+			{
 				gui.key_press(&event);
+				gui_part[index].key_press(&event);
+			}
 			engine.handle_control_camera(&event);
 		}
 		render_screen();

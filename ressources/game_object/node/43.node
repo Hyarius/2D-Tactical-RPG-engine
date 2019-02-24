@@ -1,6 +1,6 @@
-name:Tiled tile - Slowed
+name:Stone tile - Slowed
 tileset:simple_tile
-sprite:5:3
+sprite:4:3
 cost:2
 m_obstacle:0
 v_obstacle:0

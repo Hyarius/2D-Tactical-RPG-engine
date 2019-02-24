@@ -1,0 +1,20 @@
+name:Horn strike 00
+description:Deal 12 damage(s) to the target, reduce target's PM(s) by -1 and push the caster toward the target by 1 square(s)
+icon:simple_iconset
+sprite:5:5
+m_spell:1
+pa:4
+pm:1
+cooldown:0
+range:1:2:0
+type:0
+on target:0
+zone:1:0
+effect1:0:12:0:0:0
+effect2:2:-1:0:0:0
+effect3:12:1:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

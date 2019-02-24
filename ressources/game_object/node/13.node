@@ -1,6 +1,6 @@
-name:Sand tile - Move blocked
+name:Sand tile - Slowed
 tileset:simple_tile
-sprite:1:5
-cost:1
-m_obstacle:1
+sprite:1:3
+cost:2
+m_obstacle:0
 v_obstacle:0

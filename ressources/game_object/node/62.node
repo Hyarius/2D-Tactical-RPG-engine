@@ -1,6 +1,6 @@
-name:??? tile - Move and vision blocked
+name:??? tile - empty
 tileset:simple_tile
-sprite:7:6
+sprite:6:2
 cost:1
-m_obstacle:1
-v_obstacle:1
+m_obstacle:0
+v_obstacle:0
