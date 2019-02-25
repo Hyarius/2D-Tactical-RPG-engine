@@ -82,6 +82,10 @@ void		s_game_engine::start_game(string path)
 	for (size_t i = 0; i < actor.size(); i++)
 	{
 		if (actor[i] != "NULL")
-			actor_array.push_back(new t_actor(read_actor(ACTOR_PATH + actor[i] + ACTOR_EXT)));
+		{
+			t_actor *new_actor = new t_actor(read_actor(ACTOR_PATH + actor[i] + ACTOR_EXT));
+			new_actor->team = 1;
+			actor_array.push_back(new_actor);
+		}
 	}
 }
