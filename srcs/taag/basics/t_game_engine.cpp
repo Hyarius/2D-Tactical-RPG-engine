@@ -32,7 +32,7 @@ void			save_game_engine()
 	for (size_t i = 0; i < 6; i++)
 		text.append(":" + account->actor[i]);
 	text.append("\n");
-	text.append("spell");
+	text.append("spell:NULL");
 	for (size_t i = 0; i < account->spell_unlock.size(); i++)
 		text.append(":" + account->spell_unlock[i]);
 	text.append("\n");

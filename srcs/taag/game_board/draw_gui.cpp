@@ -94,41 +94,42 @@ void				s_game_board::draw_cell_info_on_gui()
 	}
 }
 
-void				s_game_board::draw_select_wheel(int *index)
+int					tmp(int i)
 {
+	if (i == 3)
+		return (1);
+	if (i == 4)
+		return (0);
+	return (i);
+}
+
+void				s_game_board::draw_select_wheel(int index)
+{
+	(void)index;
 	if (actor_pool.size() == 0)
 		return;
-	t_vect coord = t_vect(1, 2);
-	t_vect size[3];
 
-	size[0] = t_vect(1.2, 1.2);
-	size[1] = t_vect(1.8, 1.8);
-	size[2] = t_vect(2.4, 2.4);
+	t_vect coord = t_vect(1, 1);
+	t_vect size[] = {t_vect(2, 2), t_vect(2.4, 2.4), t_vect(2.8, 2.8)};
+	t_vect space[] = {t_vect(0.4, 0.2), t_vect(0.2, 0.2), t_vect(0, 0.2)};
 
-	draw_border_rectangle(gui.unit * coord, gui.unit * size[0], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-	actor_pool[(*index - 2) % actor_pool.size()]->tile->draw_self(gui.unit * coord + 12, gui.unit * size[0] - 24, actor_pool[(*index - 2) % actor_pool.size()]->sprite);
+	int type = get_frame_state(4);
+	if (type == 3)
+		type = 1;
 
-	coord = coord + t_vect(0, size[0].y + 0.5);
-	draw_border_rectangle(gui.unit * coord, gui.unit * size[1], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-	actor_pool[(*index - 1) % actor_pool.size()]->tile->draw_self(gui.unit * coord + 12, gui.unit * size[1] - 24, actor_pool[(*index - 1) % actor_pool.size()]->sprite);
+	for (int i = 0; i < 5; i++)
+	{
+		draw_border_rectangle(gui.unit * (coord + space[tmp(i)]), gui.unit * size[tmp(i)], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
+		int tile_index = ((index + (i - 2) < 0 ? index + (i - 2) - 1 : index + (i - 2))) % actor_pool.size();
+		actor_pool[tile_index]->tile->draw_self(gui.unit * (coord + space[tmp(i)]) + 12, gui.unit * size[tmp(i)] - 24, actor_pool[tile_index]->sprite + t_vect(type, 0));
+		coord.y += size[tmp(i)].y + space[tmp(i)].y;
+	}
 
-	coord = coord + t_vect(0, size[1].y + 0.5);
-	draw_border_rectangle(gui.unit * coord, gui.unit * size[2], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-	actor_pool[(*index) % actor_pool.size()]->tile->draw_self(gui.unit * coord + 12, gui.unit * size[2] - 24, actor_pool[(*index) % actor_pool.size()]->sprite);
-
-	coord = coord + t_vect(0, size[2].y + 0.5);
-	draw_border_rectangle(gui.unit * coord, gui.unit * size[1], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-	actor_pool[(*index + 1) % actor_pool.size()]->tile->draw_self(gui.unit * coord + 12, gui.unit * size[1] - 24, actor_pool[(*index + 1) % actor_pool.size()]->sprite);
-
-	coord = coord + t_vect(0, size[1].y + 0.5);
-	draw_border_rectangle(gui.unit * coord, gui.unit * size[0], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-	actor_pool[(*index + 2) % actor_pool.size()]->tile->draw_self(gui.unit * coord + 12, gui.unit * size[0] - 24, actor_pool[(*index + 2) % actor_pool.size()]->sprite);
-
-	coord = coord + t_vect(0, size[0].y + 0.5);
+	coord.y += space[tmp(4)].y;
 	size[0] = t_vect(4.5, 6);
 	draw_border_rectangle(gui.unit * coord, gui.unit * size[0], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
 	int i = 0;
-	t_actor *player = actor_pool[(*index) % actor_pool.size()];
+	t_actor *player = actor_pool[(index) % actor_pool.size()];
 	string text = "Actor : " + player->name;
 	static int text_size = calc_text_max_size(text, gui.unit * t_vect(4.5, 0.5)) / 1.3;
 	draw_lined_text(text, text_size, gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
@@ -142,7 +143,7 @@ void				s_game_board::draw_select_wheel(int *index)
 	{
 		text = "Spell [" + to_string(i - 4) + "] : " + player->spell[i - 4]->name;
 		draw_lined_text(text, text_size , gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
-}
+	}
 }
 
 void				s_game_board::draw_gui()

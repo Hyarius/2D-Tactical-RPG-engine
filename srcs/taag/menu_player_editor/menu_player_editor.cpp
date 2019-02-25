@@ -144,8 +144,12 @@ void					menu_actor_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-
-	size_t	*tile_index;
+	int t = 0;
+	while(&(sprite_map[account->tile_unlock[t]]) != actor.tile)
+	{
+		t++;
+	}
+	size_t	tile_index = t;
 	t_vect	*sprite_target;
 
 	i += 3.4;
@@ -182,11 +186,11 @@ void					menu_actor_editor(t_data data)
 	i++;
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(human_sprite_name[0]), t_vect(0, 0), t_vect(4, 0),
+	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(account->tile_unlock[tile_index % account->tile_unlock.size()]), actor.sprite, t_vect(4, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
-				t_vect(3, 4), &human_sprite_name,
+				t_vect(3, 4), &(account->tile_unlock),
 				new t_button(new s_text_button(
 						"Tileset : ", DARK_GREY,
 						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -201,11 +205,10 @@ void					menu_actor_editor(t_data data)
 						"+", DARK_GREY,
 						t_vect(18.5, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1, 1 + (1.2 * (i + 1))) * gui.unit, 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	((t_tileset_button *)(tileset_selector->container->button))->data_left = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &human_sprite_name);
+	((t_tileset_button *)(tileset_selector->container->button))->data_left = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &(account->tile_unlock));
 	i++;
 
-	tile_index = &(tileset_selector->i);
-	tile_button->tile = get_sprite_tile(sprite_name[*tile_index]);
+	tile_button->tile = get_sprite_tile(sprite_name[tile_index % account->tile_unlock.size()]);
 	sprite_target = &(((t_tileset_button *)(tileset_selector->container->button))->selected);
 
 	gui.add(back_ground);
@@ -227,7 +230,7 @@ void					menu_actor_editor(t_data data)
 	while (play)
 	{
 		actor.name = *name;
-		actor.tile = &(sprite_map[human_sprite_name[*tile_index]]);
+		actor.tile = &(sprite_map[account->tile_unlock[tile_index % account->tile_unlock.size()]]);
 		actor.sprite = *sprite_target;
 
 		prepare_screen();

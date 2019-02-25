@@ -356,7 +356,7 @@ typedef struct			s_game_board
 	//draw_gui
 	void				draw_actor_info_on_gui();
 	void				draw_cell_info_on_gui();
-	void				draw_select_wheel(int *index);
+	void				draw_select_wheel(int index);
 	void				draw_gui();
 
 	//draw_self
@@ -376,7 +376,7 @@ typedef struct			s_game_board
 	void				handle_control_camera(SDL_Event *event);
 	bool				cast_spell(t_vect mouse);
 	void				move_actor(t_actor *player, t_vect dest, double speed);
-	void				handle_actor_placement(SDL_Event *event, int *index, vector<t_actor *> game_actor_list);
+	void				handle_actor_placement(SDL_Event *event, int *index, vector<t_actor *> *game_actor_list);
 	void				handle_control_game(SDL_Event *event);
 
 	//initialisation
@@ -453,6 +453,7 @@ void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one 
 
 void					set_game_engine(t_game_board *new_game);
 void					set_coord_target(t_vect p_coord);
+void					change_s_spell(t_data data);
 
 void					generate_charset_tileset();
 void					generate_animation_tileset();

@@ -8,14 +8,14 @@ static void	modify_index(t_data data)
 	int delta = (int &)(data.data[1]);
 	t_gui *gui = (t_gui *)(data.data[2]);
 
-	if (*index + delta >= -12 && *index + delta < (int)(((spell_heros_name.size() / 6) * 6 + 6)))
+	if (*index + delta >= -12 && *index + delta < (int)(((account->spell_unlock.size() / 6) * 6 + 6)))
 		*index += delta;
 	for (int i = 0; i < 18; i++)
 	{
-		if (*index + i >= (int)(spell_heros_name.size()) || *index + i < 0)
+		if (*index + i >= (int)(account->spell_unlock.size()) || *index + i < 0)
 			spell_list[i] = &(spell_map["NULL"]);
 		else
-			spell_list[i] = &(spell_map[spell_heros_name[(*index + i) % spell_heros_name.size()]]);
+			spell_list[i] = &(spell_map[account->spell_unlock[(*index + i) % account->spell_unlock.size()]]);
 	}
 }
 
@@ -50,10 +50,10 @@ void		menu_choose_spell(t_data data)
 
 	for (int i = 0; i < 18; i++)
 	{
-		if (index + i >= (int)(spell_heros_name.size()) || index + i < 0)
+		if (index + i >= (int)(account->spell_unlock.size()) || index + i < 0)
 			spell_list[i] = &(spell_map["NULL"]);
 		else
-			spell_list[i] = &(spell_map[spell_heros_name[(index + i) % spell_heros_name.size()]]);
+			spell_list[i] = &(spell_map[account->spell_unlock[(index + i) % account->spell_unlock.size()]]);
 		gui.add(new t_spell_card(&(spell_list[i]), gui.unit * t_vect(0.5 + (i % 6) * 4 + (0.2 * (i % 6)), (0.5 + (i / 6) * 6 + (0.2 * (i / 6)))), gui.unit * t_vect(4, 6), quit_select_spell, t_data(4, player, spell_num, i, &play)));// &actor | num spell | i | &play
 	}
 

@@ -45,8 +45,7 @@ t_tileset			*get_sprite_tile(string p_name)
 	if (sprite_map[p_name].surface == NULL)
 	{
 		ifstream myfile;
-
-		printf("path = %s\n", (TILESET_CHARSET_PATH + p_name + TILESET_CHARSET_EXT).c_str());
+		
 		myfile.open(TILESET_CHARSET_PATH + p_name + TILESET_CHARSET_EXT);
 		if (myfile.fail())
 			error_exit();

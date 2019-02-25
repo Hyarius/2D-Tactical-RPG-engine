@@ -1,6 +1,6 @@
 level:0
 exp:0
 gold:0
-char:actor0:NULL:NULL:NULL:NULL:NULL
-spell:aero-sword:aqua-sword:electro-sword:fire-sword:frozen-sword:grounded-sword:minor heal
+char:actor0:actor1:NULL:NULL:NULL:actor2
+spell:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:NULL:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
 tile:H00:H01:H11:H16
