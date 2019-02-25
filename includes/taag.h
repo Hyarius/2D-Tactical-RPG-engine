@@ -263,6 +263,7 @@ typedef struct			s_game_board
 	vector<t_vect>		enemy_placement_list; //list of the node where you can place your actor
 	vector<vector<t_cell>>
 						cell_layer;	//list every cell of the map
+	vector<t_actor *>	actor_pool;	//contain every actor
 	vector<t_actor *>	actor_list;	//contain every actor
 	vector<t_actor *>	enemy_list;	//contain every enemy on the map
 	vector<t_actor *>	ally_list;	//contain every ally on the map
@@ -272,76 +273,32 @@ typedef struct			s_game_board
 	bool				calculated;	//did we need to calculate something ?
 	int					s_spell;	//what spell is selected : -1 for none
 	int					turn_num;	//the number of turn
-	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 	t_vect				offset;		//the offset of the center of the map
 	t_vect				target;		//utils for zooming/moving the camera
 	t_vect				sprite_unit;//the size of one sprite on the screen without the zoom
 	double				zoom;		//the zoom to apply to print everything
 
-						s_game_board();
-						s_game_board(string p_path);
-	t_cell				*get_cell(int x, int y);
-	t_cell				*get_cell(t_vect target);
-	bool				check_anim(); //check if an anim is ended
-	bool				check_visual(); //check if an anim is ended
+
+
+	//actor_handler
 	void				add_actor(t_actor *new_actor);
 	void				remove_actor(t_actor *old_actor);
-	t_vect				get_mouse_pos();//return the position of the mouse on the map / -1 -1 if not on map
-	void				draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite);
-									//draw a cursor on a certain coord
-	void				draw_self();//draw everything about the map
-	void				draw_cell_layer();//draw only the cell on the screen
-	void				draw_mouse_cursor();//draw the mouse up the cell
-	void				draw_cursor_layer();//draw only the cursor on the screen
-	void				draw_placement(); //draw tile where we can place actor
-	void				draw_actor_list();//draw every actor on the screen
-	void				draw_visual_info();//draw every visual info on screen
-	void				draw_animation();//draw every animation info on screen
-	void				draw_cell_border();//draw a 1 grey pixel border around every tile
-	void				reset_board(); //reset every cursor on the map to 0, 0
-	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
-	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
-	void				draw_board();	//draw the board at the center of the screen
-	void				draw_gui(); 	//draw the gui, and the multiples value/image to print on it
-	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
-	void				draw_cell_info_on_gui(); //draw the cell name, cost, if occuped, etc etc on the gui
-	void				draw_path(); //draw the path the actor will follow on screen
-	void				draw_select_wheel(int *index);	//draw the wheel the player can use to select what actor gonna be placed
-	void				initiate_turn_order();	//create the vector for tun order
-	void				next_turn();	//pass to the next player
-	void				insert_actor(t_actor *new_actor);	//insert an actor into the turn order in respect of him initiative
-	void				delete_actor(t_actor *old_actor);	//delete an actor
-	void				invoke_actor(t_actor *new_actor, t_vect coord);	//invoke a new actor at a place
-	void				outvoke_actor(t_actor *new_actor);	//outvoke an actor
-	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);	//Utils of calculate_distance
-	bool				v_calc_cell(t_vect source, t_vect target, int prev_dist); //utils to check if a cell can be seen
-	void				calculate_distance(t_vect start);		//compute what tile we can assec from a specifia tile by foot
-	void				calculate_vision_circle();	//compute what tile the current actir can see
-	void				calculate_vision_line();	//compute what tile the current actir can see
-	void				calculate_zone();			//compute what tile gonna been affected by the active spell
-	void				reset_vision(int min, int max);
-	vector<t_vect>		pathfinding(t_actor *player, t_vect dest, double speed);	//get the list of destination the actor gonna pass to go on the dest tile
-	vector<t_vect>		calc_path(t_vect dest);		//get the list of tile to go to targeted tile
-	vector<t_vect>		calc_diam(int size);		//calc the list of cell to hit with a cross zone
-	vector<t_vect>		calc_cross(int size);		//calc the list of cell to hit with a cross_line zone
-	vector<t_vect>		calc_line(int size, t_vect dir);	//calc the list of cell to hit with a line zone
-	vector<t_vect>		calc_square(int size);		//calc the list of cell to hit with a square zone
-	void				move_actor(t_actor *player, t_vect dest, double speed);	//check if the distance is close enought than start the pathfinding for the actor
-	bool				cast_spell(t_vect mouse);	//check if the distance is close enought to cast the selected spell
-	void				check_alive();				//check if an actor is dead
-	void				update_board();			//update the state of the screen, updating the actor_list.destination
-	void				handle_control_camera(SDL_Event *event); //handle the control refering to the camera motion
-	void				handle_control_game(SDL_Event *event); //handle the control refering to the game
-	void				handle_actor_placement(SDL_Event *event, int *index);
-	void				placement_phase();
-	void				game_loop();
-	void				ending_fight(bool *play);
+	void				insert_actor(t_actor *new_actor);
+	void				invoke_actor(t_actor *new_actor, t_vect coord);
+	void				outvoke_actor(t_actor *new_actor);
+	void				delete_actor(t_actor *new_actor);
 
-	void				enemy_turn();
+	//AI_calc_function
+	vector<t_vect>		AI_calc_diam(int size_min, int size_max);
+	vector<t_vect>		AI_calc_cross(int size_min, int size_max);
 
-	bool				get_close_enemy(t_ai_helper data);
-	bool				get_close_enemy_weak(t_ai_helper data);
+	//AI_execution
+	bool				execute_gambit(t_actor *source);
+
+	//AI_function
 	bool				get_close_enemy_percent(t_ai_helper data);
+	bool				get_close_enemy_weak(t_ai_helper data);
+	bool				get_close_enemy(t_ai_helper data);
 	bool				get_close_ally(t_ai_helper data);
 	bool				get_close_ally_percent(t_ai_helper data);
 	bool				get_close_ally_damaged(t_ai_helper data);
@@ -352,11 +309,100 @@ typedef struct			s_game_board
 	bool				help(t_ai_helper data);
 	bool				help_weak(t_ai_helper data);
 	bool				help_percent(t_ai_helper data);
-	bool				action_on_turn(t_ai_helper data);
-	bool				attack_caster_hp(t_ai_helper data);
 	bool				help_caster_hp(t_ai_helper data);
+	bool				attack_caster_hp(t_ai_helper data);
+	bool				action_on_turn(t_ai_helper data);
 
-	bool				execute_gambit(t_actor *source);
+	//AI_string_parsing
+	string 				parse_effect_poison_desc(s_effect *effect);
+	string 				parse_effect_regeneration_desc(s_effect *effect);
+	string 				parse_effect_change_pm_desc(s_effect *effect);
+	string 				parse_effect_change_pa_desc(s_effect *effect);
+
+	//calc_distance
+	void				m_calc_cell(vector<t_vect> *to_calc, int i, int x, int j, int y);
+	void				calculate_distance(t_vect start);
+
+	//calc_path
+	vector<t_vect>		pathfinding(t_actor *player, t_vect dest, double speed);
+	vector<t_vect>		calc_path(t_vect dest);
+
+	//calc_range
+	bool				v_calc_cell(t_vect source, t_vect target, int prev_dist);
+	void				calculate_vision_circle();
+	void				calculate_vision_line();
+
+	//calc_zone
+	vector<t_vect>		calc_diam(int size);
+	vector<t_vect>		calc_cross(int size);
+	vector<t_vect>		calc_line(int size, t_vect dir);
+	vector<t_vect>		calc_square(int size);
+	void				calculate_zone();
+
+	//checker
+	bool				check_anim();
+	bool				check_visual();
+	void				check_alive();
+	void				ending_fight(bool *play);
+
+	//draw_board
+	void				draw_cell_border();
+	void				draw_animation();
+	void				draw_cursor(t_vect coord, t_vect target, t_vect size, t_vect offset, t_vect sprite);
+	void				draw_board();
+	void				draw_mouse_cursor();
+	void				draw_cell_layer();
+	void				draw_visual_info();
+	void				draw_cursor_layer();
+	void				draw_placement();
+	void				draw_actor_list();
+	void				draw_path();
+
+	//draw_gui
+	void				draw_actor_info_on_gui();
+	void				draw_cell_info_on_gui();
+	void				draw_select_wheel(int *index);
+	void				draw_gui();
+
+	//draw_self
+	void				draw_self();
+
+	//game_loop
+	void				game_loop();
+
+	//getter
+	t_cell				*get_cell(int x, int y);
+	t_cell				*get_cell(t_vect target);
+	t_vect				get_mouse_pos();
+
+	//handle_input
+	void				handle_mouvement(SDL_Event *event);
+	void				handle_zoom(SDL_Event *event);
+	void				handle_control_camera(SDL_Event *event);
+	bool				cast_spell(t_vect mouse);
+	void				move_actor(t_actor *player, t_vect dest, double speed);
+	void				handle_actor_placement(SDL_Event *event, int *index);
+	void				handle_control_game(SDL_Event *event);
+
+	//initialisation
+						s_game_board();
+						s_game_board(string p_path);
+	void				initiate_turn_order();
+
+	//placement_phase
+	void				placement_phase(vector<t_actor *> game_actor_list);
+
+	//reset
+	void				reset_board();
+	void				reset_vision(int min, int max);
+
+	//turn_handler
+	void				enemy_turn();
+	void				next_turn();
+
+	//updater
+	void				update_board();
+
 }						t_game_board;
 
 typedef struct			s_game_engine
