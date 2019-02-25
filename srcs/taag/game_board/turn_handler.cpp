@@ -12,7 +12,7 @@ void				s_game_board::enemy_turn()
 		prepare_screen();
 
 		update_board();
-		draw_board();
+		draw_self();
 		draw_gui();
 
 		if (enemy_list.size() == 0 || ally_list.size() == 0)

@@ -6,8 +6,8 @@ s_game_engine::s_game_engine()
 	set_game_engine(&(this->board));
 }
 
-s_game_engine::s_game_engine(string p_path)
+void		s_game_engine::start_game(string path)
 {
-	board = t_game_board(p_path);
+	board = t_game_board(path);
 	set_game_engine(&(this->board));
 }

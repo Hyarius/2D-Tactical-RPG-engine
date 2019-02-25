@@ -74,11 +74,6 @@ typedef struct			s_value
 	int					percent();
 }						t_value;
 
-#define STAT_VALUE_HP	0	//refer to the HP value of the actor stat
-#define STAT_VALUE_PA	1	//refer to the PA value of the actor stat
-#define STAT_VALUE_PM	2	//refer to the PM value of the actor stat
-#define STAT_VALUE_INIT	3	//refer to the init value of the actor stat
-
 typedef struct			s_stat
 {
 	t_value				hp;			//health point
@@ -421,6 +416,7 @@ typedef struct			s_game_engine
 						s_game_engine();
 						s_game_engine(string p_path);
 
+	void				start_game(string path);
 
 }						t_game_engine;
 

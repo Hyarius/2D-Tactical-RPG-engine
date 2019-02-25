@@ -1,6 +1,6 @@
 #include "taag.h"
 
-int type = 0;
+int type = 1;
 
 t_game_engine	 *account;
 

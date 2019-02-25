@@ -112,10 +112,7 @@ static void		increment_iterator_text(t_data data) //0 - &value / 1 - &pool / 2 -
 	if (value != NULL)
 	{
 		if (*value + delta <= max && *value + delta >= min)
-		{
 			*value += delta;
-			printf("here\n");
-		}
 	}
 	*text = text_type[*value];
 }
@@ -157,9 +154,9 @@ void					menu_map_editor(t_data data)
 			"+", DARK_GREY,
 			t_vect(6.65, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
-	gui_iterator->minus->button->funct_left = increment_iterator;
+	gui_iterator->minus->button->funct_left = increment_iterator_text;
 	gui_iterator->minus->button->data_left = t_data(5, &index, -1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
-	gui_iterator->plus->button->funct_left = increment_iterator;
+	gui_iterator->plus->button->funct_left = increment_iterator_text;
 	gui_iterator->plus->button->data_left = t_data(5, &index, 1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 
 	i++;
@@ -257,7 +254,7 @@ void					menu_map_editor(t_data data)
 	{
 		prepare_screen(t_color(0.2, 0.2, 0.2));
 
-		board.draw_board();
+		board.draw_self();
 
 		gui.draw_self();
 		gui_part[index].draw_self();

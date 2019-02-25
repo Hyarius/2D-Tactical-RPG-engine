@@ -2,7 +2,7 @@
 
 void				s_game_board::draw_self()
 {
-	draw_self();
+	draw_board();
 	draw_cell_layer();
 	draw_placement();
 	if (turn_order.size())
