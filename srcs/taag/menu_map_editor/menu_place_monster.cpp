@@ -21,7 +21,7 @@ static void			modify_index(t_data data)
 
 static void			quit_place(t_data data)
 {
-	t_game_engine	*engine = (t_game_engine *)(data.data[0]);
+	t_game_board	*board = (t_game_board *)(data.data[0]);
 	t_vect			*coord = (t_vect *)(data.data[1]);
 	bool 			*play = (bool *)(data.data[2]);
 	int				i = (int &)(data.data[3]);
@@ -31,7 +31,7 @@ static void			quit_place(t_data data)
 		t_actor *monster = new t_actor(read_actor(MONSTER_PATH + *(text_list_place_monster[i]) + ACTOR_EXT));
 		monster->path = *(text_list_place_monster[i]);
 		monster->team = 2;
-		engine->invoke_actor(monster, *coord);
+		board->invoke_actor(monster, *coord);
 		*play = false;
 	}
 }
@@ -50,10 +50,10 @@ static void			start_monster_editor(t_data data)
 	}
 }
 
-void				menu_place_monster(t_data data) //coord, engine, gui
+void				menu_place_monster(t_data data) //coord, board, gui
 {
 	t_vect			*coord = (t_vect *)(data.data[0]);
-	t_game_engine	*engine = (t_game_engine *)(data.data[1]);
+	t_game_board	*board = (t_game_board *)(data.data[1]);
 	t_gui			*old_gui = (t_gui *)(data.data[2]);
 	t_gui			gui;
 	bool			play = true;
@@ -92,7 +92,7 @@ void				menu_place_monster(t_data data) //coord, engine, gui
 					8,
 					t_color(0.4, 0.4, 0.4),
 					t_color(0.6, 0.6, 0.6)),
-					quit_place, t_data(4, engine, coord, &play, i));
+					quit_place, t_data(4, board, coord, &play, i));
 		text_list_place_monster[i] = &(button->button->text);
 		gui.add(button);
 		i++;
@@ -107,7 +107,7 @@ void				menu_place_monster(t_data data) //coord, engine, gui
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

@@ -9,12 +9,7 @@ s_tileset::s_tileset(string p_path, t_vect p_size)
 {
 	surface = IMG_Load(p_path.c_str());
 	if (surface == NULL)
-	{
-		printf("IMG_Load: %s\n", IMG_GetError());
-			error_exit("Can't charge a surface into an image : " + p_path, 245);
-
-	}
-
+		error_exit_full(p_path.c_str(), 12);
 	if (surface->format->BytesPerPixel == 3)
 	{
 		internal_format = GL_RGB;

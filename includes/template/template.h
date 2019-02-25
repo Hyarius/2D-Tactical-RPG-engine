@@ -11,13 +11,14 @@
 extern double	SCREEN_RATIO_X;
 extern double	SCREEN_RATIO_Y;
 
-#define printOpenGLError() printOglError(__FILE__, __LINE__)
-#define printSDLError() check_sdl_error(__FILE__, __LINE__)
+#define printOpenGLError() 	printOglError(__FILE__, __LINE__)
+#define printSDLError() 	check_sdl_error(__FILE__, __LINE__)
+#define error_exit() 		error_exit_full(__FILE__, __LINE__)
 
 using namespace std;
 
 //			BASIC_FUNCTION
-void				error_exit(string msg, int error);
+void				error_exit_full(const char *file, int line);
 t_vect				get_mouse_coord();
 int					generate_nbr(int min, int max);
 vector<string>		strsplit(string input, string c);
@@ -34,6 +35,8 @@ string				*get_text(string key);
 
 string				get_str(ifstream *myfile);
 vector<string>		get_strsplit(ifstream *myfile, const string c, int size);
+void				write_on_file(string path, string text);
+void				rewrite_on_file(string path, string text);
 
 double				degree_to_radius(double angle);
 double				radius_to_degree(double radian);

@@ -290,7 +290,7 @@ static void create_choice_menu(t_data data)
 		gui_right->draw_self();
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{
@@ -383,7 +383,7 @@ void menu_gambit_editor(t_data data)
 		gui_left.draw_self();
 		gui_right.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{

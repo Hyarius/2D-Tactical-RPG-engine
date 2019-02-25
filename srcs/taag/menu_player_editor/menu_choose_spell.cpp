@@ -77,7 +77,7 @@ void		menu_choose_spell(t_data data)
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

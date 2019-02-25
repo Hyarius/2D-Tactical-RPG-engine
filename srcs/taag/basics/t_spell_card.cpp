@@ -73,7 +73,7 @@ void			s_spell_card::draw_self()
 			{
 				SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), actual[i].c_str(), get_color(BLACK));
 				if (surface == NULL)
-					error_exit("can't create the text to text_button", 3567);
+					error_exit();
 				text[i] = actual[i];
 				text_image[i] = new t_image(surface);
 				image_coord[i] = t_vect(text_coord[i].x, text_coord[i].y);
@@ -91,7 +91,7 @@ void			s_spell_card::draw_self()
 					{
 						SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), lines[j - i].c_str(), get_color(BLACK));
 						if (surface == NULL)
-							error_exit("can't create the text to text_button", 3567);
+							error_exit();
 						text_image[j] = new t_image(surface);
 						image_coord[j] = t_vect(text_coord[j].x + surface->w / 2, text_coord[j].y + surface->h / 2);
 						image_size[j] = t_vect(surface->w, surface->h);

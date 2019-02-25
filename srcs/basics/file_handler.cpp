@@ -26,7 +26,7 @@ vector<string>			get_strsplit(ifstream *myfile, const string c, int size)
 	if (line == "")
 	{
 		if (size != -1)
-			error_exit("Bad splited line (empty)!", 134);
+			error_exit();
 		tab.resize(0);
 		return (tab);
 	}
@@ -38,7 +38,7 @@ vector<string>			get_strsplit(ifstream *myfile, const string c, int size)
         word = strtok_r(NULL, c.c_str(), &context);
     }
 	if (size != -1 && tab.size() != (size_t)size)
-		error_exit("Bad splited line (" + saved_line + ")!", 134);
+		error_exit();
     return tab;
 }
 
@@ -49,7 +49,7 @@ vector<string>		list_files(string path, string extension)
 	string			line;
 	DIR				*dir = opendir(path.c_str());
 	if (dir == NULL)
-		error_exit("Can't open such directory : " + path, 12456);
+		error_exit();
 	char			*context = NULL;
 
 	string			test;
@@ -94,4 +94,20 @@ bool				copy_file(string src, string dest)
 	destination.write(buffer, size);
 
 	return (true);
+}
+
+void				write_on_file(string path, string text)
+{
+	ofstream myfile;
+	myfile.open(path.c_str(), ios::app);
+	myfile << text << endl;
+	myfile.close();
+}
+
+void				rewrite_on_file(string path, string text)
+{
+	ofstream myfile;
+	myfile.open(path.c_str());
+	myfile << text << endl;
+	myfile.close();
 }

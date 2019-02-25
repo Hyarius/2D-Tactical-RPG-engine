@@ -23,7 +23,7 @@ void				generate_animation_tileset()
 		myfile.close();
 		SDL_FreeSurface(surface);
 		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", "ressources/assets/animation/" + texture_file[i] + ".png") == false)
-			error_exit("can't copy ressources/tmp/" + texture_file[i] + ".png to " + "ressources/assets/animation/" + texture_file[i] + ".png", 15462);
+			error_exit();
 		remove(("ressources/tmp/" + texture_file[i] + ".png").c_str());
 		i++;
 	}

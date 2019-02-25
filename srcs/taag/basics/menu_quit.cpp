@@ -55,7 +55,7 @@ void			menu_quit(t_data data)
 			(*((t_gui *)(data.data[0]))).draw_self();
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{

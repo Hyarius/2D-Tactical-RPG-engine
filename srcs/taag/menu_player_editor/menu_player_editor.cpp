@@ -221,6 +221,6 @@ void					menu_player_editor(t_data data)
 				gui.key_press(&event);
 
 		}
-		render_screen();
+		render_screen(true);
 	}
 }

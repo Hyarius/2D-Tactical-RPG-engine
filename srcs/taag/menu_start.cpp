@@ -8,6 +8,8 @@ void		menu_start()
 	bool		play = true;
 	t_gui gui;
 
+	t_game_engine game;
+
 	gui.add(new s_button(new s_image_button(
 			t_image("ressources/assets/interface/Menu_start.png"),
 			t_vect(0, 0), get_win_size()),
@@ -17,7 +19,7 @@ void		menu_start()
 			"Play", DARK_GREY,
 			t_vect(21, 1) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			menu_play, NULL));
+			menu_play, t_data(1, &game)));
 
 	gui.add(new t_button(new s_text_button(
 			"Player editor", DARK_GREY,
@@ -52,7 +54,7 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_quit, t_data(2, &gui, &play)));
 
-	
+
 
 	while (play)
 	{

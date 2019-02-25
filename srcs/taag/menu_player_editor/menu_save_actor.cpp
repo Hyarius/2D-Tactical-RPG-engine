@@ -10,6 +10,7 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = *((string *)(data.data[1]));
 	ofstream myfile;
+	printf("here\n");
 	myfile.open (p_path);
 	myfile << "name:" + (to_save->name == "" ? "default" : to_save->name) + "\n";
 	map<string, t_tileset>::const_iterator i;
@@ -106,7 +107,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 			(*((t_gui *)(data.data[0]))).draw_self();
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&(event)) == 1)
 		{

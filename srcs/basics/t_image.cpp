@@ -9,8 +9,7 @@ s_image::s_image(string path)
 {
 	this->surface = IMG_Load(path.c_str());
 	if (this->surface == NULL)
-		error_exit("Can't charge a surface into an image at path : " + path, 245);
-
+		error_exit();
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;
@@ -47,8 +46,7 @@ s_image::s_image(t_color p_color)
 {
 	this->surface = create_surface_color(p_color);
 	if (this->surface == NULL)
-		error_exit("Can't charge a surface into an image", 245);
-
+		error_exit();
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;
@@ -85,8 +83,7 @@ s_image::s_image(SDL_Surface *p_surface)
 {
 	this->surface = p_surface;
 	if (this->surface == NULL)
-		error_exit("Can't charge a surface into an image", 245);
-
+		error_exit();
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;

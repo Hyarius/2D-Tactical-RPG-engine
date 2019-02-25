@@ -2,7 +2,7 @@
 
 vector<event>		g_effects;
 
-t_game_engine		*game;
+t_game_board		*game;
 t_vect				coord;
 
 void					set_coord_target(t_vect p_coord)
@@ -10,7 +10,7 @@ void					set_coord_target(t_vect p_coord)
 	coord = p_coord;
 }
 
-void			set_game_engine(t_game_engine *new_game)
+void			set_game_engine(t_game_board *new_game)
 {
 	game = new_game;
 }
@@ -109,7 +109,7 @@ void		push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 				tmp = tmp + delta;
 			i++;
 		}
@@ -128,7 +128,7 @@ void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 				tmp = tmp + delta;
 			i++;
 		}
@@ -164,11 +164,11 @@ void		move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	(void)effect_stat;
 	if (target == NULL)
 	{
-		if (game->board.get_cell(coord)->node->m_obs == false)
+		if (game->get_cell(coord)->node->m_obs == false)
 		{
-			game->board.get_cell(source->coord)->actor = NULL;
+			game->get_cell(source->coord)->actor = NULL;
 			source->coord = coord;
-			game->board.get_cell(source->coord)->actor = source;
+			game->get_cell(source->coord)->actor = source;
 		}
 	}
 }
@@ -182,8 +182,8 @@ void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		tmp = target->coord;
 		target->coord = source->coord;
 		source->coord = tmp;
-		game->board.get_cell(target->coord)->actor = target;
-		game->board.get_cell(source->coord)->actor = source;
+		game->get_cell(target->coord)->actor = target;
+		game->get_cell(source->coord)->actor = source;
 	}
 }
 
@@ -229,7 +229,7 @@ void		push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 				tmp = tmp + delta;
 			i++;
 		}
@@ -248,7 +248,7 @@ void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int i = 0;
 		while (i < effect_stat.value[0])
 		{
-			if (game->board.get_cell(tmp + delta) && game->board.get_cell(tmp + delta)->node->m_obs == false && game->board.get_cell(tmp + delta)->actor == NULL)
+			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 				tmp = tmp + delta;
 			i++;
 		}

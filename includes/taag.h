@@ -47,6 +47,9 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 #define TILESET_ANIMATION_PATH "ressources/tileset/animation/"
 #define TILESET_ANIMATION_EXT ".tls"
 
+#define GAME_ENGINE_PATH	"ressources/game_object/game_engine"
+#define GAME_ENGINE_EXT		".eng"
+
 typedef struct			s_node
 {
 	string				name;		//name of the node
@@ -263,7 +266,13 @@ typedef struct			s_game_board
 	vector<t_actor *>	actor_list;	//contain every actor
 	vector<t_actor *>	enemy_list;	//contain every enemy on the map
 	vector<t_actor *>	ally_list;	//contain every ally on the map
-
+	vector<t_actor *>	turn_order;	//the list of every actor of the team 1, 2 and 3
+	size_t				turn_index;	//iterator to the turn_order
+	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
+	bool				calculated;	//did we need to calculate something ?
+	int					s_spell;	//what spell is selected : -1 for none
+	int					turn_num;	//the number of turn
+	vector<t_actor *>	actor_pool;	//every actor that you can place on map
 	t_vect				offset;		//the offset of the center of the map
 	t_vect				target;		//utils for zooming/moving the camera
 	t_vect				sprite_unit;//the size of one sprite on the screen without the zoom
@@ -292,21 +301,6 @@ typedef struct			s_game_board
 	void				reset_board(); //reset every cursor on the map to 0, 0
 	void				handle_mouvement(SDL_Event *event);//handle the left click motion of the mouse to move the camera
 	void				handle_zoom(SDL_Event *event);//handle the wheel of the mouse, zooming the camera
-}						t_game_board;
-
-typedef struct			s_game_engine
-{
-	t_game_board		board;		//The board where the game take place
-	vector<t_actor *>	turn_order;	//the list of every actor of the team 1, 2 and 3
-	size_t				turn_index;	//iterator to the turn_order
-	t_gui				gui;		//Graphical User Interface of the game, contain every image on the screen
-	bool				calculated;	//did we need to calculate something ?
-	int					s_spell;	//what spell is selected : -1 for none
-	int					turn_num;	//the number of turn
-	vector<t_actor *>	actor_pool;	//every actor that you can place on map
-
-						s_game_engine();
-						s_game_engine(string p_path);
 	void				draw_board();	//draw the board at the center of the screen
 	void				draw_gui(); 	//draw the gui, and the multiples value/image to print on it
 	void				draw_actor_info_on_gui(); //draw HP, PA, PM on the gui
@@ -325,6 +319,7 @@ typedef struct			s_game_engine
 	void				calculate_vision_circle();	//compute what tile the current actir can see
 	void				calculate_vision_line();	//compute what tile the current actir can see
 	void				calculate_zone();			//compute what tile gonna been affected by the active spell
+	void				reset_vision(int min, int max);
 	vector<t_vect>		pathfinding(t_actor *player, t_vect dest, double speed);	//get the list of destination the actor gonna pass to go on the dest tile
 	vector<t_vect>		calc_path(t_vect dest);		//get the list of tile to go to targeted tile
 	vector<t_vect>		calc_diam(int size);		//calc the list of cell to hit with a cross zone
@@ -362,6 +357,15 @@ typedef struct			s_game_engine
 	bool				help_caster_hp(t_ai_helper data);
 
 	bool				execute_gambit(t_actor *source);
+}						t_game_board;
+
+typedef struct			s_game_engine
+{
+	t_game_board		board;		//The board where the game take place
+
+						s_game_engine();
+						s_game_engine(string p_path);
+
 
 }						t_game_engine;
 
@@ -380,7 +384,7 @@ typedef struct			s_game_engine
 #define HELP_PERC		11	//cast the spell num value[2] on the ally if HP % < value[1]
 #define TURN			12	//if turn == value[1] --> execute command num value[2] with verification helped by value[3]
 
-typedef bool (s_game_engine:: *gambit_command)(t_ai_helper);
+typedef bool (s_game_board:: *gambit_command)(t_ai_helper);
 
 void					read_tileset();				//read every tileset file and place it into the tileset_map
 t_node					read_node(string p_path); 	//read one .node file and return a t_node
@@ -392,7 +396,7 @@ t_visual_info			create_visual_info(string p_text, int p_text_color, int p_text_s
 
 void					draw_spell_card(t_spell *spell, t_vect coord, t_vect size);	//draw one card info on the top-left corner
 
-void					set_game_engine(t_game_engine *new_game);
+void					set_game_engine(t_game_board *new_game);
 void					set_coord_target(t_vect p_coord);
 
 void					generate_charset_tileset();

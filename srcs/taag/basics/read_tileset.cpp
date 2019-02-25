@@ -19,7 +19,7 @@ t_tileset			*get_tileset_tile(string p_name)
 
 		myfile.open(TILESET_TILESET_PATH + p_name + TILESET_TILESET_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_TILESET_PATH, p_name.c_str(), TILESET_TILESET_EXT);
+			error_exit();
 		string name = get_strsplit(&myfile, ":", 2)[1];
 		string path = get_strsplit(&myfile, ":", 2)[1];
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
@@ -48,7 +48,7 @@ t_tileset			*get_sprite_tile(string p_name)
 
 		myfile.open(TILESET_CHARSET_PATH + p_name + TILESET_CHARSET_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_CHARSET_PATH, p_name.c_str(), TILESET_CHARSET_EXT);
+			error_exit();
 		string name = get_strsplit(&myfile, ":", 2)[1];
 		string path = get_strsplit(&myfile, ":", 2)[1];
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
@@ -76,7 +76,7 @@ t_tileset			*get_interface_tile(string p_name)
 
 		myfile.open(TILESET_INTERFACE_PATH + p_name + TILESET_INTERFACE_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_INTERFACE_PATH, p_name.c_str(), TILESET_INTERFACE_EXT);
+			error_exit();
 		string name = get_strsplit(&myfile, ":", 2)[1];
 		string path = get_strsplit(&myfile, ":", 2)[1];
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
@@ -104,7 +104,7 @@ t_tileset			*get_animation_tile(string p_name)
 
 		myfile.open(TILESET_ANIMATION_PATH + p_name + TILESET_ANIMATION_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_ANIMATION_PATH, p_name.c_str(), TILESET_ANIMATION_EXT);
+			error_exit();
 		string name = get_strsplit(&myfile, ":", 2)[1];
 		string path = get_strsplit(&myfile, ":", 2)[1];
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
@@ -136,14 +136,14 @@ void				generate_charset_tileset()
 	{
 		myfile.open(TILESET_CHARSET_PATH + texture_file[i] + TILESET_CHARSET_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_CHARSET_PATH, texture_file[i].c_str(), TILESET_CHARSET_EXT);
+			error_exit();
 		printf("%s\n", texture_file[i].c_str());
 		myfile << "tile_name:" + texture_file[i] + "\n";
 		myfile << "file:ressources/assets/charset/" + texture_file[i] + ".png\n";
 		myfile << "size:12:8\n";
 		myfile.close();
 		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", "ressources/assets/charset/" + texture_file[i] + ".png") == false)
-			error_exit("can't copy ressources/tmp/" + texture_file[i] + ".png to ressources/assets/charset/" + texture_file[i] + ".png", 15462);
+			error_exit();
 		remove(("ressources/tmp/" + texture_file[i] + ".png").c_str());
 		i++;
 	}

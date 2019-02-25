@@ -81,7 +81,7 @@ void			menu_choose_effect(t_data data)
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -484,7 +484,7 @@ void menu_select_action(t_data data)
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

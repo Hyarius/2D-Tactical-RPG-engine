@@ -100,7 +100,7 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

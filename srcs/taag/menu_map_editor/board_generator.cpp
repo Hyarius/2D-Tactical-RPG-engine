@@ -64,7 +64,7 @@ t_game_board		board_generator(int size_x, int size_y, int node)
 
 void	menu_generate_board(t_data data)
 {
-	t_game_engine *engine = (t_game_engine *)(data.data[1]);
+	t_game_board *board = (t_game_board *)(data.data[1]);
 	string			*path = (string *)(data.data[2]);
 	SDL_Event	event;
 	bool		play = true;
@@ -84,7 +84,7 @@ void	menu_generate_board(t_data data)
 
 	i++;
 
-	int size_x = (engine->board.board_size.x != 0 ? engine->board.board_size.x : 5);
+	int size_x = (board->board_size.x != 0 ? board->board_size.x : 5);
 
 	t_iterator *size_x_iterator = new s_iterator(&size_x, NULL, 1, 1, 1, 30,
 		new t_button(new s_text_button(
@@ -105,7 +105,7 @@ void	menu_generate_board(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	int size_y = (engine->board.board_size.y != 0 ? engine->board.board_size.y : 5);
+	int size_y = (board->board_size.y != 0 ? board->board_size.y : 5);
 
 	t_iterator *size_y_iterator = new s_iterator(&size_y, NULL, 1, 1, 1, 30,
 		new t_button(new s_text_button(
@@ -131,7 +131,7 @@ void	menu_generate_board(t_data data)
 	t_vect coord = t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit;
 	t_vect size = t_vect(1, 1) * gui.unit;
 
-	t_iterator *node_iterator = new s_iterator(&node_type, NULL, 10, 1, 0, engine->board.node_list.size() - 1,
+	t_iterator *node_iterator = new s_iterator(&node_type, NULL, 10, 1, 0, board->node_list.size() - 1,
 		new t_button(new s_text_button(
 			"Node : ", DARK_GREY,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -154,7 +154,7 @@ void	menu_generate_board(t_data data)
 		"Generate", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		quit_generate_menu, t_data(6, &(engine->board), &size_x, &size_y, &play, &node_type, path)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
+		quit_generate_menu, t_data(6, &(board), &size_x, &size_y, &play, &node_type, path)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
 	i++;
 
 	t_button	*quit_button = new t_button(new s_text_button(
@@ -179,11 +179,11 @@ void	menu_generate_board(t_data data)
 		if (data.data.size() != 0)
 		{
 			(*((t_gui *)(data.data[0]))).draw_self();
-			engine->draw_board();
+			board->draw_board();
 		}
 		gui.draw_self();
 
-		engine->board.node_list[node_type].tile->draw_self(coord + 5, size - 10, engine->board.node_list[node_type].sprite);
+		board->node_list[node_type].tile->draw_self(coord + 5, size - 10, board->node_list[node_type].sprite);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -194,6 +194,6 @@ void	menu_generate_board(t_data data)
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}
-		render_screen();
+		render_screen(true);
 	}
 }

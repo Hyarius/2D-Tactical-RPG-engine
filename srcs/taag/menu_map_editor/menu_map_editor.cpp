@@ -6,10 +6,10 @@ t_gui					gui_part[3];
 static void				select_node(t_data data)
 {
 	t_node *node;
-	t_game_engine *engine = (t_game_engine *)(data.data[0]);
+	t_game_board *board = (t_game_board *)(data.data[0]);
 	int i = (int &)(data.data[1]);
 	if (i != -1)
-		node = &(engine->board.node_list[i]);
+		node = &(board->node_list[i]);
 	else
 		node = &empty_node;
 	size_t j = 0;
@@ -24,29 +24,29 @@ static void				select_node(t_data data)
 
 static void				select_placement(t_data data)
 {
-	t_game_engine *engine = (t_game_engine *)(data.data[0]);
+	t_game_board *board = (t_game_board *)(data.data[0]);
 	int i = (int &)(data.data[1]);
 	size_t j = 0;
 	while (j < cell_list.size())
 	{
 		size_t h = 0;
-		while (h < engine->board.placement_list.size())
+		while (h < board->placement_list.size())
 		{
-			if (engine->board.placement_list[h] == cell_list[j]->coord)
-				engine->board.placement_list.erase(engine->board.placement_list.begin() + h);
+			if (board->placement_list[h] == cell_list[j]->coord)
+				board->placement_list.erase(board->placement_list.begin() + h);
 			h++;
 		}
 		h = 0;
-		while (h < engine->board.enemy_placement_list.size())
+		while (h < board->enemy_placement_list.size())
 		{
-			if (engine->board.enemy_placement_list[h] == cell_list[j]->coord)
-				engine->board.enemy_placement_list.erase(engine->board.enemy_placement_list.begin() + h);
+			if (board->enemy_placement_list[h] == cell_list[j]->coord)
+				board->enemy_placement_list.erase(board->enemy_placement_list.begin() + h);
 			h++;
 		}
 		if (i == 1)
-			engine->board.placement_list.push_back(cell_list[j]->coord);
+			board->placement_list.push_back(cell_list[j]->coord);
 		else if (i == 2)
-			engine->board.enemy_placement_list.push_back(cell_list[j]->coord);
+			board->enemy_placement_list.push_back(cell_list[j]->coord);
 		cell_list[j]->cursor = t_vect(0, 0);
 		j++;
 	}
@@ -55,24 +55,24 @@ static void				select_placement(t_data data)
 
 bool moved = false;
 
-static void				control_mouse_editor(t_game_engine *engine)
+static void				control_mouse_editor(t_game_board *board)
 {
-	t_vect mouse = engine->board.get_mouse_pos();
+	t_vect mouse = board->get_mouse_pos();
 	if (mouse != t_vect(-1, -1))
 	{
-		if (moved == true && engine->board.get_cell(mouse)->cursor == t_vect(0, 0))
+		if (moved == true && board->get_cell(mouse)->cursor == t_vect(0, 0))
 		{
-			engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
-			cell_list.push_back(engine->board.get_cell(mouse));
+			board->get_cell(mouse)->cursor = t_vect(2, 0);
+			cell_list.push_back(board->get_cell(mouse));
 		}
-		if (moved == false && engine->board.get_cell(mouse)->cursor == t_vect(0, 0))
+		if (moved == false && board->get_cell(mouse)->cursor == t_vect(0, 0))
 		{
-			engine->board.get_cell(mouse)->cursor = t_vect(2, 0);
-			cell_list.push_back(engine->board.get_cell(mouse));
+			board->get_cell(mouse)->cursor = t_vect(2, 0);
+			cell_list.push_back(board->get_cell(mouse));
 		}
-		else if (moved == false && engine->board.get_cell(mouse)->cursor == t_vect(2, 0))
+		else if (moved == false && board->get_cell(mouse)->cursor == t_vect(2, 0))
 		{
-			engine->board.get_cell(mouse)->cursor = t_vect(0, 0);
+			board->get_cell(mouse)->cursor = t_vect(0, 0);
 			size_t h = 0;
 			while (h < cell_list.size())
 			{
@@ -123,7 +123,7 @@ static void		increment_iterator_text(t_data data) //0 - &value / 1 - &pool / 2 -
 void					menu_map_editor(t_data data)
 {
 	(void)data;
-	t_game_engine engine;
+	t_game_board board;
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
@@ -175,19 +175,19 @@ void					menu_map_editor(t_data data)
 				t_vect(1 + ((size.x + 0.2) * (j % 8)), 1 + ((size.y + 0.2) * (i + j / 8))) * gui.unit,
 				size * gui.unit,
 				5),
-				select_node, t_data(2, &engine, ((int)j) - 1));
+				select_node, t_data(2, &board, ((int)j) - 1));
 
 	gui_part[1].add(node_button);
-	while (j < engine.board.node_list.size())
+	while (j < board.node_list.size())
 	{
 		node_button = new t_button(new s_tileset_button(
 					"", DARK_GREY,
-					engine.board.node_list[j].tile,
-					engine.board.node_list[j].sprite,
+					board.node_list[j].tile,
+					board.node_list[j].sprite,
 					t_vect(1 + ((size.x + 0.2) * (j % 10)), 2.2 + ((size.y + 0.2) * (i + j / 10))) * gui.unit,
 					size * gui.unit,
 					5),
-					select_node, t_data(2, &engine, j));
+					select_node, t_data(2, &board, j));
 
 		gui_part[1].add(node_button);
 		j++;
@@ -204,7 +204,7 @@ void					menu_map_editor(t_data data)
 				t_vect(1 + (1.2 * j), 1 + (1.2 * i)) * gui.unit,
 				t_vect(1, 1) * gui.unit,
 				5),
-				select_placement, t_data(2, &engine, ((int)j)));
+				select_placement, t_data(2, &board, ((int)j)));
 
 			gui_part[2].add(placement_button);
 			j++;
@@ -215,7 +215,7 @@ void					menu_map_editor(t_data data)
 		"Save map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		menu_save_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text)));//0 - gui / 1 - t_game_board * / 2 - & file name
+		menu_save_map, t_data(3, &gui, &(board), &(entry_path->entry->text)));//0 - gui / 1 - t_game_board * / 2 - & file name
 	t_button	*generate_button = new t_button(new s_text_button(
 		"Generate map", DARK_GREY,
 		t_vect(10, 1 + (1.2 * i)) * gui.unit,
@@ -223,13 +223,13 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_generate_board, t_data(3, &gui, &(engine), &(entry_path->entry->text)));
+		menu_generate_board, t_data(3, &gui, &(board), &(entry_path->entry->text)));
 	i++;
 	t_button	*load_button = new t_button(new s_text_button(
 		"Load map", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		menu_load_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text))); // 0 - t_gui * / 1 - game_board * / 2 - &path
+		menu_load_map, t_data(3, &gui, &(board), &(entry_path->entry->text))); // 0 - t_gui * / 1 - game_board * / 2 - &path
 	t_button	*delete_button = new t_button(new s_text_button(
 		"Delete map", DARK_GREY,
 		t_vect(10, 1 + (1.2 * i)) * gui.unit,
@@ -237,7 +237,7 @@ void					menu_map_editor(t_data data)
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
-		menu_delete_map, t_data(3, &gui, &(engine.board), &(entry_path->entry->text)));
+		menu_delete_map, t_data(3, &gui, &(board), &(entry_path->entry->text)));
 	t_button	*quit_button = new t_button(new s_text_button(
 		"Quit", DARK_GREY,
 		t_vect(19, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -257,7 +257,7 @@ void					menu_map_editor(t_data data)
 	{
 		prepare_screen(t_color(0.2, 0.2, 0.2));
 
-		engine.draw_board();
+		board.draw_board();
 
 		gui.draw_self();
 		gui_part[index].draw_self();
@@ -269,12 +269,12 @@ void					menu_map_editor(t_data data)
 			else if (event.type == SDL_MOUSEMOTION && event.button.button == SDL_BUTTON_LEFT)
 			{
 				moved = true;
-				control_mouse_editor(&engine);
+				control_mouse_editor(&board);
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (gui.click(&event) == false && gui_part[index].click(&event) == false)
-					control_mouse_editor(&engine);
+					control_mouse_editor(&board);
 				moved = false;
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
@@ -283,13 +283,13 @@ void					menu_map_editor(t_data data)
 					reset_selection();
 				else
 				{
-					t_cell *cell =  engine.board.get_cell(engine.board.get_mouse_pos());
+					t_cell *cell =  board.get_cell(board.get_mouse_pos());
 					if (cell != NULL)
 					{
 						if (cell->actor == NULL)
-							menu_place_monster(t_data(3, &(cell->coord), &engine, &gui));
+							menu_place_monster(t_data(3, &(cell->coord), &board, &gui));
 						else if (cell->actor != NULL)
-							engine.outvoke_actor(cell->actor);
+							board.outvoke_actor(cell->actor);
 					}
 				}
 			}
@@ -298,8 +298,8 @@ void					menu_map_editor(t_data data)
 				gui.key_press(&event);
 				gui_part[index].key_press(&event);
 			}
-			engine.handle_control_camera(&event);
+			board.handle_control_camera(&event);
 		}
-		render_screen();
+		render_screen(true);
 	}
 }

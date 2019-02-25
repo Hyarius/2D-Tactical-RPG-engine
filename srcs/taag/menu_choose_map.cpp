@@ -77,7 +77,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 
 		gui.draw_self();
 
-		render_screen();
+		render_screen(true);
 		printOpenGLError();
 		printSDLError();
 
