@@ -38,7 +38,8 @@ t_actor					read_actor(string p_path)
 	myfile.open(p_path);
 	if (myfile.fail())
 		printf("can't open such file : %s\n", p_path.c_str());
-	name = get_strsplit(&myfile, ":", 2)[1];
+	tab = get_strsplit(&myfile, ":", -1);
+	name = (tab.size() > 1 ? tab[1] : "");
 	tile = get_sprite_tile(get_strsplit(&myfile, ":", 2)[1]);
 	tab = get_strsplit(&myfile, ":", 3);
 	sprite = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
@@ -77,6 +78,7 @@ s_actor::s_actor()
 		spell[i] = &(spell_map["NULL"]);
 		cooldown[i] = 0;
 	}
+	gambit.clear();
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
@@ -94,6 +96,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 		spell[i] = &(spell_map["NULL"]);
 		cooldown[i] = 0;
 	}
+	gambit.clear();
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell)
@@ -111,6 +114,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 		spell[i] = p_spell[i];
 		cooldown[i] = 0;
 	}
+	gambit.clear();
 }
 
 void			s_actor::reset_value()

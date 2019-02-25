@@ -10,7 +10,6 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = *((string *)(data.data[1]));
 	ofstream myfile;
-	printf("here\n");
 	myfile.open (p_path);
 	myfile << "name:" + (to_save->name == "" ? "default" : to_save->name) + "\n";
 	map<string, t_tileset>::const_iterator i;
@@ -71,21 +70,13 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 
 
 	s_button *button = new s_button(new s_text_button(//button did you wanna quit
-						"Did you want to save this file ?", DARK_GREY, //text info
+						"Did you want to save this actor ?", DARK_GREY, //text info
 						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						NULL, NULL);
-	button->button->image_coord = button->button->image_coord - (gui.unit * t_vect(0, 1));
+	button->button->image_coord = button->button->image_coord - gui.unit * t_vect(0, 1);
 
 	gui.add(button);
-
-	s_button *button2 = new s_button(new s_text_button(//button did you wanna quit
-						full_path, DARK_GREY, //text info
-						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
-						t_color(0, 0, 0, 0), t_color(0, 0, 0, 0)),
-						NULL, NULL);
-
-	gui.add(button2);
 
 	gui.add(new s_button(new s_text_button(//button yes
 						"YES", DARK_GREY, //text info

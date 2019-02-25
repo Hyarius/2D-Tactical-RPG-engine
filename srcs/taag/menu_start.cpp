@@ -23,11 +23,22 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_play, NULL));
 
-	gui.add(new t_button(new s_text_button(
+	t_vect size = t_vect(4, 6);
+	for (size_t i = 0; i < 6; i++)
+	{
+		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 1 + (size.y + 0.5) * (i / 3));
+		gui.add(new t_button(new s_text_button(
+				"Player num " + to_string(i), DARK_GREY,
+				coord * gui.unit, size * gui.unit, 8,
+				t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+				menu_actor_editor, t_data(1, &(account->actor[i]))));
+	}
+
+	/*gui.add(new t_button(new s_text_button(
 			"Player editor", DARK_GREY,
 			t_vect(21, 4) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			menu_player_editor, NULL));
+			menu_player_editor, NULL));*/
 
 	if (type == 1)
 	{

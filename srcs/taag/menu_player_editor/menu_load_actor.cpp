@@ -1,22 +1,8 @@
 #include "taag.h"
 
-vector<string>		list_file_load;
-string 				*text_list_load[30];
-
-static void	modify_index(t_data data)
+static void			stand(t_data data)
 {
-	int *index = (int *)(data.data[0]);
-	int delta = (int &)(data.data[1]);
-
-	if (*index + delta >= -27 && *index + delta < (int)(((list_file_load.size() / 3) * 3 + 3)))
-		*index += delta;
-	for (int i = 0; i < 30; i++)
-	{
-		if (*index + i >= (int)(list_file_load.size()) || *index + i < 0)
-			*(text_list_load[i]) = "";
-		else
-			*(text_list_load[i]) = list_file_load[i + *index];
-	}
+	*((bool *)data.data[0]) = false;
 }
 
 static void		quit_load(t_data data)// player / entry_name / entry_path / pool / play / num
@@ -26,24 +12,19 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	string		*entry_path = (string *)(data.data[2]);
 	int			*pool_value = (int *)(data.data[3]);
 	bool 		*play = (bool *)(data.data[4]);
-	int			i = (int &)(data.data[5]);
-	size_t		*tile_index = *(size_t **)(data.data[6]);
-	t_vect		*sprite_target = (t_vect *)(data.data[7]);
+	size_t		*tile_index = *(size_t **)(data.data[5]);
+	t_vect		*sprite_target = (t_vect *)(data.data[6]);
 
-	if (*(text_list_load[i]) != "")
-	{
-		*player = read_actor(ACTOR_PATH + *(text_list_load[i]) + ACTOR_EXT);
-		size_t t = 0;
-		for(t = 0; &(sprite_map[human_sprite_name[t]]) != player->tile;t++)
-			;
-		*tile_index = t;
-		*sprite_target = player->sprite;
-		*entry_path = *(text_list_load[i]);
-		*entry_name = player->name;
-		t_actor base;
-		*pool_value = 30 - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
-		*play = false;
-	}
+	*player = read_actor(ACTOR_PATH + *(entry_path) + ACTOR_EXT);
+	size_t t = 0;
+	for(t = 0; &(sprite_map[account->tile_unlock[t]]) != player->tile;t++)
+		;
+	*tile_index = t;
+	*sprite_target = player->sprite;
+	*entry_name = player->name;
+	t_actor base;
+	*pool_value = 30 - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
+	*play = false;
 }
 
 void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
@@ -55,41 +36,29 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 	int			*pool_value = (int *)(data.data[4]);
 	size_t		*tile_index = *(size_t **)(data.data[5]);
 	t_vect		*sprite_target = *(t_vect **)(data.data[6]);
-	t_gui		gui;
+	t_gui		gui = t_gui(15, 10);
 	bool		play = true;
 	SDL_Event	event;
-	int 		index = 0;
 
-	gui.add(new t_button(new t_text_button(
-						"", BLACK,
-						gui.unit * t_vect(1, 1), gui.unit * t_vect(28, 18), 8,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
-						),
-						NULL, NULL));
+	s_button *button = new s_button(new s_text_button(//button did you wanna quit
+						"Did you want to load this actor again ?", DARK_GREY, //text info
+						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+						NULL, NULL);
+	button->button->image_coord = button->button->image_coord - gui.unit * t_vect(0, 1);
+	gui.add(button);
 
-	gui.add(new t_button(new t_text_button(
-						"Which file did you want to load ?", BLACK,
-						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
-						),
-						NULL, NULL));
+	gui.add(new s_button(new s_text_button(//button yes
+						"YES", DARK_GREY, //text info
+						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+						quit_load, t_data(7, player, entry_name, entry_path, pool_value, &play, &tile_index, sprite_target)));
 
-	list_file_load = list_files(ACTOR_PATH, ACTOR_EXT);
-	int i = 0;
-	while (i < 30)
-	{
-		t_button *button = new t_button(new t_text_button(
-					(i < (int)(list_file_load.size()) ? list_file_load[i] : ""), BLACK,
-					gui.unit * t_vect(1.5 + ((i % 3) * 8.3 + (i % 3)), 4 + ((i / 3) * 1.3)),
-					gui.unit * t_vect(8.3, 1.1),
-					8,
-					t_color(0.4, 0.4, 0.4),
-					t_color(0.6, 0.6, 0.6)),
-					quit_load, t_data(8, player, entry_name, entry_path, pool_value, &play, i, &tile_index, sprite_target));// player / entry_name / entry_path / pool / play / num
-		text_list_load[i] = &(button->button->text);
-		gui.add(button);
-		i++;
-	}
+	gui.add(new s_button(new s_text_button(//button no
+						"NO", DARK_GREY, //text info
+						gui.unit * t_vect(7.75, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
+						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+						stand, &play));
 
 	while (play == true)
 	{
@@ -112,21 +81,6 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
-			{
-				modify_index(t_data(2, &index, -3));
-			}
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN))
-			{
-				modify_index(t_data(2, &index, 3));
-			}
-			else if (event.type == SDL_MOUSEWHEEL)
-			{
-				if (event.wheel.y > 0)
-					modify_index(t_data(2, &index, -3));
-				else if (event.wheel.y < 0)
-					modify_index(t_data(2, &index, 3));
-			}
 		}
 	}
 }

@@ -11,6 +11,7 @@ static void			quit(t_data data)
 		exit(0);
 	else
 	{
+		save_game_engine();
 		for (size_t i = 0; i < data.data.size(); i++)
 			*((bool *)data.data[i]) = false;
 	}

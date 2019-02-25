@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	//generate_animation_tileset();
 	//generate_node_file();
 
-	//check_prog_architecture();
+	check_prog_architecture();
 
 	bool play = true;
 

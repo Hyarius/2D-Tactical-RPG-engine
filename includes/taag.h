@@ -404,11 +404,12 @@ typedef struct			s_game_engine
 {
 	t_game_board		board;		//The board where the game take place
 
-	size_t				level;
+	int					level;
 	s_value				exp;
-	size_t				gold;
+	int					gold;
 
-	vector<t_actor *>	actor;
+	vector<string>		actor;
+	vector<t_actor *>	actor_array;
 
 	vector<string>		spell_unlock;
 	vector<string>		tile_unlock;
@@ -417,7 +418,9 @@ typedef struct			s_game_engine
 						s_game_engine(string p_path);
 
 	void				start_game(string path);
-
+	int 				calc_max_exp(int level);
+	void				add_exp(int delta);
+	bool				add_gold(int delta);
 }						t_game_engine;
 
 extern t_game_engine	*account;
@@ -498,7 +501,7 @@ string					parse_gambit(t_ai_helper data);
 void					menu_start();
 void					menu_play(t_data data);
 void						menu_choose_map(t_data data);
-void					menu_player_editor(t_data data);
+void					menu_actor_editor(t_data data);
 void						menu_choose_spell(t_data data);
 void						menu_choose_sprite(t_data data);
 void						menu_save_actor(t_data data);
@@ -530,4 +533,5 @@ void					menu_quit(t_data data);
 string					create_new_game_engine();
 void 					check_prog_architecture();
 
+void					save_game_engine();
 #endif

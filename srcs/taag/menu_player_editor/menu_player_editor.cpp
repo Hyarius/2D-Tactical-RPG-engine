@@ -1,8 +1,25 @@
 #include "taag.h"
 
-void					menu_player_editor(t_data data)
+static string 			create_basic_actor()
 {
-	(void)data;
+	string text = "name:\n";
+	text.append("tileset:H00\n");
+	text.append("sprite_pos:0:0\n");
+	text.append("health:50\n");
+	text.append("action:6\n");
+	text.append("mouvement:3\n");
+	text.append("initiative:5\n");
+	text.append("spell0:Slash\n");
+	text.append("spell1:NULL\n");
+	text.append("spell2:NULL\n");
+	text.append("spell3:NULL\n");
+	text.append("spell4:NULL\n");
+	text.append("spell5:NULL");
+	return (text);
+}
+
+void					menu_actor_editor(t_data data)
+{
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
@@ -11,22 +28,32 @@ void					menu_player_editor(t_data data)
 
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
-	t_entry *entry_path = new s_entry(new s_text_entry(	"File name of your character", "", BLACK,
+	string *path = (string *)(data.data[0]);
+	if (*path == "NULL")
+	{
+		int j = 0;
+		string text = ("actor" + to_string(j));
+		while (check_file_exist(ACTOR_PATH + text + ACTOR_EXT) == true)
+		{
+			j++;
+			text = "actor" + to_string(j);
+		}
+		rewrite_on_file(ACTOR_PATH + text + ACTOR_EXT, create_basic_actor());
+		*path = text;
+	}
+
+	t_actor actor = read_actor(ACTOR_PATH + (*path) + ACTOR_EXT);
+
+	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", actor.name, BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
 	i++;
-
-	entry_path->entry->back = ACTOR_EXT;
-	entry_path->entry->max_len = 32;
-
-	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", "", BLACK,
-			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
-	i++;
+	string *name = &(entry_name->entry->text);
 
 	entry_name->entry->max_len = 32;
 
-	int		pool = 30;
+	t_actor base;
+	int pool = 30 - ((actor.stat.hp.max - base.stat.hp.max) / 5 + (actor.stat.pa.max - base.stat.pa.max) * 3 + (actor.stat.pm.max - base.stat.pm.max) * 3 + (actor.stat.init - base.stat.init));
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
 		new t_button(new s_text_button(
 				"Attrib points (AtbP) left : ", DARK_GREY,
@@ -40,9 +67,6 @@ void					menu_player_editor(t_data data)
 		NULL);
 	i++;
 
-	t_actor actor;
-	string *name = &(entry_name->entry->text);
-	string *path = &(entry_path->entry->text);
 
 	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 30, 150,
 		new t_button(new s_text_button(
@@ -124,7 +148,7 @@ void					menu_player_editor(t_data data)
 	size_t	*tile_index;
 	t_vect	*sprite_target;
 
-	i += 2.4;
+	i += 3.4;
 	t_button	*save_button = new t_button(new s_text_button(
 			"Save actor", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
@@ -186,7 +210,6 @@ void					menu_player_editor(t_data data)
 
 	gui.add(back_ground);
 	gui.add(ENTRY_NUM, entry_name);
-	gui.add(ENTRY_NUM, entry_path);
 	gui.add(pool_iterator);
 	gui.add(hp_iterator);
 	gui.add(action_iterator);
