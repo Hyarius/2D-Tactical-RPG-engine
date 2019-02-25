@@ -111,7 +111,7 @@ void				s_game_board::move_actor(t_actor *player, t_vect dest, double speed)
 	}
 }
 
-void				s_game_board::handle_actor_placement(SDL_Event *event, int *index)
+void				s_game_board::handle_actor_placement(SDL_Event *event, int *index, vector<t_actor *> game_actor_list)
 {
 	t_vect 			mouse = get_mouse_pos();
 
@@ -125,6 +125,7 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index)
 			if (count < placement_list.size())
 			{
 				invoke_actor(new t_actor(*(actor_pool[*index % actor_pool.size()])), get_mouse_pos());
+				game_actor_list.erase(game_actor_list.begin() + count);
 			}
 		}
 	}
@@ -137,7 +138,10 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index)
 			while (count < placement_list.size() && mouse != placement_list[count])
 				count++;
 			if (count < placement_list.size())
+			{
+				game_actor_list.insert(game_actor_list.begin(), get_cell(mouse)->actor);
 				outvoke_actor(get_cell(mouse)->actor);
+			}
 		}
 	}
 	else if (event->type == SDL_KEYDOWN)

@@ -2,13 +2,15 @@
 
 int type = 0;
 
+t_game_engine	 *account;
+
 void		menu_start()
 {
 	SDL_Event	event;
 	bool		play = true;
 	t_gui gui;
 
-	t_game_engine game;
+	account = new t_game_engine();
 
 	gui.add(new s_button(new s_image_button(
 			t_image("ressources/assets/interface/Menu_start.png"),
@@ -19,7 +21,7 @@ void		menu_start()
 			"Play", DARK_GREY,
 			t_vect(21, 1) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			menu_play, t_data(1, &game)));
+			menu_play, NULL));
 
 	gui.add(new t_button(new s_text_button(
 			"Player editor", DARK_GREY,

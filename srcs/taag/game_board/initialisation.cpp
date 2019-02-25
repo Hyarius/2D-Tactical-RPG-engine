@@ -14,12 +14,8 @@ static void				change_s_spell(t_data data)
 {
 	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);
 
-	size_t i = 0;
-	while (i < node_file.size())
-	{
+	for (size_t i = 0; i < node_file.size(); i++)
 		node_list.push_back(read_node(NODE_PATH + node_file[i] + NODE_EXT));
-		i++;
-	}
 	board_size = t_vect(0, 0);
 	zoom = 1.5;
 	sprite_unit = t_vect(32, 32);

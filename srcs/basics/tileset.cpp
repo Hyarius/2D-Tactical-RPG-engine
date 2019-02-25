@@ -27,6 +27,8 @@ s_tileset::s_tileset(string p_path, t_vect p_size)
 			format = GL_BGRA;
 	}
 
+	printOpenGLError();
+	printSDLError();
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 

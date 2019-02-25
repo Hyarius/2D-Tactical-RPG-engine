@@ -13,6 +13,9 @@ void				s_game_board::placement_phase(vector<t_actor *> game_actor_list)
 			actor_pool.push_back(game_actor_list[i]);
 	}
 
+	if (actor_pool.size() == 0)
+		return ;
+
 	while (play)
 	{
 		prepare_screen();
@@ -28,7 +31,7 @@ void				s_game_board::placement_phase(vector<t_actor *> game_actor_list)
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE && actor_list.size() != enemy_list.size())
 				play = false;
 			handle_control_camera(&event);
-			handle_actor_placement(&event, &index);
+			handle_actor_placement(&event, &index, game_actor_list);
 		}
 		render_screen(true);
 	}

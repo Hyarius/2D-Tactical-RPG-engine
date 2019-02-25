@@ -23,6 +23,9 @@
 # include <iomanip>
 # include <sstream>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 # include <SDL.h>
 
 #ifdef __APPLE__

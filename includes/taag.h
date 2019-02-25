@@ -381,7 +381,7 @@ typedef struct			s_game_board
 	void				handle_control_camera(SDL_Event *event);
 	bool				cast_spell(t_vect mouse);
 	void				move_actor(t_actor *player, t_vect dest, double speed);
-	void				handle_actor_placement(SDL_Event *event, int *index);
+	void				handle_actor_placement(SDL_Event *event, int *index, vector<t_actor *> game_actor_list);
 	void				handle_control_game(SDL_Event *event);
 
 	//initialisation
@@ -409,12 +409,22 @@ typedef struct			s_game_engine
 {
 	t_game_board		board;		//The board where the game take place
 
+	size_t				level;
+	s_value				exp;
+	size_t				gold;
+
+	vector<t_actor *>	actor;
+
+	vector<string>		spell_unlock;
+	vector<string>		tile_unlock;
+
 						s_game_engine();
 						s_game_engine(string p_path);
 
 
 }						t_game_engine;
 
+extern t_game_engine	*account;
 
 #define CHARGE			0	//run to the closest enemy at range value[1], delta value[2] and range type value[3]
 #define CHARGE_WEAK		1	//run to the enemy with less hp at range value[1], delta value[2] and range type value[3]
@@ -520,5 +530,8 @@ void 					menu_gambit_editor(t_data data);
 void 						menu_remove_gambit(t_data data);
 void 						menu_add_gambit(t_data data);
 void					menu_quit(t_data data);
+
+string					create_new_game_engine();
+void 					check_prog_architecture();
 
 #endif

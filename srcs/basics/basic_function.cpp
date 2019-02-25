@@ -11,31 +11,31 @@ int printOglError(const char *file, int line)
 
 	glErr = glGetError();
 	string text = "";
-		switch (glErr)
-		{
-		case GL_NO_ERROR:
-			text = "";
-			break;
-		case GL_INVALID_VALUE:
-			text = "Invalid value";
-			break;
-		case GL_INVALID_OPERATION:
-			text = "Invalid operation";
-			break;
-		case GL_INVALID_ENUM:
-			text = "Invalid enum";
-			break;
-		default:
-			text = "Other error";
-			break;
-		}
+	switch (glErr)
+	{
+	case GL_NO_ERROR:
+		text = "";
+		break;
+	case GL_INVALID_VALUE:
+		text = "Invalid value";
+		break;
+	case GL_INVALID_OPERATION:
+		text = "Invalid operation";
+		break;
+	case GL_INVALID_ENUM:
+		text = "Invalid enum";
+		break;
+	default:
+		text = "Other error";
+		break;
+	}
 
-		if (text != "")
-		{
+	if (text != "")
+	{
 
-			string error = "opengl state in file " + file_name + ":line[" + to_string(line) + "] : " + text.c_str();
-			error_exit();
-		}
+		string error = "opengl state in file " + file_name + ":line[" + to_string(line) + "] : " + text.c_str();
+		error_exit();
+	}
 	retCode = 1;
 	return retCode;
 }

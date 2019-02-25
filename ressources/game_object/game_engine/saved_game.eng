@@ -1,12 +1,7 @@
 level:0
 exp:0
 gold:0
-
-
-
-
-
-
-
-
+char:NULL:NULL:NULL:NULL:NULL:NULL
+spell availible:aero-sword:aqua-sword:electro-sword:fire-sword:frozen-sword:grounded-sword:minor heal
+tile availible:H00:H01:H11:H16
 
