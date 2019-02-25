@@ -33,26 +33,43 @@ void				window_initialisation(string window_name)
 	int				win_y;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
+	printSDLError();
 	IMG_Init(IMG_INIT_PNG);
+	printSDLError();
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 2);
+	printSDLError();
 	SDL_GetDesktopDisplayMode(0, &current);
+	printSDLError();
 	g_window = SDL_CreateWindow(window_name.c_str(),
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		(int)(current.w * SCREEN_RATIO_X), (int)(current.h * SCREEN_RATIO_Y),
 		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+	printSDLError();
 	SDL_GetWindowSize(g_window, &win_x, &win_y);
+	printSDLError();
 	g_window_size = t_vect(win_x, win_y);
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	printSDLError();
 	g_context = SDL_GL_CreateContext(g_window);
+	printOpenGLError();
+	printSDLError();
 
-	SDL_GL_SetSwapInterval(1);
+	glDisable(GL_CULL_FACE);
+	printOpenGLError();
+	printSDLError();
+
+	SDL_GL_SetSwapInterval(0);
+	printOpenGLError();
+	printSDLError();
 
 	#ifndef __APPLE__
 		glewInit();
 	#endif
+		printOpenGLError();
+		printSDLError();
 
 	SDL_WarpMouseInWindow(g_window, (int)(g_window_size.x / 2), (int)(g_window_size.y) / 2);
 	SDL_SetWindowGrab(g_window, SDL_FALSE);
@@ -62,34 +79,51 @@ void				window_initialisation(string window_name)
 
 	glClearColor((GLclampf)color.r, (GLclampf)color.g, (GLclampf)color.b, 0.0f);
 
+	printOpenGLError();
+	printSDLError();
 	glGenVertexArrays(1, &vertex_array);
 	glBindVertexArray(vertex_array);
-
 	glGenBuffers(1, &vertex_buffer);
 	glGenBuffers(1, &color_buffer);
 	glGenBuffers(1, &texture_buffer);
 	glGenBuffers(1, &alpha_buffer);
+	printOpenGLError();
+	printSDLError();
 
 	glBindVertexArray(get_vertex_array());
+	printOpenGLError();
+	printSDLError();
 
 	program_color = LoadShaders(	"ressources/shader/color_shader.vert",	"ressources/shader/color_shader.frag");
 	program_sprite = LoadShaders(	"ressources/shader/texture_shader.vert", "ressources/shader/texture_shader.frag");
 
+	printOpenGLError();
+	printSDLError();
 	glGenTextures(1, &textureID);
+	printOpenGLError();
+	printSDLError();
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	printOpenGLError();
+	printSDLError();
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+	printOpenGLError();
+	printSDLError();
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable( GL_DEPTH_TEST );
+	printOpenGLError();
+	printSDLError();
 
 	srand(time(NULL));
 	set_color_tab();
 	TTF_Init();
+	printOpenGLError();
+	printSDLError();
 }
 
 t_vect				get_win_size(void)

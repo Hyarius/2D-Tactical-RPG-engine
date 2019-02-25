@@ -1,5 +1,59 @@
 #include "template.h"
 
+int printOglError(const char *file, int line)
+{
+	vector<string>tab = strsplit(file, "\\");
+	if (tab.size() == 1)
+		vector<string>tab = strsplit(file, "/");
+	string file_name = tab[tab.size() - 1];
+	GLenum glErr;
+	int    retCode = 0;
+
+	glErr = glGetError();
+	string text = "";
+		switch (glErr)
+		{
+		case GL_NO_ERROR:
+			text = "";
+			break;
+		case GL_INVALID_VALUE:
+			text = "Invalid value";
+			break;
+		case GL_INVALID_OPERATION:
+			text = "Invalid operation";
+			break;
+		case GL_INVALID_ENUM:
+			text = "Invalid enum";
+			break;
+		default:
+			text = "Other error";
+			break;
+		}
+
+		if (text != "")
+		{
+
+			string error = "opengl state in file " + file_name + ":line[" + to_string(line) + "] : " + text.c_str();
+			error_exit(error, 1);
+		}
+	retCode = 1;
+	return retCode;
+}
+
+void check_sdl_error(const char *file, int line)
+{
+	vector<string>tab = strsplit(file, "\\");
+	if (tab.size() == 1)
+		vector<string>tab = strsplit(file, "/");
+	string file_name = tab[tab.size() - 1];
+	string text = SDL_GetError();
+	if (text.size() != 0)
+	{
+		string error = "SDL2 state in file " + file_name + ":line[" + to_string(line) + "] : " + SDL_GetError();
+		error_exit(error, 1);
+	}
+}
+
 void				error_exit(string msg, int error)
 {
 	printf("Error %d : %s\n", error, msg.c_str());

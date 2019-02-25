@@ -78,6 +78,8 @@ void			menu_choose_map(t_data data) // 0 - &path
 		gui.draw_self();
 
 		render_screen();
+		printOpenGLError();
+		printSDLError();
 
 		if (SDL_PollEvent(&event) == 1)
 		{

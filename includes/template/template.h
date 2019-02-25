@@ -11,6 +11,9 @@
 extern double	SCREEN_RATIO_X;
 extern double	SCREEN_RATIO_Y;
 
+#define printOpenGLError() printOglError(__FILE__, __LINE__)
+#define printSDLError() check_sdl_error(__FILE__, __LINE__)
+
 using namespace std;
 
 //			BASIC_FUNCTION
@@ -104,4 +107,6 @@ TTF_Font			*get_font(int size);
 SDL_Color			get_color(int i);
 int					calc_text_size(string p_text, t_vect p_size);
 
+int					printOglError(const char *file, int line);
+void				check_sdl_error(const char *file, int line);
 #endif

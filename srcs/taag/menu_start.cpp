@@ -70,6 +70,8 @@ void		menu_start()
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}
-		render_screen();
+		render_screen(true);
+		printOpenGLError();
+		printSDLError();
 	}
 }

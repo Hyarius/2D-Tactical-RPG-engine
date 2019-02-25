@@ -24,9 +24,17 @@ int main(int argc, char **argv)
 	if (play == true)
 	{
 		window_initialisation(argv[0]);
+		printOpenGLError();
+		printSDLError();
 		read_tileset();
+		printOpenGLError();
+		printSDLError();
 		init_actions();
+		printOpenGLError();
+		printSDLError();
 		read_spell();
+		printOpenGLError();
+		printSDLError();
 
 		menu_start();
 	}

@@ -15,5 +15,4 @@ void					menu_play(t_data data)
 		if (game.board.board_size.x >= 5 && game.board.board_size.y >= 5)
 			game.placement_phase();
 	}
-	printf("end of the game\n");
 }
