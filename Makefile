@@ -18,6 +18,7 @@ DIR = 			srcs/ \
 				srcs/taag/menu_spell_editor \
 				srcs/taag/menu_map_editor \
 				srcs/taag/menu_gambit_editor \
+				srcs/taag/menu_shop \
 				srcs/taag/game_board \
 				srcs/taag
 
@@ -36,7 +37,7 @@ CFLAGS=		-std=c++11 -Werror -Wextra -g -fsanitize=address
 
 CC=			g++
 
-vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics:./srcs/gui:./srcs/taag/menu_player_editor:./srcs/taag/menu_spell_editor:./srcs/taag/menu_monster_editor:./srcs/taag/menu_map_editor:./srcs/taag/game_board:./srcs/taag/menu_gambit_editor
+vpath %.cpp ./srcs/:./srcs/basics/:./srcs/taag/:./srcs/taag/basics:./srcs/gui:./srcs/taag/menu_player_editor:./srcs/taag/menu_spell_editor:./srcs/taag/menu_monster_editor:./srcs/taag/menu_map_editor:./srcs/taag/menu_shop:./srcs/taag/game_board:./srcs/taag/menu_gambit_editor
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(SDL_MAIN_LIBS_PATH):$(SDL_IMAGE_LIBS_PATH):$(SDL_MIXER_LIBS_PATH):$(SDL_TTF_LIBS_PATH)
 

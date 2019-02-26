@@ -23,6 +23,12 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_play, NULL));
 
+	gui.add(new t_button(new s_text_button(
+			"Shop", DARK_GREY,
+			t_vect(21, 4) * gui.unit, t_vect(8, 2) * gui.unit, 8,
+			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+			menu_shop, NULL));
+
 	t_vect size = t_vect(4, 5);
 	for (size_t i = 0; i < 6; i++)
 	{

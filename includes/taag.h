@@ -22,33 +22,38 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 
 # define SPELL_BUTTON	3
 
-#define ACTOR_PATH "ressources/game_object/actor/"
-#define ACTOR_EXT ".act"
-#define MONSTER_PATH "ressources/game_object/monster/"
-#define MONSTER_EXT ".act"
+#define ACTOR_PATH 				"ressources/game_object/actor/"
+#define ACTOR_EXT 				".act"
+#define MONSTER_PATH 			"ressources/game_object/monster/"
+#define MONSTER_EXT 			".act"
 
-#define MAP_PATH "ressources/map/"
-#define MAP_EXT ".map"
+#define MAP_PATH 				"ressources/map/"
+#define MAP_EXT 				".map"
 
-#define NODE_PATH "ressources/game_object/node/"
-#define NODE_EXT ".node"
-#define OBS_PATH "ressources/game_object/object/"
-#define OBS_EXT ".obs"
+#define NODE_PATH 				"ressources/game_object/node/"
+#define NODE_EXT 				".node"
+#define OBS_PATH 				"ressources/game_object/object/"
+#define OBS_EXT 				".obs"
 
-#define SPELL_PATH "ressources/spell/"
-#define SPELL_EXT ".spell"
+#define SPELL_PATH 				"ressources/spell/"
+#define SPELL_EXT 				".spell"
 
-#define TILESET_TILESET_PATH "ressources/tileset/tileset/"
-#define TILESET_TILESET_EXT ".tls"
-#define TILESET_CHARSET_PATH "ressources/tileset/charset/"
-#define TILESET_CHARSET_EXT ".tls"
-#define TILESET_INTERFACE_PATH "ressources/tileset/interface/"
-#define TILESET_INTERFACE_EXT ".tls"
-#define TILESET_ANIMATION_PATH "ressources/tileset/animation/"
-#define TILESET_ANIMATION_EXT ".tls"
+#define TILESET_TILESET_PATH 	"ressources/tileset/tileset/"
+#define TILESET_TILESET_EXT 	".tls"
+#define TILESET_CHARSET_PATH 	"ressources/tileset/charset/"
+#define TILESET_CHARSET_EXT 	".tls"
+#define TILESET_INTERFACE_PATH 	"ressources/tileset/interface/"
+#define TILESET_INTERFACE_EXT 	".tls"
+#define TILESET_ANIMATION_PATH 	"ressources/tileset/animation/"
+#define TILESET_ANIMATION_EXT 	".tls"
 
-#define GAME_ENGINE_PATH	"ressources/game_object/game_engine"
-#define GAME_ENGINE_EXT		".eng"
+#define SHOP_MAP_PATH			"ressources/shop/map/"
+#define SHOP_SPRITE_PATH		"ressources/shop/sprite/"
+#define SHOP_SPELL_PATH			"ressources/shop/spell/"
+#define SHOP_EXT				".shop"
+
+#define GAME_ENGINE_PATH		"ressources/game_object/game_engine"
+#define GAME_ENGINE_EXT			".eng"
 
 typedef struct			s_node
 {
@@ -446,12 +451,14 @@ typedef struct			s_game_engine
 
 	vector<string>		spell_unlock;
 	vector<string>		tile_unlock;
+	vector<string>		map_unlock;
 
 						s_game_engine();
 						s_game_engine(string p_path);
 
 	void				start_game(string path);
 	void				recharge_actor();
+	void				recharge_map();
 
 	int 				calc_max_exp(int level);
 	void				add_exp(int delta);
@@ -493,6 +500,9 @@ void					change_s_spell(t_data data);
 void					generate_charset_tileset();
 void					generate_animation_tileset();
 void					generate_node_file();
+void					generate_map_shop();
+void					generate_sprite_shop();
+void					generate_spell_shop();
 
 t_tileset				*get_tileset_tile(string p_name);
 t_tileset				*get_tileset_tile(size_t name_num);
@@ -566,6 +576,10 @@ void							menu_select_anim(t_data data);
 void 					menu_gambit_editor(t_data data);
 void 						menu_remove_gambit(t_data data);
 void 						menu_add_gambit(t_data data);
+void 					menu_shop(t_data data);
+void						create_tab_sprite(t_data data);
+void						create_tab_map(t_data data);
+void						create_tab_spell(t_data data);
 void					menu_quit(t_data data);
 
 string					create_new_game_engine();

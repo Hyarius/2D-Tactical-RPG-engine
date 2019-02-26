@@ -54,7 +54,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 						),
 						NULL, NULL));
 
-	list_file_choose_map = list_files(MAP_PATH, MAP_EXT);
+	list_file_choose_map = account->map_unlock;
 	int i = 0;
 	while (i < 30)
 	{

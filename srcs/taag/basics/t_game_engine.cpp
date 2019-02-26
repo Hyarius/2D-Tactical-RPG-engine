@@ -40,6 +40,9 @@ void			save_game_engine()
 	text.append("tile");
 	for (size_t i = 0; i < account->tile_unlock.size(); i++)
 		text.append(":" + account->tile_unlock[i]);
+	text.append("map");
+	for (size_t i = 0; i < account->map_unlock.size(); i++)
+		text.append(":" + account->map_unlock[i]);
 	rewrite_on_file("ressources/game_object/game_engine/saved_game.eng", text);
 }
 
@@ -56,7 +59,12 @@ s_game_engine::s_game_engine()
 	vector<string> tab = get_strsplit(&myfile, ":", 7);
 
 	for (size_t i = 1; i < tab.size(); i++)
-		actor[i - 1] = tab[i];
+	{
+		if (check_file_exist(ACTOR_PATH + tab[i] + ACTOR_EXT))
+			actor[i - 1] = tab[i];
+		else
+			actor[i - 1] = "NULL";
+	}
 
 	for (size_t i = 0; i < 6; i++)
 		actor_array[i] = NULL;
@@ -71,6 +79,11 @@ s_game_engine::s_game_engine()
 
 	for (size_t i = 1; i < tab.size(); i++)
 		tile_unlock.push_back(tab[i]);
+
+	tab = get_strsplit(&myfile, ":", -1);
+
+	for (size_t i = 1; i < tab.size(); i++)
+		map_unlock.push_back(tab[i]);
 
 	board = t_game_board();
 	set_game_engine(&(this->board));
@@ -96,5 +109,17 @@ void		s_game_engine::recharge_actor()
 		}
 		else
 			actor_array[i] = NULL;
+	}
+}
+
+void		s_game_engine::recharge_map()
+{
+	for (size_t i = 0; i < map_unlock.size(); i++)
+	{
+		if (check_file_exist(MAP_PATH + actor[i] + MAP_EXT) == false)
+		{
+			map_unlock.erase(map_unlock.begin() + i);
+			i--;
+		}
 	}
 }

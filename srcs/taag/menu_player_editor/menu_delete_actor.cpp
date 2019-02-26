@@ -36,7 +36,6 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 		*player = t_actor();
 		*tile_index = 0;
 		*sprite_target = t_vect(0, 0);
-		*entry_path = "";
 		*entry_name = "";
 		*pool_value = 15;
 		*play = true;

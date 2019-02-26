@@ -22,15 +22,10 @@ vector<string>	to_test = {
 		"ressources/tileset/charset",
 		"ressources/tileset/interface",
 		"ressources/tileset/tileset",
-};
-
-vector<string>	file_to_detect = {
-	"ressources/game_object/actor/actor0.act",
-	"ressources/game_object/actor/actor1.act",
-	"ressources/game_object/actor/actor2.act",
-	"ressources/game_object/actor/actor3.act",
-	"ressources/game_object/actor/actor4.act",
-	"ressources/game_object/actor/actor5.act",
+		"ressources/shop",
+		"ressources/shop/map",
+		"ressources/shop/spell",
+		"ressources/shop/sprite",
 };
 
 string 					create_new_game_engine()
@@ -41,6 +36,7 @@ string 					create_new_game_engine()
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
 	text.append("spell:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal\n");
 	text.append("tile:H00:H01:H11:H16\n");
+	text.append("map:road-00\n");
 	return (text);
 }
 
