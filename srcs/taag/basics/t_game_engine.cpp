@@ -40,6 +40,7 @@ void			save_game_engine()
 	text.append("tile");
 	for (size_t i = 0; i < account->tile_unlock.size(); i++)
 		text.append(":" + account->tile_unlock[i]);
+	text.append("\n");
 	text.append("map");
 	for (size_t i = 0; i < account->map_unlock.size(); i++)
 		text.append(":" + account->map_unlock[i]);
@@ -116,7 +117,7 @@ void		s_game_engine::recharge_map()
 {
 	for (size_t i = 0; i < map_unlock.size(); i++)
 	{
-		if (check_file_exist(MAP_PATH + actor[i] + MAP_EXT) == false)
+		if (check_file_exist(MAP_PATH + map_unlock[i] + MAP_EXT) == false)
 		{
 			map_unlock.erase(map_unlock.begin() + i);
 			i--;

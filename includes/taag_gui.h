@@ -96,4 +96,18 @@ typedef struct		s_actor_card : t_gui_obj
 	bool			key_press(SDL_Event *event);
 }					t_actor_card;
 
+typedef struct		s_shop_spell : t_gui_obj
+{
+	s_spell_card	*button;
+	struct s_shop_item	**item;
+	t_vect			delta;
+	t_vect			size;
+					s_shop_spell();
+					s_shop_spell(s_spell_card *p_button, struct s_shop_item **p_item, t_vect p_delta, t_vect p_size);
+	void			draw_self();
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_shop_spell;
+
 #endif

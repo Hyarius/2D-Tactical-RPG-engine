@@ -18,7 +18,7 @@ s_shop_item::s_shop_item(string path)
 	if (myfile.fail())
 		printf("can't open such file : %s\n", path.c_str());
 	to_add = get_strsplit(&myfile, ":", 2)[1];
-	tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
+	tile = get_tileset_tile(get_strsplit(&myfile, ":", 2)[1]);
 	tab = get_strsplit(&myfile, ":", 3);
 	sprite = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 	price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());

@@ -1,6 +1,7 @@
-level:2
+level:0
 exp:0
-gold:1
-char:Black berzerk:White cleric:NULL:NULL:NULL:Erza
-spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
-tile:H00:H01:H11:H16mapmapmapmapmapmapmapmapmapmapmapmapmapmap
+gold:0
+char:NULL:default:NULL:NULL:NULL:NULL
+spell:NULL:Aqua-sword:Aero-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
+tile:H00:H01:H11:H16
+map:road-00

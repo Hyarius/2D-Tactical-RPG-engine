@@ -12,7 +12,7 @@ void		set_index(t_data data)
 
 void menu_shop(t_data data)
 {
-	int index = 0;
+	int index = 1;
 	(void)data;
 	SDL_Event	event;
 	bool		play = true;
@@ -65,8 +65,10 @@ void menu_shop(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		NULL);
 
+	int index_spell = 0;
+
 	create_tab_sprite(t_data(1, &(gui_part_shop[0])));
-	create_tab_spell(t_data(1, &(gui_part_shop[1])));
+	create_tab_spell(t_data(2, &(gui_part_shop[1]), &index_spell));
 	create_tab_map(t_data(1, &(gui_part_shop[2])));
 
 	gui.add(back);
@@ -90,8 +92,11 @@ void menu_shop(t_data data)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+			else if (event.type == SDL_MOUSEBUTTONUP)
+			{
 				gui.click(&event);
+				gui_part_shop[index].click(&event);
+			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 		}
