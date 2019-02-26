@@ -1,13 +1,13 @@
 #include "taag.h"
 
-void				s_game_board::placement_phase(vector<t_actor *> game_actor_list)
+void				s_game_board::placement_phase(t_actor *game_actor_list[])
 {
 	bool		continu = true;
 	SDL_Event	event;
 	bool		play = true;
 	int			index = 0;
 
-	for (size_t i = 0; i < game_actor_list.size(); i++)
+	for (size_t i = 0; i < 6; i++)
 	{
 		if (game_actor_list[i] != NULL)
 			actor_pool.push_back(game_actor_list[i]);

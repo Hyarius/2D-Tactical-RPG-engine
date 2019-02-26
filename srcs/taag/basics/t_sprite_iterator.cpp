@@ -91,8 +91,8 @@ void			s_sprite_iterator::draw_self()
 		minus->draw_self();
 	if (container != NULL)
 	{
-		if (&(sprite_map[(*vector_name)[i]]) != ((t_tileset_button *)(container->button))->tile)
-			((t_tileset_button *)(container->button))->tile = &(sprite_map[(*vector_name)[i]]);
+		if (get_sprite_tile((*vector_name)[i]) != ((t_tileset_button *)(container->button))->tile)
+			((t_tileset_button *)(container->button))->tile = get_sprite_tile((*vector_name)[i]);
 		container->draw_self();
 	}
 	if (plus != NULL)

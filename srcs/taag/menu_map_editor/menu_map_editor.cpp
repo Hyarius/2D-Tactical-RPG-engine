@@ -1,7 +1,7 @@
 #include "taag.h"
 
 vector<t_cell *>		cell_list;
-t_gui					gui_part[3];
+t_gui					gui_part[4];
 
 static void				select_node(t_data data)
 {
@@ -99,6 +99,7 @@ vector<string> text_type = {
 	"nothing",
 	"node",
 	"placement",
+	"reward",
 };
 
 static void		increment_iterator_text(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
@@ -129,6 +130,7 @@ void					menu_map_editor(t_data data)
 	gui_part[0] = t_gui();
 	gui_part[1] = t_gui();
 	gui_part[2] = t_gui();
+	gui_part[3] = t_gui();
 
 	double i = 0;
 
@@ -140,7 +142,7 @@ void					menu_map_editor(t_data data)
 
 	i++;
 
-	t_iterator *gui_iterator = new s_iterator(&index, NULL, 1, 0, 0, 2,
+	t_iterator *gui_iterator = new s_iterator(&index, NULL, 1, 0, 0, 3,
 		new t_button(new s_text_button(
 			text_type[index], DARK_GREY,
 			t_vect(2.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -155,9 +157,9 @@ void					menu_map_editor(t_data data)
 			t_vect(6.65, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	gui_iterator->minus->button->funct_left = increment_iterator_text;
-	gui_iterator->minus->button->data_left = t_data(5, &index, -1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+	gui_iterator->minus->button->data_left = t_data(5, &index, -1, 0, 3, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 	gui_iterator->plus->button->funct_left = increment_iterator_text;
-	gui_iterator->plus->button->data_left = t_data(5, &index, 1, 0, 2, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
+	gui_iterator->plus->button->data_left = t_data(5, &index, 1, 0, 3, &(gui_iterator->desc->button->text)); //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
 
 	i++;
 
@@ -206,6 +208,47 @@ void					menu_map_editor(t_data data)
 			gui_part[2].add(placement_button);
 			j++;
 	}
+	i = saved_pos;
+
+	t_iterator *exp_iterator = new s_iterator(&(board.exp_reward), NULL, 1, 1, 0, 150000,
+		new t_button(new s_text_button(
+				"Exp reward: ", DARK_GREY,
+				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"-", DARK_GREY,
+				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"", DARK_GREY,
+				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"+", DARK_GREY,
+				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+		i++;
+	gui_part[3].add(exp_iterator);
+
+	t_iterator *gold_iterator = new s_iterator(&(board.gold_reward), NULL, 1, 1, 0, 150000,
+		new t_button(new s_text_button(
+				"Gold reward: ", DARK_GREY,
+				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"-", DARK_GREY,
+				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"", DARK_GREY,
+				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"+", DARK_GREY,
+				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+		i++;
+	gui_part[3].add(gold_iterator);
 
 	i = 13;
 	t_button	*save_button = new t_button(new s_text_button(

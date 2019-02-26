@@ -82,4 +82,18 @@ typedef struct		s_spell_card : t_gui_obj
 	bool			key_press(SDL_Event *event);
 }					t_spell_card;
 
+typedef struct		s_actor_card : t_gui_obj
+{
+	t_button		*button;
+	struct s_actor	**actor;
+	t_button		*button_name;
+	t_button		*actor_frame;
+					s_actor_card();
+					s_actor_card(t_button *p_button, struct s_actor **p_actor, t_button *p_button_name, t_button *p_actor_frame);
+	void			draw_self();
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_actor_card;
+
 #endif

@@ -7,23 +7,18 @@ static void			stand(t_data data)
 
 static void		quit_load(t_data data)// player / entry_name / entry_path / pool / play / num
 {
-	t_actor		*player = (t_actor *)(data.data[0]);
-	string		*entry_name = (string *)(data.data[1]);
+	bool 		*play = (bool *)(data.data[0]);
+	t_actor		*player = (t_actor *)(data.data[1]);
 	string		*entry_path = (string *)(data.data[2]);
-	int			*pool_value = (int *)(data.data[3]);
-	bool 		*play = (bool *)(data.data[4]);
-	size_t		*tile_index = *(size_t **)(data.data[5]);
-	t_vect		*sprite_target = (t_vect *)(data.data[6]);
+	size_t		*tile_index = (size_t *)(data.data[3]);
+	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
 
 	*player = read_actor(ACTOR_PATH + *(entry_path) + ACTOR_EXT);
 	size_t t = 0;
-	for(t = 0; &(sprite_map[account->tile_unlock[t]]) != player->tile;t++)
-		;
+	while (t < account->tile_unlock.size() && get_sprite_tile(account->tile_unlock[t]) != player->tile)
+		t++;
 	*tile_index = t;
 	*sprite_target = player->sprite;
-	*entry_name = player->name;
-	t_actor base;
-	*pool_value = 30 - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
 	*play = false;
 }
 
@@ -52,7 +47,7 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						quit_load, t_data(7, player, entry_name, entry_path, pool_value, &play, &tile_index, sprite_target)));
+						quit_load, t_data(5, &play, player, entry_path, tile_index, &sprite_target)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info

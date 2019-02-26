@@ -46,10 +46,11 @@ void			init_actions()
 void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	vector<t_vect>	text_coord;
-	(void)source;
 	if (target != NULL)
 	{
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
+		if (source != NULL)
+			source->total_effect[0] += damage;
 		if (damage != 0)
 			target->change_stat_hp(-damage);
 	}
@@ -62,6 +63,8 @@ void		heal(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage = (effect_stat.value[0] + target->stat.hp.value < target->stat.hp.max ? effect_stat.value[0] : target->stat.hp.max - target->stat.hp.value);
+		if (source != NULL)
+			source->total_effect[1] += damage;
 		if (damage != 0)
 			target->change_stat_hp(damage);
 	}
@@ -259,10 +262,9 @@ void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)source;
 	if (target != NULL && target != source)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(source, effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.poison.push_back(new_effect);
 		target->apply_effect("+ Poison");
 	}
@@ -270,10 +272,9 @@ void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)source;
 	if (target != NULL)
 	{
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(source, effect_stat.value[0], { t_action(heal, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.regeneration.push_back(new_effect);
 		target->apply_effect("+ Regeneration");
 	}
@@ -281,12 +282,11 @@ void		apply_regeneration(t_actor *source, t_actor *target, t_action_stat effect_
 
 void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)source;
 	if (target != NULL)
 	{
 		if (effect_stat.value[1] < 0 && target == source)
 			return;
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(source, effect_stat.value[0], { t_action(change_pa, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pa.push_back(new_effect);
 		if (effect_stat.value[1] < 0)
 			target->apply_effect("+ Malus PA");
@@ -297,12 +297,11 @@ void		apply_pa_change(t_actor *source, t_actor *target, t_action_stat effect_sta
 
 void		apply_pm_change(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)source;
 	if (target != NULL)
 	{
 		if (effect_stat.value[1] < 0 && target == source)
 			return;
-		t_effect new_effect = s_effect(effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
+		t_effect new_effect = s_effect(source, effect_stat.value[0], { t_action(change_pm, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.change_pm.push_back(new_effect);
 		if (effect_stat.value[1] < 0)
 			target->apply_effect("+ Malus PM");

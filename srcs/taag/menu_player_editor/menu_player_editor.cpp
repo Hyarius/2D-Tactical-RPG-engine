@@ -29,7 +29,7 @@ void					menu_actor_editor(t_data data)
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
 	string *path = (string *)(data.data[0]);
-	if (*path == "NULL")
+	if (*path == "NULL" || check_file_exist(ACTOR_PATH + *path + ACTOR_EXT) == false)
 	{
 		int j = 0;
 		string text = ("actor" + to_string(j));
@@ -144,12 +144,7 @@ void					menu_actor_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	int t = 0;
-	while(&(sprite_map[account->tile_unlock[t]]) != actor.tile)
-	{
-		t++;
-	}
-	size_t	tile_index = t;
+	size_t	*tile_index;
 	t_vect	*sprite_target;
 
 	i += 3.4;
@@ -157,7 +152,7 @@ void					menu_actor_editor(t_data data)
 			"Save actor", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_save_actor, t_data(3, &gui, &actor, path));//0 - gui / 1 - t_actor * / 2 - & file name
+			menu_save_actor, t_data(5, &gui, &actor, path, &tile_index, &sprite_target));//0 - gui / 1 - t_actor * / 2 - & file name
 	i++;
 
 	t_button	*load_button = new t_button(new s_text_button(
@@ -186,7 +181,7 @@ void					menu_actor_editor(t_data data)
 	i++;
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(get_sprite_tile(account->tile_unlock[tile_index % account->tile_unlock.size()]), actor.sprite, t_vect(4, 0),
+	t_tileset_button *tile_button = new s_tileset_button(actor.tile, actor.sprite, t_vect(4, 0),
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
@@ -208,7 +203,7 @@ void					menu_actor_editor(t_data data)
 	((t_tileset_button *)(tileset_selector->container->button))->data_left = t_data(4, &gui, &(tileset_selector->i), &((t_tileset_button *)(tileset_selector->container->button))->selected, &(account->tile_unlock));
 	i++;
 
-	tile_button->tile = get_sprite_tile(sprite_name[tile_index % account->tile_unlock.size()]);
+	tile_index = &(tileset_selector->i);
 	sprite_target = &(((t_tileset_button *)(tileset_selector->container->button))->selected);
 
 	gui.add(back_ground);
@@ -230,7 +225,7 @@ void					menu_actor_editor(t_data data)
 	while (play)
 	{
 		actor.name = *name;
-		actor.tile = &(sprite_map[account->tile_unlock[tile_index % account->tile_unlock.size()]]);
+		actor.tile = &(sprite_map[account->tile_unlock[tileset_selector->i % account->tile_unlock.size()]]);
 		actor.sprite = *sprite_target;
 
 		prepare_screen();
@@ -249,4 +244,5 @@ void					menu_actor_editor(t_data data)
 		}
 		render_screen(true);
 	}
+	account->recharge_actor();
 }

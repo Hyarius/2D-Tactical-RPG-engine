@@ -181,11 +181,12 @@ typedef struct			s_ai_helper
 
 typedef struct			s_effect
 {
+	struct s_actor		*source;
 	int					effect_type; //-1 - ignore / 0 - on turn begin / 1 - on action / 2 - on mouvement
 	vector<t_action>	action; //list every action this effect had
 	int					duration; //how many time left
 						s_effect();
-						s_effect(int p_effect_type, vector<t_action> p_action, int duration);
+						s_effect(struct s_actor *p_source, int p_effect_type, vector<t_action> p_action, int duration);
 }						t_effect;
 
 typedef struct			s_effect_list
@@ -196,6 +197,31 @@ typedef struct			s_effect_list
 	vector<t_effect>	change_pm;
 						s_effect_list();
 }						t_effect_list;
+
+/* effect type
+0 - damage dealt
+1 - heal dealt
+2 - pa malus
+3 - pm malus
+4 - pa bonus
+5 - pm bonus
+6 - push actor
+7 - pull actor
+8 - damage caster
+9 - move caster
+10 - poison damage
+11 - regeneration
+12 - effect malus pa
+13 - effect malus pm
+14 - effect bonus pa
+15 - effect bonus pm
+16 - cure poison
+17 - cure regen
+18 - cure malus PA
+19 - cure malus PM
+18 - cure bonus PA
+19 - cure bonus PM
+*/
 
 typedef struct          s_actor
 {
@@ -214,7 +240,8 @@ typedef struct          s_actor
 	int					cooldown[6];
 	t_effect_list		effect_list;	//list every effect this player is affected by
 	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
-
+	int					spell_used[6];	//count every time we use a spell and store it
+	int					total_effect[20];	//store the total amount of effect dealt by spell when used
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
@@ -273,7 +300,8 @@ typedef struct			s_game_board
 	t_vect				sprite_unit;//the size of one sprite on the screen without the zoom
 	double				zoom;		//the zoom to apply to print everything
 
-
+	int					exp_reward;
+	int					gold_reward;
 
 	//actor_handler
 	void				add_actor(t_actor *new_actor);
@@ -362,6 +390,10 @@ typedef struct			s_game_board
 	//draw_self
 	void				draw_self();
 
+	//end_game_menu
+	void				end_game_win();
+	void				end_game_lose();
+
 	//game_loop
 	void				game_loop();
 
@@ -385,7 +417,7 @@ typedef struct			s_game_board
 	void				initiate_turn_order();
 
 	//placement_phase
-	void				placement_phase(vector<t_actor *> game_actor_list);
+	void				placement_phase(t_actor *game_actor_list[]);
 
 	//reset
 	void				reset_board();
@@ -408,8 +440,8 @@ typedef struct			s_game_engine
 	s_value				exp;
 	int					gold;
 
-	vector<string>		actor;
-	vector<t_actor *>	actor_array;
+	string				actor[6];
+	t_actor *			actor_array[6];
 
 	vector<string>		spell_unlock;
 	vector<string>		tile_unlock;
@@ -418,6 +450,8 @@ typedef struct			s_game_engine
 						s_game_engine(string p_path);
 
 	void				start_game(string path);
+	void				recharge_actor();
+
 	int 				calc_max_exp(int level);
 	void				add_exp(int delta);
 	bool				add_gold(int delta);
@@ -469,6 +503,8 @@ t_tileset				*get_animation_tile(string p_name);
 t_tileset				*get_animation_tile(size_t name_num);
 
 t_game_board			board_generator(int size_x, int size_y, int node);
+
+int						get_action_id(event type);
 
 void 					deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat);
 void 					heal(t_actor *source, t_actor *target, t_action_stat effect_stat);

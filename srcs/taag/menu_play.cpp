@@ -11,7 +11,12 @@ void					menu_play(t_data data)
 	{
 		account->start_game(MAP_PATH + path + MAP_EXT);
 
-		if (account->board.board_size.x >= 5 && account->board.board_size.y >= 5 && account->actor_array.size() != 0)
+		int size = 0;
+		for (int i = 0; i < 6; i++)
+			if (account->actor_array[i] != NULL)
+				size++;
+
+		if (account->board.board_size.x >= 5 && account->board.board_size.y >= 5 && size != 0)
 			account->board.placement_phase(account->actor_array);
 	}
 }

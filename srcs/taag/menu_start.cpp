@@ -27,18 +27,37 @@ void		menu_start()
 	for (size_t i = 0; i < 6; i++)
 	{
 		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 1 + (size.y + 0.5) * (i / 3));
+		t_button *player_button = new t_button(new s_text_button(
+				"", DARK_GREY,
+				coord * gui.unit, size * gui.unit, 5,
+				t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+				menu_actor_editor, t_data(1, &(account->actor[i])));
+		t_button *name_button = new t_button(new s_text_button(
+				"", DARK_GREY,
+				(coord + t_vect(0.25, 0.25)) * gui.unit, t_vect(3.5, 0.5) * gui.unit, 3,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+				NULL, NULL);
+		t_button *frame_button = new t_button(new s_text_button(
+				"", DARK_GREY,
+				(coord + t_vect(0.25, 1.5)) * gui.unit, t_vect(3.5, 3.5) * gui.unit, 3,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+				NULL, NULL);
+		t_actor_card *actor_card = new s_actor_card(player_button, &(account->actor_array[i]), name_button, frame_button);
+		gui.add(actor_card);
+	}
+
+/*
+	t_vect size = t_vect(4, 6);
+	for (size_t i = 0; i < 6; i++)
+	{
+		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 1 + (size.y + 0.5) * (i / 3));
 		gui.add(new t_button(new s_text_button(
 				"Player num " + to_string(i), DARK_GREY,
 				coord * gui.unit, size * gui.unit, 8,
 				t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 				menu_actor_editor, t_data(1, &(account->actor[i]))));
 	}
-
-	/*gui.add(new t_button(new s_text_button(
-			"Player editor", DARK_GREY,
-			t_vect(21, 4) * gui.unit, t_vect(8, 2) * gui.unit, 8,
-			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			menu_player_editor, NULL));*/
+	*/
 
 	if (type == 1)
 	{

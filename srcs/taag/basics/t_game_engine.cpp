@@ -8,10 +8,11 @@ int 			s_game_engine::calc_max_exp(int level)
 void			s_game_engine::add_exp(int delta)
 {
 	exp.value += delta;
-	if (exp.value >= exp.max)
+	while (exp.value >= exp.max)
 	{
 		exp.value -= exp.max;
 		level++;
+		exp.max = calc_max_exp(level);
 	}
 }
 
@@ -33,7 +34,7 @@ void			save_game_engine()
 		text.append(":" + account->actor[i]);
 	text.append("\n");
 	text.append("spell:NULL");
-	for (size_t i = 0; i < account->spell_unlock.size(); i++)
+	for (size_t i = 1; i < account->spell_unlock.size(); i++)
 		text.append(":" + account->spell_unlock[i]);
 	text.append("\n");
 	text.append("tile");
@@ -55,10 +56,11 @@ s_game_engine::s_game_engine()
 	vector<string> tab = get_strsplit(&myfile, ":", 7);
 
 	for (size_t i = 1; i < tab.size(); i++)
-		actor.push_back(tab[i]);
+		actor[i - 1] = tab[i];
 
-	if (actor.size() != 6)
-		error_exit_full("not the good number of actor", actor.size());
+	for (size_t i = 0; i < 6; i++)
+		actor_array[i] = NULL;
+	recharge_actor();
 
 	tab = get_strsplit(&myfile, ":", -1);
 
@@ -78,14 +80,21 @@ void		s_game_engine::start_game(string path)
 {
 	board = t_game_board(path);
 	set_game_engine(&(this->board));
-	actor_array.clear();
-	for (size_t i = 0; i < actor.size(); i++)
+}
+
+void		s_game_engine::recharge_actor()
+{
+	for (size_t i = 0; i < 6; i++)
 	{
-		if (actor[i] != "NULL")
+		if (actor[i] != "NULL" && check_file_exist(ACTOR_PATH + actor[i] + ACTOR_EXT) == true)
 		{
-			t_actor *new_actor = new t_actor(read_actor(ACTOR_PATH + actor[i] + ACTOR_EXT));
-			new_actor->team = 1;
-			actor_array.push_back(new_actor);
+			if (actor_array[i] == NULL)
+				actor_array[i] = new t_actor(read_actor(ACTOR_PATH + actor[i] + ACTOR_EXT));
+			else
+				*(actor_array[i]) = read_actor(ACTOR_PATH + actor[i] + ACTOR_EXT);
+			actor_array[i]->team = 1;
 		}
+		else
+			actor_array[i] = NULL;
 	}
 }

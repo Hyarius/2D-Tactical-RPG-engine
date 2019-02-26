@@ -42,7 +42,7 @@ bool				s_game_board::cast_spell(t_vect mouse)
 		player->stat.pm.value >= player->spell[s_spell]->cost_pm &&
 		player->stat.pa.value >= player->spell[s_spell]->cost_pa)
 	{
-		turn_order[turn_index % turn_order.size()]->apply_effect(1);
+		player->apply_effect(1);
 		if (player->spell[s_spell]->cost_pa > 0)
 			player->change_stat_pa(-(player->spell[s_spell]->cost_pa));
 		if (player->spell[s_spell]->cost_pm > 0)
@@ -82,6 +82,7 @@ bool				s_game_board::cast_spell(t_vect mouse)
 			i++;
 		}
 		player->cooldown[s_spell] = player->spell[s_spell]->cooldown;
+		player->spell_used[s_spell]++;
 		s_spell = -1;
 		calculated = false;
 	}

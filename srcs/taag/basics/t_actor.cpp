@@ -79,6 +79,10 @@ s_actor::s_actor()
 		cooldown[i] = 0;
 	}
 	gambit.clear();
+	for (int i = 0; i < 6; i++)
+		spell_used[i] = 0;
+	for (int i = 0; i < 20; i++)
+		total_effect[i] = 0;
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
@@ -97,6 +101,10 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 		cooldown[i] = 0;
 	}
 	gambit.clear();
+	for (int i = 0; i < 6; i++)
+		spell_used[i] = 0;
+	for (int i = 0; i < 20; i++)
+		total_effect[i] = 0;
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell)
@@ -115,6 +123,10 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 		cooldown[i] = 0;
 	}
 	gambit.clear();
+	for (int i = 0; i < 6; i++)
+		spell_used[i] = 0;
+	for (int i = 0; i < 20; i++)
+		total_effect[i] = 0;
 }
 
 void			s_actor::reset_value()
@@ -134,28 +146,44 @@ void			s_actor::apply_effect(int type)
 	while (i < this->effect_list.poison.size())
 	{
 		if (this->effect_list.poison[i].effect_type == type)
-			poison_effect.stat.value[0] += this->effect_list.poison[i].action[0].stat.value[0];
+		{
+			int damage = this->effect_list.poison[i].action[0].stat.value[0];
+			poison_effect.stat.value[0] += damage;
+			this->effect_list.poison[i].source->total_effect[10] += damage;
+		}
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.regeneration.size())
 	{
 		if (this->effect_list.regeneration[i].effect_type == type)
-			heal_effect.stat.value[0] += this->effect_list.regeneration[i].action[0].stat.value[0];
+		{
+			int damage = this->effect_list.regeneration[i].action[0].stat.value[0];
+			heal_effect.stat.value[0] += damage;
+			this->effect_list.regeneration[i].source->total_effect[11] += damage;
+		}
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.change_pa.size())
 	{
 		if (this->effect_list.change_pa[i].effect_type == type)
-			pa_effect.stat.value[0] += this->effect_list.change_pa[i].action[0].stat.value[0];
+		{
+			int damage = this->effect_list.change_pa[i].action[0].stat.value[0];
+			pa_effect.stat.value[0] += damage;
+			this->effect_list.change_pa[i].source->total_effect[(damage < 0 ? 12 : 14)] += damage;
+		}
 		i++;
 	}
 	i = 0;
 	while (i < this->effect_list.change_pm.size())
 	{
 		if (this->effect_list.change_pm[i].effect_type == type)
-			pm_effect.stat.value[0] += this->effect_list.change_pm[i].action[0].stat.value[0];
+		{
+			int damage = this->effect_list.change_pm[i].action[0].stat.value[0];
+			pm_effect.stat.value[0] += damage;
+			this->effect_list.change_pm[i].source->total_effect[(damage < 0 ? 13 : 15)] += damage;
+		}
 		i++;
 	}
 	poison_effect.effect(NULL, this, poison_effect.stat);

@@ -50,5 +50,11 @@ void				s_game_board::check_alive()
 void				s_game_board::ending_fight(bool *play)
 {
 	if (check_anim() == true && check_visual() == true)
+	{
+		if (enemy_list.size() == 0)
+			end_game_win();
+		else if (ally_list.size() == 0)
+			end_game_lose();
+	}
 		*play = false;
 }

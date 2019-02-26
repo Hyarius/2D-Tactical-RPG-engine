@@ -9,20 +9,13 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 {
 	t_actor *to_save = (t_actor *)(data.data[0]);
 	string	p_path = *((string *)(data.data[1]));
+	size_t	*tile_index = (size_t *)(data.data[2]);
+
 	ofstream myfile;
 	myfile.open (p_path);
 	myfile << "name:" + (to_save->name == "" ? "default" : to_save->name) + "\n";
-	map<string, t_tileset>::const_iterator i;
-	string name;
 
-	for (i = sprite_map.begin(); i != sprite_map.end(); ++i)
-	{
-		if (&(i->second) == to_save->tile)
-		{
-			name = i->first;
-			break;
-		}
-	}
+	string name = account->tile_unlock[*tile_index % account->tile_unlock.size()];
 
 	myfile << "tileset:" + name + "\n";
 	myfile << "sprite_pos:" + to_string((int)(to_save->sprite.x)) + ":" + to_string((int)(to_save->sprite.y)) + "\n";
@@ -34,22 +27,12 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	{
 		myfile << "spell" + to_string(i) + ":" + to_save->spell[i]->name + "\n";
 	}
-	for (size_t i = 0; i < to_save->gambit.size(); i++)
-	{
-		for (size_t j = 0; j < to_save->gambit[i].value.size(); j++)
-		{
-			if (j != 0)
-				myfile << ":";
-			myfile << to_string(to_save->gambit[i].value[j]);
-		}
-		myfile << "\n";
-	}
 	myfile.close();
 }
 
 static void		quit_save(t_data data)
 {
-	save_actor(t_data(2, data.data[0], data.data[1]));
+	save_actor(t_data(3, data.data[0], data.data[1], data.data[3]));
 	bool *play = (bool *)(data.data[2]);
 	*play = false;
 }
@@ -63,6 +46,8 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 		for (int i = 0; check_file_exist(full_path) == true; i++)
 			full_path = ACTOR_PATH + name + "(" + to_string(i) + ")" + ACTOR_EXT;
 	}
+	size_t		*tile_index = *(size_t **)(data.data[3]);
+	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
 	t_gui		gui = t_gui(15, 10);
 	SDL_Event	event;
 
@@ -82,7 +67,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						quit_save, t_data(3, data.data[1], &full_path, &play)));
+						quit_save, t_data(4, data.data[1], &full_path, &play, tile_index)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info
