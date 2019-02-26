@@ -15,7 +15,7 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	map<string, t_tileset>::const_iterator i;
 	string name;
 
-	for (i = sprite_map.begin(); i != sprite_map.end(); ++i)
+	for (i = tileset_map.begin(); i != tileset_map.end(); ++i)
 	{
 		if (&(i->second) == to_save->tile)
 		{

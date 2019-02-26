@@ -7,13 +7,6 @@
 
 extern map<string, struct s_tileset>	tileset_map;//the dictionnary holding on every
 													//tileset used as tile for the prog, in extern to accessibility
-extern map<string, struct s_tileset>	interface_map;
-													//the dictionnary holding on every
-													//tileset used by interface for the prog, in extern to accessibility
-extern map<string, struct s_tileset>	sprite_map; //the dictionnary holding on every
-													//tileset used by sprite for the prog, in extern to accessibility
-extern map<string, struct s_tileset>	animation_map; //the dictionnary holding on every
-													//tileset used by sprite for the prog, in extern to accessibility
 extern vector<string>					tileset_name; //stock the name of every tileset in tileset_map
 extern vector<string>					sprite_name;//stock the name of every tileset in sprite_map
 extern vector<string>					human_sprite_name;//stock the name of every tileset in sprite_map
@@ -281,6 +274,17 @@ typedef struct			s_cell
 	void				draw_cell(t_vect target, t_vect offset, t_vect size); //draw the cell on her place on the screen
 	void				draw_visual_info(t_vect target, t_vect offset, t_vect size, double zoom); //draw the cell visual info on the screen
 }						t_cell;
+
+typedef struct			s_shop_item
+{
+	string				to_add;
+	t_tileset			*tile;
+	t_vect				sprite;
+	int					price;
+						s_shop_item();
+						s_shop_item(string path);
+						s_shop_item(string p_to_add, t_tileset *p_tile, t_vect p_sprite, int p_price);
+}						t_shop_item;
 
 typedef struct			s_game_board
 {

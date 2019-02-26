@@ -1,2 +1,4 @@
-string to add:minor_heal
-price:58
+string to add:Minor heal
+tile:simple_iconset
+sprite:8:2
+price:59

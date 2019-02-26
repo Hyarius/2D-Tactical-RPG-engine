@@ -199,7 +199,7 @@ void					menu_monster_editor(t_data data)
 	while (play)
 	{
 		actor.name = *name;
-		actor.tile = &(sprite_map[sprite_name[*tile_index]]);
+		actor.tile = get_sprite_tile(sprite_name[*tile_index]);
 		actor.sprite = *sprite_target;
 
 		prepare_screen();

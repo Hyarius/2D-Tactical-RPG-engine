@@ -113,7 +113,7 @@ void				change_s_spell(t_data data)
 	sprite_unit = t_vect(32, 32);
 	offset = get_win_size() / 2;
 	target = t_vect(-board_size.x / 2, -board_size.y / 2);
-	cursor_tile = &interface_map["simple_cursor"];
+	cursor_tile = get_interface_tile("simple_cursor");
 	calculated = false;
 	s_spell = -1;
 	turn_num = 0;

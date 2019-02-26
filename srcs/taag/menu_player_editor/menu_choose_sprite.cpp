@@ -89,9 +89,9 @@ void			menu_choose_sprite(t_data data)
 		*(tileset_list[i]) = get_sprite_tile((*vector_name)[(tmp_index + i / 8) % (*vector_name).size()]);
 		gui.add(button);
 		selected.x += increment.x;
-		if (selected.x >= sprite_map[(*vector_name)[tmp_index]].nb_sprite.x)
+		if (selected.x >= get_sprite_tile((*vector_name)[tmp_index])->nb_sprite.x)
 			selected = t_vect(0, selected.y + increment.y);
-		if (selected.y >= sprite_map[(*vector_name)[tmp_index]].nb_sprite.y)
+		if (selected.y >= get_sprite_tile((*vector_name)[tmp_index])->nb_sprite.y)
 			selected = t_vect(0, 0);
 		i++;
 	}

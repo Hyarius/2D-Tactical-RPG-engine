@@ -1,9 +1,6 @@
 #include "taag.h"
 
 map<string, t_tileset>		tileset_map;
-map<string, t_tileset>		sprite_map;
-map<string, t_tileset>		interface_map;
-map<string, t_tileset>		animation_map;
 
 vector<string>				tileset_name;
 vector<string>				sprite_name;
@@ -42,10 +39,10 @@ t_tileset			*get_tileset_tile(size_t name_num)
 
 t_tileset			*get_sprite_tile(string p_name)
 {
-	if (sprite_map[p_name].surface == NULL)
+	if (tileset_map[p_name].surface == NULL)
 	{
 		ifstream myfile;
-		
+
 		myfile.open(TILESET_CHARSET_PATH + p_name + TILESET_CHARSET_EXT);
 		if (myfile.fail())
 			error_exit();
@@ -54,11 +51,11 @@ t_tileset			*get_sprite_tile(string p_name)
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
 		t_vect size = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 
-		sprite_map[p_name] = t_tileset(path, size);
+		tileset_map[p_name] = t_tileset(path, size);
 
 		myfile.close();
 	}
-	return (&(sprite_map[p_name]));
+	return (&(tileset_map[p_name]));
 }
 
 t_tileset			*get_sprite_tile(size_t name_num)
@@ -70,7 +67,7 @@ t_tileset			*get_sprite_tile(size_t name_num)
 
 t_tileset			*get_interface_tile(string p_name)
 {
-	if (interface_map[p_name].surface == NULL)
+	if (tileset_map[p_name].surface == NULL)
 	{
 		ifstream myfile;
 
@@ -82,11 +79,11 @@ t_tileset			*get_interface_tile(string p_name)
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
 		t_vect size = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 
-		interface_map[name] = t_tileset(path, size);
+		tileset_map[name] = t_tileset(path, size);
 
 		myfile.close();
 	}
-	return (&(interface_map[p_name]));
+	return (&(tileset_map[p_name]));
 }
 
 t_tileset			*get_interface_tile(size_t name_num)
@@ -98,7 +95,7 @@ t_tileset			*get_interface_tile(size_t name_num)
 
 t_tileset			*get_animation_tile(string p_name)
 {
-	if (animation_map[p_name].surface == NULL)
+	if (tileset_map[p_name].surface == NULL)
 	{
 		ifstream myfile;
 
@@ -110,11 +107,11 @@ t_tileset			*get_animation_tile(string p_name)
 		vector<string> tab = get_strsplit(&myfile, ":", 3);
 		t_vect size = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
 
-		animation_map[name] = t_tileset(path, size);
+		tileset_map[name] = t_tileset(path, size);
 
 		myfile.close();
 	}
-	return (&(animation_map[p_name]));
+	return (&(tileset_map[p_name]));
 }
 
 t_tileset			*get_animation_tile(size_t name_num)

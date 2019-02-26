@@ -35,7 +35,7 @@ void menu_edit_animation(t_data data)
 	tile_name_button->button->data_left = t_data(3, &gui, spell, tile_name); // 0 - t_gui * / 1 - t_spell * / 2 - &name
 
 	*tile_name = "NULL";
-	for (map<string, t_tileset>::const_iterator i = animation_map.begin(); i != animation_map.end(); ++i)
+	for (map<string, t_tileset>::const_iterator i = tileset_map.begin(); i != tileset_map.end(); ++i)
 	{
 		if (&(i->second) == spell->target_anim.tile)
 		{

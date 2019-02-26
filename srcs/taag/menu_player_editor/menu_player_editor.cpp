@@ -216,7 +216,7 @@ void					menu_actor_editor(t_data data)
 	while (play)
 	{
 		actor.name = *name;
-		actor.tile = &(sprite_map[account->tile_unlock[tileset_selector->i % account->tile_unlock.size()]]);
+		actor.tile = get_sprite_tile(account->tile_unlock[tileset_selector->i % account->tile_unlock.size()]);
 		actor.sprite = *sprite_target;
 
 		prepare_screen();

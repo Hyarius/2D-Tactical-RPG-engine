@@ -8,12 +8,12 @@ static void		increment_sprite_iterator(t_data data)//0 - &tileset / 1 - &selecte
 	vector<string>	*vector_name = (vector<string> *)(data.data[3]);
 
 	selected->x += delta.x;
-	if (sprite_map[(*vector_name)[*index]].nb_sprite.x <= selected->x)
+	if (get_sprite_tile((*vector_name)[*index])->nb_sprite.x <= selected->x)
 	{
 		selected->x = 0;
 		selected->y += delta.y;
 	}
-	if (sprite_map[(*vector_name)[*index]].nb_sprite.y <= selected->y)
+	if (get_sprite_tile((*vector_name)[*index])->nb_sprite.y <= selected->y)
 	{
 		selected->x = 0;
 		selected->y = 0;
@@ -33,13 +33,13 @@ static void		decrement_sprite_iterator(t_data data)//0 - &tileset / 1 - &selecte
 	selected->x -= delta.x;
 	if (selected->x < 0)
 	{
-		selected->x = sprite_map[(*vector_name)[*index]].nb_sprite.x - delta.x;
+		selected->x = get_sprite_tile((*vector_name)[*index])->nb_sprite.x - delta.x;
 		selected->y -= delta.y;
 	}
 	if (selected->y < 0)
 	{
-		selected->x = sprite_map[(*vector_name)[*index]].nb_sprite.x - delta.x;
-		selected->y = sprite_map[(*vector_name)[*index]].nb_sprite.y - delta.y;
+		selected->x = get_sprite_tile((*vector_name)[*index])->nb_sprite.x - delta.x;
+		selected->y = get_sprite_tile((*vector_name)[*index])->nb_sprite.y - delta.y;
 		if (*index == 0)
 			*index = (*vector_name).size() - 1;
 		else
@@ -64,7 +64,7 @@ s_sprite_iterator::s_sprite_iterator(t_vect p_delta, vector<string> *p_vector_na
 	{
 		for (i = 0; i != vector_name->size(); ++i)
 		{
-			if (&(sprite_map[(*vector_name)[i]]) == ((t_tileset_button *)(container->button))->tile)
+			if (get_sprite_tile((*vector_name)[i]) == ((t_tileset_button *)(container->button))->tile)
 				break;
 		}
 		container->button->funct_left = menu_choose_sprite;

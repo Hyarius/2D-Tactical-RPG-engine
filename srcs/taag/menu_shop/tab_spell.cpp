@@ -1,13 +1,19 @@
 #include "taag.h"
 
+vector<string>			check_spell_lock()
+{
+	vector<string>		list_base = list_files(SPELL_PATH, SPELL_EXT);
+
+	return (list_base);
+}
+
 void create_tab_spell(t_data data)
 {
 	t_gui *gui = (t_gui *)(data.data[0]);
 
 	*gui = t_gui();
-	gui->add(new t_button(new s_text_button(
-			"SPELL TAB", DARK_GREY,
-			t_vect(4, 4) * gui->unit, t_vect(3, 1) * gui->unit, 8,
-			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			NULL, NULL));
+	vector<string>		spell_name_list = check_spell_lock();
+
+	for (size_t i = 0; i < spell_name_list.size(); i++)
+		printf("spell[%zu] = %s\n", i, spell_name_list[i].c_str());
 }

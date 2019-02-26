@@ -316,7 +316,7 @@ void menu_spell_editor(t_data data)
 		menu_quit, t_data(2, &gui, &play));
 
 	i = 1;
-	t_tileset_button *tile_button = new s_tileset_button(&(interface_map["simple_iconset"]), t_vect(0, 0), t_vect(1, 0),
+	t_tileset_button *tile_button = new s_tileset_button(get_interface_tile("simple_iconset"), t_vect(0, 0), t_vect(1, 0),
 		t_vect(13.7, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	s_tileset_iterator *tileset_selector = new s_tileset_iterator(
 		t_vect(1, 1),
@@ -405,7 +405,7 @@ void menu_spell_editor(t_data data)
 	gui.add(card);
 	gui.add(test);
 
-	spell->tile = &(interface_map["simple_iconset"]);
+	spell->tile = get_interface_tile("simple_iconset");
 	while (play)
 	{
 		spell->name = entry_name->entry->text;

@@ -25,12 +25,12 @@ void				s_game_board::draw_actor_info_on_gui()
 				draw_centred_text(to_string(player->cooldown[i]), text_size, NORMAL, 4, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5) + gui.unit / 2, DARK_GREEN, BLACK);
 			if (player->spell[i]->cost_pa > 0)
 			{
-				interface_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));
+				get_interface_tile("simple_cursor")->draw_self(gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(0, 3));
 				draw_centred_text(to_string(player->spell[i]->cost_pa), 25, gui.unit * t_vect((i < 3 ? 8.5 : 18.5) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
 			}
 			if (player->spell[i]->cost_pm > 0)
 			{
-				interface_map["simple_cursor"].draw_self(gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(1, 3));
+				get_interface_tile("simple_cursor")->draw_self(gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1), gui.unit * 0.8, t_vect(1, 3));
 				draw_centred_text(to_string(player->spell[i]->cost_pm), 25, gui.unit * t_vect((i < 3 ? 7.7 : 17.7) + ((i % 3) * 1.5), 18.1) + gui.unit * 0.4, BLACK);
 			}
 		}

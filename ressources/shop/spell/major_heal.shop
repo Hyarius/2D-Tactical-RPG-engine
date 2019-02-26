@@ -1,2 +1,4 @@
-string to add:major_heal
-price:11
+string to add:Major heal
+tile:simple_iconset
+sprite:9:2
+price:19

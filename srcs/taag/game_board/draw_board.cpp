@@ -191,7 +191,7 @@ void				s_game_board::draw_cursor_layer()
 		}
 		i++;
 	}
-	render_triangle_texture(interface_map["simple_cursor"].texture_id);
+	render_triangle_texture(get_interface_tile("simple_cursor")->texture_id);
 }
 
 void				s_game_board::draw_placement()
