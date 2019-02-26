@@ -29,20 +29,11 @@ void					menu_actor_editor(t_data data)
 	t_button *back_ground = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 
 	string *path = (string *)(data.data[0]);
+	t_actor actor;
 	if (*path == "NULL" || check_file_exist(ACTOR_PATH + *path + ACTOR_EXT) == false)
-	{
-		int j = 0;
-		string text = ("actor" + to_string(j));
-		while (check_file_exist(ACTOR_PATH + text + ACTOR_EXT) == true)
-		{
-			j++;
-			text = "actor" + to_string(j);
-		}
-		rewrite_on_file(ACTOR_PATH + text + ACTOR_EXT, create_basic_actor());
-		*path = text;
-	}
-
-	t_actor actor = read_actor(ACTOR_PATH + (*path) + ACTOR_EXT);
+		actor = t_actor("", get_sprite_tile(account->tile_unlock[0]), t_vect(0, 0), t_stat(50, 6, 3, 5));
+	else
+		actor = read_actor(ACTOR_PATH + (*path) + ACTOR_EXT);
 
 	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", actor.name, BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,

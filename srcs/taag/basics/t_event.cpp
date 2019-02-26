@@ -77,6 +77,14 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage;
+		if (source != NULL)
+		{
+			if (damage < 0)
+				source->total_effect[4] += -damage;
+			else
+				source->total_effect[6] += -damage;
+		}
+
 		if (target->stat.pm.value + effect_stat.value[0] < 0)
 			damage = target->stat.pm.value;
 		else
@@ -93,6 +101,13 @@ void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage;
+		if (source != NULL)
+		{
+			if (damage < 0)
+				source->total_effect[3] += -damage;
+			else
+				source->total_effect[5] += -damage;
+		}
 		if (target->stat.pa.value + effect_stat.value[0] < 0)
 			damage = target->stat.pa.value;
 		else
@@ -113,7 +128,11 @@ void		push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		while (i < effect_stat.value[0])
 		{
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
+			{
+				if (source != NULL)
+					source->total_effect[7] += 1;
 				tmp = tmp + delta;
+			}
 			i++;
 		}
 		game->calculate_distance(target->coord);
@@ -132,7 +151,11 @@ void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		while (i < effect_stat.value[0])
 		{
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
+			{
+				if (source != NULL)
+					source->total_effect[8] += 1;
 				tmp = tmp + delta;
+			}
 			i++;
 		}
 		game->calculate_distance(target->coord);
@@ -146,6 +169,8 @@ void		heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] + source->stat.hp.value < source->stat.hp.max ? effect_stat.value[0] : source->stat.hp.max - source->stat.hp.value);
+		if (source != NULL)
+			source->total_effect[1] += damage;
 		if (damage != 0)
 			source->change_stat_hp(damage);
 	}
@@ -157,6 +182,8 @@ void		dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
+		if (source != NULL)
+			source->total_effect[9] += damage;
 		if (damage != 0)
 			source->change_stat_hp(-damage);
 	}
@@ -169,6 +196,8 @@ void		move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		if (game->get_cell(coord)->node->m_obs == false)
 		{
+			if (source != NULL)
+				source->total_effect[10]++;
 			game->get_cell(source->coord)->actor = NULL;
 			source->coord = coord;
 			game->get_cell(source->coord)->actor = source;
@@ -182,6 +211,8 @@ void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	t_vect tmp;
 	if (target != NULL)
 	{
+		if (source != NULL)
+			source->total_effect[10]++;
 		tmp = target->coord;
 		target->coord = source->coord;
 		source->coord = tmp;
@@ -197,6 +228,13 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 	if (source != NULL)
 	{
 		int damage;
+		if (source != NULL)
+		{
+			if (damage < 0)
+				source->total_effect[4] += -damage;
+			else
+				source->total_effect[6] += -damage;
+		}
 		if (source->stat.pm.value + effect_stat.value[0] < 0)
 			damage = source->stat.pm.value;
 		else
@@ -213,6 +251,13 @@ void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 	if (source != NULL)
 	{
 		int damage;
+		if (source != NULL)
+		{
+			if (damage < 0)
+				source->total_effect[3] += -damage;
+			else
+				source->total_effect[5] += -damage;
+		}
 		if (source->stat.pa.value + effect_stat.value[0] < 0)
 			damage = source->stat.pa.value;
 		else
@@ -317,6 +362,8 @@ void		cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	(void)effect_stat;
 	if (target != NULL)
 	{
+		if (source != NULL)
+			source->total_effect[17]++;
 		if (target->effect_list.poison.size() != 0)
 			target->apply_effect("- Poison");
 		target->effect_list.poison.clear();
@@ -329,6 +376,8 @@ void		cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_s
 	(void)effect_stat;
 	if (target != NULL)
 	{
+		if (source != NULL)
+			source->total_effect[18]++;
 		if (target->effect_list.regeneration.size() != 0)
 			target->apply_effect("- Regeneration");
 		target->effect_list.regeneration.clear();
@@ -347,6 +396,8 @@ void		cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		{
 			if (target->effect_list.change_pa[i].action[0].stat.value[0] < 0)
 			{
+				if (source != NULL)
+					source->total_effect[19]++;
 				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
 				i--;
 			}
@@ -366,6 +417,8 @@ void		cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		{
 			if (target->effect_list.change_pm[i].action[0].stat.value[0] < 0)
 			{
+				if (source != NULL)
+					source->total_effect[20]++;
 				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
 				i--;
 			}
@@ -386,6 +439,8 @@ void		cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		{
 			if (target->effect_list.change_pa[i].action[0].stat.value[0] >= 0)
 			{
+				if (source != NULL)
+					source->total_effect[21]++;
 				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
 				i--;
 			}
@@ -405,6 +460,8 @@ void		cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		{
 			if (target->effect_list.change_pm[i].action[0].stat.value[0] >= 0)
 			{
+				if (source != NULL)
+					source->total_effect[22]++;
 				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
 				i--;
 			}

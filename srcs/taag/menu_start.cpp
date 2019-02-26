@@ -23,10 +23,10 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_play, NULL));
 
-	t_vect size = t_vect(4, 6);
+	t_vect size = t_vect(4, 5);
 	for (size_t i = 0; i < 6; i++)
 	{
-		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 1 + (size.y + 0.5) * (i / 3));
+		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 8 + (size.y + 0.5) * (i / 3));
 		t_button *player_button = new t_button(new s_text_button(
 				"", DARK_GREY,
 				coord * gui.unit, size * gui.unit, 5,
@@ -39,7 +39,7 @@ void		menu_start()
 				NULL, NULL);
 		t_button *frame_button = new t_button(new s_text_button(
 				"", DARK_GREY,
-				(coord + t_vect(0.25, 1.5)) * gui.unit, t_vect(3.5, 3.5) * gui.unit, 3,
+				(coord + t_vect(0.25, 1.1)) * gui.unit, t_vect(3.5, 3.5) * gui.unit, 3,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 				NULL, NULL);
 		t_actor_card *actor_card = new s_actor_card(player_button, &(account->actor_array[i]), name_button, frame_button);

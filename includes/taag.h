@@ -201,26 +201,27 @@ typedef struct			s_effect_list
 /* effect type
 0 - damage dealt
 1 - heal dealt
-2 - pa malus
-3 - pm malus
-4 - pa bonus
-5 - pm bonus
-6 - push actor
-7 - pull actor
-8 - damage caster
-9 - move caster
-10 - poison damage
-11 - regeneration
-12 - effect malus pa
-13 - effect malus pm
-14 - effect bonus pa
-15 - effect bonus pm
-16 - cure poison
-17 - cure regen
-18 - cure malus PA
-19 - cure malus PM
-18 - cure bonus PA
-19 - cure bonus PM
+2 - damage taken
+3 - pa malus
+4 - pm malus
+5 - pa bonus
+6 - pm bonus
+7 - push actor
+8 - pull actor
+9 - damage caster
+10 - move / placement
+11 - poison damage
+12 - regeneration
+13 - effect malus pa
+14 - effect malus pm
+15 - effect bonus pa
+16 - effect bonus pm
+17 - cure poison
+18 - cure regen
+19 - cure malus PA
+20 - cure malus PM
+21 - cure bonus PA
+22 - cure bonus PM
 */
 
 typedef struct          s_actor
@@ -241,7 +242,7 @@ typedef struct          s_actor
 	t_effect_list		effect_list;	//list every effect this player is affected by
 	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
 	int					spell_used[6];	//count every time we use a spell and store it
-	int					total_effect[20];	//store the total amount of effect dealt by spell when used
+	int					total_effect[23];	//store the total amount of effect dealt by spell when used
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);

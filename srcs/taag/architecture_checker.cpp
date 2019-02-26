@@ -39,7 +39,7 @@ string 					create_new_game_engine()
 	text.append("exp:0\n");
 	text.append("gold:0\n");
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
-	text.append("spell:aero-sword:aqua-sword:electro-sword:fire-sword:frozen-sword:grounded-sword:minor heal\n");
+	text.append("spell:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal\n");
 	text.append("tile:H00:H01:H11:H16\n");
 	return (text);
 }

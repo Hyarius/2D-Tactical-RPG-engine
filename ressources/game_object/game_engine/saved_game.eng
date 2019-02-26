@@ -1,6 +1,6 @@
-level:59
-exp:3289
-gold:223
-char:actor0:actor1:actor3:NULL:NULL:actor2
-spell:NULL:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
+level:0
+exp:0
+gold:0
+char::NULL:default(1):NULL:default(0):NULL
+spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
 tile:H00:H01:H11:H16
