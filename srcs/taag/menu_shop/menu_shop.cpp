@@ -83,9 +83,9 @@ void menu_shop(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		NULL);
 
-	create_tab_sprite(t_data(1, &(gui_part_shop[0])));
+	create_tab_sprite(t_data(2, &(gui_part_shop[0]), &(index_part[0])));
 	create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
-	create_tab_map(t_data(1, &(gui_part_shop[2])));
+	create_tab_map(t_data(2, &(gui_part_shop[2]), &(index_part[2])));
 
 	gui.add(back);
 	gui.add(sprite_tabs);
@@ -116,13 +116,9 @@ void menu_shop(t_data data)
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
-			{
 				funct_tab[index](t_data(2, &(index_part[index]), -index_delta[index]));
-			}
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN))
-			{
 				funct_tab[index](t_data(2, &(index_part[index]), index_delta[index]));
-			}
 			else if (event.type == SDL_MOUSEWHEEL)
 			{
 				if (event.wheel.y > 0)

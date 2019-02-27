@@ -13,8 +13,8 @@ void					generate_map_shop()
 			error_exit();
 		printf("%s\n", list[i].c_str());
 		myfile << "string to add:" + list[i] + "\n";
-		myfile << "tile:NULL";
-		myfile << "sprite:0:0";
+		myfile << "tile:map_icons\n";
+		myfile << "sprite:" + to_string(generate_nbr(0, 7)) + ":" + to_string(generate_nbr(0, 5)) + "\n";
 		myfile << "price:" + to_string(generate_nbr(15, 100)) + "\n";
 		myfile.close();
 	}

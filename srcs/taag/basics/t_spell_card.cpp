@@ -17,9 +17,10 @@ vector<t_vect>	image_size;
 s_spell_card::s_spell_card(t_spell **p_spell, t_vect p_coord, t_vect p_size, gui_funct p_funct, t_data p_data)
 {
 	spell = p_spell;
+	border = p_size.x / 70.0;
 	button = new t_button(new t_text_button(
 				"", DARK_GREY, // text info
-				p_coord, p_size, 5, // coord / size info
+				p_coord, p_size, border, // coord / size info
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 				p_funct, p_data);
 	coord = p_coord;
@@ -49,17 +50,17 @@ void			s_spell_card::draw_self()
 {
 	button->draw_self();
 
-	draw_rectangle((coord + unit * t_vect(1, 1)), unit * t_vect(11, 11), t_color(0.4, 0.4, 0.4));
+	draw_border_rectangle((coord + unit * t_vect(1, 1)), unit * t_vect(11, 11), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
 	if (spell != NULL && (*spell)->tile != NULL)
-		(*spell)->tile->draw_self((coord + unit * t_vect(1.5, 1.5)), unit * t_vect(10, 10), (*spell)->icon);
-	draw_border_rectangle((coord + unit * t_vect(13, 1)), unit * t_vect(26, 11), 4, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
+		(*spell)->tile->draw_self((coord + unit * t_vect(1, 1)), unit * t_vect(11, 11), (*spell)->icon);
+	draw_border_rectangle((coord + unit * t_vect(13, 1)), unit * t_vect(26, 11), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
 
 	if ((*spell)->name != "NULL")
 	{
-		draw_border_rectangle((coord + unit * t_vect(1, 13)), unit * t_vect(12, 5.5), 4, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
-		draw_border_rectangle((coord + unit * t_vect(14, 13)), unit * t_vect(12, 5.5), 4, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
-		draw_border_rectangle((coord + unit * t_vect(27, 13)), unit * t_vect(12, 5.5), 4, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
-		draw_border_rectangle((coord + unit * t_vect(1, 19.5)), unit * t_vect(38, 39.5), 4, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
+		draw_border_rectangle((coord + unit * t_vect(1, 13)), unit * t_vect(12, 5.5), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
+		draw_border_rectangle((coord + unit * t_vect(14, 13)), unit * t_vect(12, 5.5), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
+		draw_border_rectangle((coord + unit * t_vect(27, 13)), unit * t_vect(12, 5.5), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
+		draw_border_rectangle((coord + unit * t_vect(1, 19.5)), unit * t_vect(38, 39.5), border, t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6));
 		vector<string> actual;
 		actual.push_back((*spell)->name);
 		actual.push_back(to_string((*spell)->cost_pa) + " PA");

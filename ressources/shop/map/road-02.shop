@@ -1,2 +1,4 @@
 string to add:road-02
-tile:NULLsprite:0:0price:49
+tile:map_icons
+sprite:2:3
+price:38

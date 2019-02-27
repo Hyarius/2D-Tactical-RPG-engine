@@ -52,19 +52,6 @@ void		menu_start()
 		gui.add(actor_card);
 	}
 
-/*
-	t_vect size = t_vect(4, 6);
-	for (size_t i = 0; i < 6; i++)
-	{
-		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 1 + (size.y + 0.5) * (i / 3));
-		gui.add(new t_button(new s_text_button(
-				"Player num " + to_string(i), DARK_GREY,
-				coord * gui.unit, size * gui.unit, 8,
-				t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-				menu_actor_editor, t_data(1, &(account->actor[i]))));
-	}
-	*/
-
 	if (type == 1)
 	{
 		gui.add(new t_button(new s_text_button(
