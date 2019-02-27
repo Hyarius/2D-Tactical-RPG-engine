@@ -115,4 +115,24 @@ typedef struct		s_shop_spell : t_gui_obj
 	bool			key_press(SDL_Event *event);
 }					t_shop_spell;
 
+typedef struct		s_shop_map : t_gui_obj
+{
+	t_button		*button;
+	struct s_shop_item	**item;
+	int				text_size;
+	t_vect			icon_coord;
+	t_vect			icon_size;
+	t_vect			text_coord;
+	vector<string>	text;
+	vector<t_image *>
+					text_image;
+	vector<t_vect>	image_size;
+					s_shop_map();
+					s_shop_map(t_button *p_button, struct s_shop_item **p_item, t_vect p_icons_coord, t_vect p_icons_size, t_vect p_text_coord);
+	void			draw_self();
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_shop_map;
+
 #endif

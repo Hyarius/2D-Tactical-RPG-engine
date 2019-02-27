@@ -99,7 +99,7 @@ vector<string> text_type = {
 	"nothing",
 	"node",
 	"placement",
-	"reward",
+	"information",
 };
 
 static void		increment_iterator_text(t_data data) //0 - &value / 1 - &pool / 2 - increment / 3 - cost / 4 - min / 5 - max
@@ -249,6 +249,26 @@ void					menu_map_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 		i++;
 	gui_part[3].add(gold_iterator);
+
+	t_iterator *level_iterator = new s_iterator(&(board.map_difficulty), NULL, 1, 1, 0, 150000,
+		new t_button(new s_text_button(
+				"Map difficulty : ", DARK_GREY,
+				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"-", DARK_GREY,
+				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"", DARK_GREY,
+				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"+", DARK_GREY,
+				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+		i++;
+	gui_part[3].add(level_iterator);
 
 	i = 13;
 	t_button	*save_button = new t_button(new s_text_button(

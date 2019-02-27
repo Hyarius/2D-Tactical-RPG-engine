@@ -27,6 +27,7 @@ void				change_s_spell(t_data data)
 	turn_num = 0;
 	exp_reward = 1;
 	gold_reward = 1;
+	map_difficulty = 0;
 }
 
 					s_game_board::s_game_board(string p_path)
@@ -40,9 +41,9 @@ void				change_s_spell(t_data data)
 	if (myfile.fail())
 		printf("can't open such file : %s\n", p_path.c_str());
 
+	map_difficulty = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	exp_reward = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	gold_reward = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-
 	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);
 
 	size_t i = 0;

@@ -312,6 +312,7 @@ typedef struct			s_game_board
 
 	int					exp_reward;
 	int					gold_reward;
+	int					map_difficulty;
 
 	//actor_handler
 	void				add_actor(t_actor *new_actor);

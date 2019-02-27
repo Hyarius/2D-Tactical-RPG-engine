@@ -1,5 +1,6 @@
 #include "taag.h"
 vector<s_shop_item *>		map_item_vector;
+s_shop_item					*map_item_list[18];
 
 void			modify_index_map_tab(t_data data)
 {
@@ -42,4 +43,32 @@ void create_tab_map(t_data data)
 
 	for (size_t i = 0; i < map_item_vector.size(); i++)
 		printf("map[%zu] = %s\n", i, map_item_vector[i]->to_add.c_str());
+
+	for (int i = 0; i < 18; i++)
+	{
+		if (i + (*index) < 0 || i + *index >= (int)(map_item_vector.size()))
+			map_item_list[i] = NULL;
+		else
+			map_item_list[i] = map_item_vector[i + (*index)];
+	}
+
+	printf("\n\n\n");
+
+	for (size_t i = 0; i < 18; i++)
+		printf("map[%zu] = %s\n", i, (map_item_list[i] != NULL ? map_item_list[i]->to_add.c_str() : "(null)"));
+
+	t_vect size = t_vect(3.6, 5.2);
+	t_vect icon_size = t_vect(1.2, 1.2);
+	for (int i = 0; i < 18; i++)
+	{
+		t_vect coord = t_vect(1.25 + (i % 6) * size.x + (0.2 * (i % 6)), (2.4 + (i / 6) * size.y + (0.4 * (i / 6))));
+		gui->add(new t_shop_map(new t_button(new s_text_button(
+				"", DARK_GREY,
+				gui->unit * coord,
+				gui->unit * size, 4,
+				t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+				NULL, NULL),
+				&(map_item_list[i]),
+				gui->unit * (coord + t_vect((size.x - icon_size.x) / 2.0, 0.2)), gui->unit * icon_size, gui->unit * (coord + t_vect(0.2, 0.4 + icon_size.y))));
+	}
 }

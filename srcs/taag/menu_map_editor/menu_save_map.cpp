@@ -13,6 +13,7 @@ static void			save_map(t_data data) // 0 - t_board * / 1 - file name
 	ofstream myfile;
 	myfile.open (path);
 
+	myfile << "level:" + to_string(board->map_difficulty) + '\n';
 	myfile << "exp reward:" + to_string(board->exp_reward) + '\n';
 	myfile << "gold reward:" + to_string(board->gold_reward) + '\n';
 
