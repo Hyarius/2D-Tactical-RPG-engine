@@ -130,11 +130,40 @@ typedef struct		s_shop_map : t_gui_obj
 					text_image;
 	vector<t_vect>	image_size;
 					s_shop_map();
-					s_shop_map(t_button *p_button, struct s_shop_item **p_item, t_vect p_icon_coord, t_vect p_icon_size, t_vect p_text_coord, t_vect p_price_coord, t_vect p_price_size);
+					s_shop_map(t_button *p_button, struct s_shop_item **p_item,
+								t_vect p_icon_coord, t_vect p_icon_size,
+								t_vect p_text_coord, t_vect p_price_coord,
+								t_vect p_price_size);
 	void			draw_self();
 	bool			click_left(t_vect mouse);
 	bool			click_right(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_shop_map;
+
+typedef struct		s_shop_tile : t_gui_obj
+{
+	t_button		*button;
+	struct s_shop_item
+					**item;
+	int				text_size;
+	t_vect			icon_coord;
+	t_vect			icon_size;
+	t_vect			price_coord;
+	t_vect			price_size;
+	string			text[2]; //0 - name / 1 - price
+	t_image			*text_image[2];
+	t_vect			image_size[2];
+	t_vect			text_coord;
+	t_vect			text_back;
+					s_shop_tile();
+					s_shop_tile(t_button *p_button, struct s_shop_item **p_item,
+								t_vect p_icon_coord, t_vect p_icon_size,
+								t_vect p_price_coord, t_vect p_price_size,
+								t_vect p_text_coord, t_vect p_text_back);
+	void			draw_self();
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_shop_tile;
 
 #endif

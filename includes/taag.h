@@ -41,7 +41,7 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 #define TILESET_ANIMATION_EXT 	".tls"
 
 #define SHOP_MAP_PATH			"ressources/shop/map/"
-#define SHOP_SPRITE_PATH		"ressources/shop/sprite/"
+#define SHOP_TILE_PATH			"ressources/shop/sprite/"
 #define SHOP_SPELL_PATH			"ressources/shop/spell/"
 #define SHOP_EXT				".shop"
 

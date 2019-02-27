@@ -58,6 +58,7 @@ void		buy_spell(t_data data)
 	if (account->add_gold(-((*item)->price)) == true)
 	{
 		account->spell_unlock.push_back((*item)->to_add);
+		sort(account->spell_unlock.begin(), account->spell_unlock.end());
 		check_spell_lock();
 		for (int i = 0; i < 18; i++)
 		{
@@ -72,6 +73,7 @@ void		buy_spell(t_data data)
 				spell_item_list[i] = spell_item_vector[i + (*index)];
 			}
 		}
+		save_game_engine();
 	}
 }
 

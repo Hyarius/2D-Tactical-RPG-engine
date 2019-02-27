@@ -28,7 +28,7 @@ void					generate_sprite_shop()
 	for (size_t i = 0; i < list.size(); i++)
 	{
 		remove(("ressources/tmp/" + list[i] + ".tls").c_str());
-		myfile.open(SHOP_SPRITE_PATH + list[i] + SHOP_EXT);
+		myfile.open(SHOP_TILE_PATH + list[i] + SHOP_EXT);
 		if (myfile.fail())
 			error_exit();
 		printf("%s\n", list[i].c_str());

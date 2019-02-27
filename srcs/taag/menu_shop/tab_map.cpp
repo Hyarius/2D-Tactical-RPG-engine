@@ -1,4 +1,5 @@
 #include "taag.h"
+
 vector<s_shop_item *>		map_item_vector;
 s_shop_item					*map_item_list[18];
 
@@ -47,9 +48,13 @@ void		buy_map(t_data data)
 	s_shop_item **item = (s_shop_item **)(data.data[0]);
 	int			*index = (int *)(data.data[1]);
 
+	if (item == NULL || *item == NULL)
+		return ;
+
 	if (account->add_gold(-((*item)->price)) == true)
 	{
 		account->map_unlock.push_back((*item)->to_add);
+		sort(account->map_unlock.begin(), account->map_unlock.end());
 		check_map_lock();
 		for (int i = 0; i < 18; i++)
 		{
@@ -58,6 +63,7 @@ void		buy_map(t_data data)
 			else
 				map_item_list[i] = map_item_vector[i + (*index)];
 		}
+		save_game_engine();
 	}
 }
 

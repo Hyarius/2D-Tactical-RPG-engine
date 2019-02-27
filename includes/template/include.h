@@ -16,6 +16,8 @@
 # include <map>
 # include <stdint.h>
 
+# include <algorithm>
+
 # include <string.h>
 # include <dirent.h>
 # include <vector>
