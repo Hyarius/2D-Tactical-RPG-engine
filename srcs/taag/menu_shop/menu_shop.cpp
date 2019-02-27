@@ -10,6 +10,24 @@ void		set_index(t_data data)
 	*index = value;
 }
 
+gui_funct		funct_tab[3] = {
+	modify_index_sprite_tab,
+	modify_index_spell_tab,
+	modify_index_map_tab,
+};
+
+int 			index_part[] = {
+	0,
+	0,
+	0,
+};
+
+int				index_delta[3] = {
+	8,
+	6,
+	4,
+};
+
 void menu_shop(t_data data)
 {
 	int index = 1;
@@ -65,10 +83,8 @@ void menu_shop(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		NULL);
 
-	int index_spell = 0;
-
 	create_tab_sprite(t_data(1, &(gui_part_shop[0])));
-	create_tab_spell(t_data(2, &(gui_part_shop[1]), &index_spell));
+	create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
 	create_tab_map(t_data(1, &(gui_part_shop[2])));
 
 	gui.add(back);
@@ -99,6 +115,21 @@ void menu_shop(t_data data)
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
+			{
+				funct_tab[index](t_data(2, &(index_part[index]), -index_delta[index]));
+			}
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN))
+			{
+				funct_tab[index](t_data(2, &(index_part[index]), index_delta[index]));
+			}
+			else if (event.type == SDL_MOUSEWHEEL)
+			{
+				if (event.wheel.y > 0)
+					funct_tab[index](t_data(2, &(index_part[index]), -index_delta[index]));
+				else if (event.wheel.y < 0)
+					funct_tab[index](t_data(2, &(index_part[index]), index_delta[index]));
+			}
 		}
 	}
 }

@@ -20,18 +20,31 @@ s_shop_spell::s_shop_spell(s_spell_card *p_button, struct s_shop_item **p_item, 
 	item = p_item;
 	delta = p_delta;
 	size = p_size;
+	text = "";
 }
 
 void			s_shop_spell::draw_self()
 {
 	if (*item != NULL)
 		*(button->spell) = &(spell_map[(*item)->to_add]);
-	button->draw_self();
-	if (*item != NULL)
+	if (button != NULL)
+		button->draw_self();
+	if (*item != NULL && button != NULL)
 	{
 		draw_border_rectangle(button->button->button->coord[0] + delta, size, 4, t_color(0.8,0.65,0.0), t_color(189.0/255.0,183.0/255.0,107.0/255.0));
-		int text_size = calc_text_max_size(to_string((*item)->price) + " gold", size - 15);
-		draw_centred_text(to_string((*item)->price) + " gold", text_size, NORMAL, 2, button->button->button->coord[0] + delta + size / 2, LIGHT_GREY, BLACK);
+		if (text != to_string((*item)->price) + " gold")
+		{
+			text = to_string((*item)->price) + " gold";
+			int text_size = calc_text_max_size(text, size - 15);
+			SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), text.c_str(), get_color(DARK_GREY));
+			if (surface == NULL)
+				error_exit();
+			text_image = new t_image(surface);
+			image_size = t_vect(surface->w, surface->h);
+			image_coord = button->button->button->coord[0] + delta + size / 2;
+			SDL_FreeSurface(surface);
+		}
+		text_image->draw_centred_self(image_coord, image_size);
 	}
 }
 

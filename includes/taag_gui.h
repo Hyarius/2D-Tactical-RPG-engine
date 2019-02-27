@@ -102,6 +102,10 @@ typedef struct		s_shop_spell : t_gui_obj
 	struct s_shop_item	**item;
 	t_vect			delta;
 	t_vect			size;
+	string			text;
+	t_image			*text_image;
+	t_vect			image_coord;
+	t_vect			image_size;
 					s_shop_spell();
 					s_shop_spell(s_spell_card *p_button, struct s_shop_item **p_item, t_vect p_delta, t_vect p_size);
 	void			draw_self();

@@ -1,5 +1,12 @@
 #include "taag.h"
 
+void			modify_index_map_tab(t_data data)
+{
+	int *index = (int *)(data.data[0]);
+	int delta = (int &)(data.data[1]);
+	printf("here index map tab\n");
+}
+
 void create_tab_map(t_data data)
 {
 	t_gui *gui = (t_gui *)(data.data[0]);

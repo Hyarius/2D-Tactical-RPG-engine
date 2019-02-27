@@ -582,8 +582,11 @@ void 						menu_remove_gambit(t_data data);
 void 						menu_add_gambit(t_data data);
 void 					menu_shop(t_data data);
 void						create_tab_sprite(t_data data);
+void							modify_index_sprite_tab(t_data data);
 void						create_tab_map(t_data data);
+void							modify_index_map_tab(t_data data);
 void						create_tab_spell(t_data data);
+void							modify_index_spell_tab(t_data data);
 void					menu_quit(t_data data);
 
 string					create_new_game_engine();

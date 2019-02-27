@@ -30,7 +30,7 @@ vector<s_shop_item *>			check_spell_lock()
 	return (item_list);
 }
 
-static void			modify_index(t_data data)
+void			modify_index_spell_tab(t_data data)
 {
 	int *index = (int *)(data.data[0]);
 	int delta = (int &)(data.data[1]);
@@ -84,7 +84,7 @@ void create_tab_spell(t_data data)
 							gui->unit * t_vect(1.25 + (i % 6) * size.x + (0.2 * (i % 6)), (2.4 + (i / 6) * size.y + (0.4 * (i / 6)))),
 							gui->unit * size,
 							NULL, NULL),
-							&(spell_item_list[i]), gui->unit * t_vect(1.2, -0.2), gui->unit * t_vect(size.x - 1.5, 0.6)));
+							&(spell_item_list[i]), gui->unit * t_vect(1.3, -0.2), gui->unit * t_vect(size.x - 1.5, 0.6)));
 	}
 
 	gui->add(new t_button(new t_text_button(
@@ -92,12 +92,12 @@ void create_tab_spell(t_data data)
 						gui->unit * t_vect(26, 3), gui->unit * t_vect(2, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						modify_index, t_data(2, index, -6)));
+						modify_index_spell_tab, t_data(2, index, -6)));
 
 	gui->add(new t_button(new t_text_button(
 						"down", BLACK,
 						gui->unit * t_vect(26, 13), gui->unit * t_vect(2, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						modify_index, t_data(3, index, 6, &gui)));
+						modify_index_spell_tab, t_data(3, index, 6, &gui)));
 }
