@@ -1,7 +1,7 @@
 level:0
 exp:0
-gold:6884
-char:NULL:NULL:default(0):NULL:NULL:NULL
+gold:0
+char:NULL:NULL:NULL:NULL:NULL:NULL
 spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
 tile:H00:H01:H11:H16
-map:road-00:road-01:road-02:road-03:road-04:road-05:road-06:road-07:road-08:road-09:road-final
+map

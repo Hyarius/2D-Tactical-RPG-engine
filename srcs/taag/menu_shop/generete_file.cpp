@@ -35,7 +35,7 @@ void					generate_sprite_shop()
 		myfile << "string to add:" + list[i] + "\n";
 		myfile << "tile:" + list[i] + "\n";
 		myfile << "sprite:0\n";
-		myfile << "price:" + to_string(generate_nbr(1, 30)) + "\n";
+		myfile << "price:" + to_string(generate_nbr(1, 4) * 25) + "\n";
 		myfile.close();
 	}
 }

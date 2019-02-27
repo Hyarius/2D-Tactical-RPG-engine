@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 		read_tileset();
 		init_actions();
 		read_spell();
+		//generate_sprite_shop();
 		//generate_spell_shop();
 
 		menu_start();
