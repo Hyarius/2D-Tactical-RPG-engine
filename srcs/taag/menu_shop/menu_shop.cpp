@@ -24,8 +24,8 @@ int 			index_part[] = {
 
 int				index_delta[3] = {
 	8,
-	6,
-	4,
+	8,
+	8,
 };
 
 void menu_shop(t_data data)

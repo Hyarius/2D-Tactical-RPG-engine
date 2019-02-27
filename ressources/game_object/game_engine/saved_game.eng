@@ -1,7 +1,7 @@
 level:0
 exp:0
-gold:0
+gold:9828
 char:NULL:default:NULL:NULL:NULL:NULL
-spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
+spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal:Absord-sword:Aero-dagger
 tile:H00:H01:H11:H16
-map:road-00
+map:road-00:road-04:road-final

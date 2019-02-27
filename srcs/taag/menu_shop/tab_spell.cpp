@@ -121,5 +121,5 @@ void create_tab_spell(t_data data)
 						gui->unit * t_vect(26, 13), gui->unit * t_vect(2, 5), 4,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
-						modify_index_spell_tab, t_data(3, index, 6, &gui)));
+						modify_index_spell_tab, t_data(2, index, 6)));
 }

@@ -122,13 +122,15 @@ typedef struct		s_shop_map : t_gui_obj
 	int				text_size;
 	t_vect			icon_coord;
 	t_vect			icon_size;
+	t_vect			price_coord;
+	t_vect			price_size;
 	t_vect			text_coord;
 	vector<string>	text;
 	vector<t_image *>
 					text_image;
 	vector<t_vect>	image_size;
 					s_shop_map();
-					s_shop_map(t_button *p_button, struct s_shop_item **p_item, t_vect p_icons_coord, t_vect p_icons_size, t_vect p_text_coord);
+					s_shop_map(t_button *p_button, struct s_shop_item **p_item, t_vect p_icon_coord, t_vect p_icon_size, t_vect p_text_coord, t_vect p_price_coord, t_vect p_price_size);
 	void			draw_self();
 	bool			click_left(t_vect mouse);
 	bool			click_right(t_vect mouse);
