@@ -1,3 +1,4 @@
+price:0
 name:Major heal
 description:Heal the target by 21 HP(s), heal the caster by 7 HP(s) and apply a regeneration effect that heal 2 HP(s) on every action for the next 2 turn(s)
 icon:simple_iconset

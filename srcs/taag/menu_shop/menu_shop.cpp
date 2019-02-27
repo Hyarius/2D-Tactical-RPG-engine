@@ -23,9 +23,9 @@ int 			index_part[] = {
 };
 
 int				index_delta[3] = {
-	8,
-	8,
-	8,
+	6,
+	6,
+	6,
 };
 
 void menu_shop(t_data data)
@@ -35,6 +35,9 @@ void menu_shop(t_data data)
 	SDL_Event	event;
 	bool		play = true;
 	t_gui gui;
+
+	for (int i = 0; i < 3; i++)
+		index_part[i] = 0;
 
 	t_button *back = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
 

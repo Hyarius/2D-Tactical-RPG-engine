@@ -10,8 +10,8 @@ int main(int argc, char **argv)
 	//generate_charset_tileset();
 	//generate_animation_tileset();
 	//generate_node_file();
-	generate_map_shop();
-	
+	//generate_map_shop();
+
 	check_prog_architecture();
 
 	bool play = true;
@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 		read_tileset();
 		init_actions();
 		read_spell();
+		//generate_spell_shop();
 
 		menu_start();
 	}

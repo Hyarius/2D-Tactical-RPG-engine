@@ -27,6 +27,8 @@ void				change_s_spell(t_data data)
 	turn_num = 0;
 	exp_reward = 1;
 	gold_reward = 1;
+	price = 0;
+	shop_icon = 0;
 	map_difficulty = 0;
 }
 
@@ -41,9 +43,12 @@ void				change_s_spell(t_data data)
 	if (myfile.fail())
 		printf("can't open such file : %s\n", p_path.c_str());
 
+	price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+	shop_icon = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	map_difficulty = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	exp_reward = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	gold_reward = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+
 	vector<string>	node_file = list_files(NODE_PATH, NODE_EXT);
 
 	size_t i = 0;

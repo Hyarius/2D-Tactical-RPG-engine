@@ -9,8 +9,24 @@ static void			save_spell(t_data data) // 0 - t_spell * / 1 - file name
 {
 	t_spell *spell = (t_spell *)(data.data[0]);
 	string	p_path = SPELL_PATH + *((string *)(data.data[1])) + SPELL_EXT;
+	string shop_path = SHOP_SPELL_PATH + *(string *)(data.data[1]) + SHOP_EXT;
+
 	ofstream myfile;
+	if (spell->m_spell == false)
+	{
+		myfile.open (shop_path);
+
+		myfile << "string to add:" + (spell->name == "" ? "default" : spell->name) + '\n';
+		myfile << "tile:simple_iconset\n";
+		int sprite = spell->icon.x + spell->icon.y * spell->tile->nb_sprite.x;
+		myfile << "sprite:" + to_string(sprite) + '\n';
+		myfile << "price:" + to_string(spell->price) + '\n';
+
+		myfile.close();
+	}
 	myfile.open (p_path);
+
+	myfile << "price:" + to_string(spell->price) + "\n";
 	myfile << "name:" + (spell->name == "" ? "default" : spell->name) + "\n";
 	myfile << "description:" + (spell->desc == "" ? "default" : spell->desc) + "\n";
 	myfile << "icon:simple_iconset\n";

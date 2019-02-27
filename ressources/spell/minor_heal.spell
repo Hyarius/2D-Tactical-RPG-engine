@@ -1,3 +1,4 @@
+price:0
 name:Minor heal
 description:Heal the target by 12 HP(s) and apply a regeneration effect that heal 4 HP(s) per turn for the next 2 turn(s)
 icon:simple_iconset

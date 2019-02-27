@@ -376,12 +376,32 @@ void menu_spell_editor(t_data data)
 	t_button	*test = new t_button(new s_text_button(
 		"Edit spell's animation", DARK_GREY,
 		t_vect(9.2, 1 + (1.2 * i)) * gui.unit,
-		t_vect(8, 1.8) * gui.unit,
+		t_vect(8, 0.8) * gui.unit,
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
 		menu_edit_animation, t_data(2, &gui, spell));
-	i++;
+	i += 0.9;
+
+
+	t_iterator *price_iterator = new s_iterator(&(spell->price), NULL, 1, 1, 0, 15000,
+		new t_button(new s_text_button(
+			"Price: ", DARK_GREY,
+			t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"-", DARK_GREY,
+			t_vect(5.5 + 8.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(6.75 + 8.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"+", DARK_GREY,
+			t_vect(8 + 8.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 0.78) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+	i += 0.81;
 
 
 	gui.add(entry_path);
@@ -402,6 +422,7 @@ void menu_spell_editor(t_data data)
 	gui.add(delete_button);
 	gui.add(quit_button);
 	gui.add(tileset_selector);
+	gui.add(price_iterator);
 	gui.add(card);
 	gui.add(test);
 

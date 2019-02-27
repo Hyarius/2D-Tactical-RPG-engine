@@ -4,7 +4,7 @@ s_shop_item::s_shop_item()
 {
 	to_add = "NULL";
 	tile = NULL;
-	sprite = t_vect(-1, -1);
+	sprite = 0;
 	price = 0;
 }
 
@@ -27,12 +27,11 @@ s_shop_item::s_shop_item(string path)
 		tile = get_interface_tile(tab[1]);
 	else if (check_file_exist(TILESET_ANIMATION_PATH + tab[1] + TILESET_ANIMATION_EXT) == true)
 		tile = get_animation_tile(tab[1]);
-	tab = get_strsplit(&myfile, ":", 3);
-	sprite = t_vect(atoi(tab[1].c_str()), atoi(tab[2].c_str()));
+	sprite = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 }
 
-s_shop_item::s_shop_item(string p_to_add, t_tileset *p_tile, t_vect p_sprite, int p_price)
+s_shop_item::s_shop_item(string p_to_add, t_tileset *p_tile, int p_sprite, int p_price)
 {
 	to_add = p_to_add;
 	tile = p_tile;

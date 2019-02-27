@@ -270,6 +270,46 @@ void					menu_map_editor(t_data data)
 		i++;
 	gui_part[3].add(level_iterator);
 
+	t_iterator *price_iterator = new s_iterator(&(board.price), NULL, 1, 1, 0, 150000,
+		new t_button(new s_text_button(
+				"Price : ", DARK_GREY,
+				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"-", DARK_GREY,
+				t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"", DARK_GREY,
+				t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+				"+", DARK_GREY,
+				t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+		i++;
+	gui_part[3].add(price_iterator);
+
+	t_iterator *icon_iterator = new s_iterator(&(board.shop_icon), NULL, 1, 1, 0, get_interface_tile("map_icons")->nb_sprite.x * get_interface_tile("map_icons")->nb_sprite.y  - 1,
+		new t_button(new s_text_button(
+			"Shop icon : ", DARK_GREY,
+			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"<", DARK_GREY,
+			t_vect(5.5, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(6.75, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
+		new t_button(new s_text_button(
+			">", DARK_GREY,
+			t_vect(8, 1.0 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
+	i++;
+	gui_part[3].add(icon_iterator);
+
 	i = 13;
 	t_button	*save_button = new t_button(new s_text_button(
 		"Save map", DARK_GREY,
@@ -317,10 +357,18 @@ void					menu_map_editor(t_data data)
 	{
 		prepare_screen(t_color(0.2, 0.2, 0.2));
 
-		board.draw_self();
+
+		board.draw_board();
+		board.draw_cell_layer();
+		if (index == 2)
+			board.draw_placement();
+		board.draw_mouse_cursor();
 
 		gui.draw_self();
 		gui_part[index].draw_self();
+
+		if (index == 3)
+			get_interface_tile("map_icons")->draw_self(icon_iterator->container->button->coord[1], icon_iterator->container->button->size[1], board.shop_icon);
 
 		if (SDL_PollEvent(&event) == 1)
 		{

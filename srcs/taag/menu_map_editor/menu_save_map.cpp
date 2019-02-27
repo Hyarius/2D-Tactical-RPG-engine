@@ -9,10 +9,21 @@ static void			save_map(t_data data) // 0 - t_board * / 1 - file name
 {
 	t_game_board *board = (t_game_board *)(data.data[0]);
 	string path = MAP_PATH + *(string *)(data.data[1]) + MAP_EXT;
+	string shop_path = SHOP_MAP_PATH + *(string *)(data.data[1]) + SHOP_EXT;
 
 	ofstream myfile;
+	myfile.open (shop_path);
+
+	myfile << "string to add:" + *(string *)(data.data[1]) + '\n';
+	myfile << "tile:map_icons\n";
+	myfile << "sprite:" + to_string(board->shop_icon) + '\n';
+	myfile << "price:" + to_string(board->price) + '\n';
+
+	myfile.close();
 	myfile.open (path);
 
+	myfile << "price:" + to_string(board->price) + '\n';
+	myfile << "shop_icon:" + to_string(board->shop_icon) + '\n';
 	myfile << "level:" + to_string(board->map_difficulty) + '\n';
 	myfile << "exp reward:" + to_string(board->exp_reward) + '\n';
 	myfile << "gold reward:" + to_string(board->gold_reward) + '\n';
@@ -50,6 +61,7 @@ static void			save_map(t_data data) // 0 - t_board * / 1 - file name
 		myfile << to_string((int)(board->enemy_placement_list[i].x)) + ":" + to_string((int)(board->enemy_placement_list[i].y)) + ":2\n";
 		i++;
 	}
+	myfile.close();
 }
 
 static void			quit_save(t_data data)

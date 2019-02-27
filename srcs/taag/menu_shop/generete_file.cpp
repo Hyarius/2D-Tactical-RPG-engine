@@ -14,7 +14,7 @@ void					generate_map_shop()
 		printf("%s\n", list[i].c_str());
 		myfile << "string to add:" + list[i] + "\n";
 		myfile << "tile:map_icons\n";
-		myfile << "sprite:" + to_string(generate_nbr(0, 7)) + ":" + to_string(generate_nbr(0, 5)) + "\n";
+		myfile << "sprite:" + to_string(generate_nbr(0, 8 * 6 - 1)) + "\n";
 		myfile << "price:" + to_string(generate_nbr(15, 100)) + "\n";
 		myfile.close();
 	}
@@ -34,7 +34,7 @@ void					generate_sprite_shop()
 		printf("%s\n", list[i].c_str());
 		myfile << "string to add:" + list[i] + "\n";
 		myfile << "tile:" + list[i] + "\n";
-		myfile << "sprite:0:0\n";
+		myfile << "sprite:0\n";
 		myfile << "price:" + to_string(generate_nbr(1, 30)) + "\n";
 		myfile.close();
 	}
@@ -56,7 +56,8 @@ void					generate_spell_shop()
 			printf("%s - %s\n", list[i].c_str(), spell_name[i + 1].c_str());
 			myfile << "string to add:" + spell_name[i + 1] + "\n";
 			myfile << "tile:simple_iconset\n";
-			myfile << "sprite:" + to_string((int)(spell_map[spell_name[i + 1]].icon.x)) + ":" + to_string((int)(spell_map[spell_name[i + 1]].icon.y)) + "\n";
+			int sprite = spell_map[spell_name[i + 1]].icon.x + spell_map[spell_name[i + 1]].icon.y * spell_map[spell_name[i + 1]].tile->nb_sprite.x;
+			myfile << "sprite:" + to_string(sprite) + "\n";
 			myfile << "price:" + to_string(generate_nbr(10, 50)) + "\n";
 			myfile.close();
 		}

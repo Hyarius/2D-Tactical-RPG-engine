@@ -26,6 +26,7 @@ s_spell::s_spell()
 		effect[i] = s_action();
 	target_anim = t_animation();
 	anim_type = 0;
+	price = 0;
 }
 
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
@@ -52,6 +53,7 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	effect.resize(6);
 	target_anim = p_target_anim;
 	anim_type = p_anim_type;
+	price = 0;
 }
 
 t_spell		read_one_spell(string path)
@@ -72,11 +74,13 @@ t_spell		read_one_spell(string path)
 	int				range_type;
 	int				zone_type;
 	int				zone_size;
+	int				price;
 	vector<t_action> effect;
 
 	myfile.open(path);
 	if (myfile.fail())
 		printf("can't open such file : %s\n", path.c_str());
+	price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	name = get_strsplit(&myfile, ":", 2)[1];
 	desc = get_strsplit(&myfile, ":", 2)[1];
 	tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
@@ -107,6 +111,7 @@ t_spell		read_one_spell(string path)
 		target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 	int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
+	spell.price = price;
 	effect.clear();
 	myfile.close();
 	return (spell);
@@ -131,6 +136,7 @@ void		read_spell()
 	int				range_type;
 	int				zone_type;
 	int				zone_size;
+	int				price;
 	vector<t_action> effect;
 
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
@@ -146,6 +152,7 @@ void		read_spell()
 		myfile.open(SPELL_PATH + spell_file[i] + SPELL_EXT);
 		if (myfile.fail())
 			printf("can't open such file : %s\n", (SPELL_PATH + spell_file[i] + SPELL_EXT).c_str());
+		price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		name = get_strsplit(&myfile, ":", 2)[1];
 		desc = get_strsplit(&myfile, ":", 2)[1];
 		tile = get_interface_tile(get_strsplit(&myfile, ":", 2)[1]);
@@ -179,6 +186,7 @@ void		read_spell()
 		if (m_spell == INT_FALSE)
 			spell_heros_name.push_back(name);
 		spell_name.push_back(name);
+		spell_map[name].price = price;
 		effect.clear();
 		myfile.close();
 

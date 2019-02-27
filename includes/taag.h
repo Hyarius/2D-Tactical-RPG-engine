@@ -127,6 +127,7 @@ typedef struct			s_animation
 
 typedef struct			s_spell
 {
+	int					price;			//utils for shop
 	string				name;			//name of the spell -
 	string				desc;			//description of the spell
 	int					m_spell;		//true = monster only
@@ -279,11 +280,11 @@ typedef struct			s_shop_item
 {
 	string				to_add;
 	t_tileset			*tile;
-	t_vect				sprite;
+	int					sprite;
 	int					price;
 						s_shop_item();
 						s_shop_item(string path);
-						s_shop_item(string p_to_add, t_tileset *p_tile, t_vect p_sprite, int p_price);
+						s_shop_item(string p_to_add, t_tileset *p_tile, int p_sprite, int p_price);
 }						t_shop_item;
 
 typedef struct			s_game_board
@@ -310,9 +311,11 @@ typedef struct			s_game_board
 	t_vect				sprite_unit;//the size of one sprite on the screen without the zoom
 	double				zoom;		//the zoom to apply to print everything
 
-	int					exp_reward;
-	int					gold_reward;
-	int					map_difficulty;
+	int					shop_icon;		//utils for shop
+	int					price;			//utils for shop
+	int					exp_reward;		//amount of exp win after finishing the board
+	int					gold_reward;	//same for gold
+	int					map_difficulty;	//an indicator of the difficulty
 
 	//actor_handler
 	void				add_actor(t_actor *new_actor);
