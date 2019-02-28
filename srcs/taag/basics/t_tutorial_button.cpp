@@ -30,8 +30,10 @@ bool			s_tutorial_button::click_left(t_vect mouse)
 {
 	if (this->button == NULL)
 		return (false);
-	if (this->button->button->funct_left == NULL)
+	if (this->paragraph != NULL && button->button->check_click(mouse) == true)
 		return (true);
+	if (this->paragraph == NULL && this->button->button->funct_left == NULL && button->button->check_click(mouse) == true)
+		return (false);
 	if (this->button->click_left(mouse) == true)
 		return (true);
 	return (false);
@@ -39,8 +41,12 @@ bool			s_tutorial_button::click_left(t_vect mouse)
 
 bool			s_tutorial_button::click_right(t_vect mouse)
 {
-	if (this->button == NULL || this->button->button->funct_right == NULL)
+	if (this->button == NULL)
+		return (false);
+	if (this->paragraph != NULL && button->button->check_click(mouse) == true)
 		return (true);
+	if (this->paragraph == NULL && this->button->button->funct_right == NULL && button->button->check_click(mouse) == true)
+		return (false);
 	if (this->button->click_right(mouse) == true)
 		return (true);
 	return (false);

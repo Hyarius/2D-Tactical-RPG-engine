@@ -29,7 +29,7 @@ void			save_game_engine()
 	string text = "level:" + to_string(account->level) + "\n";
 	text.append("exp:" + to_string(account->exp.value) + "\n");
 	text.append("gold:" + to_string(account->gold) + "\n");
-	text.append("tuto_state:" + to_string(account->tuto_state) + "\n");
+	text.append("tuto_state:" + to_string(account->tuto_state >= 30 ? account->tuto_state : 0) + "\n");
 	text.append("char");
 	for (size_t i = 0; i < 6; i++)
 		text.append(":" + account->actor[i]);

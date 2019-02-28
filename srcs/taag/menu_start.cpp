@@ -5,6 +5,11 @@ int type = 1;
 t_game_engine	 *account;
 vector<t_gui>	gui_tutorial;
 
+void		tmp(t_data data)
+{
+	printf("yolo\n");
+}
+
 void		increment_tutorial(t_data data)
 {
 	(void)data;
@@ -16,6 +21,9 @@ void		menu_start()
 {
 	if (gui_tutorial.size() == 0)
 		gui_tutorial.resize(30);
+	for (size_t i = 0; i < 30; i++)
+		gui_tutorial[i] = t_gui();
+
 	SDL_Event	event;
 	bool		play = true;
 	t_gui gui;
@@ -97,7 +105,7 @@ void		menu_start()
 			"", DARK_GREY,
 			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			NULL, NULL), new t_button(new s_paragraph_button(
+			tmp, NULL), new t_button(new s_paragraph_button(
 				"Welcome to TAAG. \n \
 You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
 \n \

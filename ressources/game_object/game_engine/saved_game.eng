@@ -1,8 +1,9 @@
 level:0
 exp:0
 gold:0
-tuto_state:3
+tuto_state:0
 char:NULL:NULL:NULL:NULL:NULL:NULL
-spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
+spell:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
 tile:H00:H01:H11:H16
-map
+map:road-00
+

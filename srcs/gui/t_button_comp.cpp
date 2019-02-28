@@ -40,6 +40,14 @@ void		s_button_comp::set_funct_param(int type, gui_funct p_funct, t_data p_data)
 	}
 }
 
+bool		s_button_comp::check_click(t_vect mouse)
+{
+	if (mouse.x > this->coord[0].x && mouse.x < this->coord[0].x + this->size[0].x &&
+		mouse.y > this->coord[0].y && mouse.y < this->coord[0].y + this->size[0].y)
+			return (true);
+	return (false);
+}
+
 bool		s_button_comp::click_left(t_vect mouse)
 {
 	if (mouse.x > this->coord[0].x && mouse.x < this->coord[0].x + this->size[0].x &&

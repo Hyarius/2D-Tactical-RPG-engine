@@ -58,6 +58,7 @@ typedef struct 		s_button_comp : t_gui_comp
 	virtual void	draw_self() = 0;
 	bool			click_left(t_vect mouse);
 	bool			click_right(t_vect mouse);
+	bool			check_click(t_vect mouse);
 	bool			key_press(SDL_Event *event);
 }					t_button_comp;
 

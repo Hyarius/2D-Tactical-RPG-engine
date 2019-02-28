@@ -20,6 +20,7 @@ static string 			create_basic_actor()
 
 void					menu_actor_editor(t_data data)
 {
+
 	SDL_Event	event;
 	bool		play = true;
 	t_gui 		gui;
@@ -218,18 +219,35 @@ void					menu_actor_editor(t_data data)
 		gui_tutorial[3] = t_gui(30, 20);
 
 		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+					"", DARK_GREY,
+					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5,
+					t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+					NULL, NULL),
+			new t_button(new s_paragraph_button(
+					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spell, stat or even them look !", DARK_GREY, gui.unit.y / 2, //text info
+					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5, //object info
+					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
+		));
+	}
+	if (gui_tutorial[4].object_list.size() == 0)
+	{
+		gui_tutorial[4] = t_gui(30, 20);
+
+		gui_tutorial[4].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
 			"", DARK_GREY,
-			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
-			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			NULL, NULL), new t_button(new s_paragraph_button(
-				"Welcome to TAAG. \n \
-You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
-\n \
-The first menu is play play menu, witch can bring you to a game of TAAG. \n \
-The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
-			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
-			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
-			));
+			t_vect(1, 1) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),NULL));
+
+		gui_tutorial[4].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 3) * gui_tutorial[0].unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"Here, you can write your character name, pseudo, or whatever you want to be the most powerful and famous player out there !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 3) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)));
 	}
 
 	while (play)

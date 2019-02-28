@@ -12,7 +12,8 @@ static void			quit(t_data data)
 	else
 	{
 		account->recharge_map();
-		save_game_engine();
+		account->tuto_state = 30;
+		//save_game_engine();
 		for (size_t i = 0; i < data.data.size(); i++)
 			*((bool *)data.data[i]) = false;
 	}
