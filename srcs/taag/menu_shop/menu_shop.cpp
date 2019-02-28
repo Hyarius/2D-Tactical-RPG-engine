@@ -106,6 +106,8 @@ void menu_shop(t_data data)
 
 		gui.draw_self();
 		gui_part_shop[index].draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
 
@@ -115,8 +117,14 @@ void menu_shop(t_data data)
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				gui.click(&event);
-				gui_part_shop[index].click(&event);
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
+				{
+					increment_tutorial(NULL);
+					gui.click(&event);
+					gui_part_shop[index].click(&event);
+				}
+				else if (account->tuto_state >= gui_tutorial.size())
+					gui.click(&event);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);

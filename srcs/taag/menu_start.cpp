@@ -3,9 +3,9 @@
 int type = 1;
 
 t_game_engine	 *account;
+vector<t_gui>	gui_tutorial;
 
-
-static void		increment_tutorial(t_data data)
+void		increment_tutorial(t_data data)
 {
 	(void)data;
 	account->tuto_state++;
@@ -14,6 +14,8 @@ static void		increment_tutorial(t_data data)
 
 void		menu_start()
 {
+	if (gui_tutorial.size() == 0)
+		gui_tutorial.resize(30);
 	SDL_Event	event;
 	bool		play = true;
 	t_gui gui;
@@ -87,46 +89,48 @@ void		menu_start()
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_quit, t_data(2, &gui, &play)));
 
-	t_gui	gui_tutorial[11];
+	if (gui_tutorial[1].object_list.size() == 0)
+	{
+		gui_tutorial[1] = t_gui(30, 20);
 
-	for (size_t i = 0; i < 11; i++)
-		gui_tutorial[i] = t_gui(30, 20);
-
-	gui_tutorial[1] = t_gui(30, 20);
-
-	gui_tutorial[1].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
-		"", DARK_GREY,
-		t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
-		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-		increment_tutorial, NULL), new t_button(new s_paragraph_button(
-					"Welcome to TAAG. \n \
+		gui_tutorial[1].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
+			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL), new t_button(new s_paragraph_button(
+				"Welcome to TAAG. \n \
 You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
 \n \
 The first menu is play play menu, witch can bring you to a game of TAAG. \n \
 The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
-					t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
-					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
-					));
-
-	gui_tutorial[2] = t_gui(30, 20);
-
-	gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
-					"Those are your six character slots. \n Witch one of them can contain one fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
-					t_vect(15, 8) * gui_tutorial[0].unit, t_vect(8, 4) * gui_tutorial[0].unit, 5, //object info
-					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
-					));
-
-	size = t_vect(4, 5);
-	for (size_t i = 0; i < 6; i++)
+			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
+			));
+	}
+	
+	if (gui_tutorial[2].object_list.size() == 0)
 	{
-		t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 8 + (size.y + 0.5) * (i / 3));
-		t_button *slot_button = new t_button(new s_text_button(
+		gui_tutorial[2] = t_gui(30, 20);
+
+		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
+			"Those are your six character slots. \n Witch one of them can contain one fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(15, 8) * gui_tutorial[0].unit, t_vect(8, 4) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
+		));
+
+		size = t_vect(4, 5);
+		for (size_t i = 0; i < 6; i++)
+		{
+			t_vect coord = t_vect(1 + (size.x + 0.5) * (i % 3), 8 + (size.y + 0.5) * (i / 3));
+			t_button *slot_button = new t_button(new s_text_button(
 				"", DARK_GREY,
 				coord * gui.unit, size * gui.unit, 5,
 				t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
-			increment_tutorial, NULL);
-		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(slot_button, NULL));
+				NULL, NULL);
+			gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(slot_button, NULL));
+		}
 	}
+	
 
 	if (account->tuto_state == 0)
 	{
@@ -139,7 +143,8 @@ The second one is the shop, where you can buy things for your character. \n ", D
 		prepare_screen();
 
 		gui.draw_self();
-		gui_tutorial[account->tuto_state].draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
 
@@ -149,10 +154,13 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (gui_tutorial[account->tuto_state].click(&event) == true)
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
 				{
+					increment_tutorial(NULL);
 					gui.click(&event);
 				}
+				else if (account->tuto_state >= gui_tutorial.size())
+					gui.click(&event);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);

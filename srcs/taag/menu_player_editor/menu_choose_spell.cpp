@@ -76,6 +76,8 @@ void		menu_choose_spell(t_data data)
 		prepare_screen();
 
 		gui.draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
 
@@ -85,8 +87,16 @@ void		menu_choose_spell(t_data data)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click(&event);
+			else if (event.type == SDL_MOUSEBUTTONUP)
+			{
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
+				{
+					increment_tutorial(NULL);
+					gui.click(&event);
+				}
+				else if (account->tuto_state >= gui_tutorial.size())
+					gui.click(&event);
+			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))

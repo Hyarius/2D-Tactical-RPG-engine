@@ -13,6 +13,8 @@ extern vector<string>					human_sprite_name;//stock the name of every tileset in
 extern vector<string>					interface_name;//stock the name of every tileset in interface_map
 extern vector<string>					animation_name;//stock the name of every tileset in interface_map
 
+extern vector<t_gui>					gui_tutorial;
+
 # define SPELL_BUTTON	3
 
 #define ACTOR_PATH 				"ressources/game_object/actor/"
@@ -600,5 +602,6 @@ void 					check_prog_architecture();
 void					save_game_engine();
 
 void					start_tutorial(t_gui *gui);
+void					increment_tutorial(t_data data);
 
 #endif

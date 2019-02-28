@@ -213,6 +213,25 @@ void					menu_actor_editor(t_data data)
 	for (int i = 0; i < 6; i++)
 		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor)));
 
+	if (gui_tutorial[3].object_list.size() == 0)
+	{
+		gui_tutorial[3] = t_gui(30, 20);
+
+		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
+			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL), new t_button(new s_paragraph_button(
+				"Welcome to TAAG. \n \
+You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
+\n \
+The first menu is play play menu, witch can bring you to a game of TAAG. \n \
+The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
+			));
+	}
+
 	while (play)
 	{
 		actor.name = *name;
@@ -222,13 +241,23 @@ void					menu_actor_editor(t_data data)
 		prepare_screen();
 
 		gui.draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP)
-				gui.click(&event);
+			{
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
+				{
+					increment_tutorial(NULL);
+					gui.click(&event);
+				}
+				else if (account->tuto_state >= gui_tutorial.size())
+					gui.click(&event);
+			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
 

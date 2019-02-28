@@ -117,6 +117,8 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 		if (data.data.size() != 0)
 			(*((t_gui *)(data.data[0]))).draw_self();
 		gui.draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
 
@@ -126,7 +128,7 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 				menu_quit(t_data(1, &gui));
 			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
 				play = false;
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+			else if (event.type == SDL_MOUSEBUTTONUP)
 				gui.click(&event);
 		}
 	}

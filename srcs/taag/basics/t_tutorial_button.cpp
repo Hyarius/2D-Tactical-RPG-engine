@@ -28,7 +28,9 @@ void			s_tutorial_button::draw_self()
 
 bool			s_tutorial_button::click_left(t_vect mouse)
 {
-	if (this->button == NULL || this->button->button->funct_left == NULL)
+	if (this->button == NULL)
+		return (false);
+	if (this->button->button->funct_left == NULL)
 		return (true);
 	if (this->button->click_left(mouse) == true)
 		return (true);

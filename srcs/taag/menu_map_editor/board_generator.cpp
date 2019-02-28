@@ -189,7 +189,7 @@ void	menu_generate_board(t_data data)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
-			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+			else if (event.type == SDL_MOUSEBUTTONUP)
 				gui.click(&event);
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
