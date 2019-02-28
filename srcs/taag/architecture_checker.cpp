@@ -52,7 +52,13 @@ void 					check_prog_architecture()
 	{
 		DIR *dir = opendir(to_test[i].c_str());
 		if (dir == NULL)
-			mkdir(to_test[i].c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+		{
+			#ifdef __APPLE__
+				mkdir(to_test[i].c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+			#elif defined _WIN32
+			CreateDirectoryA(to_test[i].c_str(), NULL);
+			#endif
+		}
 	}
 	if (check_file_exist("ressources/game_object/game_engine/saved_game.eng") == false || can_create_game_engine() == false)
 	{

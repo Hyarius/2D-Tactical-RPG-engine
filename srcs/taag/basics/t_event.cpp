@@ -77,6 +77,10 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage;
+		if (target->stat.pm.value + effect_stat.value[0] < 0)
+			damage = target->stat.pm.value;
+		else
+			damage = effect_stat.value[0];
 		if (source != NULL)
 		{
 			if (damage < 0)
@@ -84,11 +88,6 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			else
 				source->total_effect[6] += -damage;
 		}
-
-		if (target->stat.pm.value + effect_stat.value[0] < 0)
-			damage = target->stat.pm.value;
-		else
-			damage = effect_stat.value[0];
 		if (damage != 0)
 			target->change_stat_pm(damage);
 	}
@@ -101,6 +100,10 @@ void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		int damage;
+		if (target->stat.pa.value + effect_stat.value[0] < 0)
+			damage = target->stat.pa.value;
+		else
+			damage = effect_stat.value[0];
 		if (source != NULL)
 		{
 			if (damage < 0)
@@ -108,10 +111,6 @@ void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			else
 				source->total_effect[5] += -damage;
 		}
-		if (target->stat.pa.value + effect_stat.value[0] < 0)
-			damage = target->stat.pa.value;
-		else
-			damage = effect_stat.value[0];
 		if (damage != 0)
 			target->change_stat_pa(damage);
 	}
@@ -228,6 +227,10 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 	if (source != NULL)
 	{
 		int damage;
+		if (source->stat.pm.value + effect_stat.value[0] < 0)
+			damage = source->stat.pm.value;
+		else
+			damage = effect_stat.value[0];
 		if (source != NULL)
 		{
 			if (damage < 0)
@@ -235,10 +238,6 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 			else
 				source->total_effect[6] += -damage;
 		}
-		if (source->stat.pm.value + effect_stat.value[0] < 0)
-			damage = source->stat.pm.value;
-		else
-			damage = effect_stat.value[0];
 		if (damage != 0)
 			source->change_stat_pm(damage);
 	}
@@ -251,6 +250,10 @@ void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 	if (source != NULL)
 	{
 		int damage;
+		if (source->stat.pa.value + effect_stat.value[0] < 0)
+			damage = source->stat.pa.value;
+		else
+			damage = effect_stat.value[0];
 		if (source != NULL)
 		{
 			if (damage < 0)
@@ -258,10 +261,6 @@ void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 			else
 				source->total_effect[5] += -damage;
 		}
-		if (source->stat.pa.value + effect_stat.value[0] < 0)
-			damage = source->stat.pa.value;
-		else
-			damage = effect_stat.value[0];
 		if (damage != 0)
 			source->change_stat_pa(damage);
 	}

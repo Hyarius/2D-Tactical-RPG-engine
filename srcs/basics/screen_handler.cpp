@@ -60,7 +60,7 @@ void				window_initialisation(string window_name)
 	SDL_GL_SetSwapInterval(0);
 
 	#ifndef __APPLE__
-		glewInit()
+		glewInit();
 	#endif
 
 	printOpenGLError();

@@ -37,7 +37,7 @@ void					menu_actor_editor(t_data data)
 
 	t_entry *entry_name = new s_entry(new s_text_entry(	"Name of your character", actor.name, BLACK,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0)));
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6), t_color(1.0, 0.95, 0.0)));
 	i++;
 	string *name = &(entry_name->entry->text);
 

@@ -178,7 +178,7 @@ void menu_edit_animation(t_data data)
 			while (sprite.x < spell->target_anim.tile->nb_sprite.x && sprite.y < spell->target_anim.tile->nb_sprite.y)
 			{
 				if (count == spell->target_anim.start)
-					draw_border_rectangle((coord + (sprite * size) + 0.25) * gui.unit, size * gui.unit, 4, t_color(0.11, 0.54, 1), t_color(0.53, 0.8, 0.93));
+					draw_border_rectangle((coord + (sprite * size) + 0.25) * gui.unit, size * gui.unit, 4, t_color(0.11, 0.54, 1.0), t_color(0.53, 0.8, 0.93));
 				if (spell->target_anim.len != 0 && count - spell->target_anim.start == spell->target_anim.len)
 					draw_border_rectangle((coord + (sprite * size) + 0.25) * gui.unit, size * gui.unit, 4, t_color(0.94, 0.50, 0.5), t_color(0.82, 0.32, 0.32));
 				spell->target_anim.tile->draw_self((coord + (sprite * size) + 0.25) * gui.unit, size * gui.unit, sprite);

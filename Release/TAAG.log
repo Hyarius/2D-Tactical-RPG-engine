@@ -1,0 +1,9 @@
+﻿  menu_start.cpp
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_start.cpp(106): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_start.cpp(114): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+  Génération de code en cours
+  0 of 4057 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Fin de la génération du code
+  TAAG.vcxproj -> C:\Users\Hywa\Desktop\Programme C++\TAAG\Release\TAAG.exe
