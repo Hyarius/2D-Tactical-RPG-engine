@@ -29,6 +29,7 @@ void			save_game_engine()
 	string text = "level:" + to_string(account->level) + "\n";
 	text.append("exp:" + to_string(account->exp.value) + "\n");
 	text.append("gold:" + to_string(account->gold) + "\n");
+	text.append("tuto_state:" + to_string(account->tuto_state) + "\n");
 	text.append("char");
 	for (size_t i = 0; i < 6; i++)
 		text.append(":" + account->actor[i]);
@@ -56,6 +57,7 @@ s_game_engine::s_game_engine()
 	level = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	exp = s_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()), calc_max_exp(level));
 	gold = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
+	tuto_state = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 
 	vector<string> tab = get_strsplit(&myfile, ":", 7);
 

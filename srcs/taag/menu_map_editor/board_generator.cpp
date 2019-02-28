@@ -154,7 +154,7 @@ void	menu_generate_board(t_data data)
 		"Generate", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-		quit_generate_menu, t_data(6, &(board), &size_x, &size_y, &play, &node_type, path)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
+		quit_generate_menu, t_data(6, board, &size_x, &size_y, &play, &node_type, path)); //0 - board | 1 - x | 2 - y | 3 - bool | 4 - node type
 	i++;
 
 	t_button	*quit_button = new t_button(new s_text_button(

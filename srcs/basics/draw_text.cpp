@@ -193,20 +193,30 @@ void				draw_paragraphe(string text, int text_size, t_vect coord, t_vect size, i
 	int height = get_char(text_size, BLACK, 'M')->surface->h;
 	while (i < line.size())
 	{
-		int len = calc_text_len(line[i] + " ", text_size);
-		if (tmp.x + len > size.x)
+		while (line[i] == "\n")
 		{
 			tmp.x = 0;
-			draw_text(text_line, text_size, tmp + coord, color_type);
 			tmp.y = tmp.y + height;
 			text_line = "";
+			i++;
 		}
-		else
+		if (i < line.size())
 		{
-			tmp.x += len;
-			text_line += line[i] + " ";
+			int len = calc_text_len(line[i] + " ", text_size);
+			if (tmp.x + len > size.x)
+			{
+				tmp.x = 0;
+				draw_text(text_line, text_size, tmp + coord, color_type);
+				tmp.y = tmp.y + height;
+				text_line = "";
+			}
+			else
+			{
+				tmp.x += len;
+				text_line += line[i] + " ";
+			}
+			i++;
 		}
-		i++;
 	}
 	tmp.x = 0;
 	draw_text(text_line, text_size, tmp + coord, color_type);
@@ -226,19 +236,30 @@ vector<string>		prepare_paragraphe(string text, int text_size, t_vect size)
 	int height = get_char(text_size, BLACK, 'M')->surface->h;
 	while (i < line.size())
 	{
-		int len = calc_text_len(line[i] + " ", text_size);
-		if (tmp.x + len < size.x)
-		{
-			text_line += line[i] + " ";
-			tmp.x += len;
-		}
-		else
+		while (i < line.size() && line[i] == "\n")
 		{
 			result.push_back(text_line);
-			text_line = line[i] + " ";
-			tmp.x = len;
+			text_line = "";
+			tmp.x = 0;
+			i++;
 		}
-		i++;
+		if (i < line.size())
+		{
+
+			int len = calc_text_len(line[i] + " ", text_size);
+			if (tmp.x + len < size.x)
+			{
+				text_line += line[i] + " ";
+				tmp.x += len;
+			}
+			else
+			{
+				result.push_back(text_line);
+				text_line = line[i] + " ";
+				tmp.x = len;
+			}
+			i++;
+		}
 	}
 	result.push_back(text_line);
 	return (result);

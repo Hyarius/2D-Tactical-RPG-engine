@@ -166,4 +166,16 @@ typedef struct		s_shop_tile : t_gui_obj
 	bool			key_press(SDL_Event *event);
 }					t_shop_tile;
 
+typedef struct		s_tutorial_button : t_gui_obj
+{
+	t_button		*button;
+	t_button		*paragraph;
+					s_tutorial_button();
+					s_tutorial_button(t_button *button, t_button *p_paragraph);
+	void			draw_self();
+	bool			click_left(t_vect mouse);
+	bool			click_right(t_vect mouse);
+	bool			key_press(SDL_Event *event);
+}					t_tutorial_button;
+
 #endif

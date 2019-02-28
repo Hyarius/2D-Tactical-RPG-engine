@@ -4,14 +4,14 @@ s_gui::s_gui()
 {
 	entry = NULL;
 	unit = t_vect(get_win_size().x / 30, get_win_size().y / 20);
-	object_list.resize(5);
+	tutorial_value = 0.0;
 }
 
 s_gui::s_gui(int x, int y)
 {
 	entry = NULL;
 	unit = t_vect(get_win_size().x / x, get_win_size().y / y);
-	object_list.resize(5);
+	tutorial_value = 0.0;
 }
 
 void		s_gui::draw_self()
@@ -21,11 +21,23 @@ void		s_gui::draw_self()
 
 	while (i < object_list.size())
 	{
+		if (i == TUTORIAL_NUM && object_list[i].size() != 0)
+		{
+			glClear(GL_DEPTH_BUFFER_BIT);
+			glDepthFunc(GL_LESS);
+		}
 		j = 0;
 		while (j < object_list[i].size())
 		{
 			object_list[i].at(j)->draw_self();
 			j++;
+		}
+		if (i == TUTORIAL_NUM && object_list[i].size() != 0)
+		{
+			draw_rectangle(t_vect(0, 0), get_win_size(), t_color(0.2,0.2,0.2,tutorial_value));
+			if (tutorial_value < 0.7)
+				tutorial_value += 0.7 / 60.0;
+			glDepthFunc(GL_ALWAYS);
 		}
 		i++;
 	}
@@ -33,11 +45,13 @@ void		s_gui::draw_self()
 
 bool		s_gui::click(SDL_Event *event)
 {
+	if (object_list.size() == 0)
+		return (true);
 	size_t i = 0;
 	size_t j = 0;
 	t_vect mouse = get_mouse_coord();
 
-	while (i < object_list[ENTRY_NUM].size())
+	while (object_list.size() >= ENTRY_NUM && i < object_list[ENTRY_NUM].size())
 	{
 		((t_entry *)(object_list[ENTRY_NUM][i]))->entry->selected = false;
 		i++;
@@ -79,6 +93,8 @@ bool		s_gui::click(SDL_Event *event)
 
 bool		s_gui::key_press(SDL_Event *event)
 {
+	if (object_list.size() == 0)
+		return (true);
 	size_t i = 0;
 	size_t j = 0;
 

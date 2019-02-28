@@ -5,8 +5,9 @@
 
 using namespace std;
 
-# define BUTTON_NUM		2
+# define BUTTON_NUM		1
 # define ENTRY_NUM		2
+# define TUTORIAL_NUM	3
 
 # define MOUSE_LEFT		0
 # define MOUSE_RIGHT	1
@@ -69,6 +70,20 @@ typedef struct		s_text_button : t_button_comp
 								t_color p_color1, t_color p_color2);
 	void			draw_self(); // draw the button
 }					t_text_button;
+
+
+typedef struct		s_paragraph_button : t_button_comp
+{
+	t_color			color[2]; //0 - color back || 1 - color front
+	vector<t_image *>
+					text_paragraph;
+	vector<t_vect>	paragraph_coord;
+	vector<t_vect>	paragraph_size;
+					s_paragraph_button(	string p_text, int p_text_color, int p_text_size, // text info
+								t_vect p_coord, t_vect p_size, int border, // coord / size info
+								t_color p_color1, t_color p_color2);
+	void			draw_self(); // draw the button
+}					t_paragraph_button;
 
 typedef struct		s_image_button : t_button_comp
 {
@@ -181,6 +196,7 @@ typedef struct		s_gui
 	t_entry_comp	*entry;
 	t_vect			canvas;
 	t_vect			unit;
+	double			tutorial_value;
 
 					s_gui();
 					s_gui(int x, int y);

@@ -453,6 +453,7 @@ typedef struct			s_game_engine
 	int					level;
 	s_value				exp;
 	int					gold;
+	int					tuto_state;
 
 	string				actor[6];
 	t_actor *			actor_array[6];
@@ -597,4 +598,7 @@ string					create_new_game_engine();
 void 					check_prog_architecture();
 
 void					save_game_engine();
+
+void					start_tutorial(t_gui *gui);
+
 #endif

@@ -10,6 +10,8 @@ void		set_index(t_data data)
 	*index = value;
 }
 
+typedef 			void(*gui_funct)(t_data);
+
 gui_funct		funct_tab[3] = {
 	modify_index_sprite_tab,
 	modify_index_spell_tab,

@@ -33,6 +33,7 @@ string 					create_new_game_engine()
 	string text = "level:0\n";
 	text.append("exp:0\n");
 	text.append("gold:0\n");
+	text.append("tuto_state:0\n");
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
 	text.append("spell:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal\n");
 	text.append("tile:H00:H01:H11:H16\n");
