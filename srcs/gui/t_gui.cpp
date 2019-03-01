@@ -19,9 +19,11 @@ void		s_gui::draw_self()
 	size_t i = 0;
 	size_t j;
 
+	printf("gui size = %zu\n", i);
 	while (i < object_list.size())
 	{
-		if (i == TUTORIAL_NUM && object_list[i].size() != 0)
+		printf("there\n");
+		if (i == TUTORIAL_NUM)
 		{
 			glClear(GL_DEPTH_BUFFER_BIT);
 			glDepthFunc(GL_LESS);
@@ -32,11 +34,13 @@ void		s_gui::draw_self()
 			object_list[i].at(j)->draw_self();
 			j++;
 		}
-		if (i == TUTORIAL_NUM && object_list[i].size() != 0)
+		if (i == TUTORIAL_NUM)
 		{
+			printf("here\n");
 			draw_rectangle(t_vect(0, 0), get_win_size(), t_color(0.2,0.2,0.2,tutorial_value));
 			if (tutorial_value < 0.7)
 				tutorial_value += 0.7 / 60.0;
+			glClear(GL_DEPTH_BUFFER_BIT);
 			glDepthFunc(GL_ALWAYS);
 		}
 		i++;

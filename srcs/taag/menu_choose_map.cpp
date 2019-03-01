@@ -78,7 +78,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 			"", DARK_GREY,
 			t_vect(1.5, 4) * gui.unit, t_vect(26.9, 5) * gui.unit, 5,
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
-			menu_play, NULL),
+			NULL, NULL),
 			new t_button(new s_paragraph_button(
 				"Look like we didn't get any map to play with ... We should go to the shop and buy some ! \n \n \n Press the echap key to get back to main menu", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(10.8, 9.3) * gui_tutorial[0].unit, t_vect(8.3, 4) * gui_tutorial[0].unit, 5, //object info

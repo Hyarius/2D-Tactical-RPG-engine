@@ -12,11 +12,6 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 	string name = (to_save->name == "" ? "default" : to_save->name);
 	string p_path = name;
 
-	if (name == "default" && check_file_exist(ACTOR_PATH + p_path + ACTOR_EXT) == true)
-	{
-		for (int i = 0; check_file_exist(ACTOR_PATH + p_path + ACTOR_EXT) == true; i++)
-			p_path = name + "(" + to_string(i) + ")";
-	}
 	*path = p_path;
 
 	size_t	*tile_index = (size_t *)(data.data[1]);

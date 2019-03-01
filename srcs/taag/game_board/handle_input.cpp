@@ -118,7 +118,7 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index, vecto
 
 	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT)
 	{
-		if (actor_pool.size() && get_cell(mouse)->actor == NULL)
+		if (actor_pool.size() && get_cell(mouse) && get_cell(mouse)->actor == NULL)
 		{
 			size_t count = 0;
 			while (count < placement_list.size() && mouse != placement_list[count])
@@ -133,7 +133,7 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index, vecto
 	else if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_RIGHT)
 	{
 
-		if (get_cell(mouse) && get_cell(mouse)->actor != NULL)
+		if (get_cell(mouse) && get_cell(mouse) && get_cell(mouse)->actor != NULL)
 		{
 			size_t count = 0;
 			while (count < placement_list.size() && mouse != placement_list[count])

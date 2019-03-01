@@ -29,7 +29,7 @@ void			save_game_engine()
 	string text = "level:" + to_string(account->level) + "\n";
 	text.append("exp:" + to_string(account->exp.value) + "\n");
 	text.append("gold:" + to_string(account->gold) + "\n");
-	text.append("tuto_state:" + to_string(account->tuto_state >= 30 ? account->tuto_state : 0) + "\n");
+	text.append("tuto_state:" + to_string(account->tuto_state) + "\n");
 	text.append("keyboard:" + to_string(account->keyboard[0]) + ":" + to_string(account->keyboard[1]) + ":" + to_string(account->keyboard[2]) + ":" + to_string(account->keyboard[3]) + ":" + to_string(account->keyboard[4]) + ":" + to_string(account->keyboard[5]) + "\n");
 
 	text.append("char");

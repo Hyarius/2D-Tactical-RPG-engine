@@ -26,8 +26,9 @@ s_paragraph_button::s_paragraph_button(	string p_text, int p_text_color, int p_t
 
 void		s_paragraph_button::draw_self()
 {
-	glDepthFunc(GL_LEQUAL);
-	for (int i = 0 ; i < 2 ; i++)
+	if (data_left.data.size() == 1)
+		glDepthFunc(GL_LEQUAL);
+	for (int i = 0; i < 2; i++)
 		draw_rectangle(coord[i], size[i], color[i]);
 	if (text != saved_text)
 	{
@@ -56,9 +57,10 @@ void		s_paragraph_button::draw_self()
 	}
 	for (size_t i = 0; i < text_paragraph.size(); i++)
 	{
-		t_vect image_coord = t_vect(coord[1] + t_vect(0, get_char(text_size, BLACK, 'M')->surface->h) * (int)(i) +  (size[0] - size[1]));
+		t_vect image_coord = t_vect(coord[1] + t_vect(0, get_char(text_size, BLACK, 'M')->surface->h) * (int)(i)+(size[0] - size[1]));
 		if (text_paragraph[i] != NULL)
 			text_paragraph[i]->draw_self(image_coord, paragraph_size[i]);
 	}
-	glDepthFunc(GL_LESS);
+	if (data_left.data.size() == 1)
+		glDepthFunc(GL_LESS);
 }

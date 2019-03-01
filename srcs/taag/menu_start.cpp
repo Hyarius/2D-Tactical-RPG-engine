@@ -203,13 +203,10 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+				if (account->tuto_state < TUTO_SIZE && gui_tutorial[account->tuto_state].object_list.size())
 					gui_tutorial[account->tuto_state].click(&event);
 				else
-				{
-					printf("here\n");
 					gui.click(&event);
-				}
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);
