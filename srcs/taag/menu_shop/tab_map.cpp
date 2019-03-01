@@ -3,6 +3,17 @@
 vector<s_shop_item *>		map_item_vector;
 s_shop_item					*map_item_list[18];
 
+void			actualize_map_tab(int *index)
+{
+	for (int i = 0; i < 18; i++)
+	{
+		if (i + (*index) < 0 || i + *index >= (int)(map_item_vector.size()))
+			map_item_list[i] = NULL;
+		else
+			map_item_list[i] = map_item_vector[i + (*index)];
+	}
+}
+
 void			modify_index_map_tab(t_data data)
 {
 	int *index = (int *)(data.data[0]);
@@ -23,6 +34,8 @@ void				check_map_lock()
 {
 	vector<string>		list_base = list_files(MAP_PATH, MAP_EXT);
 
+	if (account->tuto_state < TUTO_SIZE)
+		list_base = { "tutorial-00" };
 	map_item_vector.clear();
 
 	for (size_t i = 0; i < list_base.size(); i++)

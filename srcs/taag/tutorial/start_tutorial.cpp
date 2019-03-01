@@ -14,7 +14,7 @@ static void		don_t_play_tutorial(t_data data)
 	(void)data;
 	bool *play = (bool *)(data.data[0]);
 
-	account->tuto_state = 10;
+	account->tuto_state = TUTO_SIZE;
 	*play = false;
 }
 

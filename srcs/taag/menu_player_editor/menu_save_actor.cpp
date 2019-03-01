@@ -43,22 +43,27 @@ static void			save_actor(t_data data) // 0 - t_actor * / 1 - file name
 static void		quit_save(t_data data)
 {
 	save_actor(t_data(3, data.data[0], data.data[2], data.data[3]));
+	if (account->tuto_state < 30)
+		account->tuto_state++;
 	bool *play = (bool *)(data.data[1]);
 	*play = false;
+	bool *play_2 = (bool *)(data.data[4]);
+	*play_2 = false;
 }
 
 void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 {
+	if (account->tuto_state < TUTO_SIZE)
+		account->tuto_state--;
 	t_actor 	*to_save = (t_actor *)(data.data[1]);
 	string		*path = (string *)(data.data[2]);
 	size_t		*tile_index = *(size_t **)(data.data[3]);
 	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
+	bool		*old_play = (bool *)(data.data[5]);
 	t_gui		gui = t_gui(15, 10);
 	SDL_Event	event;
 
 	bool		play = true;
-
-
 
 	s_button *button = new s_button(new s_text_button(//button did you wanna quit
 						"Did you want to save this actor ?", DARK_GREY, //text info
@@ -73,7 +78,7 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-						quit_save, t_data(4, data.data[1], &play, tile_index, path)));
+						quit_save, t_data(5, data.data[1], &play, tile_index, path, old_play)));
 
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info
@@ -87,9 +92,9 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 
 		if (data.data.size() != 0)
 			(*((t_gui *)(data.data[0]))).draw_self();
-		gui.draw_self();
 		if (account->tuto_state < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
+		gui.draw_self();
 
 		render_screen(true);
 
@@ -99,15 +104,8 @@ void			menu_save_actor(t_data data) //0 - gui / 1 - t_actor * / 2 - & file name
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
-				{
-					increment_tutorial(NULL);
-					gui.click(&event);
-				}
-				else if (account->tuto_state >= gui_tutorial.size())
-					gui.click(&event);
+				gui.click(&event);
 			}
 		}
 	}
-
 }

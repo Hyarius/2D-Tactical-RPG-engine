@@ -30,6 +30,8 @@ void			save_game_engine()
 	text.append("exp:" + to_string(account->exp.value) + "\n");
 	text.append("gold:" + to_string(account->gold) + "\n");
 	text.append("tuto_state:" + to_string(account->tuto_state >= 30 ? account->tuto_state : 0) + "\n");
+	text.append("keyboard:" + to_string(account->keyboard[0]) + ":" + to_string(account->keyboard[1]) + ":" + to_string(account->keyboard[2]) + ":" + to_string(account->keyboard[3]) + ":" + to_string(account->keyboard[4]) + ":" + to_string(account->keyboard[5]) + "\n");
+
 	text.append("char");
 	for (size_t i = 0; i < 6; i++)
 		text.append(":" + account->actor[i]);
@@ -60,6 +62,10 @@ s_game_engine::s_game_engine()
 	tuto_state = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 
 	vector<string> tab = get_strsplit(&myfile, ":", 7);
+	for (size_t i = 1; i < tab.size(); i++)
+		keyboard[i - 1] = atoi(tab[i].c_str());
+
+	tab = get_strsplit(&myfile, ":", 7);
 
 	for (size_t i = 1; i < tab.size(); i++)
 	{

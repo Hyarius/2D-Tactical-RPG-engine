@@ -18,6 +18,16 @@ static string 			create_basic_actor()
 	return (text);
 }
 
+static void				select_entry(t_data data)
+{
+	t_entry *entry_name = (t_entry *)(data.data[0]);
+	t_gui	*gui = (t_gui *)(data.data[1]);
+
+	entry_name->entry->selected = true;
+	gui->entry = entry_name->entry;
+	SDL_StartTextInput();
+}
+
 void					menu_actor_editor(t_data data)
 {
 
@@ -144,7 +154,7 @@ void					menu_actor_editor(t_data data)
 			"Save actor", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_save_actor, t_data(5, &gui, &actor, path, &tile_index, &sprite_target));//0 - gui / 1 - t_actor * / 2 - & file name
+			menu_save_actor, t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play));//0 - gui / 1 - t_actor * / 2 - & file name
 	i++;
 
 	t_button	*load_button = new t_button(new s_text_button(
@@ -218,40 +228,108 @@ void					menu_actor_editor(t_data data)
 	{
 		gui_tutorial[3] = t_gui(30, 20);
 
-		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
-					"", DARK_GREY,
-					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5,
-					t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-					NULL, NULL),
+		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
 					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spell, stat or even them look !", DARK_GREY, gui.unit.y / 2, //text info
 					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5, //object info
-					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
-		));
+					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
 	if (gui_tutorial[4].object_list.size() == 0)
 	{
-		gui_tutorial[4] = t_gui(30, 20);
-
 		gui_tutorial[4].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
 			"", DARK_GREY,
 			t_vect(1, 1) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			NULL, NULL),NULL));
-
-		gui_tutorial[4].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
-			"", DARK_GREY,
-			t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 3) * gui_tutorial[0].unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
 				"Here, you can write your character name, pseudo, or whatever you want to be the most powerful and famous player out there !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 3) * gui_tutorial[0].unit, 5, //object info
-				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)));
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[5].object_list.size() == 0)
+	{
+		gui_tutorial[5].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1, 2.2) * gui.unit, t_vect(8, 6) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"Here, you can find 2 types of things : \n First, you have the amount of attribute points left to give. You will receive some at every level up ! \n You can spend them into the 4 types of caracteristics that your character have : \n \n - Health Points : Represent how much damage you can take before faint out \n - Action Points : Points used in combat to cast spell \n - Mouvement Points : Points used on combat to move around the map \n - Initiative : Determine the turn order of the map \n \n You can find how much attrib. points every caracteristic cost just near the caracteristic name.", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(10, 9.5) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[6].object_list.size() == 0)
+	{
+		gui_tutorial[6].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(13.7, 1.0) * gui.unit, t_vect(5.8, 3.4) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"Here is the sprite selector, where you can choose the look of your character. \n You can select it by pressing the \"<\" or \">\" button, or by simply click on the sprite on the center to open the sprite selection menu. \n ", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(11.6, 4.6) * gui_tutorial[0].unit, t_vect(10, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[7].object_list.size() == 0)
+	{
+		gui_tutorial[7].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(9.2, 4.6) * gui.unit, t_vect(12.4, 12.2) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"Here, you will find the most important feature of this menu : the spell spelector !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.2, 1.5) * gui_tutorial[0].unit, t_vect(12.4, 2) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[8].object_list.size() == 0)
+	{
+		gui_tutorial[8].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(9.2, 4.6) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_choose_spell, t_data(3, &gui, 0, &actor)),
+			new t_button(new s_paragraph_button(
+				"Click on this spell, to open the spell selector menu.", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
+	}
+	if (gui_tutorial[12].object_list.size() == 0)
+	{
+		gui_tutorial[12] = t_gui(30, 20);
+
+		gui_tutorial[12].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(9.2, 4.6) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"All right ! Now our character got one spell !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[13].object_list.size() == 0)
+	{
+		gui_tutorial[13].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
+			new t_button(new s_paragraph_button(
+				"Now than we got a spell, we should go and play one game no ? Before that, we need to give this character a proper name ! \n Click on the name entry, and give him an awnsome name. Than click to the \"Save actor \" button to save this actor.", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
+		gui_tutorial[13].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1, 1) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			select_entry, t_data(2, entry_name, &gui)), NULL, false));
+		gui_tutorial[13].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1, 12.28) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			menu_save_actor, t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play)), NULL, true));
 	}
 
 	while (play)
 	{
+		//printf("tuto state = %d\n", account->tuto_state);
 		actor.name = *name;
 		actor.tile = get_sprite_tile(account->tile_unlock[tileset_selector->i % account->tile_unlock.size()]);
 		actor.sprite = *sprite_target;
@@ -268,12 +346,9 @@ void					menu_actor_editor(t_data data)
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
-				{
-					increment_tutorial(NULL);
-					gui.click(&event);
-				}
-				else if (account->tuto_state >= gui_tutorial.size())
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+					gui_tutorial[account->tuto_state].click(&event);
+				else
 					gui.click(&event);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)

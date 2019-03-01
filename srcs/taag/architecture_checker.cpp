@@ -34,10 +34,11 @@ string 					create_new_game_engine()
 	text.append("exp:0\n");
 	text.append("gold:0\n");
 	text.append("tuto_state:0\n");
+	text.append("keyboard:" + to_string(SDLK_q) + ":" + to_string(SDLK_w) + ":" + to_string(SDLK_e) + ":" + to_string(SDLK_r) + ":" + to_string(SDLK_t) + ":" + to_string(SDLK_y) + "\n");
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
 	text.append("spell:Aero-sword:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal\n");
 	text.append("tile:H00:H01:H11:H16\n");
-	text.append("map:road-00\n");
+	text.append("map:\n");
 	return (text);
 }
 

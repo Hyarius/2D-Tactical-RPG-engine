@@ -1,21 +1,17 @@
 #include "taag.h"
 
-static void			return_true(t_data data)
-{
-	(void)data;
-}
-
 s_tutorial_button::s_tutorial_button()
 {
 	button = NULL;
+	paragraph = NULL;
+	allowed = false;
 }
 
-s_tutorial_button::s_tutorial_button(t_button *p_button, t_button *p_paragraph)
+s_tutorial_button::s_tutorial_button(t_button *p_button, t_button *p_paragraph, bool p_allowed)
 {
 	button = p_button;
 	paragraph = p_paragraph;
-	if (button != NULL && button->button->funct_left == NULL)
-		button->button->funct_left = return_true;
+	allowed = p_allowed;
 }
 
 void			s_tutorial_button::draw_self()
@@ -25,30 +21,36 @@ void			s_tutorial_button::draw_self()
 	if (paragraph != NULL)
 		paragraph->draw_self();
 }
-
 bool			s_tutorial_button::click_left(t_vect mouse)
 {
-	if (this->button == NULL)
-		return (false);
-	if (this->paragraph != NULL && button->button->check_click(mouse) == true)
+	if (paragraph != NULL && paragraph->button->funct_left == NULL && paragraph->button->check_click(mouse) == true)
+	{
+		if (allowed == true)
+			increment_tutorial(NULL);
 		return (true);
-	if (this->paragraph == NULL && this->button->button->funct_left == NULL && button->button->check_click(mouse) == true)
-		return (false);
-	if (this->button->click_left(mouse) == true)
-		return (true);
+	}
+	else if (button != NULL && button->button->funct_left != NULL && button->button->check_click(mouse) == true)
+	{
+		if (allowed == true)
+			increment_tutorial(NULL);
+		return (this->button->click_left(mouse));
+	}
 	return (false);
 }
 
 bool			s_tutorial_button::click_right(t_vect mouse)
 {
-	if (this->button == NULL)
-		return (false);
-	if (this->paragraph != NULL && button->button->check_click(mouse) == true)
+	if ((paragraph != NULL && paragraph->button->check_click(mouse) == true && paragraph->button->funct_right == NULL))
+	{
+		increment_tutorial(NULL);
 		return (true);
-	if (this->paragraph == NULL && this->button->button->funct_right == NULL && button->button->check_click(mouse) == true)
-		return (false);
-	if (this->button->click_right(mouse) == true)
-		return (true);
+	}
+	else if (button != NULL && button->button->funct_right != NULL)
+	{
+		if (button->button->check_click(mouse) == true && allowed == true)
+			increment_tutorial(NULL);
+		return (this->button->click_right(mouse));
+	}
 	return (false);
 }
 

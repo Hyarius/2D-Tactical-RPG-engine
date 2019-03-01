@@ -70,16 +70,47 @@ void			menu_choose_map(t_data data) // 0 - &path
 		gui.add(button);
 		i++;
 	}
+	if (gui_tutorial[15].object_list.size() == 0)
+	{
+		gui_tutorial[15] = t_gui(30, 20);
+
+		gui_tutorial[15].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1.5, 4) * gui.unit, t_vect(26.9, 5) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			menu_play, NULL),
+			new t_button(new s_paragraph_button(
+				"Look like we didn't get any map to play with ... We should go to the shop and buy some ! \n \n \n Press the echap key to get back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(10.8, 9.3) * gui_tutorial[0].unit, t_vect(8.3, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), false
+		));
+	}
+
+	if (gui_tutorial[24].object_list.size() == 0)
+	{
+		gui_tutorial[24] = t_gui(30, 20);
+
+		gui_tutorial[24].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(1.5, 4) * gui.unit, t_vect(8.3, 1.1) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			quit_load, t_data(3, entry_path, &play, 0)),
+			new t_button(new s_paragraph_button(
+				"Select the \"tutorial-00\" map and let's play it !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(10.8, 9.3) * gui_tutorial[0].unit, t_vect(8.3, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
+		));
+	}
 
 	while (play == true)
 	{
 		prepare_screen();
 
 		gui.draw_self();
+		if (account->tuto_state < gui_tutorial.size())
+			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
-		printOpenGLError();
-		printSDLError();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -88,18 +119,23 @@ void			menu_choose_map(t_data data) // 0 - &path
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-				gui.click(&event);
-			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
+			{
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+					gui_tutorial[account->tuto_state].click(&event);
+				else
+					gui.click(&event);
+			}
+			else if ((event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) && account->tuto_state >= gui_tutorial.size())
 				gui.key_press(&event);
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP) && account->tuto_state >= gui_tutorial.size())
 			{
 				modify_index(t_data(2, &index, -3));
 			}
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN))
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN) && account->tuto_state >= gui_tutorial.size())
 			{
 				modify_index(t_data(2, &index, 3));
 			}
-			else if (event.type == SDL_MOUSEWHEEL)
+			else if (event.type == SDL_MOUSEWHEEL && account->tuto_state >= gui_tutorial.size())
 			{
 				if (event.wheel.y > 0)
 					modify_index(t_data(2, &index, -3));
@@ -108,4 +144,6 @@ void			menu_choose_map(t_data data) // 0 - &path
 			}
 		}
 	}
+	if (account->tuto_state == 15)
+		account->tuto_state++;
 }

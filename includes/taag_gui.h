@@ -170,8 +170,9 @@ typedef struct		s_tutorial_button : t_gui_obj
 {
 	t_button		*button;
 	t_button		*paragraph;
+	bool			allowed;
 					s_tutorial_button();
-					s_tutorial_button(t_button *button, t_button *p_paragraph);
+					s_tutorial_button(t_button *button, t_button *p_paragraph, bool p_allowed);
 	void			draw_self();
 	bool			click_left(t_vect mouse);
 	bool			click_right(t_vect mouse);

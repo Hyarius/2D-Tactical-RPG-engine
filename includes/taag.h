@@ -16,6 +16,7 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 extern vector<t_gui>					gui_tutorial;
 
 # define SPELL_BUTTON	3
+# define TUTO_SIZE		30
 
 #define ACTOR_PATH 				"ressources/game_object/actor/"
 #define ACTOR_EXT 				".act"
@@ -457,6 +458,8 @@ typedef struct			s_game_engine
 	int					gold;
 	int					tuto_state;
 
+	int					keyboard[6];
+
 	string				actor[6];
 	t_actor *			actor_array[6];
 
@@ -591,6 +594,7 @@ void 					menu_shop(t_data data);
 void						create_tab_sprite(t_data data);
 void							modify_index_sprite_tab(t_data data);
 void						create_tab_map(t_data data);
+void							actualize_map_tab(int *index);
 void							modify_index_map_tab(t_data data);
 void						create_tab_spell(t_data data);
 void							modify_index_spell_tab(t_data data);
@@ -603,5 +607,7 @@ void					save_game_engine();
 
 void					start_tutorial(t_gui *gui);
 void					increment_tutorial(t_data data);
+void					tmp_function(t_data data);
+void					setting_keyboard(t_gui *gui);
 
 #endif

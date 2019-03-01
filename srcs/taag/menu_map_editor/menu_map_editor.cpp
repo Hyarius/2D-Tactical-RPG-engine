@@ -362,6 +362,7 @@ void					menu_map_editor(t_data data)
 		board.draw_cell_layer();
 		if (index == 2)
 			board.draw_placement();
+		board.draw_cursor_layer();
 		board.draw_mouse_cursor();
 
 		gui.draw_self();
@@ -372,8 +373,13 @@ void					menu_map_editor(t_data data)
 
 		if (SDL_PollEvent(&event) == 1)
 		{
-			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE && cell_list.size() == 0))
 				menu_quit(t_data(2, &gui, &play));
+			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE && cell_list.size() != 0)
+			{
+				board.reset_board();
+				cell_list.clear();
+			}
 			else if (event.type == SDL_MOUSEMOTION && event.button.button == SDL_BUTTON_LEFT)
 			{
 				moved = true;

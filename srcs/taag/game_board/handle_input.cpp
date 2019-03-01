@@ -180,7 +180,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 	}
 	if (event->type == SDL_KEYDOWN)
 	{
-		if (event->key.keysym.sym == SDLK_q)
+		if (event->key.keysym.sym == account->keyboard[0])
 		{
 			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm &&
 				player->cooldown[0] == 0)
@@ -188,7 +188,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 			else
 				s_spell = -1;
 		}
-		else if (event->key.keysym.sym == SDLK_w)
+		else if (event->key.keysym.sym == account->keyboard[1])
 		{
 			if (player->stat.pa.value >= player->spell[1]->cost_pa && player->stat.pm.value >= player->spell[1]->cost_pm &&
 				player->cooldown[1] == 0)
@@ -196,7 +196,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 			else
 				s_spell = -1;
 		}
-		else if (event->key.keysym.sym == SDLK_e)
+		else if (event->key.keysym.sym == account->keyboard[2])
 		{
 			if (player->stat.pa.value >= player->spell[2]->cost_pa && player->stat.pm.value >= player->spell[2]->cost_pm &&
 				player->cooldown[2] == 0)
@@ -204,7 +204,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 			else
 				s_spell = -1;
 		}
-		else if (event->key.keysym.sym == SDLK_r)
+		else if (event->key.keysym.sym == account->keyboard[3])
 		{
 			if (player->stat.pa.value >= player->spell[3]->cost_pa && player->stat.pm.value >= player->spell[3]->cost_pm &&
 				player->cooldown[3] == 0)
@@ -212,7 +212,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 			else
 				s_spell = -1;
 		}
-		else if (event->key.keysym.sym == SDLK_t)
+		else if (event->key.keysym.sym == account->keyboard[4])
 		{
 			if (player->stat.pa.value >= player->spell[4]->cost_pa && player->stat.pm.value >= player->spell[4]->cost_pm &&
 				player->cooldown[4] == 0)
@@ -220,7 +220,7 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 			else
 				s_spell = -1;
 		}
-		else if (event->key.keysym.sym == SDLK_y)
+		else if (event->key.keysym.sym == account->keyboard[5])
 		{
 			if (player->stat.pa.value >= player->spell[5]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm &&
 				player->cooldown[5] == 0)

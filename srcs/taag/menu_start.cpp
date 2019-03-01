@@ -5,24 +5,27 @@ int type = 1;
 t_game_engine	 *account;
 vector<t_gui>	gui_tutorial;
 
-void		tmp(t_data data)
+void		tmp_function(t_data data)
 {
-	printf("yolo\n");
+	(void)data;
 }
 
 void		increment_tutorial(t_data data)
 {
 	(void)data;
 	account->tuto_state++;
-	printf("there\n");
 }
 
 void		menu_start()
 {
 	if (gui_tutorial.size() == 0)
-		gui_tutorial.resize(30);
-	for (size_t i = 0; i < 30; i++)
+		gui_tutorial.resize(TUTO_SIZE);
+	for (size_t i = 0; i < TUTO_SIZE; i++)
+	{
 		gui_tutorial[i] = t_gui();
+		if (i != 1)
+			gui_tutorial[i].tutorial_value = 0.7;
+	}
 
 	SDL_Event	event;
 	bool		play = true;
@@ -99,13 +102,7 @@ void		menu_start()
 
 	if (gui_tutorial[1].object_list.size() == 0)
 	{
-		gui_tutorial[1] = t_gui(30, 20);
-
-		gui_tutorial[1].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
-			"", DARK_GREY,
-			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5,
-			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
-			tmp, NULL), new t_button(new s_paragraph_button(
+		gui_tutorial[1].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
 				"Welcome to TAAG. \n \
 You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
 \n \
@@ -113,17 +110,15 @@ The first menu is play play menu, witch can bring you to a game of TAAG. \n \
 The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
-			));
+			, true));
 	}
 	
 	if (gui_tutorial[2].object_list.size() == 0)
 	{
-		gui_tutorial[2] = t_gui(30, 20);
-
 		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
 			"Those are your six character slots. \n Witch one of them can contain one fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(15, 8) * gui_tutorial[0].unit, t_vect(8, 4) * gui_tutorial[0].unit, 5, //object info
-			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
+			t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
 
 		size = t_vect(4, 5);
@@ -134,20 +129,66 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				"", DARK_GREY,
 				coord * gui.unit, size * gui.unit, 5,
 				t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
-				NULL, NULL);
-			gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(slot_button, NULL));
+				menu_actor_editor, t_data(1, &(account->actor[i])));
+			gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(slot_button, NULL, true));
 		}
+	}
+	if (gui_tutorial[14].object_list.size() == 0)
+	{
+		gui_tutorial[14] = t_gui(30, 20);
+
+		gui_tutorial[14].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(21, 1) * gui.unit, t_vect(8, 2) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			menu_play, NULL),
+			new t_button(new s_paragraph_button(
+				"Now than we got a character, let's try and play one game ! Click on the \"Play\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
+		));
+	}
+	if (gui_tutorial[16].object_list.size() == 0)
+	{
+		gui_tutorial[16] = t_gui(30, 20);
+
+		gui_tutorial[16].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(21, 4) * gui.unit, t_vect(8, 2) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			menu_shop, NULL),
+			new t_button(new s_paragraph_button(
+				"Let's open the \"Shop\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
+		));
+	}
+
+	if (gui_tutorial[23].object_list.size() == 0)
+	{
+		gui_tutorial[23] = t_gui(30, 20);
+
+		gui_tutorial[23].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(21, 1) * gui.unit, t_vect(8, 2) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			menu_play, NULL),
+			new t_button(new s_paragraph_button(
+				"Click on the \"Play\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
+		));
 	}
 	
 
 	if (account->tuto_state == 0)
 	{
 		start_tutorial(&gui);
+		setting_keyboard(&gui);
 	}
 
 	while (play)
 	{
-
 		prepare_screen();
 
 		gui.draw_self();
@@ -162,13 +203,13 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+					gui_tutorial[account->tuto_state].click(&event);
+				else
 				{
-					increment_tutorial(NULL);
+					printf("here\n");
 					gui.click(&event);
 				}
-				else if (account->tuto_state >= gui_tutorial.size())
-					gui.click(&event);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);

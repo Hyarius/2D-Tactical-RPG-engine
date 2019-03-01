@@ -71,6 +71,41 @@ void		menu_choose_spell(t_data data)
 						),
 						modify_index, t_data(3, &index, 6, &gui)));
 
+	if (gui_tutorial[9].object_list.size() == 0)
+	{
+		gui_tutorial[9] = t_gui(30, 20);
+
+		gui_tutorial[9].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
+			new t_button(new s_paragraph_button(
+				"Welcome to the spell selector ! You will find here every spell that you have acces to. \n Let's look at the more closely !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[10].object_list.size() == 0)
+	{
+		gui_tutorial[10].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(4.7, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			NULL, NULL),
+			new t_button(new s_paragraph_button(
+				"This spell, obviously named \"Aqua-sword\", got some basics informations. \n - the Action points cost of it : 4 PA per attack. \n - the Mouvement points cost. In this case it cost 0 MP per attack, but it happen than spell cost some MP ! \n - The range of the attack. It describ from how much distance you can land this spell. The first value describ the distance minimum where you can hit enemy, and the other one describ the maximun range allowed. \n - The description of the spell and it's effect. In this case, it will deal some damages to the target and will pull it to you by one square. \n \n And, at the bottom of the spell, you can find 4 icons. \n - The first on the left represent what kind of target you can hit with this spell. Some spell must target occuped area, some other should focus an empty target, and some can target both. \n - The second one represent the type of line of vision you need to actualy target someone : it can be blocked by obstacle, or can see freely thought it. \n - The third one describ the type of range allowed for this spell : in circle around you, or in strict line. \n - And the last one represent the type of zone this spell will hit : a solo-area, a circle, a square, or a line.", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(12.4, 13.2) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
+	}
+	if (gui_tutorial[11].object_list.size() == 0)
+	{
+		gui_tutorial[11].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(4.7, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			quit_select_spell, t_data(4, player, spell_num, 1, &play)),
+			new t_button(new s_paragraph_button(
+				"Let's select this spell ! Click on it !", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(6.5, 2) * gui_tutorial[0].unit, 5, //object info
+				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
+	}
+
 	while (play == true)
 	{
 		prepare_screen();
@@ -86,28 +121,30 @@ void		menu_choose_spell(t_data data)
 			if (event.type == SDL_QUIT)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
-				play = false;
+			{
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+					menu_quit(t_data(1, &gui));
+				else
+					play = false;
+			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
-				{
-					increment_tutorial(NULL);
-					gui.click(&event);
-				}
-				else if (account->tuto_state >= gui_tutorial.size())
+				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+					gui_tutorial[account->tuto_state].click(&event);
+				else
 					gui.click(&event);
 			}
-			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
+			else if (account->tuto_state < gui_tutorial.size() && (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN))
 				gui.key_press(&event);
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP))
+			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP)
 			{
 				modify_index(t_data(3, &index, -6, &gui));
 			}
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN))
+			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN)
 			{
 				modify_index(t_data(3, &index, 6, &gui));
 			}
-			else if (event.type == SDL_MOUSEWHEEL)
+			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_MOUSEWHEEL)
 			{
 				if (event.wheel.y > 0)
 					modify_index(t_data(3, &index, -6, &gui));
