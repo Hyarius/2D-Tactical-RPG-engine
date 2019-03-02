@@ -1,11 +1,11 @@
 name:default
-tileset:H00
-sprite_pos:0:0
+tileset:H01
+sprite_pos:9:0
 health:50
 action:6
 mouvement:3
 initiative:5
-spell0:Aqua-sword
+spell0:NULL
 spell1:NULL
 spell2:NULL
 spell3:NULL

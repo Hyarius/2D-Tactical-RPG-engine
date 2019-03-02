@@ -12,6 +12,8 @@ void				s_game_board::game_loop()
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
 
+	printf("here in game_loop\n");
+
 	while (play)
 	{
 		prepare_screen();

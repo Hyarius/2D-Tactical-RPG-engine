@@ -141,7 +141,7 @@ void				s_game_board::draw_select_wheel(int index)
 	draw_lined_text(text, text_size, gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
 	while (i < 10)
 	{
-		text = "Spell [" + to_string(i - 4) + "] : " + player->spell[i - 4]->name;
+		text = "Spell [" + to_string(i - 4) + "] : " + (player->spell[i - 4]->name != "NULL" ? player->spell[i - 4]->name : "");
 		draw_lined_text(text, text_size , gui.unit * t_vect(coord.x + 0.25, coord.y + 0.5 * i++ + 0.5), BLACK);
 	}
 }

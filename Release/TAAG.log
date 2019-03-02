@@ -1,9 +1,8 @@
-﻿  t_paragraph_button.cpp
-  placement_phase.cpp
-c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\game_board\placement_phase.cpp(29): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+﻿  menu_save_actor.cpp
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_save_actor.cpp(98): warning C4018: '<' : incompatibilité signed/unsigned
   Génération de code en cours
-  3 of 4140 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 4140 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    19 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Fin de la génération du code
   TAAG.vcxproj -> C:\Users\Hywa\Desktop\Programme C++\TAAG\Release\TAAG.exe

@@ -7,7 +7,7 @@ static void			stand(t_data data)
 
 static void			quit(t_data data)
 {
-	if (data.data[0] == NULL || account->tuto_state < 30)
+	if (data.data[0] == NULL)
 		exit(0);
 	else
 	{

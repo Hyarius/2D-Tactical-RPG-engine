@@ -116,15 +116,22 @@ void	s_tileset::draw_self(t_vect p_tl, t_vect p_tr, t_vect p_dl, t_vect p_dr, t_
 
 void 			s_tileset::draw_self(t_vect p_coord, t_vect p_size, t_vect p_sprite)
 {
-	int value = (int)(p_sprite.y) * (int)(nb_sprite.x) + (int)(p_sprite.x);
-	draw_self(p_coord, p_coord + t_vect(p_size.x, 0), p_coord + t_vect(0, p_size.y), p_coord + p_size, value, 1.0);
+	if (p_sprite != t_vect(-1, -1))
+	{
+		int value = (int)(p_sprite.y) * (int)(nb_sprite.x) + (int)(p_sprite.x);
+		draw_self(p_coord, p_coord + t_vect(p_size.x, 0), p_coord + t_vect(0, p_size.y), p_coord + p_size, value, 1.0);
+	}
+	
 }
 
 
 void 			s_tileset::draw_self(t_vect p_coord, t_vect p_size, t_vect p_sprite, double p_alpha)
 {
-	int value = (int)(p_sprite.y) * (int)(nb_sprite.x) + (int)(p_sprite.x);
-	draw_self(p_coord, p_coord + t_vect(p_size.x, 0), p_coord + t_vect(0, p_size.y), p_coord + p_size, value, p_alpha);
+	if (p_sprite != t_vect(-1, -1))
+	{
+		int value = (int)(p_sprite.y) * (int)(nb_sprite.x) + (int)(p_sprite.x);
+		draw_self(p_coord, p_coord + t_vect(p_size.x, 0), p_coord + t_vect(0, p_size.y), p_coord + p_size, value, p_alpha);
+	}
 }
 
 void			s_tileset::prepare_print(t_vect p_tl, t_vect p_tr, t_vect p_dl, t_vect p_dr, int p_sprite, double p_alpha)

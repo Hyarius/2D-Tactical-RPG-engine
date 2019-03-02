@@ -1,9 +1,9 @@
-level:1
+level:0
 exp:0
 gold:0
-tuto_state:26
+tuto_state:30
 keyboard:97:122:101:114:116:121
-char:NULL:NULL:default:NULL:NULL:NULL
+char:Test:default(0):default:NULL:NULL:NULL
 spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
 tile:H00:H01:H11:H16
-map:tutorial-00
+map

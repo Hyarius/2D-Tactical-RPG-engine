@@ -362,6 +362,7 @@ void					menu_map_editor(t_data data)
 		board.draw_cell_layer();
 		if (index == 2)
 			board.draw_placement();
+		board.draw_actor_list();
 		board.draw_cursor_layer();
 		board.draw_mouse_cursor();
 
@@ -385,7 +386,7 @@ void					menu_map_editor(t_data data)
 				moved = true;
 				control_mouse_editor(&board);
 			}
-			else if (event.type == SDL_MOUSEBUTTONUP)
+			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (gui.click(&event) == false && gui_part[index].click(&event) == false)
 					control_mouse_editor(&board);

@@ -7,6 +7,9 @@ void				s_game_board::placement_phase(t_actor *game_actor_list[])
 	bool		play = true;
 	int			index = 0;
 
+	if (account->tuto_state < TUTO_SIZE)
+		account->tuto_state = 25;
+
 	for (size_t i = 0; i < 6; i++)
 	{
 		if (game_actor_list[i] != NULL)
@@ -57,6 +60,7 @@ void				s_game_board::placement_phase(t_actor *game_actor_list[])
 			handle_actor_placement(&event, &index, &actor_pool);
 		}
 	}
+	account->tuto_state++;
 	placement_list.clear();
 	enemy_placement_list.clear();
 
