@@ -9,7 +9,7 @@ s_spell::s_spell()
 	name = "NULL";
 	desc = "";
 	m_spell = INT_FALSE;
-	tile = NULL;
+	tile = get_interface_tile("simple_iconset");
 	icon = t_vect(-1, -1);
 	cost_pa = 0;
 	cost_pm = 0;

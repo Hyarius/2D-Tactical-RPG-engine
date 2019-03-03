@@ -2,6 +2,8 @@
 
 int type = 1;
 
+bool			menu_status[30];
+
 t_game_engine	 *account;
 vector<t_gui>	gui_tutorial;
 

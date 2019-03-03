@@ -15,8 +15,8 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 
 extern vector<t_gui>					gui_tutorial;
 
-# define SPELL_BUTTON	3
-# define TUTO_SIZE		30
+# define SPELL_BUTTON	4
+# define TUTO_SIZE		40
 
 #define ACTOR_PATH 				"ressources/game_object/actor/"
 #define ACTOR_EXT 				".act"
@@ -413,11 +413,15 @@ typedef struct			s_game_board
 
 	//game_loop
 	void				game_loop();
+	void				game_loop_tutorial();
 
 	//getter
 	t_cell				*get_cell(int x, int y);
 	t_cell				*get_cell(t_vect target);
 	t_vect				get_mouse_pos();
+	t_vect				get_tile_pos(t_vect coord);
+	t_vect				get_tile_pos(int x, int y);
+	t_vect				get_tile_size();
 
 	//handle_input
 	void				handle_mouvement(SDL_Event *event);
@@ -435,6 +439,7 @@ typedef struct			s_game_board
 
 	//placement_phase
 	void				placement_phase(t_actor *game_actor_list[]);
+	void				placement_phase_tutorial(t_actor *game_actor_list[]);
 
 	//reset
 	void				reset_board();
@@ -477,6 +482,7 @@ typedef struct			s_game_engine
 	int 				calc_max_exp(int level);
 	void				add_exp(int delta);
 	bool				add_gold(int delta);
+	int					calc_pool();
 }						t_game_engine;
 
 extern t_game_engine	*account;
@@ -574,6 +580,7 @@ void						menu_choose_spell_monster(t_data data);
 void						menu_save_monster(t_data data);
 void						menu_load_monster(t_data data);
 void						menu_delete_monster(t_data data);
+void						menu_new_monster(t_data data);
 void					menu_map_editor(t_data data);
 void						menu_generate_board(t_data data);
 void 						menu_save_map(t_data data);
@@ -584,6 +591,7 @@ void					menu_spell_editor(t_data data);
 void						menu_save_spell(t_data data);
 void						menu_load_spell(t_data data);
 void						menu_delete_spell(t_data data);
+void						menu_new_spell(t_data data);
 void						menu_select_action(t_data data);
 void						menu_edit_animation(t_data data);
 void							menu_select_anim(t_data data);

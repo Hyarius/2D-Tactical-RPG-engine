@@ -12,6 +12,7 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	string		*entry_path = (string *)(data.data[2]);
 	size_t		*tile_index = (size_t *)(data.data[3]);
 	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
+	int	*pool_value = (int *)(data.data[5]);
 
 	*player = read_actor(ACTOR_PATH + *(entry_path) + ACTOR_EXT);
 	size_t t = 0;
@@ -19,6 +20,8 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 		t++;
 	*tile_index = t;
 	*sprite_target = player->sprite;
+	t_actor base;
+	*pool_value = account->calc_pool() - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
 	*play = false;
 }
 

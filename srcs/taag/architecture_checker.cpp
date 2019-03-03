@@ -30,7 +30,7 @@ vector<string>	to_test = {
 
 string 					create_new_game_engine()
 {
-	string text = "level:0\n";
+	string text = "level:1\n";
 	text.append("exp:0\n");
 	text.append("gold:0\n");
 	text.append("tuto_state:0\n");

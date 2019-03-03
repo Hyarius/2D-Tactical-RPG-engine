@@ -141,7 +141,6 @@ void menu_spell_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i += 0.89;
 
-
 	t_iterator *range_type_iterator = new s_iterator(&(spell->range_type), NULL, 1, 1, 0, 1,
 		new t_button(new s_text_button(
 			"Range type: ", DARK_GREY,
@@ -301,11 +300,20 @@ void menu_spell_editor(t_data data)
 	t_button	*delete_button = new t_button(new s_text_button(
 		"Delete spell", DARK_GREY,
 		t_vect(1, 1 + (1.2 * i)) * gui.unit,
-		t_vect(8, 0.78) * gui.unit,
+		t_vect(3.75, 0.78) * gui.unit,
 		5,
 		t_color(0.4, 0.4, 0.4),
 		t_color(0.6, 0.6, 0.6)),
 		menu_delete_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
+
+	t_button	*new_button = new t_button(new s_text_button(
+		"New spell", DARK_GREY,
+		t_vect(5.25, 1 + (1.2 * i)) * gui.unit,
+		t_vect(3.75, 0.78) * gui.unit,
+		5,
+		t_color(0.4, 0.4, 0.4),
+		t_color(0.6, 0.6, 0.6)),
+		menu_new_spell, t_data(6, &gui, spell, &(entry_name->entry->text), &(entry_path->entry->text), &selected, text));// 0 - t_gui * / 1 - t_spell * / 2 - &name / 3 - &path / 4 - &sprite
 
 	i += 0.81;
 
@@ -420,6 +428,7 @@ void menu_spell_editor(t_data data)
 	gui.add(save_button);
 	gui.add(load_button);
 	gui.add(delete_button);
+	gui.add(new_button);
 	gui.add(quit_button);
 	gui.add(tileset_selector);
 	gui.add(price_iterator);

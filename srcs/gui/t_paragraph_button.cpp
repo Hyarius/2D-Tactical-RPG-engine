@@ -26,7 +26,7 @@ s_paragraph_button::s_paragraph_button(	string p_text, int p_text_color, int p_t
 
 void		s_paragraph_button::draw_self()
 {
-	if (data_left.data.size() == 1)
+	if (data_left.data.size() <= 1)
 		glDepthFunc(GL_LEQUAL);
 	for (int i = 0; i < 2; i++)
 		draw_rectangle(coord[i], size[i], color[i]);
@@ -61,6 +61,6 @@ void		s_paragraph_button::draw_self()
 		if (text_paragraph[i] != NULL)
 			text_paragraph[i]->draw_self(image_coord, paragraph_size[i]);
 	}
-	if (data_left.data.size() == 1)
+	if (data_left.data.size() <= 1)
 		glDepthFunc(GL_LESS);
 }

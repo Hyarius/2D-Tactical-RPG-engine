@@ -1,5 +1,12 @@
 #include "taag.h"
 
+vector<int>			tuto_state_list = {
+	1,
+	15,
+	23,
+	TUTO_SIZE,
+};
+
 static void			stand(t_data data)
 {
 	*((bool *)data.data[0]) = false;
@@ -7,14 +14,15 @@ static void			stand(t_data data)
 
 static void			quit(t_data data)
 {
-	if (data.data[0] == NULL)
-		exit(0);
-	else
+	size_t i = 0;
+	while (i < tuto_state_list.size() && account->tuto_state >= tuto_state_list[i])
+		i++;
+	account->tuto_state = tuto_state_list[i - 1];
+	account->recharge_map();
+	save_game_engine();
+	for (size_t i = 0; i < data.data.size(); i++)
 	{
-		account->recharge_map();
-		save_game_engine();
-		for (size_t i = 0; i < data.data.size(); i++)
-			*((bool *)data.data[i]) = false;
+		*((bool *)(data.data[i])) = false;
 	}
 }
 
@@ -35,7 +43,13 @@ void			menu_quit(t_data data)
 	button->button->image_coord = button->button->image_coord - gui.unit * t_vect(0, 1);
 	gui.add(button);
 
-	t_data new_data = (data.data.size() == 1 ? NULL : (data.data.size() == 2 ? t_data(2, data.data[1], &play) : data.data.size() == 3 ? t_data(3, data.data[1], data.data[2], &play) : NULL));
+	t_data new_data = t_data();
+
+	for (size_t i = 1; i < data.data.size(); i++)
+	{
+		new_data.data.push_back(data.data[i]);
+	}
+	new_data.data.push_back(&play);
 
 	gui.add(new s_button(new s_text_button(//button yes
 						"YES", DARK_GREY, //text info

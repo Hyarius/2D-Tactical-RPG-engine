@@ -1,11 +1,11 @@
-name:Test
+name:Hywa
 tileset:H00
 sprite_pos:0:0
 health:50
 action:6
 mouvement:3
 initiative:5
-spell0:NULL
+spell0:Aqua-sword
 spell1:NULL
 spell2:NULL
 spell3:NULL

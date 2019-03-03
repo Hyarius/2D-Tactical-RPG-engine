@@ -117,6 +117,16 @@ void				quit_end_menu(t_data data)
 	save_game_engine();
 }
 
+static void			give_away_end_tutorial(t_data data)
+{
+	printf("here\n");
+	account->map_unlock.push_back("road-00");
+	for (size_t i = 0; i < account->map_unlock.size(); i++)
+		printf("map [%zu] = %s\n", i, account->map_unlock[i].c_str());
+	account->add_gold(100);
+	quit_end_menu(data);
+}
+
 void				s_game_board::end_game_win()
 {
 	t_gui gui = t_gui();
@@ -210,6 +220,78 @@ void				s_game_board::end_game_win()
 		gui.add(actor_card);
 	}
 
+	if (gui_tutorial[36].object_list.size() == 0)
+	{
+		gui_tutorial[36] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(0, 0), get_win_size(), 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"Here is the end game menu ! \n You will find in this menu some useful informations about the game you just played, your character and the way they have handle this.", DARK_GREY, gui_tutorial[0].unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 6) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[36].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[37].object_list.size() == 0)
+	{
+		gui_tutorial[37] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(12.5, 2.5) * gui.unit, t_vect(15.5, 1) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"This part of the screen show you what you have earn in this map : Your new level/exp, and the amount of gold you have now. \n You can pass the animation of exp/gold giveaway by pressing Space or Echap once.", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[37].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[38].object_list.size() == 0)
+	{
+		gui_tutorial[38] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(2, 4.5) * gui.unit, t_vect(6.5, 13) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"There you can find all of your possible 6 characters. If you click on one of them, you will see a bunch of information about him.", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[38].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[39].object_list.size() == 0)
+	{
+		gui_tutorial[39] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 100 gold, and one map : road-00 ! \n \n Click here to get back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 4) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[39].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
 	int frame = 0;
 
 	while (play == true)
@@ -235,6 +317,9 @@ void				s_game_board::end_game_win()
 		gui.draw_self();
 		gui_part_end.draw_self();
 
+		if (account->tuto_state < TUTO_SIZE)
+			gui_tutorial[account->tuto_state].draw_self();
+
 		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
@@ -247,23 +332,29 @@ void				s_game_board::end_game_win()
 				gold_bonus = 0;
 				menu_quit(t_data(2, &gui, &play));
 			}
-			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE && gold_bonus == 0 && exp_bonus == 0)
+			else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE && gold_bonus == 0 && exp_bonus == 0 && account->tuto_state >= TUTO_SIZE)
 				quit_end_menu(t_data(3, &play, &exp_bonus, &gold_bonus));
-			if (event.type == SDL_KEYUP && (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_RETURN) && (gold_bonus != 0 || exp_bonus != 0))
+			else if (event.type == SDL_KEYUP && (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_RETURN) && (gold_bonus != 0 || exp_bonus != 0))
 			{
 				account->add_exp(exp_bonus);
 				account->add_gold(gold_bonus);
 				exp_bonus = 0;
 				gold_bonus = 0;
 			}
+			else if (event.type == SDL_MOUSEBUTTONUP && account->tuto_state < TUTO_SIZE)
+				gui_tutorial[account->tuto_state].click(&event);
 			else if (event.type == SDL_MOUSEBUTTONUP)
 				gui.click(&event);
 		}
+		if (account->tuto_state == 40)
+			give_away_end_tutorial(t_data(3, &play, &exp_bonus, &gold_bonus));
 	}
 }
 
 void				s_game_board::end_game_lose()
 {
+	int exp_bonus = 0;
+	int	gold_bonus = 0;
 	t_gui gui = t_gui();
 	bool play = true;
 	SDL_Event	event;
@@ -284,7 +375,7 @@ void				s_game_board::end_game_lose()
 		"CONTINUE", DARK_GREY,
 		t_vect(23, 16.5) * gui.unit, t_vect(5, 1.5) * gui.unit, 5,
 		t_color(0.5, 0.5, 0.5), t_color(0.7, 0.7, 0.7)),
-		NULL, NULL);
+		quit_end_menu, t_data(3, &play, &exp_bonus, &gold_bonus));
 
 	gui.add(background);
 	gui.add(victory_message);
@@ -313,6 +404,78 @@ void				s_game_board::end_game_lose()
 		gui.add(actor_card);
 	}
 
+	if (gui_tutorial[36].object_list.size() == 0)
+	{
+		gui_tutorial[36] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(0, 0), get_win_size(), 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"Here is the end game menu ! \n You will find in this menu some useful informations about the game you just played, your character and the way they have handle this.", DARK_GREY, gui_tutorial[0].unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 6) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[36].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[37].object_list.size() == 0)
+	{
+		gui_tutorial[37] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(12.5, 2.5) * gui.unit, t_vect(15.5, 1) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"This part of the screen show you what you have earn in this map : Your new level/exp, and the amount of gold you have now. \n You can pass the animation of exp/gold giveaway by pressing Space or Echap once.", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[37].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[38].object_list.size() == 0)
+	{
+		gui_tutorial[38] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(2, 4.5) * gui.unit, t_vect(6.5, 13) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			NULL, NULL);
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"There you can find all of your possible 6 characters. If you click on one of them, you will see a bunch of information about him.", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[38].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
+	if (gui_tutorial[39].object_list.size() == 0)
+	{
+		gui_tutorial[39] = t_gui(30, 20);
+
+		t_button *button = new t_button(new s_text_button(
+			"", DARK_GREY,
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui.unit, 5,
+			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
+			give_away_end_tutorial, t_data(3, &play, &exp_bonus, &gold_bonus));
+
+		t_button *button2 = new t_button(new s_paragraph_button(
+			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 100 gold, and one map : road-00 ! \n \n Click here to get back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 4) * gui_tutorial[0].unit, 5, //object info
+			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
+
+		gui_tutorial[39].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
+	}
+
 	while (play == true)
 	{
 		prepare_screen(t_color(0.2, 0.2, 0.2));
@@ -320,12 +483,19 @@ void				s_game_board::end_game_lose()
 		gui.draw_self();
 		gui_part_end.draw_self();
 
+		if (account->tuto_state < TUTO_SIZE)
+			gui_tutorial[account->tuto_state].draw_self();
+
 		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
-			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE && account->tuto_state >= TUTO_SIZE))
 				menu_quit(t_data(2, &gui, &play));
+			else if (event.type == SDL_MOUSEBUTTONUP && account->tuto_state < TUTO_SIZE)
+				gui_tutorial[account->tuto_state].click(&event);
+			else if (event.type == SDL_MOUSEBUTTONUP)
+				gui.click(&event);
 		}
 	}
 }

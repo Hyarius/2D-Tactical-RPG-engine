@@ -1,8 +1,22 @@
-﻿  menu_save_actor.cpp
-c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_save_actor.cpp(98): warning C4018: '<' : incompatibilité signed/unsigned
+﻿  menu_choose_spell.cpp
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_choose_spell.cpp(80): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_choose_spell.cpp(92): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_choose_spell.cpp(104): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_choose_spell.cpp(116): warning C4018: '<' : incompatibilité signed/unsigned
+  menu_player_editor.cpp
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(233): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(245): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(257): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(269): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(281): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(293): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(309): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(317): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(343): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\hywa\desktop\programme c++\taag\taag\srcs\taag\menu_player_editor\menu_player_editor.cpp(354): warning C4018: '<' : incompatibilité signed/unsigned
   Génération de code en cours
-  0 of 4140 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  1 of 4160 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    24 functions had inline decision re-evaluated but remain unchanged
   Fin de la génération du code
   TAAG.vcxproj -> C:\Users\Hywa\Desktop\Programme C++\TAAG\Release\TAAG.exe

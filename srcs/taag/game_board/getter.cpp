@@ -33,3 +33,18 @@ t_vect				s_game_board::get_mouse_pos()
 
 	return (t_vect((int)(mouse.x), (int)(mouse.y)));
 }
+
+t_vect				s_game_board::get_tile_pos(t_vect coord)
+{
+	return ((coord + target) * sprite_unit * zoom + offset);
+}
+
+t_vect				s_game_board::get_tile_pos(int x, int y)
+{
+	return ((t_vect(x, y) + target) * sprite_unit * zoom + offset);
+}
+
+t_vect				s_game_board::get_tile_size()
+{
+	return (sprite_unit * zoom);
+}

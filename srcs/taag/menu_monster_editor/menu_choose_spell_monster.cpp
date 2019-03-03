@@ -34,6 +34,7 @@ void		menu_choose_spell_monster(t_data data)
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	int			spell_num = (int &)(data.data[1]);
 	t_actor		*player = (t_actor *)(data.data[2]);
+	bool		*old_play = (bool *)(data.data[3]);
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
@@ -82,7 +83,7 @@ void		menu_choose_spell_monster(t_data data)
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT)
-				menu_quit(t_data(1, &gui));
+				menu_quit(t_data(3, &gui, &play, old_play));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)

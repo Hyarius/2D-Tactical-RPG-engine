@@ -55,7 +55,7 @@ void					menu_actor_editor(t_data data)
 	entry_name->entry->max_len = 32;
 
 	t_actor base;
-	int pool = 30 - ((actor.stat.hp.max - base.stat.hp.max) / 5 + (actor.stat.pa.max - base.stat.pa.max) * 3 + (actor.stat.pm.max - base.stat.pm.max) * 3 + (actor.stat.init - base.stat.init));
+	int pool = account->calc_pool() - ((actor.stat.hp.max - base.stat.hp.max) / 5 + (actor.stat.pa.max - base.stat.pa.max) * 3 + (actor.stat.pm.max - base.stat.pm.max) * 3 + (actor.stat.init - base.stat.init));
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
 		new t_button(new s_text_button(
 				"Attrib points (AtbP) left : ", DARK_GREY,
@@ -151,10 +151,10 @@ void					menu_actor_editor(t_data data)
 
 	i += 3.4;
 	t_button	*save_button = new t_button(new s_text_button(
-			"Save actor", DARK_GREY,
-			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
-			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			menu_save_actor, t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play));//0 - gui / 1 - t_actor * / 2 - & file name
+		"Save actor", DARK_GREY,
+		t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+		menu_save_actor, t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play));//0 - gui / 1 - t_actor * / 2 - & file name
 	i++;
 
 	t_button	*load_button = new t_button(new s_text_button(
@@ -222,7 +222,7 @@ void					menu_actor_editor(t_data data)
 	gui.add(quit_button);
 
 	for (int i = 0; i < 6; i++)
-		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor)));
+		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell, t_data(3, &gui, i, &actor, &play)));
 
 	if (gui_tutorial[3].object_list.size() == 0)
 	{
@@ -294,6 +294,8 @@ void					menu_actor_editor(t_data data)
 				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
 	}
+	((s_tutorial_button *)(gui_tutorial[8].object_list[TUTORIAL_NUM][0]))->button->button->data_left = t_data(3, &gui, 0, &actor);
+
 	if (gui_tutorial[12].object_list.size() == 0)
 	{
 		gui_tutorial[12] = t_gui(30, 20);
@@ -326,7 +328,8 @@ void					menu_actor_editor(t_data data)
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			menu_save_actor, t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play)), NULL, true));
 	}
-
+	((s_tutorial_button *)(gui_tutorial[13].object_list[TUTORIAL_NUM][1]))->button->button->data_left = t_data(2, entry_name, &gui);
+	((s_tutorial_button *)(gui_tutorial[13].object_list[TUTORIAL_NUM][2]))->button->button->data_left = t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play);
 	while (play)
 	{
 		//printf("tuto state = %d\n", account->tuto_state);
@@ -343,7 +346,9 @@ void					menu_actor_editor(t_data data)
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+			{
 				menu_quit(t_data(2, &gui, &play));
+			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
 				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())

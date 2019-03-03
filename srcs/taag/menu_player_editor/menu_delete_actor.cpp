@@ -37,7 +37,7 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 		*tile_index = 0;
 		*sprite_target = t_vect(0, 0);
 		*entry_name = "";
-		*pool_value = 15;
+		*pool_value = account->calc_pool();
 		*play = true;
 		list_file_delete = list_files(ACTOR_PATH, ACTOR_EXT);
 		for (i = 0; i < 30; i++)

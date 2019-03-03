@@ -28,6 +28,7 @@ static void		quit_delete(t_data data)// spell / entry_name / entry_path / play /
 	t_vect		*sprite_target = *(t_vect **)(data.data[4]);
 	int			i = (int &)(data.data[5]);
 	string		**text = (string **)(data.data[6]);
+	int			*index = (int *)(data.data[7]);
 
 	if (*(text_list_delete_spell[i]) != "")
 	{
@@ -38,8 +39,13 @@ static void		quit_delete(t_data data)// spell / entry_name / entry_path / play /
 		*entry_name = "";
 		*play = true;
 		list_file_delete_spell = list_files(SPELL_PATH, SPELL_EXT);
-		for (i = 0; i < 30; i++)
-			*(text_list_delete_spell[i]) = (i < (int)(list_file_delete_spell.size()) ? list_file_delete_spell[i] : "");
+		for (int i = 0; i < 30; i++)
+		{
+			if (*index + i >= (int)(list_file_delete_spell.size()) || *index + i < 0)
+				*(text_list_delete_spell[i]) = "";
+			else
+				*(text_list_delete_spell[i]) = list_file_delete_spell[i + *index];
+		}
 		for (i = 0; i < 6; i++)
 			*(text[i]) = list_action_name[0];
 	}
@@ -83,7 +89,7 @@ void			menu_delete_spell(t_data data) // 0 - t_gui * / 1 - t_spell * / 2 - &name
 					8,
 					t_color(0.4, 0.4, 0.4),
 					t_color(0.6, 0.6, 0.6)),// spell / entry_name / entry_path / play / sprite / num
-					quit_delete, t_data(7, spell, entry_name, entry_path, &play, &sprite_target, i, text));// spell / entry_name / entry_path / pool / play / num
+					quit_delete, t_data(8, spell, entry_name, entry_path, &play, &sprite_target, i, text, &index));// spell / entry_name / entry_path / pool / play / num
 		text_list_delete_spell[i] = &(button->button->text);
 		gui.add(button);
 		i++;

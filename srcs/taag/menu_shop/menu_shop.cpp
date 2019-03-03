@@ -26,7 +26,6 @@ int				index_delta[3] = {
 static void adding_map(t_data data)
 {
 	(void)data;
-	printf("here\n");
 	account->map_unlock.push_back("tutorial-00");
 	actualize_map_tab(&(index_part[2]));
 }
@@ -203,9 +202,15 @@ void menu_shop(t_data data)
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT)
+			{
 				menu_quit(t_data(2, &gui, &play));
+			}
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
+			{
 				play = false;
+				if (account->tuto_state < 22)
+					account->tuto_state = 15;
+			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
 				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())

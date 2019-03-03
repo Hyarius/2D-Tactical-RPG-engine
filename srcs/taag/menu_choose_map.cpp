@@ -115,9 +115,15 @@ void			menu_choose_map(t_data data) // 0 - &path
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT)
+			{
 				menu_quit(t_data(1, &gui));
-			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+			}
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
+			{
 				play = false;
+				if (account->tuto_state < TUTO_SIZE)
+					account->tuto_state = 15;
+			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())

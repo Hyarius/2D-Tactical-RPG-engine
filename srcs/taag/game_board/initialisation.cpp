@@ -30,6 +30,7 @@ void				change_s_spell(t_data data)
 	price = 0;
 	shop_icon = 0;
 	map_difficulty = 0;
+	gui = t_gui();
 }
 
 					s_game_board::s_game_board(string p_path)

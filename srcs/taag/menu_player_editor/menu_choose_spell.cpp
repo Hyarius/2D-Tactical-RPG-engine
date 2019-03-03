@@ -106,6 +106,8 @@ void		menu_choose_spell(t_data data)
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
 	}
 
+	((s_tutorial_button *)(gui_tutorial[11].object_list[TUTORIAL_NUM][0]))->button->button->data_left = t_data(4, player, spell_num, 1, &play);
+
 	while (play == true)
 	{
 		prepare_screen();
@@ -119,32 +121,31 @@ void		menu_choose_spell(t_data data)
 		if (SDL_PollEvent(&event) == 1)
 		{
 			if (event.type == SDL_QUIT)
-				menu_quit(t_data(1, &gui));
+				menu_quit(t_data(2, &gui, &play));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
-					menu_quit(t_data(1, &gui));
-				else
-					play = false;
+				play = false;
+				if (account->tuto_state < TUTO_SIZE)
+					account->tuto_state = 8;
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+				if (account->tuto_state < TUTO_SIZE && gui_tutorial[account->tuto_state].object_list.size())
 					gui_tutorial[account->tuto_state].click(&event);
 				else
 					gui.click(&event);
 			}
-			else if (account->tuto_state < gui_tutorial.size() && (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN))
+			else if (account->tuto_state < TUTO_SIZE && (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN))
 				gui.key_press(&event);
-			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP)
+			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP)
 			{
 				modify_index(t_data(3, &index, -6, &gui));
 			}
-			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN)
+			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN)
 			{
 				modify_index(t_data(3, &index, 6, &gui));
 			}
-			else if (account->tuto_state < gui_tutorial.size() && event.type == SDL_MOUSEWHEEL)
+			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_MOUSEWHEEL)
 			{
 				if (event.wheel.y > 0)
 					modify_index(t_data(3, &index, -6, &gui));

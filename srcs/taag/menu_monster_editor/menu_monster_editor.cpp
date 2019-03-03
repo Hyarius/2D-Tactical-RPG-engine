@@ -110,12 +110,22 @@ void					menu_monster_editor(t_data data)
 	size_t	*tile_index;
 	t_vect	*sprite_target;
 
-	i += 2.4;
+
+
+	i += 1.4;
+
 	t_button	*gambit_button = new t_button(new s_text_button(
 			"Edit gambit", DARK_GREY,
 			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			menu_gambit_editor, t_data(2, &gui, &actor));//0 - gui / 1 - t_actor * / 2 - & file name
+	i++;
+
+	t_button	*new_button = new t_button(new s_text_button(
+			"New monster", DARK_GREY,
+			t_vect(1, 1 + (1.2 * i)) * gui.unit, t_vect(8, 1) * gui.unit, 5,
+			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
+			menu_new_monster, t_data(6, &gui, &actor, path, name, &tile_index, &sprite_target)); //0 - gui / 1 - t_actor * / 2 - & file name / actor_name / tile index / sprite_target
 	i++;
 
 	t_button	*save_button = new t_button(new s_text_button(
@@ -155,7 +165,7 @@ void					menu_monster_editor(t_data data)
 			t_vect(14.9, 1.0 + (1.2 * (i - 1))) * gui.unit, t_vect(1 + (1.2 * (i + 1)), 1 + (1.2 * (i + 1))) * gui.unit, 5);
 	//t_vect *sprite = &(tile_button->selected);
 	t_sprite_iterator *tileset_selector = new t_sprite_iterator(
-				t_vect(4, 4), &sprite_name,
+				t_vect(3, 4), &sprite_name,
 				new t_button(new s_text_button(
 						"Tileset :            ", DARK_GREY,
 						t_vect(9.2, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -192,9 +202,10 @@ void					menu_monster_editor(t_data data)
 	gui.add(load_button);
 	gui.add(delete_button);
 	gui.add(quit_button);
+	gui.add(new_button);
 
 	for (int i = 0; i < 6; i++)
-		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell_monster, t_data(3, &gui, i, &actor)));
+		gui.add(new t_spell_card(&actor.spell[i], gui.unit * t_vect(9.2 + (i % 3) * 4 + (0.2 * (i % 3)), (4.6 + (i / 3) * 6 + (0.2 * (i / 3)))), gui.unit * t_vect(4, 6), menu_choose_spell_monster, t_data(4, &gui, i, &actor, &play)));
 
 	while (play)
 	{

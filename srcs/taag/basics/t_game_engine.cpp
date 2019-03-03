@@ -1,5 +1,10 @@
 #include "taag.h"
 
+int				s_game_engine::calc_pool()
+{
+	return (((level - 1) * 2) + 15);
+}
+
 int 			s_game_engine::calc_max_exp(int level)
 {
 	return (level * level);
