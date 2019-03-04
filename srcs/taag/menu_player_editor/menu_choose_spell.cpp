@@ -85,7 +85,7 @@ void		menu_choose_spell(t_data data)
 	{
 		gui_tutorial[10].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
 			"", DARK_GREY,
-			t_vect(4.7, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_vect(0.5, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
@@ -113,7 +113,7 @@ void		menu_choose_spell(t_data data)
 		prepare_screen();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
@@ -135,17 +135,17 @@ void		menu_choose_spell(t_data data)
 				else
 					gui.click(&event);
 			}
-			else if (account->tuto_state < TUTO_SIZE && (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN))
+			else if (account->tuto_state >= TUTO_SIZE && (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN))
 				gui.key_press(&event);
-			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP)
+			else if (account->tuto_state >= TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP)
 			{
 				modify_index(t_data(3, &index, -6, &gui));
 			}
-			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN)
+			else if (account->tuto_state >= TUTO_SIZE && event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN)
 			{
 				modify_index(t_data(3, &index, 6, &gui));
 			}
-			else if (account->tuto_state < TUTO_SIZE && event.type == SDL_MOUSEWHEEL)
+			else if (account->tuto_state >= TUTO_SIZE && event.type == SDL_MOUSEWHEEL)
 			{
 				if (event.wheel.y > 0)
 					modify_index(t_data(3, &index, -6, &gui));

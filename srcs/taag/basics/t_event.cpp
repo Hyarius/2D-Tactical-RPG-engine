@@ -310,7 +310,7 @@ void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		t_effect new_effect = s_effect(source, effect_stat.value[0], { t_action(deal_dmg, effect_stat.value[1], 0, 0, effect_stat.value[2]) }, effect_stat.value[2]);
 		target->effect_list.poison.push_back(new_effect);
-		target->apply_effect("+ Poison");
+		target->apply_effect("+ Damage effect");
 	}
 }
 

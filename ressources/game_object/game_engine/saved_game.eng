@@ -1,9 +1,9 @@
 level:1
 exp:0
-gold:47
+gold:10000
 tuto_state:40
-keyboard:97:122:101:114:116:121
+keyboard:113:119:101:114:116:121
 char:NULL:NULL:NULL:NULL:NULL:NULL
-spell:NULL
-tile:H00:H01:H05:H17
-map:road-00
+spell::Basic attack
+tile:H00:H04:H05:H17
+map:tutorial-00

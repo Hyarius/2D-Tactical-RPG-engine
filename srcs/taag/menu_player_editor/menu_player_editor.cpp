@@ -335,7 +335,7 @@ void					menu_actor_editor(t_data data)
 	((s_tutorial_button *)(gui_tutorial[13].object_list[TUTORIAL_NUM][2]))->button->button->data_left = t_data(6, &gui, &actor, path, &tile_index, &sprite_target, &play);
 	while (play)
 	{
-		//printf("tuto state = %d\n", account->tuto_state);
+		//printf("tuto state = %d\n", (size_t)(account->tuto_state));
 		actor.name = *name;
 		actor.tile = get_sprite_tile(account->tile_unlock[tileset_selector->i % account->tile_unlock.size()]);
 		actor.sprite = *sprite_target;
@@ -343,8 +343,8 @@ void					menu_actor_editor(t_data data)
 		prepare_screen();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
-			gui_tutorial[account->tuto_state].draw_self();
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
+			gui_tutorial[(size_t)(account->tuto_state)].draw_self();
 
 		if (SDL_PollEvent(&event) == 1)
 		{
@@ -354,8 +354,8 @@ void					menu_actor_editor(t_data data)
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
-					gui_tutorial[account->tuto_state].click(&event);
+				if ((size_t)(account->tuto_state) < gui_tutorial.size() && gui_tutorial[(size_t)(account->tuto_state)].object_list.size())
+					gui_tutorial[(size_t)(account->tuto_state)].click(&event);
 				else
 					gui.click(&event);
 			}

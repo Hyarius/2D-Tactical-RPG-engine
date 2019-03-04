@@ -108,10 +108,12 @@ void			s_spell_card::draw_self()
 		}
 		int tmp = ((*spell)->zone_size != 0 ? (*spell)->zone_type : 4);
 		get_interface_tile("simple_cursor")->draw_self((coord + unit * t_vect(29.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect(tmp, 5));
-		get_interface_tile("simple_cursor")->draw_self((coord + unit * t_vect(21.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect((int)((*spell)->range_type) + 2, 4));
+		if ((int)((*spell)->zone_size) != 0)
+			draw_centred_text(to_string((int)((*spell)->zone_size)), text_size, NORMAL, 4, (coord + unit * t_vect(30.5, 50.5)), LIGHT_GREY, BLACK);
+		t_vect tmp2 = ((*spell)->range[1] != 0 ? t_vect((int)((*spell)->range_type) + 2, 4) : t_vect(4, 4));
+		get_interface_tile("simple_cursor")->draw_self((coord + unit * t_vect(21.5, 49.5)), unit * t_vect(8.5, 8.5), tmp2);
 		get_interface_tile("simple_cursor")->draw_self((coord + unit * t_vect(12.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect((*spell)->block, 4));
 		get_interface_tile("simple_cursor")->draw_self((coord + unit * t_vect(4.5, 49.5)), unit * t_vect(8.5, 8.5), t_vect(2 + (*spell)->on_target, 3));
-
 	}
 }
 

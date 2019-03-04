@@ -285,6 +285,7 @@ typedef struct			s_shop_item
 	t_tileset			*tile;
 	int					sprite;
 	int					price;
+	bool				owned;
 						s_shop_item();
 						s_shop_item(string path);
 						s_shop_item(string p_to_add, t_tileset *p_tile, int p_sprite, int p_price);

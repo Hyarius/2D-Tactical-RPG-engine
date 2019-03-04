@@ -107,7 +107,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 		prepare_screen();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
@@ -121,27 +121,27 @@ void			menu_choose_map(t_data data) // 0 - &path
 			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 			{
 				play = false;
-				if (account->tuto_state < TUTO_SIZE)
+				if ((size_t)(account->tuto_state) < TUTO_SIZE)
 					account->tuto_state = 15;
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+				if ((size_t)(account->tuto_state) < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
 					gui_tutorial[account->tuto_state].click(&event);
 				else
 					gui.click(&event);
 			}
-			else if ((event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) && account->tuto_state >= gui_tutorial.size())
+			else if ((event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) && (size_t)(account->tuto_state) >= gui_tutorial.size())
 				gui.key_press(&event);
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP) && account->tuto_state >= gui_tutorial.size())
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP) && (size_t)(account->tuto_state) >= gui_tutorial.size())
 			{
 				modify_index(t_data(2, &index, -3));
 			}
-			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN) && account->tuto_state >= gui_tutorial.size())
+			else if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN) && (size_t)(account->tuto_state) >= gui_tutorial.size())
 			{
 				modify_index(t_data(2, &index, 3));
 			}
-			else if (event.type == SDL_MOUSEWHEEL && account->tuto_state >= gui_tutorial.size())
+			else if (event.type == SDL_MOUSEWHEEL && (size_t)(account->tuto_state) >= gui_tutorial.size())
 			{
 				if (event.wheel.y > 0)
 					modify_index(t_data(2, &index, -3));

@@ -17,6 +17,8 @@ vector<t_vect>	image_size;
 s_shop_spell::s_shop_spell(s_spell_card *p_button, struct s_shop_item **p_item, t_vect p_delta, t_vect p_size)
 {
 	button = p_button;
+	if (button != NULL)
+		funct = button->button->button->funct_left;
 	item = p_item;
 	delta = p_delta;
 	size = p_size;
@@ -31,7 +33,13 @@ void			s_shop_spell::draw_self()
 		button->draw_self();
 	if (*item != NULL && button != NULL)
 	{
-		draw_border_rectangle(button->button->button->coord[0] + delta, size, 4, t_color(0.8,0.65,0.0), t_color(189.0/255.0,183.0/255.0,107.0/255.0));
+		if ((*item)->owned == true)
+		{
+			button->button->button->funct_left = NULL;
+			button->button->button->funct_right = NULL;
+		}
+		else
+			button->button->button->funct_left = funct;
 		if (text != to_string((*item)->price) + " gold")
 		{
 			text = to_string((*item)->price) + " gold";
@@ -44,6 +52,9 @@ void			s_shop_spell::draw_self()
 			image_coord = button->button->button->coord[0] + delta + size / 2;
 			SDL_FreeSurface(surface);
 		}
+		if ((*item)->owned == true)
+			draw_rectangle(button->button->button->coord[0], button->button->button->size[0], t_color(0.3, 0.3, 0.3, 0.6));
+		draw_border_rectangle(button->button->button->coord[0] + delta, size, 4, t_color(0.8,0.65,0.0), t_color(189.0/255.0,183.0/255.0,107.0/255.0));
 		text_image->draw_centred_self(image_coord, image_size);
 	}
 }

@@ -241,7 +241,7 @@ void menu_spell_editor(t_data data)
 	i += 0.89;
 
 
-	t_iterator *zone_size_iterator = new s_iterator(&(spell->zone_size), NULL, 1, 1, 0, 4,
+	t_iterator *zone_size_iterator = new s_iterator(&(spell->zone_size), NULL, 1, 1, 0, 30,
 		new t_button(new s_text_button(
 			"Zone size: ", DARK_GREY,
 			t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 0.78) * gui.unit, 5,
@@ -443,7 +443,7 @@ void menu_spell_editor(t_data data)
 		prepare_screen();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		if (SDL_PollEvent(&event) == 1)

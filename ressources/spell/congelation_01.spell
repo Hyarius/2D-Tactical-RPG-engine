@@ -1,0 +1,21 @@
+price:20
+name:Congelation I
+description:Deal 3 damage(s) to the target and reduce target's PA(s) by -1
+icon:simple_iconset
+sprite:7:3
+m_spell:0
+pa:5
+pm:0
+cooldown:1
+range:2:8:1
+type:1
+on target:0
+zone:0:1
+effect1:0:3:0:0:0
+effect2:3:-1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

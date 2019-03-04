@@ -17,6 +17,8 @@ vector<t_vect>	image_size;
 s_shop_map::s_shop_map(t_button *p_button, struct s_shop_item **p_item, t_vect p_icon_coord, t_vect p_icon_size, t_vect p_text_coord, t_vect p_price_coord, t_vect p_price_size)
 {
 	button = p_button;
+	if (button != NULL)
+		funct = button->button->funct_left;
 	item = p_item;
 	icon_coord = p_icon_coord;
 	icon_size = p_icon_size;
@@ -35,6 +37,13 @@ void			s_shop_map::draw_self()
 		button->draw_self();
 	if (*item != NULL && button != NULL)
 	{
+		if ((*item)->owned == true)
+		{
+			button->button->funct_left = NULL;
+			button->button->funct_right = NULL;
+		}
+		else
+			button->button->funct_left = funct;
 		if (text[0] != (*item)->to_add)
 		{
 			t_game_board tmp = t_game_board(MAP_PATH + (*item)->to_add + MAP_EXT);
@@ -60,6 +69,8 @@ void			s_shop_map::draw_self()
 			text_image[i]->draw_self(tmp2, image_size[i]);
 			tmp2.y += image_size[i].y * 1.1;
 		}
+		if ((*item)->owned == true)
+			draw_rectangle(button->button->coord[0], button->button->size[0], t_color(0.3, 0.3, 0.3, 0.6));
 		draw_border_rectangle(price_coord, price_size, 4, t_color(0.8,0.65,0.0), t_color(189.0/255.0,183.0/255.0,107.0/255.0));
 		text_image[4]->draw_centred_self(price_coord + price_size / 2, image_size[4]);
 	}

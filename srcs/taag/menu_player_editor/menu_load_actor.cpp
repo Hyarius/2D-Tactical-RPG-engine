@@ -66,7 +66,7 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 			old_gui->draw_self();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
@@ -79,12 +79,12 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 				play = false;
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
+				if ((size_t)(account->tuto_state) < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size() && gui_tutorial[account->tuto_state].click(&event) == true)
 				{
 					increment_tutorial(NULL);
 					gui.click(&event);
 				}
-				else if (account->tuto_state >= gui_tutorial.size())
+				else if ((size_t)(account->tuto_state) >= gui_tutorial.size())
 					gui.click(&event);
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)

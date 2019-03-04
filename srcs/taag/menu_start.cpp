@@ -114,7 +114,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
 			, true));
 	}
-	
+
 	if (gui_tutorial[2].object_list.size() == 0)
 	{
 		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
@@ -181,7 +181,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
 	}
-	
+
 
 	if (account->tuto_state == 0)
 	{
@@ -194,7 +194,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 		prepare_screen();
 
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);

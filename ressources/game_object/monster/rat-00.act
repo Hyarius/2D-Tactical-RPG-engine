@@ -5,13 +5,12 @@ health:12
 action:4
 mouvement:2
 initiative:3
-spell0:Charge I
-spell1:Bite I
+spell0:Bite 00
+spell1:NULL
 spell2:NULL
 spell3:NULL
 spell4:NULL
 spell5:NULL
 7:0:-1:-1:1:-1:0:0:0:0
-7:1:-1:-1:1:-1:0:0:0:0
 -1:0:0:0:0:0:0:0:0:0
 0:1:0:0:-1:0:0:0:0:0

@@ -2,11 +2,13 @@
 
 static void			tutorial_move_function(t_data data)
 {
+	(void)data;
 	account->board.move_actor(account->board.turn_order[account->board.turn_index], account->board.get_mouse_pos(), 1.0);
 }
 
 static void			tutorial_cast_spell(t_data data)
 {
+	(void)data;
 	bool result = account->board.cast_spell(account->board.get_mouse_pos());
 }
 
@@ -80,7 +82,7 @@ void				s_game_board::game_loop_tutorial()
 
 		t_button *button = new t_button(new s_text_button(
 			"", DARK_GREY,
-			get_tile_pos(3, 4), get_tile_size(), 5,
+			get_tile_pos(3, 5), get_tile_size(), 5,
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			tutorial_move_function, NULL);
 
@@ -202,11 +204,11 @@ void				s_game_board::game_loop_tutorial()
 
 		if (account->tuto_state < TUTO_SIZE)
 		{
-			((t_tutorial_button *)(gui_tutorial[27].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(3, 4);
+			((t_tutorial_button *)(gui_tutorial[27].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(3, 5);
 			((t_tutorial_button *)(gui_tutorial[27].object_list[TUTORIAL_NUM][0]))->button->button->size[0] = get_tile_size();
-			((t_tutorial_button *)(gui_tutorial[30].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(3, 3);
+			((t_tutorial_button *)(gui_tutorial[30].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(4, 4);
 			((t_tutorial_button *)(gui_tutorial[30].object_list[TUTORIAL_NUM][0]))->button->button->size[0] = get_tile_size();
-			((t_tutorial_button *)(gui_tutorial[32].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(4, 3);
+			((t_tutorial_button *)(gui_tutorial[32].object_list[TUTORIAL_NUM][0]))->button->button->coord[0] = get_tile_pos(5, 4);
 			((t_tutorial_button *)(gui_tutorial[32].object_list[TUTORIAL_NUM][0]))->button->button->size[0] = get_tile_size();
 			gui_tutorial[account->tuto_state].draw_self();
 		}

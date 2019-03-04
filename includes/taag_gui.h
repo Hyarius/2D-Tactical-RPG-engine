@@ -101,6 +101,7 @@ typedef struct		s_shop_spell : t_gui_obj
 {
 	s_spell_card	*button;
 	struct s_shop_item	**item;
+	gui_funct		funct;
 	t_vect			delta;
 	t_vect			size;
 	string			text;
@@ -119,6 +120,7 @@ typedef struct		s_shop_map : t_gui_obj
 {
 	t_button		*button;
 	struct s_shop_item	**item;
+	gui_funct		funct;
 	int				text_size;
 	t_vect			icon_coord;
 	t_vect			icon_size;
@@ -145,6 +147,7 @@ typedef struct		s_shop_tile : t_gui_obj
 	t_button		*button;
 	struct s_shop_item
 					**item;
+	gui_funct		funct;
 	int				text_size;
 	t_vect			icon_coord;
 	t_vect			icon_size;

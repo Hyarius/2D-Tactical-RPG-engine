@@ -16,14 +16,7 @@ void				check_spell_lock()
 		{
 			s_shop_item tmp = s_shop_item(SHOP_SPELL_PATH + list_base[i] + SHOP_EXT);
 
-			int find = 0;
-			for (size_t j = 0; j < account->spell_unlock.size(); j++)
-			{
-				if (account->spell_unlock[j] == tmp.to_add)
-					find = 1;
-			}
-			if (find == 0)
-				spell_item_vector.push_back(new t_shop_item(tmp));
+			spell_item_vector.push_back(new t_shop_item(tmp));
 		}
 	}
 }
@@ -54,6 +47,9 @@ void		buy_spell(t_data data)
 {
 	s_shop_item **item = (s_shop_item **)(data.data[0]);
 	int		*index = (int *)(data.data[1]);
+
+	if (item == NULL || *item == NULL)
+		return ;
 
 	if (account->add_gold(-((*item)->price)) == true)
 	{

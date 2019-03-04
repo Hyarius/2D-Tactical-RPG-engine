@@ -3,8 +3,27 @@
 vector<s_shop_item *>		map_item_vector;
 s_shop_item					*map_item_list[18];
 
+void				check_map_lock()
+{
+	vector<string>		list_base = list_files(MAP_PATH, MAP_EXT);
+
+	if (account->tuto_state < TUTO_SIZE)
+		list_base = { "tutorial-00" };
+	map_item_vector.clear();
+
+	for (size_t i = 0; i < list_base.size(); i++)
+	{
+		if (check_file_exist(SHOP_MAP_PATH + list_base[i] + SHOP_EXT) == true)
+		{
+			s_shop_item tmp = s_shop_item(SHOP_MAP_PATH + list_base[i] + SHOP_EXT);
+			map_item_vector.push_back(new t_shop_item(tmp));
+		}
+	}
+}
+
 void			actualize_map_tab(int *index)
 {
+	check_map_lock();
 	for (int i = 0; i < 18; i++)
 	{
 		if (i + (*index) < 0 || i + *index >= (int)(map_item_vector.size()))
@@ -27,32 +46,6 @@ void			modify_index_map_tab(t_data data)
 			map_item_list[i] = NULL;
 		else
 			map_item_list[i] = map_item_vector[i + (*index)];
-	}
-}
-
-void				check_map_lock()
-{
-	vector<string>		list_base = list_files(MAP_PATH, MAP_EXT);
-
-	if (account->tuto_state < TUTO_SIZE)
-		list_base = { "tutorial-00" };
-	map_item_vector.clear();
-
-	for (size_t i = 0; i < list_base.size(); i++)
-	{
-		if (check_file_exist(SHOP_MAP_PATH + list_base[i] + SHOP_EXT) == true)
-		{
-			s_shop_item tmp = s_shop_item(SHOP_MAP_PATH + list_base[i] + SHOP_EXT);
-
-			int find = 0;
-			for (size_t j = 0; j < account->map_unlock.size(); j++)
-			{
-				if (account->map_unlock[j] == tmp.to_add)
-					find = 1;
-			}
-			if (find == 0)
-				map_item_vector.push_back(new t_shop_item(tmp));
-		}
 	}
 }
 

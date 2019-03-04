@@ -117,8 +117,6 @@ void 				menu_save_map(t_data data) //0 - gui / 1 - t_game_board * / 2 - & file 
 		if (data.data.size() != 0)
 			(*((t_gui *)(data.data[0]))).draw_self();
 		gui.draw_self();
-		if (account->tuto_state < gui_tutorial.size())
-			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
 

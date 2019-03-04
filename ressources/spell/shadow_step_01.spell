@@ -1,0 +1,21 @@
+price:20
+name:Shadow step I
+description:Push the target by 2 square(s)
+icon:simple_iconset
+sprite:3:6
+m_spell:0
+pa:2
+pm:0
+cooldown:0
+range:1:2:0
+type:1
+on target:2
+zone:0:0
+effect1:4:2:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

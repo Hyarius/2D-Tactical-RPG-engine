@@ -36,6 +36,12 @@ void		set_index(t_data data)
 	int value = (int &)(data.data[1]);
 
 	*index = value;
+	if (*index == 0)
+		create_tab_sprite(t_data(2, &(gui_part_shop[0]), &(index_part[0])));
+	else if (*index == 1)
+		create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
+	else if (*index == 2)
+		create_tab_map(t_data(2, &(gui_part_shop[2]), &(index_part[2])));
 }
 
 void menu_shop(t_data data)
@@ -166,7 +172,7 @@ void menu_shop(t_data data)
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			adding_map, NULL),
 			new t_button(new s_paragraph_button(
-				"All right ! Here is the only map we can find here ... \n \"Tutorial-00\... \n You can see some informations about it : \n - how much gold did it cost can be found in the gold button. \n - The amount of gold / exp you can get by finishing it. \n The adviced level of your account to actualy win this map. \n \n Let's buy it ! Left click on this map to buy it !", DARK_GREY, gui.unit.y / 2, //text info
+				"All right ! Here is the only map we can find here ... \n \"Tutorial-00\"... \n You can see some informations about it : \n - how much gold did it cost can be found in the gold button. \n - The amount of gold / exp you can get by finishing it. \n The adviced level of your account to actualy win this map. \n \n Let's buy it ! Left click on this map to buy it !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.5, 8.55) * gui_tutorial[0].unit, t_vect(10, 7) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
@@ -182,19 +188,16 @@ void menu_shop(t_data data)
 		));
 	}
 
+	create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
+
 	while (play)
 	{
-		if (index == 0 && gui_part_shop[0].object_list.size() == 0)
-			create_tab_sprite(t_data(2, &(gui_part_shop[0]), &(index_part[0])));
-		if (index == 1 && gui_part_shop[1].object_list.size() == 0)
-			create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
-		if (index == 2 && gui_part_shop[2].object_list.size() == 0)
-			create_tab_map(t_data(2, &(gui_part_shop[2]), &(index_part[2])));
+
 		prepare_screen();
 
 		gui.draw_self();
 		gui_part_shop[index].draw_self();
-		if (account->tuto_state < gui_tutorial.size())
+		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
 		render_screen(true);
@@ -213,7 +216,7 @@ void menu_shop(t_data data)
 			}
 			else if (event.type == SDL_MOUSEBUTTONUP)
 			{
-				if (account->tuto_state < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
+				if ((size_t)(account->tuto_state) < gui_tutorial.size() && gui_tutorial[account->tuto_state].object_list.size())
 					gui_tutorial[account->tuto_state].click(&event);
 				else
 				{

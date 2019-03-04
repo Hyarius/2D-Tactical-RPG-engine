@@ -7,7 +7,7 @@ int				s_game_engine::calc_pool()
 
 int 			s_game_engine::calc_max_exp(int level)
 {
-	return (level * level);
+	return (level * 75);
 }
 
 void			s_game_engine::add_exp(int delta)
@@ -41,8 +41,8 @@ void			save_game_engine()
 	for (size_t i = 0; i < 6; i++)
 		text.append(":" + account->actor[i]);
 	text.append("\n");
-	text.append("spell:NULL");
-	for (size_t i = 1; i < account->spell_unlock.size(); i++)
+	text.append("spell:");
+	for (size_t i = 0; i < account->spell_unlock.size(); i++)
 		text.append(":" + account->spell_unlock[i]);
 	text.append("\n");
 	text.append("tile");

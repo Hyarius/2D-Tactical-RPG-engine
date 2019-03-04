@@ -1,0 +1,21 @@
+price:20
+name:Regeneration I
+description:Apply a regeneration effect that heal 2 HP(s) per turn for the next 2 turn(s)
+icon:simple_iconset
+sprite:9:2
+m_spell:0
+pa:4
+pm:0
+cooldown:0
+range:0:4:0
+type:0
+on target:1
+zone:1:0
+effect1:15:0:2:2:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

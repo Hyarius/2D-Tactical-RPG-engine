@@ -216,13 +216,13 @@ static string parse_effect_apply_poison(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] == 0)
-		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 1)
-		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 2)
-		text = "apply a poison effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == -1)
-		text = "apply a poison effect that had no effect";
+		text = "apply a effect that had no effect";
 	return (text);
 }
 static string parse_effect_apply_regeneration(t_action *effect)

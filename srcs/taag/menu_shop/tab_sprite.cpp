@@ -15,14 +15,7 @@ void				check_tile_lock()
 		{
 			s_shop_item tmp = s_shop_item(SHOP_TILE_PATH + list_base[i] + SHOP_EXT);
 
-			int find = 0;
-			for (size_t j = 0; j < account->tile_unlock.size(); j++)
-			{
-				if (account->tile_unlock[j] == tmp.to_add)
-					find = 1;
-			}
-			if (find == 0)
-				tile_item_vector.push_back(new t_shop_item(tmp));
+			tile_item_vector.push_back(new t_shop_item(tmp));
 		}
 	}
 }

@@ -36,8 +36,8 @@ string 					create_new_game_engine()
 	text.append("tuto_state:0\n");
 	text.append("keyboard:" + to_string(SDLK_q) + ":" + to_string(SDLK_w) + ":" + to_string(SDLK_e) + ":" + to_string(SDLK_r) + ":" + to_string(SDLK_t) + ":" + to_string(SDLK_y) + "\n");
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
-	text.append("spell:\n");
-	text.append("tile:H00:H01:H05:H17\n");
+	text.append("spell:basic_attack\n");
+	text.append("tile:H00:H04:H05:H17\n");
 	text.append("map:\n");
 	return (text);
 }
