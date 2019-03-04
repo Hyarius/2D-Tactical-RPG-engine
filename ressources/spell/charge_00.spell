@@ -1,0 +1,21 @@
+price:25
+name:Charge I
+description:Deal 5 damage(s) to the target and push the caster toward the target by 3 square(s)
+icon:simple_iconset
+sprite:0:5
+m_spell:0
+pa:3
+pm:0
+cooldown:2
+range:2:3:0
+type:1
+on target:0
+zone:1:0
+effect1:0:5:0:0:0
+effect2:12:3:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

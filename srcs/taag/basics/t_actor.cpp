@@ -68,8 +68,8 @@ s_actor::s_actor()
 	name = "";
 	selected = false;
 	tile = NULL;
-	sprite = t_vect(-1, -1);
-	stat = t_stat(t_value(50), t_value(6), t_value(3), 5);
+	sprite = t_vect(0, 0);
+	stat = t_stat(t_value(15), t_value(4), t_value(2), 5);
 	dir = 0;
 	effect_list = s_effect_list();
 	visual_info = {};

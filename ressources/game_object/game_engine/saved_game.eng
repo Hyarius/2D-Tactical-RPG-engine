@@ -1,9 +1,9 @@
 level:1
 exp:0
-gold:0
-tuto_state:23
+gold:47
+tuto_state:40
 keyboard:97:122:101:114:116:121
-char:NULL:NULL:Hywa:NULL:NULL:NULL
-spell:NULL:Aqua-sword:Electro-sword:Fire-sword:Frozen-sword:Grounded-sword:Minor heal
-tile:H00:H01:H11:H16
-map:tutorial-00
+char:NULL:NULL:NULL:NULL:NULL:NULL
+spell:NULL
+tile:H00:H01:H05:H17
+map:road-00

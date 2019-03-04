@@ -5,11 +5,11 @@ static string 			create_basic_actor()
 	string text = "name:\n";
 	text.append("tileset:H00\n");
 	text.append("sprite_pos:0:0\n");
-	text.append("health:50\n");
-	text.append("action:6\n");
-	text.append("mouvement:3\n");
+	text.append("health:20\n");
+	text.append("action:4\n");
+	text.append("mouvement:2\n");
 	text.append("initiative:5\n");
-	text.append("spell0:Slash\n");
+	text.append("spell0:NULL\n");
 	text.append("spell1:NULL\n");
 	text.append("spell2:NULL\n");
 	text.append("spell3:NULL\n");
@@ -42,7 +42,10 @@ void					menu_actor_editor(t_data data)
 	string *path = (string *)(data.data[0]);
 	t_actor actor;
 	if (*path == "NULL" || check_file_exist(ACTOR_PATH + *path + ACTOR_EXT) == false)
-		actor = t_actor("", get_sprite_tile(account->tile_unlock[0]), t_vect(0, 0), t_stat(50, 6, 3, 5));
+	{
+		actor = t_actor();
+		actor.tile = get_sprite_tile(account->tile_unlock[0]);
+	}
 	else
 		actor = read_actor(ACTOR_PATH + (*path) + ACTOR_EXT);
 
@@ -70,7 +73,7 @@ void					menu_actor_editor(t_data data)
 	i++;
 
 
-	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 30, 150,
+	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 15, 150,
 		new t_button(new s_text_button(
 				"Health points (5 hp / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -89,7 +92,7 @@ void					menu_actor_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), &pool, 1, 3, 5, 12,
+	t_iterator *action_iterator = new s_iterator(&(actor.stat.pa.max), &pool, 1, 3, 4, 12,
 		new t_button(new s_text_button(
 				"Action points (1 act / 3 AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
@@ -127,7 +130,7 @@ void					menu_actor_editor(t_data data)
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
 
-	t_iterator *initiative_iterator = new s_iterator(&(actor.stat.init), &pool, 1, 1, 4, 12,
+	t_iterator *initiative_iterator = new s_iterator(&(actor.stat.init), &pool, 1, 1, 0, 12,
 		new t_button(new s_text_button(
 				"Initiative (1 init / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,

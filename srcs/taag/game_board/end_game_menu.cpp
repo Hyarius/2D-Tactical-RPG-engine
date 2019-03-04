@@ -119,10 +119,8 @@ void				quit_end_menu(t_data data)
 
 static void			give_away_end_tutorial(t_data data)
 {
-	printf("here\n");
+	account->map_unlock.clear();
 	account->map_unlock.push_back("road-00");
-	for (size_t i = 0; i < account->map_unlock.size(); i++)
-		printf("map [%zu] = %s\n", i, account->map_unlock[i].c_str());
 	account->add_gold(100);
 	quit_end_menu(data);
 }

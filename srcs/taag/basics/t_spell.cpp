@@ -32,7 +32,7 @@ s_spell::s_spell()
 s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon, int p_m_spell,
 					int p_cost_pa, int p_cost_pm, int p_cooldown, int range_min, int range_max, int p_block, int p_on_target,
 					int p_range_type, int p_zone_type, int p_zone_size,
-					vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type)
+					vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type, int p_price)
 {
 	name = p_name;
 	desc = p_desc;
@@ -53,7 +53,7 @@ s_spell::s_spell(	string p_name, string p_desc, t_tileset *p_tile, t_vect p_icon
 	effect.resize(6);
 	target_anim = p_target_anim;
 	anim_type = p_anim_type;
-	price = 0;
+	price = p_price;
 }
 
 t_spell		read_one_spell(string path)
@@ -110,8 +110,7 @@ t_spell		read_one_spell(string path)
 	if (tab[1] != "NULL")
 		target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 	int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
-	spell.price = price;
+	t_spell spell = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type, price);
 	effect.clear();
 	myfile.close();
 	return (spell);
@@ -182,11 +181,10 @@ void		read_spell()
 		if (tab[1] != "NULL")
 			target_anim = s_animation(get_animation_tile(tab[1]), atoi(tab[2].c_str()), atoi(tab[3].c_str()), t_vect(atof(tab[4].c_str()), atof(tab[5].c_str())));
 		int anim_type = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
-		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type);
+		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type, price);
 		if (m_spell == INT_FALSE)
 			spell_heros_name.push_back(name);
 		spell_name.push_back(name);
-		spell_map[name].price = price;
 		effect.clear();
 		myfile.close();
 

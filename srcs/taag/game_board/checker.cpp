@@ -41,7 +41,10 @@ void				s_game_board::check_alive()
 	while (i < actor_list.size())
 	{
 		if (actor_list[i]->stat.hp.value <= 0 && check_visual() == true && check_anim() == true)
+		{
 			delete_actor(actor_list[i]);
+			calculated = false;
+		}
 		else
 			i++;
 	}

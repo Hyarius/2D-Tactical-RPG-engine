@@ -50,7 +50,10 @@ void		menu_choose_spell_monster(t_data data)
 
 	for (int i = 0; i < 18; i++)
 	{
-		spell_list_monster[i] = &(spell_map[spell_name[(index + i) % spell_name.size()]]);
+		if (index + i >= (int)(spell_name.size()) || index + i < 0)
+			spell_list_monster[i] = &(spell_map["NULL"]);
+		else
+			spell_list_monster[i] = &(spell_map[spell_name[(index + i) % spell_name.size()]]);
 		gui.add(new t_spell_card(&(spell_list_monster[i]), gui.unit * t_vect(0.5 + (i % 6) * 4 + (0.2 * (i % 6)), (0.5 + (i / 6) * 6 + (0.2 * (i / 6)))), gui.unit * t_vect(4, 6), quit_select_spell, t_data(4, player, spell_num, i, &play)));// &actor | num spell | i | &play
 	}
 

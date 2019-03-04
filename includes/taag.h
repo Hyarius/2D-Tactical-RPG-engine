@@ -153,7 +153,7 @@ typedef struct			s_spell
 								int p_cost_pa, int p_cost_pm, int p_cooldown,
 								int range_min, int range_max, int p_block, int p_on_target,
 								int p_range_type, int p_zone_type, int p_zone_size,
-								vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type);
+								vector<t_action> p_effect, t_animation p_target_anim, int p_anim_type, int p_price);
 }						t_spell;
 
 extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell

@@ -59,7 +59,6 @@ void				s_game_board::outvoke_actor(t_actor *new_actor)
 		get_cell(new_actor->coord)->actor = NULL;
 		new_actor->coord = t_vect(-1, -1);
 		remove_actor(new_actor);
-		delete new_actor;
 	}
 }
 
@@ -74,5 +73,4 @@ void				s_game_board::delete_actor(t_actor *new_actor)
 	if (count < turn_order.size())
 		turn_order.erase(turn_order.begin() + count);
 	get_cell(new_actor->coord)->actor = NULL;
-	delete new_actor;
 }
