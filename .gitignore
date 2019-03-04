@@ -3,3 +3,4 @@ Debug
 lib
 *.vcx*
 dirent.h
+Release
