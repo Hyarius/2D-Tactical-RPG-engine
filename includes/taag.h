@@ -16,7 +16,7 @@ extern vector<string>					animation_name;//stock the name of every tileset in in
 extern vector<t_gui>					gui_tutorial;
 
 # define SPELL_BUTTON	4
-# define TUTO_SIZE		40
+# define TUTO_SIZE		41
 
 #define ACTOR_PATH 				"ressources/game_object/actor/"
 #define ACTOR_EXT 				".act"
@@ -161,6 +161,8 @@ extern map<string, t_spell>	spell_map;	//The dictionnary holding every spell
 										//from the game
 extern vector<string>		spell_name;
 extern vector<string>		spell_heros_name;
+extern vector<string>		spell_monster_name;
+
 typedef struct			s_visual_info
 {
 	string				text;

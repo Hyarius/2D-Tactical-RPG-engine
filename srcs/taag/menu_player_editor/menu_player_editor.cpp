@@ -58,7 +58,7 @@ void					menu_actor_editor(t_data data)
 	entry_name->entry->max_len = 32;
 
 	t_actor base;
-	int pool = account->calc_pool() - ((actor.stat.hp.max - base.stat.hp.max) / 5 + (actor.stat.pa.max - base.stat.pa.max) * 3 + (actor.stat.pm.max - base.stat.pm.max) * 3 + (actor.stat.init - base.stat.init));
+	int pool = account->calc_pool() - ((actor.stat.hp.max - base.stat.hp.max) + (actor.stat.pa.max - base.stat.pa.max) * 3 + (actor.stat.pm.max - base.stat.pm.max) * 3 + (actor.stat.init - base.stat.init));
 	t_iterator *pool_iterator = new s_iterator(&pool, &pool, 0, 0, 0, 100,
 		new t_button(new s_text_button(
 				"Attrib points (AtbP) left : ", DARK_GREY,
@@ -73,9 +73,9 @@ void					menu_actor_editor(t_data data)
 	i++;
 
 
-	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 5, 1, 15, 150,
+	t_iterator *hp_iterator = new s_iterator(&(actor.stat.hp.max), &pool, 1, 1, 15, 150,
 		new t_button(new s_text_button(
-				"Health points (5 hp / AtbP): ", DARK_GREY,
+				"Health points (1 hp / AtbP): ", DARK_GREY,
 				t_vect(1, 1.0 + (1.2 * (i))) * gui.unit, t_vect(4.25, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		new t_button(new s_text_button(

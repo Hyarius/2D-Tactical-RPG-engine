@@ -126,7 +126,7 @@ void				s_game_board::draw_select_wheel(int index)
 	for (int i = 0; i < 5; i++)
 	{
 		draw_border_rectangle(gui.unit * (coord + space[tmp(i)]), gui.unit * size[tmp(i)], 12, t_color(0.5, 0.5, 0.5), t_color(0.4, 0.4, 0.4));
-		int tile_index = ((index + (i - 2) < 0 ? index + (i - 2) - 1 : index + (i - 2))) % actor_pool.size();
+		int tile_index = (index + (i - 2)) % actor_pool.size();
 		actor_pool[tile_index]->tile->draw_self(gui.unit * (coord + space[tmp(i)]) + 12, gui.unit * size[tmp(i)] - 24, actor_pool[tile_index]->sprite + t_vect(type, 0));
 		coord.y += size[tmp(i)].y + space[tmp(i)].y;
 	}

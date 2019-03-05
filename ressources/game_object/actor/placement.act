@@ -1,0 +1,13 @@
+name:placement
+tileset:H19
+sprite_pos:3:4
+health:15
+action:8
+mouvement:3
+initiative:5
+spell0:Fire sword I
+spell1:Aero-sword I
+spell2:Aqua-sword I
+spell3:Attraction I
+spell4:Bastion I
+spell5:Shadow step I

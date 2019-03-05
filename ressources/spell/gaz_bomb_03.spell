@@ -1,0 +1,21 @@
+price:0
+name:Gaz bomb III
+description:Apply a effect that deal 4 damage(s) per turn for the next 3 turn(s) and deal 3 damage(s) to the target
+icon:simple_iconset
+sprite:4:4
+m_spell:1
+pa:4
+pm:0
+cooldown:1
+range:2:5:0
+type:1
+on target:0
+zone:0:1
+effect1:14:0:4:3:0
+effect2:0:3:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

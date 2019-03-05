@@ -120,6 +120,7 @@ void				quit_end_menu(t_data data)
 	account->add_gold(*gold_bonus);
 	*play = false;
 	save_game_engine();
+	account->tuto_state++;
 }
 
 static void			give_away_end_tutorial(t_data data)

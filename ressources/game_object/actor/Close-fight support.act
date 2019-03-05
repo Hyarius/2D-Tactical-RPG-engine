@@ -1,0 +1,13 @@
+name:Close-fight support
+tileset:H00
+sprite_pos:6:4
+health:19
+action:6
+mouvement:3
+initiative:7
+spell0:Slash I
+spell1:Fury I
+spell2:Devotion I
+spell3:Congelation I
+spell4:Construction I
+spell5:Bastion I

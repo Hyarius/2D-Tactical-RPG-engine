@@ -1,0 +1,21 @@
+price:0
+name:Life leech I
+description:Deal 2 damage(s) to the target and heal the caster by 1 HP(s) per target hit
+icon:simple_iconset
+sprite:6:4
+m_spell:1
+pa:3
+pm:0
+cooldown:1
+range:1:2:0
+type:1
+on target:0
+zone:0:0
+effect1:0:2:0:0:0
+effect2:6:1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

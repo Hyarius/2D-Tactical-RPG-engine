@@ -55,6 +55,7 @@ void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
 		if (source != NULL)
 			source->total_effect[0] += damage;
+		target->total_effect[2] += damage;
 		if (damage != 0)
 			target->change_stat_hp(-damage);
 	}
@@ -263,46 +264,40 @@ void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 
 void		push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (target != NULL)
+	t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
+		source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
+	t_vect tmp = t_vect(source->coord);
+	int i = 0;
+	while (i < effect_stat.value[0])
 	{
-		t_vect delta = t_vect(source->coord.x > target->coord.x ? -1 : source->coord.x == target->coord.x ? 0 : 1,
-			source->coord.y > target->coord.y ? -1 : source->coord.y == target->coord.y ? 0 : 1);
-		t_vect tmp = t_vect(source->coord);
-		int i = 0;
-		while (i < effect_stat.value[0])
+		if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 		{
-			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
-			{
-				tmp = tmp + delta;
-				source->total_effect[11]++;
-			}
-			i++;
+			tmp = tmp + delta;
+			source->total_effect[11]++;
 		}
-		game->calculate_distance(source->coord);
-		game->move_actor(source, tmp, 0.4);
+		i++;
 	}
+	game->calculate_distance(source->coord);
+	game->move_actor(source, tmp, 0.4);
 }
 
 void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (target != NULL)
+	t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
+		source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
+	t_vect tmp = t_vect(source->coord);
+	int i = 0;
+	while (i < effect_stat.value[0])
 	{
-		t_vect delta = t_vect(source->coord.x > target->coord.x ? 1 : source->coord.x == target->coord.x ? 0 : -1,
-			source->coord.y > target->coord.y ? 1 : source->coord.y == target->coord.y ? 0 : -1);
-		t_vect tmp = t_vect(source->coord);
-		int i = 0;
-		while (i < effect_stat.value[0])
+		if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 		{
-			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
-			{
-				tmp = tmp + delta;
-				source->total_effect[11]++;
-			}
-			i++;
+			tmp = tmp + delta;
+			source->total_effect[11]++;
 		}
-		game->calculate_distance(source->coord);
-		game->move_actor(source, tmp, 0.4);
+		i++;
 	}
+	game->calculate_distance(source->coord);
+	game->move_actor(source, tmp, 0.4);
 }
 
 void		apply_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
@@ -488,6 +483,7 @@ void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_sta
 		int damage = effect_stat.value[0];
 		if (source != NULL)
 			source->total_effect[0] += damage;
+		target->total_effect[2] += damage;
 		if (damage != 0)
 			target->change_stat_armor(-damage);
 	}
@@ -500,6 +496,7 @@ void				true_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
 		if (source != NULL)
 			source->total_effect[0] += damage;
+		target->total_effect[2] += damage;
 		if (damage != 0)
 			target->change_stat_hp_ignore_armor(-damage);
 	}
@@ -523,7 +520,7 @@ void					remove_armor_caster(t_actor *source, t_actor *target, t_action_stat eff
 	{
 		int damage = effect_stat.value[0];
 		if (source != NULL)
-			source->total_effect[0] += damage;
+			source->total_effect[2] += damage;
 		if (damage != 0)
 			source->change_stat_armor(-damage);
 	}

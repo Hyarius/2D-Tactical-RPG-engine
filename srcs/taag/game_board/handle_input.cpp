@@ -70,14 +70,23 @@ bool				s_game_board::cast_spell(t_vect mouse)
 			size_t j = 0;
 			while (j < player->spell[s_spell]->effect.size())
 			{
-				if (player->spell[s_spell]->effect[j].effect == move_caster)
-					set_coord_target(mouse + target_list[i]);
-				if (get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL && (player->spell[s_spell]->effect[j].stat.value[3] == 0 || player->spell[s_spell]->effect[j].stat.value[3] > find[j]))
+				if (get_cell(mouse + target_list[i]))
 				{
-					find[j]++;
-					player->spell[s_spell]->effect[j].effect(player, get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
-					if (player->spell[s_spell]->anim_type == 1 || (player->spell[s_spell]->anim_type == 2 && get_cell(mouse + target_list[i])->actor != NULL))
-						get_cell(mouse + target_list[i])->animation.push_back(player->spell[s_spell]->target_anim);
+					t_actor *target = get_cell(mouse + target_list[i])->actor;
+					if (target == NULL && (player->spell[s_spell]->effect[j].effect == pull_caster || player->spell[s_spell]->effect[j].effect == push_caster))
+					{
+						target = new t_actor();
+						target->coord = mouse + target_list[i];
+					}
+					if (player->spell[s_spell]->effect[j].effect == move_caster)
+						set_coord_target(mouse + target_list[i]);
+					if (player->spell[s_spell]->effect[j].effect != NULL && (player->spell[s_spell]->effect[j].stat.value[3] == 0 || player->spell[s_spell]->effect[j].stat.value[3] > find[j]))
+					{
+						find[j]++;
+						player->spell[s_spell]->effect[j].effect(player, target, player->spell[s_spell]->effect[j].stat);
+						if (player->spell[s_spell]->anim_type == 1 || (player->spell[s_spell]->anim_type == 2 && target != NULL))
+							get_cell(mouse + target_list[i])->animation.push_back(player->spell[s_spell]->target_anim);
+					}
 				}
 				j++;
 			}
@@ -143,9 +152,9 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index, vecto
 			if (count < placement_list.size())
 			{
 				if (game_actor_list->size() == 0)
-					game_actor_list->insert(game_actor_list->begin(), new t_actor((*get_cell(mouse)->actor)));
+					game_actor_list->insert(game_actor_list->begin(), get_cell(mouse)->actor);
 				else
-					game_actor_list->insert(game_actor_list->begin() + (*index % game_actor_list->size()), new t_actor((*get_cell(mouse)->actor)));
+					game_actor_list->insert(game_actor_list->end(), get_cell(mouse)->actor);
 				outvoke_actor(get_cell(mouse)->actor);
 			}
 		}

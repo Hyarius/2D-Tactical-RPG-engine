@@ -9,7 +9,7 @@ pm:0
 cooldown:2
 range:0:4:1
 type:0
-on target:0
+on target:1
 zone:0:1
 effect1:18:0:0:0:0
 effect2:20:0:0:0:0

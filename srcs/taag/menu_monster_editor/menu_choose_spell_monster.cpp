@@ -7,14 +7,14 @@ static void	modify_index(t_data data)
 	int *index = (int *)(data.data[0]);
 	int delta = (int &)(data.data[1]);
 
-	if (*index + delta >= -12 && *index + delta < (int)(((spell_name.size() / 6) * 6 + 6)))
+	if (*index + delta >= -12 && *index + delta < (int)(((spell_monster_name.size() / 6) * 6 + 6)))
 		*index += delta;
 	for (int i = 0; i < 18; i++)
 	{
-		if (*index + i >= (int)(spell_name.size()) || *index + i < 0)
+		if (*index + i >= (int)(spell_monster_name.size()) || *index + i < 0)
 			spell_list_monster[i] = &(spell_map["NULL"]);
 		else
-			spell_list_monster[i] = &(spell_map[spell_name[(*index + i) % spell_name.size()]]);
+			spell_list_monster[i] = &(spell_map[spell_monster_name[(*index + i) % spell_monster_name.size()]]);
 	}
 }
 
@@ -50,10 +50,10 @@ void		menu_choose_spell_monster(t_data data)
 
 	for (int i = 0; i < 18; i++)
 	{
-		if (index + i >= (int)(spell_name.size()) || index + i < 0)
+		if (index + i >= (int)(spell_monster_name.size()) || index + i < 0)
 			spell_list_monster[i] = &(spell_map["NULL"]);
 		else
-			spell_list_monster[i] = &(spell_map[spell_name[(index + i) % spell_name.size()]]);
+			spell_list_monster[i] = &(spell_map[spell_monster_name[(index + i) % spell_monster_name.size()]]);
 		gui.add(new t_spell_card(&(spell_list_monster[i]), gui.unit * t_vect(0.5 + (i % 6) * 4 + (0.2 * (i % 6)), (0.5 + (i / 6) * 6 + (0.2 * (i / 6)))), gui.unit * t_vect(4, 6), quit_select_spell, t_data(4, player, spell_num, i, &play)));// &actor | num spell | i | &play
 	}
 

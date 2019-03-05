@@ -1,9 +1,9 @@
 level:1
-exp:0
-gold:4677
-tuto_state:40
+exp:32
+gold:4581
+tuto_state:41
 keyboard:113:119:101:114:116:121
-char:NULL:NULL:default:NULL:NULL:NULL
-spell::Absorb-dagger I:Absorb-sword I:Aero-dagger I:Aero-sword I:Anger I:Aqua-dagger I:Aqua-sword I:Arrow blow I:Attraction I:Basic attack:Bastion I:Black fury I:Cheer I:Congelation I:Construction I:Devotion I:Drain I:Ember shot I:Fire punch I:Fire sword I:Fire-dagger I:Fireball I:Frozen dagger I:Frozen-sword I:Fury I:Healing I:Hurricane I:Ice bolt I:Inferno I:Inner fire I:Minor help I:Multiple arrow I:Poison ball I:Poison dagger I:Regeneration I:Repulsive arrow I:Self control I:Shadow step I:Slash I:Solar help I:Stone dagger I:Stone fall I:Stone sword I:Thrust I:Thunder I:Unstopable force I:Uprising I:Wind dash I:Wing I:test:test2
+char:Fire-mage:Close-fight support:Vampirisme:Cleric:Fatou tank:placement
+spell::Absorb-dagger I:Absorb-sword I:Aero-dagger I:Aero-sword I:Anger I:Aqua-dagger I:Aqua-sword I:Arrow blow I:Attraction I:Basic attack:Bastion I:Battle calling I:Black fury I:Cheer I:Congelation I:Construction I:Devotion I:Drain I:Ember shot I:Fire punch I:Fire sword I:Fire-dagger I:Fireball I:Frozen dagger I:Frozen-sword I:Fury I:Healing I:Hurricane I:Ice bolt I:Inferno I:Inner fire I:Minor help I:Multiple arrow I:Poison ball I:Poison dagger I:Regeneration I:Repulsive arrow I:Self control I:Shadow step I:Slash I:Solar help I:Stone dagger I:Stone fall I:Stone sword I:Thrust I:Thunder I:Unstopable force I:Uprising I:Wind dash I:Wing I:test:test2
 tile:H00:H01:H02:H03:H04:H05:H06:H07:H08:H09:H10:H11:H12:H13:H14:H15:H16:H17:H18:H19:H20:H21:H22:H23:H24:H25:H26:H27:H28:H29:H30:H31:H32:H33:H34:H35:H36:H37:H38:H39:H40:H41:H42:H43:H44:H45:H46:H47:H48:H49:H50:H51:H52:H53:H54:H55:H56:H57:H58:H59:H60:H61:H62:H63:H64:H65:H66:H67:H68:H69
 map:cave_road_01:cave_road_02:cave_road_03:cave_road_04:cave_road_05:cave_road_06:forest_road_01:forest_road_02:forest_road_03:forest_road_04:forest_road_05:forest_road_06:island_01:island_02:tutorial-00

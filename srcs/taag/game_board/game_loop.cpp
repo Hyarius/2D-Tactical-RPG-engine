@@ -17,6 +17,7 @@ void				s_game_board::game_loop()
 	SDL_Event	event;
 	bool		play = true;
 
+	printf("here\n");
 	initiate_turn_order();
 
 	gui = t_gui(30, 20);

@@ -21,7 +21,7 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 	*tile_index = t;
 	*sprite_target = player->sprite;
 	t_actor base;
-	*pool_value = account->calc_pool() - ((player->stat.hp.max - base.stat.hp.max) / 5 + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
+	*pool_value = account->calc_pool() - ((player->stat.hp.max - base.stat.hp.max) + (player->stat.pa.max - base.stat.pa.max) * 3 + (player->stat.pm.max - base.stat.pm.max) * 3 + (player->stat.init - base.stat.init));
 	*play = false;
 }
 

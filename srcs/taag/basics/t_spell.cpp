@@ -3,6 +3,7 @@
 map<string, t_spell>	spell_map;
 vector<string>			spell_name;
 vector<string>			spell_heros_name;
+vector<string>			spell_monster_name;
 
 s_spell::s_spell()
 {
@@ -143,8 +144,7 @@ void		read_spell()
 	spell_map["NULL"] = t_spell();
 	spell_name.clear();
 	spell_heros_name.clear();
-	spell_name.push_back("NULL");
-	spell_heros_name.push_back("NULL");
+	spell_monster_name.clear();
 	size_t i = 0;
 	while (i < spell_file.size())
 	{
@@ -184,6 +184,8 @@ void		read_spell()
 		spell_map[name] = t_spell(name, desc, tile, icon, m_spell, cost_pa, cost_pm, cooldown, range[0], range[1], block, on_target, range_type, zone_type, zone_size, effect, target_anim, anim_type, price);
 		if (m_spell == INT_FALSE)
 			spell_heros_name.push_back(name);
+		if (m_spell == INT_TRUE)
+			spell_monster_name.push_back(name);
 		spell_name.push_back(name);
 		effect.clear();
 		myfile.close();

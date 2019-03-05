@@ -32,6 +32,7 @@ void				s_game_board::enemy_turn()
 
 void				s_game_board::next_turn()
 {
+	check_alive();
 	if (turn_order.size())
 	{
 		turn_order[turn_index % turn_order.size()]->selected = false;

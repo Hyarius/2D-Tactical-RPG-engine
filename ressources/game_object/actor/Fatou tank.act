@@ -1,0 +1,13 @@
+name:Fatou tank
+tileset:H07
+sprite_pos:0:0
+health:24
+action:6
+mouvement:2
+initiative:5
+spell0:Unstopable force I
+spell1:Attraction I
+spell2:Bastion I
+spell3:Battle calling I
+spell4:Wind dash I
+spell5:Self control I
