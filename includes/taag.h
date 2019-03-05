@@ -417,8 +417,7 @@ typedef struct			s_game_board
 	void				draw_self();
 
 	//end_game_menu
-	void				end_game_win();
-	void				end_game_lose();
+	void				end_game();
 
 	//game_loop
 	void				game_loop();

@@ -48,7 +48,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 						NULL, NULL));
 
 	gui.add(new t_button(new t_text_button(
-						"Which map did you want to play ?", BLACK,
+						"Which map do you want to play ?", BLACK,
 						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
@@ -80,7 +80,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Look like we didn't get any map to play with ... We should go to the shop and buy some ! \n \n \n Press the echap key to get back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+				"Looks like we don't have any map to play with ... We should go to the shop and buy some ! \n \n \n Press the echap key to go back to the main menu", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(10.8, 9.3) * gui_tutorial[0].unit, t_vect(8.3, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), false
 		));

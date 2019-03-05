@@ -68,7 +68,7 @@ void				menu_place_monster(t_data data) //coord, board, gui
 						NULL, NULL));
 
 	gui.add(new t_button(new t_text_button(
-						"Which monster did you want to put here ?", BLACK,
+						"Which monster do you want to put here ?", BLACK,
 						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),

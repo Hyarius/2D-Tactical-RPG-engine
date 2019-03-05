@@ -49,7 +49,7 @@ void			menu_choose_effect(t_data data)
 		NULL, NULL));
 
 	gui.add(new t_button(new t_text_button(
-		"Which effect did you want", BLACK,
+		"Which effect do you want", BLACK,
 		gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
 		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 	),
@@ -126,12 +126,12 @@ string *entry[6];
 
 static string parse_effect_dmg(t_action *effect)
 {
-	string text = "deal " + to_string(effect->stat.value[0]) + " damage(s) to the target";
+	string text = "deals " + to_string(effect->stat.value[0]) + " damage(s) to the target";
 	return (text);
 }
 static string parse_effect_heal(t_action *effect)
 {
-	string text = "heal the target by " + to_string(effect->stat.value[0]) + " HP(s)";
+	string text = "heals the target by " + to_string(effect->stat.value[0]) + " HP(s)";
 	return (text);
 }
 static string parse_effect_change_pm(t_action *effect)
@@ -140,21 +140,21 @@ static string parse_effect_change_pm(t_action *effect)
 	if (effect->stat.value[0] < 0)
 		text = "reduce target's PM(s) by " + to_string(effect->stat.value[0]);
 	else
-		text = "give " + to_string(effect->stat.value[0]) + " PM(s) to the target" ;
+		text = "gives " + to_string(effect->stat.value[0]) + " PM(s) to the target" ;
 	return (text);
 }
 static string parse_effect_change_pa(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] < 0)
-		text = "reduce target's PA(s) by " + to_string(effect->stat.value[0]);
+		text = "reduces target's PA(s) by " + to_string(effect->stat.value[0]);
 	else
-		text = "give " + to_string(effect->stat.value[0]) + " PA(s) to the target";
+		text = "gives " + to_string(effect->stat.value[0]) + " PA(s) to the target";
 	return (text);
 }
 static string parse_effect_heal_caster(t_action *effect)
 {
-	string text = "heal the caster by " + to_string(effect->stat.value[0]) + " HP(s)";
+	string text = "heals the caster by " + to_string(effect->stat.value[0]) + " HP(s)";
 	if (effect->stat.value[3] != 1)
 	{
 		text.append(" per target hit");
@@ -165,7 +165,7 @@ static string parse_effect_heal_caster(t_action *effect)
 }
 static string parse_effect_dmg_caster(t_action *effect)
 {
-	string text = "deal " + to_string(effect->stat.value[0]) + " damage(s) to the caster";
+	string text = "deals " + to_string(effect->stat.value[0]) + " damage(s) to the caster";
 	if (effect->stat.value[3] != 1)
 	{
 		text.append(" per target hit");
@@ -181,13 +181,13 @@ static string parse_effect_push_actor(t_action *effect)
 }
 static string parse_effect_pull_actor(t_action *effect)
 {
-	string text = "pull the target by " + to_string(effect->stat.value[0]) + " square(s)";
+	string text = "pulls the target by " + to_string(effect->stat.value[0]) + " square(s)";
 	return (text);
 }
 static string parse_effect_move_caster(t_action *effect)
 {
 	(void)effect;
-	string text = "move the caster to the targeted location";
+	string text = "moves the caster to the targeted location";
 	return (text);
 }
 static string parse_effect_swap_actor(t_action *effect)
@@ -200,7 +200,7 @@ static string parse_effect_change_caster_pa(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] < 0)
-		text = "reduce caster's PA(s) by " + to_string(effect->stat.value[0]);
+		text = "reduces caster's PA(s) by " + to_string(effect->stat.value[0]);
 	else
 		text = "give " + to_string(effect->stat.value[0]) + " PA(s) to the caster";
 	if (effect->stat.value[3] != 1)
@@ -215,9 +215,9 @@ static string parse_effect_change_caster_pm(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] < 0)
-		text = "reduce caster's PM(s) by " + to_string(effect->stat.value[0]);
+		text = "reduces caster's PM(s) by " + to_string(effect->stat.value[0]);
 	else
-		text = "give " + to_string(effect->stat.value[0]) + " PM(s) to the caster";
+		text = "gives " + to_string(effect->stat.value[0]) + " PM(s) to the caster";
 	if (effect->stat.value[3] != 1)
 	{
 		text.append(" per target hit");
@@ -240,26 +240,26 @@ static string parse_effect_apply_poison(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] == 0)
-		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply an effect that deals " + to_string(effect->stat.value[1]) + " damage(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 1)
-		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply an effect that deals " + to_string(effect->stat.value[1]) + " damage(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 2)
-		text = "apply a effect that deal " + to_string(effect->stat.value[1]) + " damage(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply an effect that deals " + to_string(effect->stat.value[1]) + " damage(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == -1)
-		text = "apply a effect that had no effect";
+		text = "apply an effect that has no effects";
 	return (text);
 }
 static string parse_effect_apply_regeneration(t_action *effect)
 {
 	string text;
 	if (effect->stat.value[0] == 0)
-		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a regeneration effect that heals " + to_string(effect->stat.value[1]) + " HP(s) per turn for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 1)
-		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a regeneration effect that heals " + to_string(effect->stat.value[1]) + " HP(s) on every action for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == 2)
-		text = "apply a regeneration effect that heal " + to_string(effect->stat.value[1]) + " HP(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
+		text = "apply a regeneration effect that heals " + to_string(effect->stat.value[1]) + " HP(s) on every mouvement for the next " + to_string(effect->stat.value[2]) + " turn(s)";
 	else if (effect->stat.value[0] == -1)
-		text = "apply a regeneration effect that had no effect";
+		text = "apply a regeneration effect that has no effects";
 	return (text);
 }
 static string parse_effect_apply_pa_change(t_action *effect)
@@ -334,22 +334,22 @@ static string parse_effect_cure_pm_bonus(t_action *effect)
 }
 static string parse_effect_add_armor(t_action *effect)
 {
-	string text = "add " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
+	string text = "adds " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
 	return (text);
 }
 static string parse_effect_remove_armor(t_action *effect)
 {
-	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
+	string text = "removes " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
 	return (text);
 }
 static string parse_effect_true_dmg(t_action *effect)
 {
-	string text = "deal " + to_string(effect->stat.value[0]) + " true damage(s) to the target";
+	string text = "deals " + to_string(effect->stat.value[0]) + " true damage(s) to the target";
 	return (text);
 }
 static string parse_effect_add_armor_caster(t_action *effect)
 {
-	string text = "add " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	string text = "adds " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
 	if (effect->stat.value[3] != 1)
 	{
 		text.append(" per target hit");
@@ -360,7 +360,7 @@ static string parse_effect_add_armor_caster(t_action *effect)
 }
 static string parse_effect_remove_armor_caster(t_action *effect)
 {
-	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	string text = "removes " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
 	if (effect->stat.value[3] != 1)
 	{
 		text.append(" per target hit");

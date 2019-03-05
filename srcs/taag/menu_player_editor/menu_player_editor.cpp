@@ -233,7 +233,7 @@ void					menu_actor_editor(t_data data)
 
 		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
-					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spell, stat or even them look !", DARK_GREY, gui.unit.y / 2, //text info
+					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spells, stats and even looks !", DARK_GREY, gui.unit.y / 2, //text info
 					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5, //object info
 					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -257,7 +257,7 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here, you can find 2 types of things : \n First, you have the amount of attribute points left to give. You will receive some at every level up ! \n You can spend them into the 4 types of caracteristics that your character have : \n \n - Health Points : Represent how much damage you can take before faint out \n - Action Points : Points used in combat to cast spell \n - Mouvement Points : Points used on combat to move around the map \n - Initiative : Determine the turn order of the map \n \n You can find how much attrib. points every caracteristic cost just near the caracteristic name.", DARK_GREY, gui.unit.y / 2, //text info
+				"Here, you can find 2 types of things : \n First, you have the amount of attribute points left to give. You will receive some at every level up ! \n You can spend them into the 4 types of caracteristics : \n \n - Health Points : Represent how much damage you can take before you faint \n - Action Points : Points used in combat to cast spell \n - Mouvement Points : Points used in combat to move around the map \n - Initiative : Determine in which order you and your enemy will play \n \n You can find how much attrib. points every caracteristic cost next to the caracteristic name.", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(10, 9.5) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -269,7 +269,7 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here is the sprite selector, where you can choose the look of your character. \n You can select it by pressing the \"<\" or \">\" button, or by simply click on the sprite on the center to open the sprite selection menu. \n ", DARK_GREY, gui.unit.y / 2, //text info
+				"Here is the sprite selector, where you can choose the look of your character. \n You can select it by pressing the \"<\" or \">\" button, or by simply clicking at the center of the sprite to open the selection menu. \n ", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(11.6, 4.6) * gui_tutorial[0].unit, t_vect(10, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -309,7 +309,7 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"All right ! Now our character got one spell !", DARK_GREY, gui.unit.y / 2, //text info
+				"All right ! Now our character has one spell !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -317,7 +317,7 @@ void					menu_actor_editor(t_data data)
 	{
 		gui_tutorial[13].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
-				"Now than we got a spell, we should go and play one game no ? Before that, we need to give this character a proper name ! \n Click on the name entry, and give him an awnsome name. Than click to the \"Save actor \" button to save this actor.", DARK_GREY, gui.unit.y / 2, //text info
+				"Now that we got a spell, we should go and play a game no ? Before that, we need to give this character a proper name ! \n Click on the name entry, and give him an awesome name. Then click on the \"Save actor \" button to save this actor.", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
 		gui_tutorial[13].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(

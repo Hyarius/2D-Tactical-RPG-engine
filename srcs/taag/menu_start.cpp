@@ -106,9 +106,9 @@ void		menu_start()
 	{
 		gui_tutorial[1].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
 				"Welcome to TAAG. \n \
-You're here into the main menu. He's compose, as you can see, of 6 characters slots, just under this text box, and some menu, at the right part of the screen. \n \
+Here you're in the main menu. It's composed, as you can see, of 6 character slots just under this text box, and some menu at the right part of the screen. \n \
 \n \
-The first menu is play play menu, witch can bring you to a game of TAAG. \n \
+The first menu is the play menu, which brings you to a game of TAAG. \n \
 The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
@@ -118,7 +118,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 	if (gui_tutorial[2].object_list.size() == 0)
 	{
 		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
-			"Those are your six character slots. \n Witch one of them can contain one fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
+			"Those are your six character slots. \n Each one can contain a fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(15, 8) * gui_tutorial[0].unit, t_vect(8, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
@@ -145,7 +145,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			menu_play, NULL),
 			new t_button(new s_paragraph_button(
-				"Now than we got a character, let's try and play one game ! Click on the \"Play\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				"Now that we have a character, let's try and play a game ! Click on the \"Play\" menu !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
@@ -187,6 +187,11 @@ The second one is the shop, where you can buy things for your character. \n ", D
 	{
 		start_tutorial(&gui);
 		setting_keyboard(&gui);
+	}
+	if (account->tuto_state > TUTO_SIZE)
+	{
+		setting_keyboard(&gui);
+		account->tuto_state = TUTO_SIZE;
 	}
 
 	while (play)

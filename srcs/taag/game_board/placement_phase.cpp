@@ -102,7 +102,7 @@ void				s_game_board::placement_phase_tutorial(t_actor *game_actor_list[])
 			tmp_placement, t_data(2, &index, &actor_pool));
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Welcome to the main TAAG actual gameplay : fighting ! \n What you are looking at right now is the game preparation mode : you will place your character on the map. If you have more than 1 character, you can select the one you want to place with the top/down arrow. \n Try to place your first character on one of the targeted blue square on the map, and press \"space\" to end the placement phase, and go to the actual fight !", DARK_GREY, gui.unit.y / 2, //text info
+			"Welcome to the main TAAG gameplay : fighting ! \n What you are looking at right now is the game preparation mode : you will place your characters on the map. If you have more than 1 character, you can select the one you want to place with the top/down arrow. \n Try to place your first character on one of the targeted blue square on the map, and press \"space\" to end the placement phase, and go to the actual fight !", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(5, 16) * gui_tutorial[0].unit, t_vect(20, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 

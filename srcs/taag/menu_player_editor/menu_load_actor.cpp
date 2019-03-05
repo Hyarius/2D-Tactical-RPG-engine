@@ -39,7 +39,7 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 	SDL_Event	event;
 
 	s_button *button = new s_button(new s_text_button(//button did you wanna quit
-						"Did you want to load this actor again ?", DARK_GREY, //text info
+						"Do you want to load this actor again ?", DARK_GREY, //text info
 						gui.unit * t_vect(4, 2), gui.unit * t_vect(7, 5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						NULL, NULL);

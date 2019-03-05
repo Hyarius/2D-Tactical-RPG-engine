@@ -72,7 +72,7 @@ void			menu_load_spell(t_data data) // 0 - t_gui * / 1 - t_spell * / 2 - &name /
 						NULL, NULL));
 
 	gui.add(new t_button(new t_text_button(
-						"Which file did you want to load ?", BLACK,
+						"Which file do you want to load ?", BLACK,
 						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),

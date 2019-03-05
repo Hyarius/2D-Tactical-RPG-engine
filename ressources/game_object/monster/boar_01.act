@@ -2,7 +2,7 @@ name:Brown boar
 tileset:C04
 sprite_pos:0:0
 health:25
-action:5
+action:7
 mouvement:2
 initiative:3
 spell0:Berzerk I
@@ -18,5 +18,4 @@ spell5:NULL
 7:4:-1:-1:0:0:0:0:0:0
 7:5:-1:-1:0:0:0:0:0:0
 -1:0:0:0:0:0:0:0:0:0
-3:25:-1:0:0:0:0:0:0:0
 0:1:0:0:-1:0:0:0:0:0

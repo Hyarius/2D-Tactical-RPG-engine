@@ -25,7 +25,7 @@ void			start_tutorial(t_gui *gui)
 	t_gui		tuto_gui = t_gui(15, 10);
 
 	t_button *button = new s_button(new s_text_button(//button did you wanna quit
-						"Did you want to run the tutorial ?", DARK_GREY, //text info
+						"Do you want to run the tutorial ?", DARK_GREY, //text info
 						tuto_gui.unit * t_vect(4, 2), tuto_gui.unit * t_vect(7, 5), 16, //object info
 						t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 						NULL, NULL);

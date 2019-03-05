@@ -2,8 +2,8 @@ name:White boar
 tileset:C04
 sprite_pos:6:0
 health:40
-action:6
-mouvement:3
+action:9
+mouvement:4
 initiative:6
 spell0:Berzerk I
 spell1:Horn attack II
@@ -18,5 +18,4 @@ spell5:NULL
 7:4:-1:-1:0:0:0:0:0:0
 7:5:-1:-1:0:0:0:0:0:0
 -1:0:0:0:0:0:0:0:0:0
-3:25:-1:0:0:0:0:0:0:0
 0:1:0:0:-1:0:0:0:0:0

@@ -31,7 +31,7 @@ void		setting_keyboard(t_gui *gui)
 	t_gui		tuto_gui = t_gui(15, 10);
 
 	t_button *button = new s_button(new s_text_button(//button did you wanna quit
-		"What kind of keyboard did you got ?", DARK_GREY, //text info
+		"What kind of keyboard do you have ?", DARK_GREY, //text info
 		tuto_gui.unit * t_vect(4, 2), tuto_gui.unit * t_vect(7, 5), 16, //object info
 		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 		NULL, NULL);

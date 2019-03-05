@@ -71,7 +71,7 @@ void				s_game_board::game_loop_tutorial()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Here we go ! \n Oh, look, there is a wild rat. It look aggressive ... Better get ready, we don't know what this monster is able of... \n \n To Fight him, we got our awnsome Aqua-sword ! It's actualy on the 1 spell slot (Shortcut : " + text[0] + "). \n But first, we need to get close to him. \n As you can see, there is some green square around your fabulous " + ally_list[0]->name + ". It describ the range were he can run to, in one turn. Every square cost an amount of MP to reach (You can find more informations about a certain square by placing your mouse on it, and look at the top-right corner of the screen).", DARK_GREY, gui.unit.y / 2, //text info
+			"Here we go ! \n Oh, look, there is a wild rat. It looks aggressive ... Better get ready, we don't know what this monster is able of... \n \n To Fight him, we have our awesome Aqua-sword ! It's on the 1 spell slot (Shortcut : " + text[0] + "). \n But first, we need to get close to him. \n As you can see, there is some green squares around your fabulous " + ally_list[0]->name + ". It describe the range where he can run to, in one turn. Every square cost an amount of MP to reach (You can find more informations about a certain square on the top-right corner of the screen by hovering your mouse on it).", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -88,7 +88,7 @@ void				s_game_board::game_loop_tutorial()
 			tutorial_move_function, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Now it's time ! Go for kill this rat ! Move to the target square !", DARK_GREY, gui.unit.y / 2, //text info
+			"Now it's time ! Go kill this rat ! Move to the targeted square !", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -104,7 +104,7 @@ void				s_game_board::game_loop_tutorial()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Alright ! Now than we have move, let's try to cast our powerful Aqua-sword. \n \n Oh, this rat is too far away... I guess we have to pass our turn for now. For that, press the \"space\" key.", DARK_GREY, gui.unit.y / 2, //text info
+			"Alright ! Now that we moved, let's try to cast our powerful Aqua-sword. \n \n Oh, this rat is too far away... I guess we have to pass our turn for now. For that, press the \"space\" key.", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -122,7 +122,7 @@ void				s_game_board::game_loop_tutorial()
 			tutorial_move_function, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Oh, the rat is aggressive ! Let's try to kill it ! First of all, move too, and get closer to him !", DARK_GREY, gui.unit.y / 2, //text info
+			"Oh, the rat is aggressive ! Let's try to kill it ! First of all, move too and get closer to him !", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -156,7 +156,7 @@ void				s_game_board::game_loop_tutorial()
 			tutorial_cast_spell, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Okay ! Time to cast this incredible attack on him face ! Click on it !", DARK_GREY, gui.unit.y / 2, //text info
+			"Okay ! Time to cast this incredible attack on his face ! Click on it !", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -172,7 +172,7 @@ void				s_game_board::game_loop_tutorial()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Perfect ! But ... Look like you didn't kill him... And you didn't have enought AP to re-cast your Aqua-sword. \n \n You should pass your turn and finaly kill him.", DARK_GREY, gui.unit.y / 2, //text info
+			"Perfect ! But ... Looks like you didn't kill him... And you dont't have enough AP to cast again your Aqua-sword. \n \n You should pass your turn and finaly kill him.", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 

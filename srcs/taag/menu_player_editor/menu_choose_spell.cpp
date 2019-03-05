@@ -77,7 +77,7 @@ void		menu_choose_spell(t_data data)
 
 		gui_tutorial[9].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
-				"Welcome to the spell selector ! You will find here every spell that you have acces to. \n Let's look at the more closely !", DARK_GREY, gui.unit.y / 2, //text info
+				"Welcome to the spell selector ! Here, you will find every spell that you have access to. \n Let's look at them more closely !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -89,7 +89,7 @@ void		menu_choose_spell(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"This spell, obviously named \"Aqua-sword\", got some basics informations. \n - the Action points cost of it : 4 PA per attack. \n - the Mouvement points cost. In this case it cost 0 MP per attack, but it happen than spell cost some MP ! \n - The range of the attack. It describ from how much distance you can land this spell. The first value describ the distance minimum where you can hit enemy, and the other one describ the maximun range allowed. \n - The description of the spell and it's effect. In this case, it will deal some damages to the target and will pull it to you by one square. \n \n And, at the bottom of the spell, you can find 4 icons. \n - The first on the left represent what kind of target you can hit with this spell. Some spell must target occuped area, some other should focus an empty target, and some can target both. \n - The second one represent the type of line of vision you need to actualy target someone : it can be blocked by obstacle, or can see freely thought it. \n - The third one describ the type of range allowed for this spell : in circle around you, or in strict line. \n - And the last one represent the type of zone this spell will hit : a solo-area, a circle, a square, or a line.", DARK_GREY, gui.unit.y / 2, //text info
+				"This spell, obviously named \"Aqua-sword\", has some basic informations. \n - It's Action Points cost : 4 PA per attack. \n - It's Mouvement Points cost. In this case it cost 0 MP per attack, but sometimes it will be more ! \n - The range of the attack. It describes the range from which you can cast this spell. The first value describe the minimum distance where to hit an enemy, and the other one describe the maximun range allowed. \n - The description of the spell and it's effect. In this case, it will deal damages to the target and will pull it to you by one square. \n \n And, at the bottom of the spell, you can find 4 icons. \n - The first on the left represent what kind of target you can hit with this spell. Some spell must target an occupied area, others should focus an empty tile, and some can target both. \n - The second one tells you if obstacles prevent the casting of the spell or if you can ignore them. \n - The third one describe the type of range allowed for this spell : in circle around you, or in a straight line. \n - And the last one represent the type of zone this spell will hit : a solo-area, a circle, a square, or a line.", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(12.4, 13.2) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}

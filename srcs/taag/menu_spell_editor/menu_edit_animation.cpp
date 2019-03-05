@@ -17,7 +17,7 @@ void menu_edit_animation(t_data data)
 						NULL, NULL));
 
 	gui.add(new t_button(new t_text_button(
-						"Which animation did you want ?", BLACK,
+						"Which animation do you want ?", BLACK,
 						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(7, 1), 5,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
