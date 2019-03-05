@@ -1,9 +1,9 @@
 level:1
 exp:0
-gold:9880
+gold:9872
 tuto_state:40
 keyboard:113:119:101:114:116:121
 char:NULL:NULL:default:NULL:NULL:NULL
 spell::Basic attack:Self control I:Stone fall I:test:test2
 tile:H00:H04:H05:H17
-map:forest_road_01:forest_road_02:forest_road_03:forest_road_04:tutorial-00
+map:cave_road_01:forest_road_01:forest_road_02:forest_road_03:forest_road_04:forest_road_05:tutorial-00

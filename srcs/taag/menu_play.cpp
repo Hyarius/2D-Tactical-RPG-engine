@@ -21,7 +21,10 @@ void					menu_play(t_data data)
 
 		if (account->board.board_size.x >= 5 && account->board.board_size.y >= 5)
 		{
-			account->board.placement_phase_tutorial(account->actor_array);
+			if (account->tuto_state < TUTO_SIZE)
+				account->board.placement_phase_tutorial(account->actor_array);
+			else
+				account->board.placement_phase(account->actor_array);
 		}
 	}
 }

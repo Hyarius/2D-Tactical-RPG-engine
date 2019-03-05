@@ -1,0 +1,19 @@
+struct b
+{
+	string test;
+	b();
+	print_value();
+}
+
+struct a : b
+{
+	int bouh;
+	a();
+	print_value();
+}
+
+
+a test = a();
+b test2 = a();
+(b)(test).print_value();
+test2.print_value();

@@ -15,8 +15,11 @@ static void				select_node(t_data data)
 	size_t j = 0;
 	while (j < cell_list.size())
 	{
-		cell_list[j]->node = node;
-		cell_list[j]->cursor = t_vect(0, 0);
+		if (cell_list[j] != NULL)
+		{
+			cell_list[j]->node = node;
+			cell_list[j]->cursor = t_vect(0, 0);
+		}
 		j++;
 	}
 	cell_list.clear();
