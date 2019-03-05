@@ -94,6 +94,15 @@ s_actor::s_actor()
 		spell_used[i] = 0;
 	for (int i = 0; i < 24; i++)
 		total_effect[i] = 0;
+	gambit.push_back(s_ai_helper({7, 0, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 1, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 2, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 3, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 4, -1, -1}));
+	gambit.push_back(s_ai_helper({7, 5, -1, -1}));
+	gambit.push_back(s_ai_helper({-1}));
+	gambit.push_back(s_ai_helper({3, 25, -1}));
+	gambit.push_back(s_ai_helper({0, 1, 0, 0, -1}));
 }
 
 s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat)
