@@ -1,6 +1,6 @@
 price:20
 name:Drain I
-description:Deal 2 damage(s) to the target and heal the caster by 2 HP(s)
+description:Deal 2 damage(s) to the target and heal the caster by 2 HP(s) per target hit
 icon:simple_iconset
 sprite:1:1
 m_spell:0

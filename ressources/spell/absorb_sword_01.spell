@@ -12,7 +12,7 @@ type:1
 on target:0
 zone:1:0
 effect1:0:4:0:0:0
-effect2:6:3:0:0:0
+effect2:6:3:0:0:1
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0

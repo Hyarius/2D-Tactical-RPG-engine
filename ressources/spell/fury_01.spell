@@ -11,7 +11,7 @@ range:0:4:0
 type:1
 on target:0
 zone:1:0
-effect1:7:8:0:0:0
+effect1:7:8:0:0:1
 effect2:16:0:4:2:0
 effect3:17:0:2:2:0
 effect4:0:0:0:0:0

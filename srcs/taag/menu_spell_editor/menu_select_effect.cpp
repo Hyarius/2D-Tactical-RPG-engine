@@ -155,11 +155,23 @@ static string parse_effect_change_pa(t_action *effect)
 static string parse_effect_heal_caster(t_action *effect)
 {
 	string text = "heal the caster by " + to_string(effect->stat.value[0]) + " HP(s)";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 static string parse_effect_dmg_caster(t_action *effect)
 {
 	string text = "deal " + to_string(effect->stat.value[0]) + " damage(s) to the caster";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 static string parse_effect_push_actor(t_action *effect)
@@ -191,6 +203,12 @@ static string parse_effect_change_caster_pa(t_action *effect)
 		text = "reduce caster's PA(s) by " + to_string(effect->stat.value[0]);
 	else
 		text = "give " + to_string(effect->stat.value[0]) + " PA(s) to the caster";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 static string parse_effect_change_caster_pm(t_action *effect)
@@ -200,6 +218,12 @@ static string parse_effect_change_caster_pm(t_action *effect)
 		text = "reduce caster's PM(s) by " + to_string(effect->stat.value[0]);
 	else
 		text = "give " + to_string(effect->stat.value[0]) + " PM(s) to the caster";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 static string parse_effect_push_caster(t_action *effect)
@@ -326,11 +350,23 @@ static string parse_effect_true_dmg(t_action *effect)
 static string parse_effect_add_armor_caster(t_action *effect)
 {
 	string text = "add " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 static string parse_effect_remove_armor_caster(t_action *effect)
 {
 	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	if (effect->stat.value[3] != 1)
+	{
+		text.append(" per target hit");
+		if (effect->stat.value[3] != 0)
+			text.append(" up to " + to_string(effect->stat.value[3]) + " times max");
+	}
 	return (text);
 }
 

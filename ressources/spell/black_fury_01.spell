@@ -1,6 +1,6 @@
 price:20
 name:Black fury I
-description:Deal 3 damage(s) to the target and heal the caster by 3 HP(s)
+description:Deal 3 damage(s) to the target and heal the caster by 3 HP(s) per target hit
 icon:simple_iconset
 sprite:0:1
 m_spell:0

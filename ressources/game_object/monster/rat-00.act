@@ -1,7 +1,7 @@
 name:Rat
 tileset:C06
 sprite_pos:9:0
-health:12
+health:5
 action:4
 mouvement:2
 initiative:3

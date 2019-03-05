@@ -15,8 +15,8 @@ static void			set_list_action_name()
 	list_action_name.push_back("dmg caster");	//7
 	list_action_name.push_back("move caster"); 	//8
 	list_action_name.push_back("swap actor");	//9
-	list_action_name.push_back("change caster pa");	//10
 	list_action_name.push_back("change caster pm");	//11
+	list_action_name.push_back("change caster pa");	//10
 	list_action_name.push_back("push caster");	//12
 	list_action_name.push_back("pull caster");	//13
 	list_action_name.push_back("apply poison");	//13

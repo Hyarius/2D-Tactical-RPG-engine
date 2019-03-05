@@ -50,7 +50,7 @@ void			init_actions()
 
 void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (target != NULL)
+	if (target != NULL && target != source)
 	{
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
 		if (source != NULL)
@@ -165,8 +165,7 @@ void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage = (effect_stat.value[0] + source->stat.hp.value < source->stat.hp.max ? effect_stat.value[0] : source->stat.hp.max - source->stat.hp.value);
 		if (source != NULL)
@@ -178,8 +177,7 @@ void		heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
 		if (source != NULL)
@@ -223,8 +221,7 @@ void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage;
 		if (source->stat.pm.value + effect_stat.value[0] < 0)
@@ -245,8 +242,7 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 
 void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage;
 		if (source->stat.pa.value + effect_stat.value[0] < 0)
@@ -487,7 +483,7 @@ void					add_armor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (target != NULL)
+	if (target != NULL && target != source)
 	{
 		int damage = effect_stat.value[0];
 		if (source != NULL)
@@ -499,7 +495,7 @@ void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_sta
 
 void				true_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (target != NULL)
+	if (target != NULL && target != source)
 	{
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
 		if (source != NULL)
@@ -511,8 +507,7 @@ void				true_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void					add_armor_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage = effect_stat.value[0];
 		if (source != NULL)
@@ -524,8 +519,7 @@ void					add_armor_caster(t_actor *source, t_actor *target, t_action_stat effect
 
 void					remove_armor_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	(void)target;
-	if (source != NULL)
+	if (source != NULL && target != NULL)
 	{
 		int damage = effect_stat.value[0];
 		if (source != NULL)

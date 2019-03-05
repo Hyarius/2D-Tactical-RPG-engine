@@ -1,6 +1,6 @@
 price:20
 name:Stone dagger I
-description:Deal 1 damage(s) to the target and apply a malus PM off -1 PM(s) per turn for the next 1 turn(s)
+description:Deal 1 true damage(s) to the target and apply a malus PM off -1 PM(s) per turn for the next 1 turn(s)
 icon:simple_iconset
 sprite:12:8
 m_spell:0
@@ -11,7 +11,7 @@ range:1:1:0
 type:1
 on target:0
 zone:1:0
-effect1:0:1:0:0:0
+effect1:26:1:0:0:0
 effect2:17:0:-1:1:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0

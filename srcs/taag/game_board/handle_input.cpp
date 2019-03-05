@@ -64,6 +64,7 @@ bool				s_game_board::cast_spell(t_vect mouse)
 			target_list = calc_square(player->spell[s_spell]->zone_size);
 		if (player->spell[s_spell]->anim_type == 0)
 			get_cell(mouse)->animation.push_back(player->spell[s_spell]->target_anim);
+		int		find[6] = {0, 0, 0, 0, 0, 0};
 		while (i < target_list.size())
 		{
 			size_t j = 0;
@@ -71,8 +72,9 @@ bool				s_game_board::cast_spell(t_vect mouse)
 			{
 				if (player->spell[s_spell]->effect[j].effect == move_caster)
 					set_coord_target(mouse + target_list[i]);
-				if (get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL)
+				if (get_cell(mouse + target_list[i]) && player->spell[s_spell]->effect[j].effect != NULL && (player->spell[s_spell]->effect[j].stat.value[3] == 0 || player->spell[s_spell]->effect[j].stat.value[3] > find[j]))
 				{
+					find[j]++;
 					player->spell[s_spell]->effect[j].effect(player, get_cell(mouse + target_list[i])->actor, player->spell[s_spell]->effect[j].stat);
 					if (player->spell[s_spell]->anim_type == 1 || (player->spell[s_spell]->anim_type == 2 && get_cell(mouse + target_list[i])->actor != NULL))
 						get_cell(mouse + target_list[i])->animation.push_back(player->spell[s_spell]->target_anim);

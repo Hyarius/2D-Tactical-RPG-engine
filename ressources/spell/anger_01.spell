@@ -1,0 +1,21 @@
+price:20
+name:Anger I
+description:Deal 3 true damage(s) to the target and apply a malus PM off -1 PM(s) per turn for the next 1 turn(s)
+icon:simple_iconset
+sprite:6:1
+m_spell:0
+pa:6
+pm:3
+cooldown:0
+range:0:0:0
+type:0
+on target:0
+zone:0:3
+effect1:26:3:0:0:0
+effect2:17:0:-1:1:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

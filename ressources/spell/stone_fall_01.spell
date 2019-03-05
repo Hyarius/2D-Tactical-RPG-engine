@@ -1,0 +1,21 @@
+price:20
+name:Stone fall I
+description:Deal 4 damage(s) to the target and add 2 armor point(s) to the caster
+icon:simple_iconset
+sprite:9:0
+m_spell:0
+pa:5
+pm:0
+cooldown:0
+range:1:5:0
+type:1
+on target:1
+zone:0:1
+effect1:0:4:0:0:0
+effect2:27:2:0:0:1
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0
