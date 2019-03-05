@@ -20,6 +20,17 @@ void					s_actor::draw_self(t_vect target, t_vect offset, t_vect size)
 	int percent = 100 * stat.hp.value / stat.hp.max;
 	if (percent > 0)
 		draw_rectangle(bar_coord + 2, t_vect(size.x * 0.8 * percent / 100, size.y / 10) - 4, t_color(1.0, 0.0, 0.0));
+	if (stat.armor > 0)
+	{
+		bar_coord = (coord + target) * size + offset + t_vect((size.x - size.x * 0.8) / 2, -size.y / 10);
+	 	draw_rectangle(bar_coord, bar_size, t_color(0.0, 0.0, 0.0));
+		draw_rectangle(bar_coord + 2, bar_size - 4, t_color(0.6, 0.6, 0.6));
+		percent = 100 * stat.armor / stat.hp.max;
+		if (percent > 100)
+			percent = 100;
+		if (percent > 0)
+			draw_rectangle(bar_coord + 2, t_vect(size.x * 0.8 * percent / 100, size.y / 10) - 4, t_color(34, 139, 34));
+	}
 }
 
 t_actor					read_actor(string p_path)
@@ -81,7 +92,7 @@ s_actor::s_actor()
 	gambit.clear();
 	for (int i = 0; i < 6; i++)
 		spell_used[i] = 0;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 24; i++)
 		total_effect[i] = 0;
 }
 
@@ -103,7 +114,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	gambit.clear();
 	for (int i = 0; i < 6; i++)
 		spell_used[i] = 0;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 24; i++)
 		total_effect[i] = 0;
 }
 
@@ -125,7 +136,7 @@ s_actor::s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_sta
 	gambit.clear();
 	for (int i = 0; i < 6; i++)
 		spell_used[i] = 0;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 24; i++)
 		total_effect[i] = 0;
 }
 
@@ -260,10 +271,35 @@ void				s_actor::apply_effect(string text)
 	apply_effect(text, GREY);
 }
 
+void				s_actor::change_stat_armor(int value)
+{
+	change_stat_armor(value, DARK_GREEN);
+}
+
 void				s_actor::change_stat_hp(int value, int color)
 {
-	this->stat.hp.value += value;
-	this->visual_info.push_back(create_visual_info(to_string(value) + "hp", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	if (value < 0)
+	{
+		if (this->stat.armor >= -value)
+		{
+			this->stat.armor += value;
+			this->visual_info.push_back(create_visual_info(to_string(value) + "armor", DARK_GREEN, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+			value = 0;
+		}
+		else
+		{
+			value += this->stat.armor;
+			this->stat.armor = 0;
+			total_effect[2] -= value;
+			this->stat.hp.value += value;
+			this->visual_info.push_back(create_visual_info(to_string(value) + "hp", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+		}
+	}
+	else
+	{
+		this->stat.hp.value += value;
+		this->visual_info.push_back(create_visual_info(to_string(value) + "hp", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	}
 }
 
 void				s_actor::change_stat_pa(int value, int color)
@@ -281,4 +317,12 @@ void				s_actor::change_stat_pm(int value, int color)
 void				s_actor::apply_effect(string text, int color)
 {
 	this->visual_info.push_back(create_visual_info(text, color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_armor(int value, int color)
+{
+	if (value < 0 && -value > this->stat.armor)
+		value = -(this->stat.armor);
+	this->stat.armor += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + "armor", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
 }

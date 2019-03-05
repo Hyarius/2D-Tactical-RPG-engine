@@ -5,7 +5,8 @@ t_gui gui_part_end;
 vector<t_vect>		coord_button = {
 	t_vect(9, 		5.75),
 	t_vect(13.5, 	5.75),
-	t_vect(18, 	5.75),
+	t_vect(18, 		5.75),
+	t_vect(22.5,	5.75),
 	t_vect(9, 		7),
 	t_vect(13.5, 	7),
 	t_vect(18, 		7),
@@ -32,6 +33,7 @@ vector<string>		desc_text = {
 	"Total damage dealt :",
 	"Total heal dealth :",
 	"Total damage taken :",
+	"Total armor given :",
 	"Total PA taken :",
 	"Total PM taken :",
 	"Total PA given :",
@@ -77,7 +79,7 @@ static void			select_player_info(t_data data)
 				NULL, NULL);
 			t_button *new_value = new t_button(new s_text_button(
 				to_string(actor->total_effect[i]), DARK_GREY,
-				(coord_button[i] + t_vect(desc_part.x + 0.5, 0)) * gui_part_end.unit, value_part * gui_part_end.unit, 5,
+				(coord_button[i] + t_vect(desc_part.x + 0.2, 0)) * gui_part_end.unit, value_part * gui_part_end.unit, 5,
 				t_color(0.5, 0.5, 0.5), t_color(0.7, 0.7, 0.7)),
 				NULL, NULL);
 			gui_part_end.add(new_desc);
@@ -91,16 +93,19 @@ static void			select_player_info(t_data data)
 		gui_part_end.add(new_desc);
 		for (size_t i = 0; i < 6; i++)
 		{
-			t_button *new_icon = new t_button(new s_tileset_button(actor->spell[i]->tile, actor->spell[i]->icon,
-								t_vect(9 + (3.25 * (i % 3)), 15.75 + (1.1 * (i / 3))) * gui_part_end.unit, t_vect(1, 1) * gui_part_end.unit, 4),
-				NULL, NULL);
-			t_button *new_text = new t_button(new s_text_button(
-				"x " + to_string(actor->spell_used[i]), DARK_GREY,
-				t_vect(9 + 1.2 + (3.25 * (i % 3)), 15.75 + (1.1 * (i / 3))) * gui_part_end.unit, t_vect(1, 1) * gui_part_end.unit, 5,
-				t_color(0.5, 0.5, 0.5), t_color(0.7, 0.7, 0.7)),
-				NULL, NULL);
-			gui_part_end.add(new_icon);
-			gui_part_end.add(new_text);
+			if (actor->spell[i]->name != "NULL")
+			{
+				t_button *new_icon = new t_button(new s_tileset_button(actor->spell[i]->tile, actor->spell[i]->icon,
+									t_vect(9 + (3.25 * (i % 3)), 15.75 + (1.1 * (i / 3))) * gui_part_end.unit, t_vect(1, 1) * gui_part_end.unit, 4),
+					NULL, NULL);
+				t_button *new_text = new t_button(new s_text_button(
+					"x " + to_string(actor->spell_used[i]), DARK_GREY,
+					t_vect(9 + 1.2 + (3.25 * (i % 3)), 15.75 + (1.1 * (i / 3))) * gui_part_end.unit, t_vect(1, 1) * gui_part_end.unit, 5,
+					t_color(0.5, 0.5, 0.5), t_color(0.7, 0.7, 0.7)),
+					NULL, NULL);
+				gui_part_end.add(new_icon);
+				gui_part_end.add(new_text);
+			}
 		}
 	}
 }

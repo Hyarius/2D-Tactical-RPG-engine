@@ -78,6 +78,7 @@ typedef struct			s_value
 typedef struct			s_stat
 {
 	t_value				hp;			//health point
+	int					armor;		//armor value
 	t_value				pa;			//action point
 	t_value				pm;			//mouvement point
 	int					init;		//initiative
@@ -204,26 +205,27 @@ typedef struct			s_effect_list
 0 - damage dealt
 1 - heal dealt
 2 - damage taken
-3 - pa malus
-4 - pm malus
-5 - pa bonus
-6 - pm bonus
-7 - push actor
-8 - pull actor
-9 - damage caster
-10 - move / placement
-11 - poison damage
-12 - regeneration
-13 - effect malus pa
-14 - effect malus pm
-15 - effect bonus pa
-16 - effect bonus pm
-17 - cure poison
-18 - cure regen
-19 - cure malus PA
-20 - cure malus PM
-21 - cure bonus PA
-22 - cure bonus PM
+3 - armor given
+4 - pa malus
+5 - pm malus
+6 - pa bonus
+7 - pm bonus
+8 - push actor
+9 - pull actor
+10 - damage caster
+11 - move / placement
+12 - poison damage
+13 - regeneration
+14 - effect malus pa
+15 - effect malus pm
+16 - effect bonus pa
+17 - effect bonus pm
+18 - cure poison
+19 - cure regen
+20 - cure malus PA
+21 - cure malus PM
+22 - cure bonus PA
+23 - cure bonus PM
 */
 
 typedef struct          s_actor
@@ -244,7 +246,7 @@ typedef struct          s_actor
 	t_effect_list		effect_list;	//list every effect this player is affected by
 	vector<t_ai_helper>	gambit; //list of every action the actor need to do if controled by AI
 	int					spell_used[6];	//count every time we use a spell and store it
-	int					total_effect[23];	//store the total amount of effect dealt by spell when used
+	int					total_effect[24];	//store the total amount of effect dealt by spell when used
 						s_actor();
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat);
 						s_actor(string p_name, t_tileset *p_tile, t_vect p_sprite, t_stat p_stat, t_spell **p_spell);
@@ -259,6 +261,8 @@ typedef struct          s_actor
 	void				change_stat_hp(int value, int color);
 	void				change_stat_pa(int value, int color);
 	void				change_stat_pm(int value,int color);
+	void				change_stat_armor(int value);
+	void				change_stat_armor(int value, int color);
 	void				apply_effect(string text, int color);
 }						t_actor;
 
@@ -564,6 +568,9 @@ void					cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 void					cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
 void					cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat);
 void					cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat);
+
+void					add_armor(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_stat);
 
 string					parse_gambit(t_ai_helper data);
 

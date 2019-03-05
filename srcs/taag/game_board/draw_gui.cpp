@@ -68,7 +68,13 @@ void				s_game_board::draw_cell_info_on_gui()
 			text = "Actor : " + player->name;
 			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			string text = "Health : " + to_string(player->stat.hp.value) + "/" + to_string(player->stat.hp.max);
-			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i + 0.5), BLACK);
+			if (player->stat.armor != 0)
+			{
+				text = "Armor : " + to_string(player->stat.armor);
+				draw_lined_text(text, text_size, gui.unit * t_vect(26.1, 0.5 * i + 0.5), BLACK);
+			}
+			i++;
 			text = "Action points : " + to_string(player->stat.pa.value);
 			draw_lined_text(text, text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			text = "Mouvement points : " + to_string(player->stat.pm.value);

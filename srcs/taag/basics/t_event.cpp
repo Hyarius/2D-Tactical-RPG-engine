@@ -41,11 +41,12 @@ void			init_actions()
 	g_effects.push_back(cure_malus_pm);
 	g_effects.push_back(cure_bonus_pa);
 	g_effects.push_back(cure_bonus_pm);
+	g_effects.push_back(add_armor);
+	g_effects.push_back(remove_armor);
 }
 
 void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	if (target != NULL)
 	{
 		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
@@ -58,7 +59,6 @@ void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		heal(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	(void)source;
 	if (target != NULL)
 	{
@@ -72,7 +72,6 @@ void		heal(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	(void)source;
 	if (target != NULL)
 	{
@@ -84,9 +83,9 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		if (source != NULL)
 		{
 			if (damage < 0)
-				source->total_effect[4] += -damage;
+				source->total_effect[5] += -damage;
 			else
-				source->total_effect[6] += -damage;
+				source->total_effect[7] += -damage;
 		}
 		if (damage != 0)
 			target->change_stat_pm(damage);
@@ -95,7 +94,6 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	(void)source;
 	if (target != NULL)
 	{
@@ -107,9 +105,9 @@ void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		if (source != NULL)
 		{
 			if (damage < 0)
-				source->total_effect[3] += -damage;
+				source->total_effect[4] += -damage;
 			else
-				source->total_effect[5] += -damage;
+				source->total_effect[6] += -damage;
 		}
 		if (damage != 0)
 			target->change_stat_pa(damage);
@@ -129,7 +127,7 @@ void		push_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 			{
 				if (source != NULL)
-					source->total_effect[7] += 1;
+					source->total_effect[8] += 1;
 				tmp = tmp + delta;
 			}
 			i++;
@@ -152,7 +150,7 @@ void		pull_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
 			{
 				if (source != NULL)
-					source->total_effect[8] += 1;
+					source->total_effect[9] += 1;
 				tmp = tmp + delta;
 			}
 			i++;
@@ -182,7 +180,7 @@ void		dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	{
 		int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
 		if (source != NULL)
-			source->total_effect[9] += damage;
+			source->total_effect[10] += damage;
 		if (damage != 0)
 			source->change_stat_hp(-damage);
 	}
@@ -196,7 +194,7 @@ void		move_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		if (game->get_cell(coord)->node->m_obs == false)
 		{
 			if (source != NULL)
-				source->total_effect[10]++;
+				source->total_effect[11]++;
 			game->get_cell(source->coord)->actor = NULL;
 			source->coord = coord;
 			game->get_cell(source->coord)->actor = source;
@@ -211,7 +209,7 @@ void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		if (source != NULL)
-			source->total_effect[10]++;
+			source->total_effect[11]++;
 		tmp = target->coord;
 		target->coord = source->coord;
 		source->coord = tmp;
@@ -222,7 +220,6 @@ void		swap_actor(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	(void)target;
 	if (source != NULL)
 	{
@@ -234,9 +231,9 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 		if (source != NULL)
 		{
 			if (damage < 0)
-				source->total_effect[4] += -damage;
+				source->total_effect[5] += -damage;
 			else
-				source->total_effect[6] += -damage;
+				source->total_effect[7] += -damage;
 		}
 		if (damage != 0)
 			source->change_stat_pm(damage);
@@ -245,7 +242,6 @@ void		change_caster_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 
 void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	vector<t_vect>	text_coord;
 	(void)target;
 	if (source != NULL)
 	{
@@ -257,9 +253,9 @@ void		change_caster_pa(t_actor *source, t_actor *target, t_action_stat effect_st
 		if (source != NULL)
 		{
 			if (damage < 0)
-				source->total_effect[3] += -damage;
+				source->total_effect[4] += -damage;
 			else
-				source->total_effect[5] += -damage;
+				source->total_effect[6] += -damage;
 		}
 		if (damage != 0)
 			source->change_stat_pa(damage);
@@ -277,7 +273,10 @@ void		push_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		while (i < effect_stat.value[0])
 		{
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
+			{
 				tmp = tmp + delta;
+				source->total_effect[11]++;
+			}
 			i++;
 		}
 		game->calculate_distance(source->coord);
@@ -296,7 +295,10 @@ void		pull_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 		while (i < effect_stat.value[0])
 		{
 			if (game->get_cell(tmp + delta) && game->get_cell(tmp + delta)->node->m_obs == false && game->get_cell(tmp + delta)->actor == NULL)
+			{
 				tmp = tmp + delta;
+				source->total_effect[11]++;
+			}
 			i++;
 		}
 		game->calculate_distance(source->coord);
@@ -362,7 +364,7 @@ void		cure_poison(t_actor *source, t_actor *target, t_action_stat effect_stat)
 	if (target != NULL)
 	{
 		if (source != NULL)
-			source->total_effect[17]++;
+			source->total_effect[18]++;
 		if (target->effect_list.poison.size() != 0)
 			target->apply_effect("- Poison");
 		target->effect_list.poison.clear();
@@ -376,7 +378,7 @@ void		cure_regeneration(t_actor *source, t_actor *target, t_action_stat effect_s
 	if (target != NULL)
 	{
 		if (source != NULL)
-			source->total_effect[18]++;
+			source->total_effect[19]++;
 		if (target->effect_list.regeneration.size() != 0)
 			target->apply_effect("- Regeneration");
 		target->effect_list.regeneration.clear();
@@ -396,7 +398,7 @@ void		cure_malus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (target->effect_list.change_pa[i].action[0].stat.value[0] < 0)
 			{
 				if (source != NULL)
-					source->total_effect[19]++;
+					source->total_effect[20]++;
 				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
 				i--;
 			}
@@ -417,7 +419,7 @@ void		cure_malus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (target->effect_list.change_pm[i].action[0].stat.value[0] < 0)
 			{
 				if (source != NULL)
-					source->total_effect[20]++;
+					source->total_effect[21]++;
 				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
 				i--;
 			}
@@ -439,7 +441,7 @@ void		cure_bonus_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (target->effect_list.change_pa[i].action[0].stat.value[0] >= 0)
 			{
 				if (source != NULL)
-					source->total_effect[21]++;
+					source->total_effect[22]++;
 				target->effect_list.change_pa.erase(target->effect_list.change_pa.begin() + i);
 				i--;
 			}
@@ -460,10 +462,34 @@ void		cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (target->effect_list.change_pm[i].action[0].stat.value[0] >= 0)
 			{
 				if (source != NULL)
-					source->total_effect[22]++;
+					source->total_effect[23]++;
 				target->effect_list.change_pm.erase(target->effect_list.change_pm.begin() + i);
 				i--;
 			}
 		}
+	}
+}
+
+void					add_armor(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		int damage = effect_stat.value[0];
+		if (source != NULL)
+			source->total_effect[3] += damage;
+		if (damage != 0)
+			target->change_stat_armor(damage);
+	}
+}
+
+void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_stat)
+{
+	if (target != NULL)
+	{
+		int damage = effect_stat.value[0];
+		if (source != NULL)
+			source->total_effect[0] += damage;
+		if (damage != 0)
+			target->change_stat_armor(-damage);
 	}
 }

@@ -29,6 +29,8 @@ static void			set_list_action_name()
 	list_action_name.push_back("cure malus pm");	//13
 	list_action_name.push_back("cure bonus pa");	//13
 	list_action_name.push_back("cure bonus pm");	//13
+	list_action_name.push_back("give armor");	//13
+	list_action_name.push_back("remove armor");	//13
 }
 
 void menu_spell_editor(t_data data)

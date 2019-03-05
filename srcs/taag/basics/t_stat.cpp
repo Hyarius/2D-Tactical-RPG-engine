@@ -8,6 +8,7 @@ s_stat::s_stat()
 s_stat::s_stat(t_value p_hp, t_value p_pa, t_value p_pm, int p_init)
 {
 	hp = p_hp;
+	armor = 0;
 	pa = p_pa;
 	pm = p_pm;
 	init = p_init;

@@ -3,7 +3,7 @@ exp:0
 gold:10000
 tuto_state:40
 keyboard:113:119:101:114:116:121
-char:NULL:NULL:NULL:NULL:NULL:NULL
-spell::Basic attack
+char:NULL:NULL:default:NULL:NULL:NULL
+spell::Basic attack:test
 tile:H00:H04:H05:H17
 map:tutorial-00

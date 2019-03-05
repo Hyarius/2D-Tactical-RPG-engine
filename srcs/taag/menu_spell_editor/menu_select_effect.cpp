@@ -308,6 +308,16 @@ static string parse_effect_cure_pm_bonus(t_action *effect)
 	string text = "cure every bonus PM effect of the target";
 	return (text);
 }
+static string parse_effect_add_armor(t_action *effect)
+{
+	string text = "add " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
+	return (text);
+}
+static string parse_effect_remove_armor(t_action *effect)
+{
+	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
+	return (text);
+}
 
 typedef string(*f_effect_parsor)(t_action *effect);
 
@@ -336,6 +346,8 @@ f_effect_parsor f_effect_list[] = {
 	&parse_effect_cure_pm_malus,
 	&parse_effect_cure_pa_bonus,
 	&parse_effect_cure_pm_bonus,
+	&parse_effect_add_armor,
+	&parse_effect_remove_armor,
 };
 
 static string compute_text(size_t size, int count, t_action *effect, int nb_effect)
