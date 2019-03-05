@@ -1,17 +1,17 @@
 price:20
-name:Congelation I
-description:Deal 3 damage(s) to the target and apply a malus PA off -1 PA(s) per turn for the next 1 turn(s)
+name:Frozen dagger I
+description:Deal 1 damage(s) to the target and apply a malus PA off -1 PA(s) per turn for the next 1 turn(s)
 icon:simple_iconset
-sprite:7:3
+sprite:10:8
 m_spell:0
-pa:5
-pm:0
+pa:0
+pm:2
 cooldown:1
-range:2:8:1
+range:1:1:0
 type:1
 on target:0
-zone:0:1
-effect1:0:3:0:0:0
+zone:1:0
+effect1:0:1:0:0:0
 effect2:16:0:-1:1:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0

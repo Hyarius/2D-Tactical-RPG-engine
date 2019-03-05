@@ -1,18 +1,18 @@
 price:20
-name:Black fury I
-description:Deal 3 damage(s) to the target and heal the caster by 3 HP(s)
+name:Multiple arrow I
+description:Deal 3 damage(s) to the target
 icon:simple_iconset
-sprite:0:1
+sprite:10:7
 m_spell:0
-pa:4
-pm:2
+pa:5
+pm:0
 cooldown:0
-range:0:0:0
+range:4:8:1
 type:0
-on target:0
-zone:1:3
+on target:1
+zone:0:2
 effect1:0:3:0:0:0
-effect2:6:3:0:0:0
+effect2:0:0:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
