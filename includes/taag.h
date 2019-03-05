@@ -257,12 +257,14 @@ typedef struct          s_actor
 	void				change_stat_hp(int value);
 	void				change_stat_pa(int value);
 	void				change_stat_pm(int value);
+	void 				change_stat_hp_ignore_armor(int value);
 	void				apply_effect(string text);
 	void				change_stat_hp(int value, int color);
 	void				change_stat_pa(int value, int color);
 	void				change_stat_pm(int value,int color);
 	void				change_stat_armor(int value);
 	void				change_stat_armor(int value, int color);
+	void 				change_stat_hp_ignore_armor(int value, int color);
 	void				apply_effect(string text, int color);
 }						t_actor;
 
@@ -571,6 +573,9 @@ void					cure_bonus_pm(t_actor *source, t_actor *target, t_action_stat effect_st
 
 void					add_armor(t_actor *source, t_actor *target, t_action_stat effect_stat);
 void					remove_armor(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					true_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					add_armor_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
+void					remove_armor_caster(t_actor *source, t_actor *target, t_action_stat effect_stat);
 
 string					parse_gambit(t_ai_helper data);
 

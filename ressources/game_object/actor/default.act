@@ -7,7 +7,7 @@ mouvement:2
 initiative:5
 spell0:test
 spell1:Basic attack
-spell2:NULL
+spell2:test2
 spell3:NULL
 spell4:NULL
 spell5:Basic attack

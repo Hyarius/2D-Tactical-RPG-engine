@@ -318,6 +318,21 @@ static string parse_effect_remove_armor(t_action *effect)
 	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the target";
 	return (text);
 }
+static string parse_effect_true_dmg(t_action *effect)
+{
+	string text = "deal " + to_string(effect->stat.value[0]) + " true damage(s) to the target";
+	return (text);
+}
+static string parse_effect_add_armor_caster(t_action *effect)
+{
+	string text = "add " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	return (text);
+}
+static string parse_effect_remove_armor_caster(t_action *effect)
+{
+	string text = "remove " + to_string(effect->stat.value[0]) + " armor point(s) to the caster";
+	return (text);
+}
 
 typedef string(*f_effect_parsor)(t_action *effect);
 
@@ -348,6 +363,9 @@ f_effect_parsor f_effect_list[] = {
 	&parse_effect_cure_pm_bonus,
 	&parse_effect_add_armor,
 	&parse_effect_remove_armor,
+	&parse_effect_true_dmg,
+	&parse_effect_add_armor_caster,
+	&parse_effect_remove_armor_caster,
 };
 
 static string compute_text(size_t size, int count, t_action *effect, int nb_effect)

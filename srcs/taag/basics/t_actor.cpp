@@ -276,6 +276,11 @@ void				s_actor::change_stat_armor(int value)
 	change_stat_armor(value, DARK_GREEN);
 }
 
+void				s_actor::change_stat_hp_ignore_armor(int value)
+{
+	change_stat_hp_ignore_armor(value, WHITE);
+}
+
 void				s_actor::change_stat_hp(int value, int color)
 {
 	if (value < 0)
@@ -283,7 +288,7 @@ void				s_actor::change_stat_hp(int value, int color)
 		if (this->stat.armor >= -value)
 		{
 			this->stat.armor += value;
-			this->visual_info.push_back(create_visual_info(to_string(value) + "armor", DARK_GREEN, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+			this->visual_info.push_back(create_visual_info(to_string(value) + " armor", DARK_GREEN, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
 			value = 0;
 		}
 		else
@@ -324,5 +329,11 @@ void				s_actor::change_stat_armor(int value, int color)
 	if (value < 0 && -value > this->stat.armor)
 		value = -(this->stat.armor);
 	this->stat.armor += value;
-	this->visual_info.push_back(create_visual_info(to_string(value) + "armor", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+	this->visual_info.push_back(create_visual_info(to_string(value) + " armor", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
+}
+
+void				s_actor::change_stat_hp_ignore_armor(int value, int color)
+{
+	this->stat.hp.value += value;
+	this->visual_info.push_back(create_visual_info(to_string(value) + " true damage", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
 }

@@ -4,6 +4,6 @@ gold:10000
 tuto_state:40
 keyboard:113:119:101:114:116:121
 char:NULL:NULL:default:NULL:NULL:NULL
-spell::Basic attack:test
+spell::Basic attack:test:test2
 tile:H00:H04:H05:H17
 map:tutorial-00

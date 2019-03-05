@@ -1,0 +1,21 @@
+price:0
+name:test2
+description:Deal 3 damage(s) to the target and remove 2 armor point(s) to the caster
+icon:simple_iconset
+sprite:0:0
+m_spell:0
+pa:1
+pm:0
+cooldown:0
+range:0:5:0
+type:0
+on target:0
+zone:1:0
+effect1:0:3:0:0:0
+effect2:28:2:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

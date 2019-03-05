@@ -1,18 +1,18 @@
 price:0
 name:test
-description:Add 7 armor point(s) to the target
+description:Deal 3 damage(s) to the target and add 2 armor point(s) to the caster
 icon:simple_iconset
 sprite:0:0
 m_spell:0
-pa:2
+pa:1
 pm:0
-cooldown:1
+cooldown:0
 range:0:4:0
 type:0
 on target:0
 zone:1:0
-effect1:24:7:0:0:0
-effect2:0:0:0:0:0
+effect1:0:3:0:0:0
+effect2:27:2:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
