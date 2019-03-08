@@ -1,6 +1,6 @@
 price:20
 name:Inferno I
-description:Deal 4 damage(s) to the target
+description:Deals 9 damage(s) to the target
 icon:simple_iconset
 sprite:3:0
 m_spell:0
@@ -10,12 +10,12 @@ cooldown:0
 range:2:6:0
 type:0
 on target:1
-zone:3:2
-effect1:0:4:0:0:0
+zone:3:1
+effect1:0:9:0:0:0
 effect2:0:0:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_action:NULL:0:0:1:1
+target_action:explosion_02:0:33:4:4
 anim_type:0

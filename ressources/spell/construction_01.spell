@@ -2,7 +2,7 @@ price:20
 name:Construction I
 description:Add 3 armor point(s) to the target
 icon:simple_iconset
-sprite:12:0
+sprite:10:4
 m_spell:0
 pa:4
 pm:0
@@ -17,5 +17,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_action:NULL:0:0:1:1
-anim_type:0
+target_action:heal_pink_06:15:13:2:2
+anim_type:2

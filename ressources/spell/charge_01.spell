@@ -17,5 +17,5 @@ effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_action:NULL:0:0:1:1
+target_action:hit_06:1:9:2:2
 anim_type:0
