@@ -1,0 +1,21 @@
+price:0
+name:Fairy healing III
+description:Heals the target by 7 HP(s) and gives 1 PA(s) to the target
+icon:simple_iconset
+sprite:8:2
+m_spell:1
+pa:3
+pm:0
+cooldown:0
+range:1:6:1
+type:0
+on target:0
+zone:1:0
+effect1:1:7:0:0:0
+effect2:3:1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:heal_pink:1:16:2:2
+anim_type:0

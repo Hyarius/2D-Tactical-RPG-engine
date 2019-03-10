@@ -1,0 +1,13 @@
+name:Strong dps
+tileset:H00
+sprite_pos:9:0
+health:21
+action:9
+mouvement:3
+initiative:5
+spell0:Slash I
+spell1:Attraction I
+spell2:Aero-sword I
+spell3:Wing I
+spell4:Anger I
+spell5:Bastion I

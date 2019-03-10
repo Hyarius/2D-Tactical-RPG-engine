@@ -52,10 +52,9 @@ void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
 	if (target != NULL && target != source)
 	{
-		int damage = (effect_stat.value[0] < target->stat.hp.value ? effect_stat.value[0] : target->stat.hp.value);
+		int damage = (effect_stat.value[0] < target->stat.hp.value + target->stat.armor ? effect_stat.value[0] : target->stat.hp.value + target->stat.armor);
 		if (source != NULL)
 			source->total_effect[0] += damage;
-		target->total_effect[2] += damage;
 		if (damage != 0)
 			target->change_stat_hp(-damage);
 	}
@@ -89,7 +88,7 @@ void		change_pm(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (damage < 0)
 				source->total_effect[5] += -damage;
 			else
-				source->total_effect[7] += -damage;
+				source->total_effect[7] += damage;
 		}
 		if (damage != 0)
 			target->change_stat_pm(damage);
@@ -111,7 +110,7 @@ void		change_pa(t_actor *source, t_actor *target, t_action_stat effect_stat)
 			if (damage < 0)
 				source->total_effect[4] += -damage;
 			else
-				source->total_effect[6] += -damage;
+				source->total_effect[6] += damage;
 		}
 		if (damage != 0)
 			target->change_stat_pa(damage);
@@ -178,7 +177,8 @@ void		heal_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 
 void		dmg_caster(t_actor *source, t_actor *target, t_action_stat effect_stat)
 {
-	if (source != NULL && target != NULL)
+	(void)target;
+	if (source != NULL)
 	{
 		int damage = (effect_stat.value[0] < source->stat.hp.value ? effect_stat.value[0] : source->stat.hp.value);
 		if (source != NULL)

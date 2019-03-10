@@ -1,0 +1,21 @@
+price:0
+name:Fairy wind I
+description:Deals 2 damage(s) to the target and push the target by 3 square(s)
+icon:simple_iconset
+sprite:4:2
+m_spell:1
+pa:0
+pm:0
+cooldown:1
+range:0:0:0
+type:1
+on target:0
+zone:1:1
+effect1:0:2:0:0:0
+effect2:4:3:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:wind_attack:3:21:2:2
+anim_type:0

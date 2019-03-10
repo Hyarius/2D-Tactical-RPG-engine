@@ -1,0 +1,21 @@
+price:0
+name:Werewolf power I
+description:Deals 7 damage(s) to the target, reduce target's PM(s) by -2, push the target by 3 square(s) and heals the caster by 12 HP(s)
+icon:simple_iconset
+sprite:8:4
+m_spell:1
+pa:0
+pm:0
+cooldown:3
+range:0:0:0
+type:0
+on target:0
+zone:1:1
+effect1:0:7:0:0:0
+effect2:2:-2:0:0:0
+effect3:4:3:0:0:0
+effect4:6:12:0:0:1
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:hit_explosive_01:1:59:4:4
+anim_type:0

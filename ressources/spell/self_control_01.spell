@@ -1,6 +1,6 @@
 price:20
 name:Self control I
-description:Add 3 armor point(s) to the caster and give 1 PM(s) to the caster
+description:Adds 3 armor point(s) to the caster and gives 1 PM(s) to the caster
 icon:simple_iconset
 sprite:9:6
 m_spell:0

@@ -36,6 +36,8 @@ bool				s_game_board::execute_gambit(t_actor *source)
 				return (false);
 		}
 		i++;
+		if (source->stat.hp.value <= 0)
+			return (true);
 	}
 	return (true);
 }

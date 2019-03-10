@@ -7,7 +7,7 @@ int				s_game_engine::calc_pool()
 
 int 			s_game_engine::calc_max_exp(int level)
 {
-	return (level * 75);
+	return (level * 10 + 20);
 }
 
 void			s_game_engine::add_exp(int delta)

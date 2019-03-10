@@ -121,6 +121,7 @@ void				quit_end_menu(t_data data)
 	*play = false;
 	save_game_engine();
 	account->tuto_state++;
+	account->recharge_actor();
 }
 
 static void			give_away_end_tutorial(t_data data)
@@ -129,7 +130,6 @@ static void			give_away_end_tutorial(t_data data)
 	account->spell_unlock.push_back("Basic fire");
 	account->spell_unlock.push_back("Basic slash");
 	account->spell_unlock.push_back("Basic heal");
-	account->add_gold(100);
 	quit_end_menu(data);
 }
 
@@ -293,7 +293,7 @@ void				s_game_board::end_game()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 100 gold and 4 new spells : basic arrow, heal, fire and slash ! \n \n Click here to go back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 4 new spells : basic arrow, heal, fire and slash ! \n \n Feel free to play some maps, earn money, and buy new powerful spells ! \n \n click here to go back to main menu", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 

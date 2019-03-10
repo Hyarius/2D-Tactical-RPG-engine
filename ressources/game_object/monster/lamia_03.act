@@ -1,0 +1,21 @@
+name:Lamia (level 3)
+tileset:M06
+sprite_pos:3:4
+health:20
+action:8
+mouvement:4
+initiative:7
+spell0:Lamia attraction I
+spell1:Life leech II
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:NULL
+7:0:-1:-1:0:0:0:0:0:0
+7:1:-1:-1:0:0:0:0:0:0
+7:2:-1:-1:0:0:0:0:0:0
+7:3:-1:-1:0:0:0:0:0:0
+7:4:-1:-1:0:0:0:0:0:0
+7:5:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+0:1:0:0:-1:0:0:0:0:0

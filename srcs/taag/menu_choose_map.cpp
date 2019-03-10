@@ -28,6 +28,7 @@ static void		quit_load(t_data data)// entry_path / play / num
 	if (*(text_list_choose_map[i]) != "" && list_files(ACTOR_PATH, ACTOR_EXT).size() != 0)
 	{
 		*entry_path = *(text_list_choose_map[i]);
+		account->recharge_actor();
 		*play = false;
 	}
 }

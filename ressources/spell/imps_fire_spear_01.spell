@@ -1,0 +1,21 @@
+price:0
+name:Imp fire spear I
+description:Deals 5 damage(s) to the target
+icon:simple_iconset
+sprite:0:0
+m_spell:1
+pa:4
+pm:0
+cooldown:1
+range:2:4:0
+type:1
+on target:0
+zone:2:2
+effect1:0:5:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:fire_01:0:28:2:2
+anim_type:1

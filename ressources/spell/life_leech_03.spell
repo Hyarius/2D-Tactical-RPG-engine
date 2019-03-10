@@ -1,0 +1,21 @@
+price:0
+name:Life leech III
+description:Deals 9 damage(s) to the target and heals the caster by 6 HP(s) per target hit
+icon:simple_iconset
+sprite:6:4
+m_spell:1
+pa:4
+pm:0
+cooldown:0
+range:1:2:0
+type:1
+on target:0
+zone:0:0
+effect1:0:9:0:0:0
+effect2:6:6:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:dark_attack_02:0:24:2:2
+anim_type:0

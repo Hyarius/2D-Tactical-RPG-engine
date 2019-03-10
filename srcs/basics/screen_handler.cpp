@@ -35,7 +35,7 @@ void				window_initialisation(string window_name)
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -120,14 +120,12 @@ void				prepare_screen(t_color color)
 void				render_screen()
 {
 	check_frame();
-	glFlush();
 	SDL_GL_SwapWindow(g_window);
 }
 
 void				render_screen(bool value)
 {
 	check_frame(value);
-	glFlush();
 	SDL_GL_SwapWindow(g_window);
 }
 

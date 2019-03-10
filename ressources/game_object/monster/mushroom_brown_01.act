@@ -1,0 +1,17 @@
+name:Brown mushroom (level 1)
+tileset:M17
+sprite_pos:0:4
+health:17
+action:4
+mouvement:3
+initiative:4
+spell0:Cut I
+spell1:NULL
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:Regeneration I
+14:5:75:-1:-1:-1:0:0:0:0
+7:0:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+0:2:0:1:-1:0:0:0:0:0

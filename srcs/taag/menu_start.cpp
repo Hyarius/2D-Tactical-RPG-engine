@@ -76,6 +76,51 @@ void		menu_start()
 		gui.add(actor_card);
 	}
 
+	t_button *level_text_button = new t_button(new s_text_button(
+		"Level :", DARK_GREY,
+		t_vect(0.5, 0.5) * gui.unit, t_vect(2, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	t_button *level_value_button = new t_button(new s_text_button(
+		"", DARK_GREY,
+		t_vect(2.7, 0.5) * gui.unit, t_vect(1.5, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	gui.add(level_text_button);
+	gui.add(level_value_button);
+
+	t_button *exp_text_button = new t_button(new s_text_button(
+		"Exp :", DARK_GREY,
+		t_vect(4.4, 0.5) * gui.unit, t_vect(1.5, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	t_button *exp_value_button = new t_button(new s_text_button(
+		"", DARK_GREY,
+		t_vect(6.1, 0.5) * gui.unit, t_vect(4, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	gui.add(exp_value_button);
+	gui.add(exp_text_button);
+
+	t_button *gold_text_button = new t_button(new s_text_button(
+		"Gold :", DARK_GREY,
+		t_vect(11.1, 0.5) * gui.unit, t_vect(2, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	t_button *gold_value_button = new t_button(new s_text_button(
+		"", DARK_GREY,
+		t_vect(13.3, 0.5) * gui.unit, t_vect(3.5, 1) * gui.unit, 6,
+		t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
+		NULL, NULL);
+
+	gui.add(gold_text_button);
+	gui.add(gold_value_button);
+
 	gui_editor.add(new t_button(new s_text_button(
 			"Monster editor", DARK_GREY,
 			t_vect(21, 7) * gui.unit, t_vect(8, 2) * gui.unit, 8,
@@ -194,6 +239,9 @@ The second one is the shop, where you can buy things for your character. \n ", D
 
 	while (play)
 	{
+		level_value_button->button->text = to_string(account->level);
+		exp_value_button->button->text = to_string(account->exp.value) + "/" + to_string(account->exp.max);
+		gold_value_button->button->text = to_string(account->gold);
 		prepare_screen();
 
 		gui.draw_self();

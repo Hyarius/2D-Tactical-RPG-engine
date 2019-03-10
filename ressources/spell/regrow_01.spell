@@ -1,0 +1,21 @@
+price:0
+name:Regrow I
+description:Apply a bonus PA off 1 PA(s) per turn for the next 2 turn(s) and apply a regeneration effect that heals 2 HP(s) per turn for the next 2 turn(s)
+icon:simple_iconset
+sprite:5:4
+m_spell:1
+pa:2
+pm:0
+cooldown:3
+range:0:0:0
+type:0
+on target:0
+zone:1:0
+effect1:16:0:1:2:0
+effect2:15:0:2:2:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:green_heal_03:0:17:2:2
+anim_type:0

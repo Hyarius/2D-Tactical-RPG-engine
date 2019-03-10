@@ -1,0 +1,21 @@
+price:0
+name:Demon healing I
+description:Heals the target by 3 HP(s)
+icon:simple_iconset
+sprite:9:2
+m_spell:1
+pa:4
+pm:0
+cooldown:1
+range:1:5:1
+type:0
+on target:1
+zone:0:1
+effect1:1:3:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:heal_green_01:13:20:2:2
+anim_type:2

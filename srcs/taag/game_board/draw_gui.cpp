@@ -84,7 +84,7 @@ void				s_game_board::draw_cell_info_on_gui()
 			for (size_t j = 0; j < player->effect_list.regeneration.size(); j++)
 				draw_lined_text(parse_effect_regeneration_desc(&(player->effect_list.regeneration[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			for (size_t j = 0; j < player->effect_list.change_pa.size(); j++)
-				draw_lined_text(parse_effect_change_pm_desc(&(player->effect_list.change_pa[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
+				draw_lined_text(parse_effect_change_pa_desc(&(player->effect_list.change_pa[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 			for (size_t j = 0; j < player->effect_list.change_pm.size(); j++)
 				draw_lined_text(parse_effect_change_pm_desc(&(player->effect_list.change_pm[j])), text_size, gui.unit * t_vect(22.2, 0.5 * i++ + 0.5), BLACK);
 		}

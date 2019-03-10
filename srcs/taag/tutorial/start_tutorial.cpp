@@ -19,7 +19,6 @@ static void		don_t_play_tutorial(t_data data)
 	account->spell_unlock.push_back("Basic fire");
 	account->spell_unlock.push_back("Basic slash");
 	account->spell_unlock.push_back("Basic heal");
-	account->add_gold(100);
 	*play = false;
 	account->recharge_actor();
 }

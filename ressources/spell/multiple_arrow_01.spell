@@ -1,6 +1,6 @@
 price:20
 name:Multiple arrow I
-description:Deal 3 damage(s) to the target
+description:Deals 4 damage(s) to the target
 icon:simple_iconset
 sprite:10:7
 m_spell:0
@@ -11,11 +11,11 @@ range:4:8:1
 type:0
 on target:1
 zone:0:2
-effect1:0:3:0:0:0
+effect1:0:4:0:0:0
 effect2:0:0:0:0:0
 effect3:0:0:0:0:0
 effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
-target_action:hit_06:1:8:2:2
+target_action:hit_06:1:8:1:1
 anim_type:1

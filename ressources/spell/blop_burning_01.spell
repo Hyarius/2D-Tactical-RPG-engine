@@ -1,0 +1,21 @@
+price:0
+name:Burning I
+description:Deals 10 damage(s) to the target and deals 9 damage(s) to the caster
+icon:simple_iconset
+sprite:3:0
+m_spell:1
+pa:5
+pm:1
+cooldown:3
+range:0:0:0
+type:0
+on target:0
+zone:0:2
+effect1:0:10:0:0:0
+effect2:7:9:0:0:1
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:explosion_02:0:34:4:4
+anim_type:0

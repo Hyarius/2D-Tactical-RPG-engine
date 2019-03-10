@@ -169,7 +169,7 @@ void			s_actor::apply_effect(int type)
 		{
 			int damage = this->effect_list.poison[i].action[0].stat.value[0];
 			poison_effect.stat.value[0] += damage;
-			this->effect_list.poison[i].source->total_effect[11] += damage;
+			this->effect_list.poison[i].source->total_effect[12] += damage;
 		}
 		i++;
 	}
@@ -180,7 +180,7 @@ void			s_actor::apply_effect(int type)
 		{
 			int damage = this->effect_list.regeneration[i].action[0].stat.value[0];
 			heal_effect.stat.value[0] += damage;
-			this->effect_list.regeneration[i].source->total_effect[12] += damage;
+			this->effect_list.regeneration[i].source->total_effect[13] += damage;
 		}
 		i++;
 	}
@@ -191,7 +191,7 @@ void			s_actor::apply_effect(int type)
 		{
 			int damage = this->effect_list.change_pa[i].action[0].stat.value[0];
 			pa_effect.stat.value[0] += damage;
-			this->effect_list.change_pa[i].source->total_effect[(damage < 0 ? 13 : 15)] += damage;
+			this->effect_list.change_pa[i].source->total_effect[(damage < 0 ? 14 : 16)] += damage;
 		}
 		i++;
 	}
@@ -202,7 +202,7 @@ void			s_actor::apply_effect(int type)
 		{
 			int damage = this->effect_list.change_pm[i].action[0].stat.value[0];
 			pm_effect.stat.value[0] += damage;
-			this->effect_list.change_pm[i].source->total_effect[(damage < 0 ? 14 : 16)] += damage;
+			this->effect_list.change_pm[i].source->total_effect[(damage < 0 ? 15 : 17)] += damage;
 		}
 		i++;
 	}
@@ -294,6 +294,7 @@ void				s_actor::change_stat_hp(int value, int color)
 {
 	if (value < 0)
 	{
+		total_effect[2] -= value;
 		if (this->stat.armor >= -value)
 		{
 			this->stat.armor += value;
@@ -304,7 +305,6 @@ void				s_actor::change_stat_hp(int value, int color)
 		{
 			value += this->stat.armor;
 			this->stat.armor = 0;
-			total_effect[2] -= value;
 			this->stat.hp.value += value;
 			this->visual_info.push_back(create_visual_info(to_string(value) + "hp", color, 10, this->coord - t_vect(0.0, 0.5 * this->visual_info.size())));
 		}

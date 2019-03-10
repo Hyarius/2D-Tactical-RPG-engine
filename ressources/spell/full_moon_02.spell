@@ -1,0 +1,21 @@
+price:0
+name:Full moon II
+description:Apply a regeneration effect that heals 27 HP(s) per turn for the next 4 turn(s), apply a bonus PA off 6 PA(s) per turn for the next 4 turn(s) and apply a bonus PM off 5 PM(s) per turn for the next 4 turn(s)
+icon:simple_iconset
+sprite:9:4
+m_spell:1
+pa:5
+pm:1
+cooldown:5
+range:0:0:0
+type:0
+on target:0
+zone:1:0
+effect1:15:0:27:4:0
+effect2:16:0:6:4:0
+effect3:17:0:5:4:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:heal_white_02:9:24:2:2
+anim_type:0

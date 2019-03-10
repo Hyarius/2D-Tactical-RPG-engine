@@ -18,4 +18,4 @@ effect4:0:0:0:0:0
 effect5:0:0:0:0:0
 effect6:0:0:0:0:0
 target_action:explosion_03:0:16:2:2
-anim_type:0
+anim_type:1
