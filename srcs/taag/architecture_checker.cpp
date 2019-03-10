@@ -1,32 +1,5 @@
 #include "taag.h"
 
-vector<string>	to_test = {
-		"ressources",
-		"ressources/assets",
-		"ressources/assets/charset",
-		"ressources/assets/iconset",
-		"ressources/assets/interface",
-		"ressources/assets/tileset",
-		"ressources/font",
-		"ressources/game_object",
-		"ressources/game_object/animation",
-		"ressources/game_object/monster",
-		"ressources/game_object/node",
-		"ressources/game_object/actor",
-		"ressources/game_object/game_engine",
-		"ressources/map",
-		"ressources/shader",
-		"ressources/spell",
-		"ressources/tileset",
-		"ressources/tileset/animation",
-		"ressources/tileset/charset",
-		"ressources/tileset/interface",
-		"ressources/tileset/tileset",
-		"ressources/shop",
-		"ressources/shop/map",
-		"ressources/shop/spell",
-		"ressources/shop/sprite",
-};
 
 string 					create_new_game_engine()
 {
@@ -36,7 +9,7 @@ string 					create_new_game_engine()
 	text.append("tuto_state:0\n");
 	text.append("keyboard:" + to_string(SDLK_q) + ":" + to_string(SDLK_w) + ":" + to_string(SDLK_e) + ":" + to_string(SDLK_r) + ":" + to_string(SDLK_t) + ":" + to_string(SDLK_y) + "\n");
 	text.append("char:NULL:NULL:NULL:NULL:NULL:NULL\n");
-	text.append("spell:basic_attack\n");
+	text.append("spell:Basic attack\n");
 	text.append("tile:H00:H04:H05:H17\n");
 	text.append("map:\n");
 	return (text);
@@ -49,20 +22,8 @@ bool					can_create_game_engine()
 
 void 					check_prog_architecture()
 {
-	for (size_t i = 0; i < to_test.size(); i++)
+	if (check_file_exist(GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT) == false || can_create_game_engine() == false)
 	{
-		DIR *dir = opendir(to_test[i].c_str());
-		if (dir == NULL)
-		{
-			#ifdef __APPLE__
-				mkdir(to_test[i].c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-			#elif defined _WIN32
-			CreateDirectoryA(to_test[i].c_str(), NULL);
-			#endif
-		}
-	}
-	if (check_file_exist("ressources/game_object/game_engine/saved_game.eng") == false || can_create_game_engine() == false)
-	{
-		rewrite_on_file("ressources/game_object/game_engine/saved_game.eng", create_new_game_engine());
+		rewrite_on_file(GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT, create_new_game_engine());
 	}
 }

@@ -1,6 +1,6 @@
 #include "taag.h"
 
-int type = 1;
+int type = 0;
 
 bool			menu_status[30];
 
@@ -32,6 +32,7 @@ void		menu_start()
 	SDL_Event	event;
 	bool		play = true;
 	t_gui gui;
+	t_gui gui_editor;
 
 	account = new t_game_engine();
 
@@ -75,26 +76,23 @@ void		menu_start()
 		gui.add(actor_card);
 	}
 
-	if (type == 1)
-	{
-		gui.add(new t_button(new s_text_button(
+	gui_editor.add(new t_button(new s_text_button(
 			"Monster editor", DARK_GREY,
 			t_vect(21, 7) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_monster_editor, NULL));
 
-		gui.add(new t_button(new s_text_button(
+	gui_editor.add(new t_button(new s_text_button(
 			"Map editor", DARK_GREY,
 			t_vect(21, 10) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_map_editor, NULL));
 
-		gui.add(new t_button(new s_text_button(
+	gui_editor.add(new t_button(new s_text_button(
 			"Spell editor", DARK_GREY,
 			t_vect(21, 13) * gui.unit, t_vect(8, 2) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			menu_spell_editor, NULL));
-	}
 
 	gui.add(new t_button(new s_text_button(
 			"QUIT", DARK_GREY,
@@ -199,13 +197,21 @@ The second one is the shop, where you can buy things for your character. \n ", D
 		prepare_screen();
 
 		gui.draw_self();
+		if (type == 1)
+			gui_editor.draw_self();
 		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
+
 
 		render_screen(true);
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			const Uint8 *state = SDL_GetKeyboardState(NULL);
+			if (state[SDL_SCANCODE_F1] && state[SDL_SCANCODE_F10])
+			{
+				type = (type == 0 ? 1 : 0);
+			}
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
@@ -213,7 +219,11 @@ The second one is the shop, where you can buy things for your character. \n ", D
 				if (account->tuto_state < TUTO_SIZE && gui_tutorial[account->tuto_state].object_list.size())
 					gui_tutorial[account->tuto_state].click(&event);
 				else
+				{
 					gui.click(&event);
+					if (type == 1)
+						gui_editor.click(&event);
+				}
 			}
 			else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN)
 				gui.key_press(&event);

@@ -1,7 +1,23 @@
 #include "taag.h"
 
+char *user_profile;
+char *app_data;
+size_t len;
+
 int main(int argc, char **argv)
 {
+	errno_t err = _dupenv_s(&user_profile, &len, "USERPROFILE");
+	for (size_t i = 0; i < len; i++)
+	{
+		if (user_profile[i] == '\\')
+			user_profile[i] = '/' ;
+	}
+	errno_t err2 = _dupenv_s(&app_data, &len, "APPDATA");
+	for (size_t i = 0; i < len; i++)
+	{
+		if (app_data[i] == '\\')
+			app_data[i] = '/';
+	}
 	(void)argv;
 	if (argc != 1)
 		return (0);
@@ -27,6 +43,6 @@ int main(int argc, char **argv)
 
 		menu_start();
 	}
-
-	return (0);
+	
+	return 0;
 }

@@ -136,10 +136,10 @@ void				generate_charset_tileset()
 			error_exit();
 		printf("%s\n", texture_file[i].c_str());
 		myfile << "tile_name:" + texture_file[i] + "\n";
-		myfile << "file:ressources/assets/charset/" + texture_file[i] + ".png\n";
+		myfile << string("file:") + TILESET_CHARSET_PATH + texture_file[i] + ".png\n";
 		myfile << "size:12:8\n";
 		myfile.close();
-		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", "ressources/assets/charset/" + texture_file[i] + ".png") == false)
+		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", TILESET_CHARSET_PATH + texture_file[i] + ".png") == false)
 			error_exit();
 		remove(("ressources/tmp/" + texture_file[i] + ".png").c_str());
 		i++;

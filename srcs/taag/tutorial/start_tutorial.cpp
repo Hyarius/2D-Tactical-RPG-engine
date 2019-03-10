@@ -15,7 +15,13 @@ static void		don_t_play_tutorial(t_data data)
 	bool *play = (bool *)(data.data[0]);
 
 	account->tuto_state = TUTO_SIZE;
+	account->spell_unlock.push_back("Basic arrow");
+	account->spell_unlock.push_back("Basic fire");
+	account->spell_unlock.push_back("Basic slash");
+	account->spell_unlock.push_back("Basic heal");
+	account->add_gold(100);
 	*play = false;
+	account->recharge_actor();
 }
 
 void			start_tutorial(t_gui *gui)

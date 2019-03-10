@@ -89,7 +89,7 @@ void		menu_choose_spell(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"This spell, obviously named \"Aqua-sword\", has some basic informations. \n - It's Action Points cost : 4 PA per attack. \n - It's Mouvement Points cost. In this case it cost 0 MP per attack, but sometimes it will be more ! \n - The range of the attack. It describes the range from which you can cast this spell. The first value describe the minimum distance where to hit an enemy, and the other one describe the maximun range allowed. \n - The description of the spell and it's effect. In this case, it will deal damages to the target and will pull it to you by one square. \n \n And, at the bottom of the spell, you can find 4 icons. \n - The first on the left represent what kind of target you can hit with this spell. Some spell must target an occupied area, others should focus an empty tile, and some can target both. \n - The second one tells you if obstacles prevent the casting of the spell or if you can ignore them. \n - The third one describe the type of range allowed for this spell : in circle around you, or in a straight line. \n - And the last one represent the type of zone this spell will hit : a solo-area, a circle, a square, or a line.", DARK_GREY, gui.unit.y / 2, //text info
+				"This spell, obviously named " + spell_list[0]->name  + ", has some basic informations. \n - It's Action Points cost : " + to_string(spell_list[0]->cost_pa) + " PA per attack. \n - It's Mouvement Points cost. In this case it cost 0 MP per attack, but sometimes it will be more ! \n - The range of the attack. It describes the range from which you can cast this spell. The first value describe the minimum distance where to hit an enemy, and the other one describe the maximun range allowed. \n - The description of the spell and it's effect. In this case, it will deal damages to the target and will pull it to you by one square. \n \n And, at the bottom of the spell, you can find 4 icons. \n - The first on the left represent what kind of target you can hit with this spell. Some spell must target an occupied area, others should focus an empty tile, and some can target both. \n - The second one tells you if obstacles prevent the casting of the spell or if you can ignore them. \n - The third one describe the type of range allowed for this spell : in circle around you, or in a straight line. \n - And the last one represent the type of zone this spell will hit : a solo-area, a circle, a square, or a line.", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(12.4, 13.2) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -97,16 +97,16 @@ void		menu_choose_spell(t_data data)
 	{
 		gui_tutorial[11].add(TUTORIAL_NUM, new s_tutorial_button(new t_button(new s_text_button(
 			"", DARK_GREY,
-			t_vect(4.7, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
+			t_vect(0.5, 0.5) * gui.unit, t_vect(4, 6) * gui.unit, 5,
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
-			quit_select_spell, t_data(4, player, spell_num, 1, &play)),
+			quit_select_spell, t_data(4, player, spell_num, 0, &play)),
 			new t_button(new s_paragraph_button(
 				"Let's select this spell ! Click on it !", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9, 0.5) * gui_tutorial[0].unit, t_vect(6.5, 2) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true));
 	}
 
-	((s_tutorial_button *)(gui_tutorial[11].object_list[TUTORIAL_NUM][0]))->button->button->data_left = t_data(4, player, spell_num, 1, &play);
+	((s_tutorial_button *)(gui_tutorial[11].object_list[TUTORIAL_NUM][0]))->button->button->data_left = t_data(4, player, spell_num, 0, &play);
 
 	while (play == true)
 	{

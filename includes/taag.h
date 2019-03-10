@@ -18,37 +18,40 @@ extern vector<t_gui>					gui_tutorial;
 # define SPELL_BUTTON	4
 # define TUTO_SIZE		41
 
-#define ACTOR_PATH 				"ressources/game_object/actor/"
+extern char *user_profile;
+extern char *app_data;
+
+#define ACTOR_PATH 				string(user_profile) + "/documents/TAAG/ressources/game_object/actor/"
 #define ACTOR_EXT 				".act"
-#define MONSTER_PATH 			"ressources/game_object/monster/"
+#define MONSTER_PATH 			string(app_data) + "/TAAG/ressources/game_object/monster/"
 #define MONSTER_EXT 			".act"
 
-#define MAP_PATH 				"ressources/map/"
+#define MAP_PATH 				string(app_data) + "/TAAG/ressources/map/"
 #define MAP_EXT 				".map"
 
-#define NODE_PATH 				"ressources/game_object/node/"
+#define NODE_PATH 				string(app_data) + "/TAAG/ressources/game_object/node/"
 #define NODE_EXT 				".node"
-#define OBS_PATH 				"ressources/game_object/object/"
+#define OBS_PATH 				string(app_data) + "/TAAG/ressources/game_object/object/"
 #define OBS_EXT 				".obs"
 
-#define SPELL_PATH 				"ressources/spell/"
+#define SPELL_PATH 				string(app_data) + "/TAAG/ressources/spell/"
 #define SPELL_EXT 				".spell"
 
-#define TILESET_TILESET_PATH 	"ressources/tileset/tileset/"
+#define TILESET_TILESET_PATH 	string(app_data) + "/TAAG/ressources/tileset/tileset/"
 #define TILESET_TILESET_EXT 	".tls"
-#define TILESET_CHARSET_PATH 	"ressources/tileset/charset/"
+#define TILESET_CHARSET_PATH 	string(app_data) + "/TAAG/ressources/tileset/charset/"
 #define TILESET_CHARSET_EXT 	".tls"
-#define TILESET_INTERFACE_PATH 	"ressources/tileset/interface/"
+#define TILESET_INTERFACE_PATH 	string(app_data) + "/TAAG/ressources/tileset/interface/"
 #define TILESET_INTERFACE_EXT 	".tls"
-#define TILESET_ANIMATION_PATH 	"ressources/tileset/animation/"
+#define TILESET_ANIMATION_PATH 	string(app_data) + "/TAAG/ressources/tileset/animation/"
 #define TILESET_ANIMATION_EXT 	".tls"
 
-#define SHOP_MAP_PATH			"ressources/shop/map/"
-#define SHOP_TILE_PATH			"ressources/shop/sprite/"
-#define SHOP_SPELL_PATH			"ressources/shop/spell/"
+#define SHOP_MAP_PATH			string(app_data) + "/TAAG/ressources/shop/map/"
+#define SHOP_TILE_PATH			string(app_data) + "/TAAG/ressources/shop/sprite/"
+#define SHOP_SPELL_PATH			string(app_data) + "/TAAG/ressources/shop/spell/"
 #define SHOP_EXT				".shop"
 
-#define GAME_ENGINE_PATH		"ressources/game_object/game_engine"
+#define GAME_ENGINE_PATH		string(user_profile) + "/documents/TAAG/ressources/game_object/game_engine/"
 #define GAME_ENGINE_EXT			".eng"
 
 typedef struct			s_node

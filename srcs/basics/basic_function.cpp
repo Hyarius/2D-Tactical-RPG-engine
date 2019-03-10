@@ -50,6 +50,7 @@ void check_sdl_error(const char *file, int line)
 	if (text.size() != 0)
 	{
 		string error = "SDL2 state in file " + file_name + ":line[" + to_string(line) + "] : " + SDL_GetError();
+		printf("%s\n", error);
 		error_exit();
 	}
 }
@@ -57,6 +58,7 @@ void check_sdl_error(const char *file, int line)
 void				error_exit_full(const char *file, int line)
 {
 	printf("Error in [%s][%d]\n", file, line);
+	getchar();
 	exit(1);
 }
 

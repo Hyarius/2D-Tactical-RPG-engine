@@ -9,7 +9,10 @@ s_image::s_image(string path)
 {
 	this->surface = IMG_Load(path.c_str());
 	if (this->surface == NULL)
+	{
+		printf("image path = %s\n", path.c_str());
 		error_exit();
+	}
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;

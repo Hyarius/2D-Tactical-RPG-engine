@@ -2,6 +2,8 @@
 
 vector<int>			tuto_state_list = {
 	1,
+	3,
+	12,
 	15,
 	23,
 	TUTO_SIZE,

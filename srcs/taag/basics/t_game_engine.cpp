@@ -52,15 +52,15 @@ void			save_game_engine()
 	text.append("map");
 	for (size_t i = 0; i < account->map_unlock.size(); i++)
 		text.append(":" + account->map_unlock[i]);
-	rewrite_on_file("ressources/game_object/game_engine/saved_game.eng", text);
+	rewrite_on_file((GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT).c_str(), text);
 }
 
 s_game_engine::s_game_engine()
 {
 	ifstream		myfile;
-	myfile.open("ressources/game_object/game_engine/saved_game.eng");
+	myfile.open(GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT);
 	if (myfile.fail())
-		printf("can't open such file : %s\n", "ressources/game_object/game_engine/saved_game.eng");
+		printf("can't open such file : %s\n", (GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT).c_str());
 	level = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	exp = s_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()), calc_max_exp(level));
 	gold = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
