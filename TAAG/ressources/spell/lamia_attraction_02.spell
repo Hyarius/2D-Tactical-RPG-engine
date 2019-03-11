@@ -1,0 +1,21 @@
+price:0
+name:Lamia attraction II
+description:Pulls the target by 7 square(s) and apply an effect that deals 5 damage(s) per turn for the next 3 turn(s)
+icon:simple_iconset
+sprite:5:6
+m_spell:1
+pa:3
+pm:0
+cooldown:0
+range:1:7:0
+type:1
+on target:0
+zone:1:0
+effect1:5:7:0:0:0
+effect2:14:0:5:3:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

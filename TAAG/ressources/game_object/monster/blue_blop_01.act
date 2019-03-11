@@ -1,0 +1,22 @@
+name:Blue blop
+tileset:M39
+sprite_pos:0:0
+health:19
+action:6
+mouvement:4
+initiative:4
+spell0:Life leech II
+spell1:Strange fluid I
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:NULL
+7:0:-1:-1:0:0:0:0:0:0
+7:1:-1:-1:0:0:0:0:0:0
+7:2:-1:-1:0:0:0:0:0:0
+7:3:-1:-1:0:0:0:0:0:0
+7:4:-1:-1:0:0:0:0:0:0
+7:5:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+3:25:-1:0:0:0:0:0:0:0
+0:2:1:1:-1:0:0:0:0:0

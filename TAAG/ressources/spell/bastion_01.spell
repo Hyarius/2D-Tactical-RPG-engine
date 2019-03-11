@@ -1,0 +1,21 @@
+price:20
+name:Bastion I
+description:Adds 6 armor point(s) to the target
+icon:simple_iconset
+sprite:9:7
+m_spell:0
+pa:3
+pm:0
+cooldown:2
+range:0:4:0
+type:1
+on target:0
+zone:1:0
+effect1:24:6:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:shield_02:0:23:2:2
+anim_type:0

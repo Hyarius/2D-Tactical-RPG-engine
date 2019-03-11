@@ -1,0 +1,21 @@
+price:20
+name:Thunder I
+description:Deals 5 damage(s) to the target
+icon:simple_iconset
+sprite:4:3
+m_spell:0
+pa:5
+pm:0
+cooldown:0
+range:3:6:1
+type:0
+on target:1
+zone:0:2
+effect1:0:5:0:0:0
+effect2:3:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:thunder_03:0:17:2:2
+anim_type:1

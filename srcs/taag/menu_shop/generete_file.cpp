@@ -10,7 +10,7 @@ void					generate_map_shop()
 		remove(("ressources/tmp/" + list[i] + ".map").c_str());
 		myfile.open(SHOP_MAP_PATH + list[i] + SHOP_EXT);
 		if (myfile.fail())
-			error_exit();
+			error_exit("Can't open such file : " + SHOP_MAP_PATH + list[i] + SHOP_EXT);
 		printf("%s\n", list[i].c_str());
 		myfile << "string to add:" + list[i] + "\n";
 		myfile << "tile:map_icons\n";
@@ -30,7 +30,7 @@ void					generate_sprite_shop()
 		remove(("ressources/tmp/" + list[i] + ".tls").c_str());
 		myfile.open(SHOP_TILE_PATH + list[i] + SHOP_EXT);
 		if (myfile.fail())
-			error_exit();
+			error_exit("Can't open such file : " + SHOP_TILE_PATH + list[i] + SHOP_EXT);
 		printf("%s\n", list[i].c_str());
 		myfile << "string to add:" + list[i] + "\n";
 		myfile << "tile:" + list[i] + "\n";
@@ -52,7 +52,7 @@ void					generate_spell_shop()
 		{
 			myfile.open(SHOP_SPELL_PATH + list[i] + SHOP_EXT);
 			if (myfile.fail())
-				error_exit();
+				error_exit("Can't open such file : " + SHOP_SPELL_PATH + list[i] + SHOP_EXT);
 			printf("%s - %s\n", list[i].c_str(), spell_name[i + 1].c_str());
 			myfile << "string to add:" + spell_name[i + 1] + "\n";
 			myfile << "tile:simple_iconset\n";

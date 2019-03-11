@@ -13,12 +13,11 @@ extern double	SCREEN_RATIO_Y;
 
 #define printOpenGLError() 	printOglError(__FILE__, __LINE__)
 #define printSDLError() 	check_sdl_error(__FILE__, __LINE__)
-#define error_exit() 		error_exit_full(__FILE__, __LINE__)
 
 using namespace std;
 
 //			BASIC_FUNCTION
-void				error_exit_full(const char *file, int line);
+void				error_exit(string error);
 t_vect				get_mouse_coord();
 int					generate_nbr(int min, int max);
 vector<string>		strsplit(string input, string c);

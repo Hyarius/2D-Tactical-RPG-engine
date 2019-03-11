@@ -16,7 +16,7 @@ s_image_button::s_image_button(string p_text, int p_text_color,
 		text_size = calc_text_size(text, size[1]);
 		surface = TTF_RenderText_Blended(get_font(text_size), text.c_str(), get_color(text_color));
 		if (surface == NULL)
-			error_exit();
+			error_exit("Can't create the text for a t_image button with the string " + text + " at size " + to_string(text_size));
 		saved_text = text;
 		text_image = new t_image(surface);
 		image_coord = t_vect(coord[2].x - text_image->surface->w / 2, coord[2].y - text_image->surface->h / 2);
@@ -60,7 +60,7 @@ void		s_image_button::draw_self()
 				text_size = calc_text_size(text, size[1]);
 				surface = TTF_RenderText_Blended(get_font(text_size), text.c_str(), get_color(text_color));
 				if (surface == NULL)
-					error_exit();
+					error_exit("Can't create the text for a t_image button with the string " + text + " at size " + to_string(text_size));
 				saved_text = text;
 				text_image = new t_image(surface);
 				image_coord = t_vect(coord[2].x - text_image->surface->w / 2, coord[2].y - text_image->surface->h / 2);

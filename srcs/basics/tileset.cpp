@@ -9,7 +9,7 @@ s_tileset::s_tileset(string p_path, t_vect p_size)
 {
 	surface = IMG_Load(p_path.c_str());
 	if (surface == NULL)
-		error_exit_full(p_path.c_str(), 12);
+		error_exit("Can't load " + p_path + " to create a t_tileset");
 	if (surface->format->BytesPerPixel == 3)
 	{
 		internal_format = GL_RGB;
@@ -26,9 +26,6 @@ s_tileset::s_tileset(string p_path, t_vect p_size)
 		else
 			format = GL_BGRA;
 	}
-
-	printOpenGLError();
-	printSDLError();
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 
@@ -121,7 +118,7 @@ void 			s_tileset::draw_self(t_vect p_coord, t_vect p_size, t_vect p_sprite)
 		int value = (int)(p_sprite.y) * (int)(nb_sprite.x) + (int)(p_sprite.x);
 		draw_self(p_coord, p_coord + t_vect(p_size.x, 0), p_coord + t_vect(0, p_size.y), p_coord + p_size, value, 1.0);
 	}
-	
+
 }
 
 

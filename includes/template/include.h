@@ -28,7 +28,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# include <SDL.h>
+# include <SDL2/SDL.h>
 
 #ifdef __APPLE__
 #	include <OpenGL/gl3.h>

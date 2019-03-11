@@ -1,18 +1,26 @@
 #include "taag.h"
 
-char *user_profile;
-char *app_data;
+string user_profile;
+string app_data;
 size_t len;
 
 int main(int argc, char **argv)
 {
-	errno_t err = _dupenv_s(&user_profile, &len, "USERPROFILE");
+	if (getenv("USERPROFILE") != NULL)
+		user_profile = string(getenv("USERPROFILE")) + "/documents/";
+	else
+		user_profile = "";
+	len = user_profile.size();
 	for (size_t i = 0; i < len; i++)
 	{
 		if (user_profile[i] == '\\')
 			user_profile[i] = '/' ;
 	}
-	errno_t err2 = _dupenv_s(&app_data, &len, "APPDATA");
+	if (getenv("APPDATA") != NULL)
+		app_data = string(getenv("APPDATA")) + "/";
+	else
+		app_data = "";
+	len = app_data.size();
 	for (size_t i = 0; i < len; i++)
 	{
 		if (app_data[i] == '\\')
@@ -43,6 +51,6 @@ int main(int argc, char **argv)
 
 		menu_start();
 	}
-	
+
 	return 0;
 }

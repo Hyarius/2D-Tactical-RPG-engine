@@ -1,6 +1,0 @@
-name:Water tile - Slowed
-tileset:simple_tile
-sprite:3:3
-cost:3
-m_obstacle:0
-v_obstacle:0

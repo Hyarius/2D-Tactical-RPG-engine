@@ -1,0 +1,6 @@
+name:Grass tile - empty
+tileset:simple_tile
+sprite:0:2
+cost:1
+m_obstacle:0
+v_obstacle:0

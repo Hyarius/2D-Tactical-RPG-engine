@@ -1,0 +1,21 @@
+price:20
+name:Aqua-sword I
+description:Deal 4 damage(s) to the target and pull the target by 1 square(s)
+icon:simple_iconset
+sprite:2:8
+m_spell:0
+pa:4
+pm:0
+cooldown:1
+range:1:2:0
+type:1
+on target:0
+zone:1:0
+effect1:0:4:0:0:0
+effect2:5:1:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:water_02:2:22:2:2
+anim_type:0

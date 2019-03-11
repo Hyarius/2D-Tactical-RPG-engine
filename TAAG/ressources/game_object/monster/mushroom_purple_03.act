@@ -1,0 +1,17 @@
+name:Purple mushroom (level  2)
+tileset:M17
+sprite_pos:3:0
+health:14
+action:6
+mouvement:3
+initiative:3
+spell0:Poison scratch II
+spell1:NULL
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:Regeneration II
+14:5:75:-1:-1:-1:0:0:0:0
+7:0:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+0:1:0:0:-1:0:0:0:0:0

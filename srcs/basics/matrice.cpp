@@ -111,18 +111,3 @@ t_vertex		matrice::operator * (t_vertex vertex)
 
 	return t_vertex(result[0], result[1], result[2]);
 }
-
-void			matrice::print()
-{
-	int	i;
-
-	i = 0;
-	printf("-----------------------------------------------------------------\n");
-	while (i < 4)
-	{
-		printf("|\t%-4f|\t%-4f|\t%-4f|\t%-4f|\n", this->value[i][0], this->value[i][1],
-		this->value[i][2], this->value[i][3]);
-		i++;
-	}
-	printf("-----------------------------------------------------------------\n");
-}

@@ -1,0 +1,9 @@
+level:5
+exp:35
+gold:9179
+tuto_state:41
+keyboard:113:119:101:114:116:121
+char:Vampire:Healer:Second tank:First tank:Strong dps:Ranged dps
+spell::Absorb-dagger I:Absorb-sword I:Aero-dagger I:Aero-sword I:Anger I:Aqua-dagger I:Aqua-sword I:Arrow blow I:Attraction I:Basic arrow:Basic attack:Basic fire:Basic heal:Basic slash:Bastion I:Battle calling I:Black fury I:Cheer I:Congelation I:Construction I:Curse I:Dark matter I:Devotion I:Drain I:Ember shot I:Fire punch I:Fire sword I:Fire-dagger I:Fireball I:Frozen dagger I:Frozen-sword I:Fury I:Healing I:Hurricane I:Ice bolt I:Inferno I:Inner fire I:Minor help I:Multiple arrow I:Poison ball I:Poison bubble I:Poison dagger I:Regeneration I:Repulsive arrow I:Self control I:Shadow step I:Slash I:Solar help I:Stone dagger I:Stone fall I:Stone sword I:Thrust I:Thunder I:Unstopable force I:Uprising I:Wind dash I:Wing I:Basic arrow:Basic fire:Basic slash:Basic heal
+tile:H00:H04:H05:H17
+map:Demonic castle - 01:Demonic castle - 02:Demonic castle - 03:Mushroom forest - 01:Mushroom forest - 02:Mushroom forest - 03:Mushroom forest - 04:Mushroom forest - 05:Mushroom forest - 06:Mushroom forest - 07:Mushroom forest - 08:Mushroom forest - 09:mushroom forest - 01

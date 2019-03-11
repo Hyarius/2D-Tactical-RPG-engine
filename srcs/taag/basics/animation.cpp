@@ -7,14 +7,14 @@ void				generate_animation_tileset()
 	SDL_Surface		*surface;
 	t_vect			sprite_size = t_vect(192, 192);
 
-	texture_file = list_files("ressources/tmp/", ".png");
+	texture_file = list_files(TMP_PATH, ".png");
 	size_t i = 0;
 	while (i < texture_file.size())
 	{
 		myfile.open(TILESET_ANIMATION_PATH + texture_file[i] + TILESET_ANIMATION_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s%s%s\n", TILESET_ANIMATION_PATH, texture_file[i].c_str(), TILESET_ANIMATION_EXT);
-		surface = IMG_Load(("ressources/tmp/" + texture_file[i] + ".png").c_str());
+			error_exit("can't open such file : " + TILESET_ANIMATION_PATH + texture_file[i] + TILESET_ANIMATION_EXT);
+		surface = IMG_Load((TMP_PATH + texture_file[i] + ".png").c_str());
 		t_vect size = t_vect(surface->w / sprite_size.x, surface->h / sprite_size.y);
 		printf("%s - %.2f / %.2f\n", texture_file[i].c_str(), size.x, size.y);
 		myfile << "tile_name:" + texture_file[i] + "\n";
@@ -22,9 +22,9 @@ void				generate_animation_tileset()
 		myfile << "size:" + to_string((int)(size.x)) + ":" + to_string((int)(size.y)) + "\n";
 		myfile.close();
 		SDL_FreeSurface(surface);
-		if (copy_file("ressources/tmp/" + texture_file[i] + ".png", "ressources/assets/animation/" + texture_file[i] + ".png") == false)
-			error_exit();
-		remove(("ressources/tmp/" + texture_file[i] + ".png").c_str());
+		if (copy_file(TMP_PATH + texture_file[i] + ".png", TILESET_ANIMATION_PATH + texture_file[i] + ".png") == false)
+			error_exit("Can't copy " + TMP_PATH + texture_file[i] + ".png into " + TILESET_ANIMATION_PATH + texture_file[i] + ".png");
+		remove((TMP_PATH + texture_file[i] + ".png").c_str());
 		i++;
 	}
 }

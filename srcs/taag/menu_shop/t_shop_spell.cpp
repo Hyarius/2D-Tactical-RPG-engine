@@ -46,7 +46,7 @@ void			s_shop_spell::draw_self()
 			int text_size = calc_text_max_size(text, size - 15);
 			SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), text.c_str(), get_color(DARK_GREY));
 			if (surface == NULL)
-				error_exit();
+				error_exit("Can't create the text for a t_spell_card button with the string " + text + " at size " + to_string(text_size));
 			text_image = new t_image(surface);
 			image_size = t_vect(surface->w, surface->h);
 			image_coord = button->button->button->coord[0] + delta + size / 2;

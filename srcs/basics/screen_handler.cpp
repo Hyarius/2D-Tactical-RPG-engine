@@ -40,8 +40,6 @@ void				window_initialisation(string window_name)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	
-	glClearDepth(0);
 
 	SDL_GetDesktopDisplayMode(0, &current);
 	g_window = SDL_CreateWindow(window_name.c_str(),

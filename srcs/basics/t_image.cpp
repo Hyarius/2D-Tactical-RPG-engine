@@ -9,10 +9,7 @@ s_image::s_image(string path)
 {
 	this->surface = IMG_Load(path.c_str());
 	if (this->surface == NULL)
-	{
-		printf("image path = %s\n", path.c_str());
-		error_exit();
-	}
+		error_exit("Can't load " + path + " file");
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;
@@ -49,7 +46,7 @@ s_image::s_image(t_color p_color)
 {
 	this->surface = create_surface_color(p_color);
 	if (this->surface == NULL)
-		error_exit();
+		error_exit("Can't create a surface of color " + to_string((int)(p_color.r * 255)) + "/" + to_string((int)(p_color.g * 255)) + "/" + to_string((int)(p_color.b * 255)) + "/" + to_string((int)(p_color.a * 255)));
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;
@@ -86,7 +83,7 @@ s_image::s_image(SDL_Surface *p_surface)
 {
 	this->surface = p_surface;
 	if (this->surface == NULL)
-		error_exit();
+		error_exit("Surface send in t_image = NULL");
 	if (this->surface->format->BytesPerPixel == 3)
 	{
 		this->internal_format = GL_RGB;

@@ -1,0 +1,21 @@
+price:0
+name:Berzerk I
+description:Deals 2 damage(s) to the caster, give 4 PA(s) to the caster, gives 3 PM(s) to the caster, apply a bonus PA off 4 PA(s) per turn for the next 3 turn(s) and apply a bonus PM off 3 PM(s) per turn for the next 3 turn(s)
+icon:simple_iconset
+sprite:13:6
+m_spell:1
+pa:0
+pm:0
+cooldown:5
+range:0:0:0
+type:1
+on target:0
+zone:1:0
+effect1:7:2:0:0:1
+effect2:11:4:0:0:1
+effect3:10:3:0:0:1
+effect4:16:0:4:3:0
+effect5:17:0:3:3:0
+effect6:0:0:0:0:0
+target_action:heal_white_01:3:30:2:2
+anim_type:0

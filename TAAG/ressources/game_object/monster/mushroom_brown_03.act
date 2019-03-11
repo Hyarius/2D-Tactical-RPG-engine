@@ -1,0 +1,17 @@
+name:Brown mushroom (level 2)
+tileset:M17
+sprite_pos:3:4
+health:21
+action:7
+mouvement:4
+initiative:7
+spell0:Cut II
+spell1:NULL
+spell2:NULL
+spell3:NULL
+spell4:NULL
+spell5:Regeneration II
+14:5:75:-1:-1:-1:0:0:0:0
+7:0:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+0:2:0:1:-1:0:0:0:0:0

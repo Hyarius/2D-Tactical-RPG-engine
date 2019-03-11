@@ -60,7 +60,7 @@ void			generate_node_file()
 				text = "0" + text;
 			myfile.open(NODE_PATH + text + NODE_EXT);
 			if (myfile.fail())
-				printf("can't open such file : %s%s%s\n", NODE_PATH, text.c_str(), NODE_EXT);
+				printf("can't open such file : %s%s%s\n", (NODE_PATH).c_str(), text.c_str(), NODE_EXT);
 			string text_type = (j == 3 ? type[1] : (j == 4 || j == 5 ? type[2] : (j == 6 || j == 7 || j == 8 || j == 9 ? type[3] : type[0])));
 			myfile << "name:" + name[i] + text_type + "\n";
 			myfile << "tileset:simple_tile\n";

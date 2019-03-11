@@ -42,7 +42,7 @@ void		s_paragraph_button::draw_self()
 				{
 					SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), lines[j].c_str(), get_color(BLACK));
 					if (surface == NULL)
-						error_exit();
+						error_exit("Can't create the text for a t_image button with the string " + lines[j] + " at size " + to_string(text_size));
 					text_paragraph.push_back(new t_image(surface));
 					paragraph_size.push_back(t_vect(surface->w, surface->h));
 					SDL_FreeSurface(surface);

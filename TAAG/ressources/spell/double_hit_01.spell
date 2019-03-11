@@ -1,0 +1,21 @@
+price:20
+name:Double hit I
+description:Deals 3 damage(s) to the target
+icon:simple_iconset
+sprite:7:7
+m_spell:0
+pa:3
+pm:0
+cooldown:0
+range:3:7:0
+type:0
+on target:0
+zone:1:0
+effect1:0:3:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:hit_05:0:8:2:2
+anim_type:0

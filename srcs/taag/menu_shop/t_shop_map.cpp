@@ -56,7 +56,7 @@ void			s_shop_map::draw_self()
 			{
 				SDL_Surface *surface = TTF_RenderText_Blended(get_font(text_size), text[i].c_str(), get_color(DARK_GREY));
 				if (surface == NULL)
-					error_exit();
+					error_exit("Can't create the text for a t_spell_card button with the string " + text[i] + " at size " + to_string(text_size));
 				text_image[i] = new t_image(surface);
 				image_size[i] = t_vect(surface->w, surface->h);
 				SDL_FreeSurface(surface);

@@ -1,0 +1,21 @@
+price:0
+name:Basic heal
+description:Heals the target by 2 HP(s)
+icon:simple_iconset
+sprite:7:2
+m_spell:0
+pa:4
+pm:0
+cooldown:0
+range:0:3:0
+type:0
+on target:0
+zone:1:0
+effect1:1:2:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:NULL:0:0:1:1
+anim_type:0

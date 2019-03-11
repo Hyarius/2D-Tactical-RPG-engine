@@ -1,0 +1,21 @@
+price:0
+name:Frozen explosion I
+description:Deals 4 damage(s) to the target and apply a malus PA off -2 PA(s) per turn for the next 1 turn(s)
+icon:simple_iconset
+sprite:9:3
+m_spell:1
+pa:4
+pm:0
+cooldown:2
+range:3:4:0
+type:0
+on target:1
+zone:0:2
+effect1:0:4:0:0:0
+effect2:16:0:-2:1:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:frozen_04:9:24:4:4
+anim_type:0

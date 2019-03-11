@@ -32,9 +32,8 @@ int printOglError(const char *file, int line)
 
 	if (text != "")
 	{
-
 		string error = "opengl state in file " + file_name + ":line[" + to_string(line) + "] : " + text.c_str();
-		error_exit();
+		error_exit(error);
 	}
 	retCode = 1;
 	return retCode;
@@ -50,14 +49,13 @@ void check_sdl_error(const char *file, int line)
 	if (text.size() != 0)
 	{
 		string error = "SDL2 state in file " + file_name + ":line[" + to_string(line) + "] : " + SDL_GetError();
-		printf("%s\n", error);
-		error_exit();
+		error_exit(error);
 	}
 }
 
-void				error_exit_full(const char *file, int line)
+void				error_exit(string error)
 {
-	printf("Error in [%s][%d]\n", file, line);
+	printf("%s\n", error.c_str());
 	getchar();
 	exit(1);
 }
@@ -141,7 +139,7 @@ t_vect				second_degree_solver(double a, double b, double e, double c, double d,
 		y = (a * f - e * c) / delta;
 	}
 	else
-		error_exit();
+		error_exit("Error during second degree solving");
 	return (t_vect(x, y));
 }
 

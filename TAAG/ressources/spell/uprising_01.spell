@@ -1,0 +1,21 @@
+price:20
+name:Uprising I
+description:Deal 3 damage(s) to the target and apply a malus PM off -1 PM(s) per turn for the next 1 turn(s)
+icon:simple_iconset
+sprite:7:0
+m_spell:0
+pa:4
+pm:0
+cooldown:0
+range:2:4:1
+type:0
+on target:1
+zone:0:1
+effect1:0:3:0:0:0
+effect2:17:0:-1:1:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:stone_02:0:24:2:2
+anim_type:1

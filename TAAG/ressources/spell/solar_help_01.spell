@@ -1,0 +1,21 @@
+price:20
+name:Solar help I
+description:Cure every poison effect of the target, cure every malus PA effect of the target, cure every malus PM effect of the target and add 3 armor point(s) to the target
+icon:simple_iconset
+sprite:8:4
+m_spell:0
+pa:3
+pm:0
+cooldown:2
+range:0:4:1
+type:0
+on target:1
+zone:0:1
+effect1:18:0:0:0:0
+effect2:20:0:0:0:0
+effect3:21:0:0:0:0
+effect4:24:3:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:unprotect_01:0:12:3:3
+anim_type:0

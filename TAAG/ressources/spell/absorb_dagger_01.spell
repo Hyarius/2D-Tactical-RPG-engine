@@ -1,0 +1,21 @@
+price:20
+name:Absorb-dagger I
+description:Deal 2 true damage(s) to the target and heal the caster by 1 HP(s)
+icon:simple_iconset
+sprite:11:8
+m_spell:0
+pa:0
+pm:2
+cooldown:1
+range:1:1:0
+type:1
+on target:0
+zone:1:0
+effect1:26:2:0:0:0
+effect2:6:1:0:0:1
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:dark_attack_03:0:31:2:2
+anim_type:0
