@@ -3,7 +3,7 @@
 ## About me :
 
 I'm Jeremy, 25 years old, 1st years student at 42 school, in Paris.
-I used to work at an engineering office from my 18 years until november 2017, when I decided to quit, and start learning c/c++/C# programmation. 
+I used to work at an engineering office from my 18 years until november 2017, when I decided to quit, and start learning c/c++/C# programmation.
 
 After finishing the mandatory project for 42, I decided to work on my own on SDL2 and OpenGl. After 2 months of testing, learning things and reading SDL2/OpenGL documentation, I started to create my first game, TAAG.
 
@@ -67,7 +67,8 @@ Requirement :
 * Brew
 
 Setup :
-Simple git clone this repot, 'make install' it than ./TAAG-game to run it
+Simply git clone this repot, open it on a terminal then use the command "make install"
+Use ./TAAG-game in the folder to launch it
 ```
 
 ### Linux
