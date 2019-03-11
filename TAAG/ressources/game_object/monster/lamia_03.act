@@ -4,7 +4,7 @@ sprite_pos:3:4
 health:20
 action:8
 mouvement:4
-initiative:7
+initiative:9
 spell0:Lamia attraction I
 spell1:Life leech II
 spell2:NULL
