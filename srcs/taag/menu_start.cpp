@@ -152,8 +152,8 @@ void		menu_start()
 Here you're in the main menu. It's composed, as you can see, of 6 character slots just under this text box, and some menu at the right part of the screen. \n \
 \n \
 The first menu is the play menu, which brings you to a game of TAAG. \n \
-The second one is the shop, where you can buy things for your character. \n ", DARK_GREY, gui.unit.y / 2, //text info
-			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
+The second one is the shop, where you can buy things for your character. \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 5) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL)
 			, true));
 	}
@@ -161,7 +161,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 	if (gui_tutorial[2].object_list.size() == 0)
 	{
 		gui_tutorial[2].add(TUTORIAL_NUM, new s_tutorial_button(NULL, new t_button(new s_paragraph_button(
-			"Those are your six character slots. \n Each one can contain a fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them.", DARK_GREY, gui.unit.y / 2, //text info
+			"Those are your six character slots. \n Each one can contain a fully personalisable character. \n Let's look at this more closely. \n \n Click on one of them to open it.", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(15, 8) * gui_tutorial[0].unit, t_vect(8, 4) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
@@ -203,7 +203,7 @@ The second one is the shop, where you can buy things for your character. \n ", D
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			menu_shop, NULL),
 			new t_button(new s_paragraph_button(
-				"Let's open the \"Shop\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				"Let's open the \"Shop\" menu ! \n \n Click on it.", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(1.5, 1.5) * gui_tutorial[0].unit, t_vect(16, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));

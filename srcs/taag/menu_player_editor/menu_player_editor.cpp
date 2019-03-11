@@ -233,7 +233,7 @@ void					menu_actor_editor(t_data data)
 
 		gui_tutorial[3].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
-					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spells, stats and even looks !", DARK_GREY, gui.unit.y / 2, //text info
+					"Here is one of the most important part of this game : the character editor \n Here, you will be able to edit your character spells, stats and even looks ! \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
 					t_vect(22, 1) * gui_tutorial[0].unit, t_vect(7, 18) * gui_tutorial[0].unit, 5, //object info
 					t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
@@ -245,8 +245,8 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here, you can write your character name, pseudo, or whatever you want to be the most powerful and famous player out there !", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 3) * gui_tutorial[0].unit, 5, //object info
+				"Here, you can write your character name, pseudo, or whatever you want to be the most powerful and famous player out there ! \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(7, 4.5) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
 	if (gui_tutorial[5].object_list.size() == 0)
@@ -257,8 +257,8 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here, you can find 2 types of things : \n First, you have the amount of attribute points left to give. You will receive some at every level up ! \n You can spend them into the 4 types of caracteristics : \n \n - Health Points : Represent how much damage you can take before you faint \n - Action Points : Points used in combat to cast spell \n - Mouvement Points : Points used in combat to move around the map \n - Initiative : Determine in which order you and your enemy will play \n \n You can find how much attrib. points every caracteristic cost next to the caracteristic name.", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(10, 9.5) * gui_tutorial[0].unit, 5, //object info
+				"Here, you can find 2 types of things : \n First, you have the amount of attribute points left to give. You will receive some at every level up ! \n You can spend them into the 4 types of caracteristics : \n \n - Health Points : Represent how much damage you can take before you faint \n - Action Points : Points used in combat to cast spell \n - Mouvement Points : Points used in combat to move around the map \n - Initiative : Determine in which order you and your enemy will play \n \n You can find how much attrib. points every caracteristic cost next to the caracteristic name. \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.5, 0.75) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
 	if (gui_tutorial[6].object_list.size() == 0)
@@ -269,8 +269,8 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here is the sprite selector, where you can choose the look of your character. \n You can select it by pressing the \"<\" or \">\" button, or by simply clicking at the center of the sprite to open the selection menu. \n ", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(11.6, 4.6) * gui_tutorial[0].unit, t_vect(10, 4) * gui_tutorial[0].unit, 5, //object info
+				"Here is the sprite selector, where you can choose the look of your character. \n You can select it by pressing the \"<\" or \">\" button, or by simply clicking at the center of the sprite to open the selection menu. \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(11.6, 4.6) * gui_tutorial[0].unit, t_vect(10, 4.5) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
 	if (gui_tutorial[7].object_list.size() == 0)
@@ -281,8 +281,8 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"Here, you will find the most important feature of this menu : the spell spelector !", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(9.2, 1.5) * gui_tutorial[0].unit, t_vect(12.4, 2) * gui_tutorial[0].unit, 5, //object info
+				"Here, you will find the most important feature of this menu : the spell selector ! \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(9.2, 1.5) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}
 	if (gui_tutorial[8].object_list.size() == 0)
@@ -309,7 +309,7 @@ void					menu_actor_editor(t_data data)
 			t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 			NULL, NULL),
 			new t_button(new s_paragraph_button(
-				"All right ! Now our character has one spell !", DARK_GREY, gui.unit.y / 2, //text info
+				"All right ! Now our character has one spell ! \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.2, 1) * gui_tutorial[0].unit, t_vect(12.4, 3) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true));
 	}

@@ -239,8 +239,8 @@ void				s_game_board::end_game()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Here is the end game menu ! \n You will find some usefull informations about the game you just played, your characters and the way they have handle this.", DARK_GREY, gui_tutorial[0].unit.y / 2, //text info
-			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 6) * gui_tutorial[0].unit, 5, //object info
+			"Here is the end game menu ! \n You will find some usefull informations about the game you just played, your characters and the way they have handle this. \n \n Click here to continue", DARK_GREY, gui_tutorial[0].unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 8) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
 		gui_tutorial[36].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
@@ -257,8 +257,8 @@ void				s_game_board::end_game()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"This part of the screen show you what you have earn in this map : Your new level/exp and the amount of gold you have now. \n You can pass the animation of exp/gold giveaway by pressing Space or Echap once.", DARK_GREY, gui.unit.y / 2, //text info
-			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			"This part of the screen show you what you have earn in this map : Your new level/exp and the amount of gold you have now. \n You can pass the animation of exp/gold giveaway by pressing Space or Echap once. \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 5) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
 		gui_tutorial[37].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
@@ -275,8 +275,8 @@ void				s_game_board::end_game()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"There you can find all 6 of your possible characters. If you click on one of them, you will see a bunch of information about him.", DARK_GREY, gui.unit.y / 2, //text info
-			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 3) * gui_tutorial[0].unit, 5, //object info
+			"There you can find all 6 of your possible characters. If you click on one of them, you will see a bunch of information about him. \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 5) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
 		gui_tutorial[38].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
@@ -293,8 +293,8 @@ void				s_game_board::end_game()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 4 new spells : basic arrow, heal, fire and slash ! \n \n Feel free to play some maps, earn money, and buy new powerful spells ! \n \n click here to go back to main menu", DARK_GREY, gui.unit.y / 2, //text info
-			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 4) * gui_tutorial[0].unit, 5, //object info
+			"And this is the end of our tutorial ! \n \n I hope that you will enjoy our game. \n As a gift, we offer you 4 new spells : basic arrow, heal, fire and slash ! \n \n Feel free to play some maps, earn money, and buy new powerful spells ! \n \n Click here to go back to main menu", DARK_GREY, gui.unit.y / 2, //text info
+			t_vect(12.5, 4) * gui_tutorial[0].unit, t_vect(15.5, 7) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
 		gui_tutorial[39].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, true));
@@ -358,4 +358,3 @@ void				s_game_board::end_game()
 			give_away_end_tutorial(t_data(3, &play, &exp_bonus, &gold_bonus));
 	}
 }
-

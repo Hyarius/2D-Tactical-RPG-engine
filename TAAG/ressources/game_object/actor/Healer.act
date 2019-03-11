@@ -5,7 +5,7 @@ health:27
 action:8
 mouvement:3
 initiative:5
-spell0:Healing I
+spell0:Absorb-dagger I
 spell1:Devotion I
 spell2:Curse I
 spell3:Bastion I

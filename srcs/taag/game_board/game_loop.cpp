@@ -70,7 +70,7 @@ void				s_game_board::game_loop_tutorial()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Here we go ! \n Oh, look, there is a wild rat. It looks aggressive ... Better get ready, we don't know what this monster is able of... \n \n To Fight him, we have our awesome " + turn_order[turn_index]->spell[0]->name + " ! It's on the 1 spell slot (Shortcut : " + text[0] + "). \n But first, we need to get close to him. \n As you can see, there is some green squares around your fabulous " + ally_list[0]->name + ". It describe the range where he can run to, in one turn. Every square cost an amount of MP to reach (You can find more informations about a certain square on the top-right corner of the screen by hovering your mouse on it).", DARK_GREY, gui.unit.y / 2, //text info
+			"Here we go ! \n Oh, look, there is a wild rat. It looks aggressive ... Better get ready, we don't know what this monster is able of... \n \n To Fight him, we have our awesome " + turn_order[turn_index]->spell[0]->name + " ! It's on the 1 spell slot (Shortcut : " + text[0] + "). \n But first, we need to get close to him. \n As you can see, there is some green squares around your fabulous " + ally_list[0]->name + ". It describe the range where he can run to, in one turn. Every square cost an amount of MP to reach (You can find more informations about a certain square on the top-right corner of the screen by hovering your mouse on it). \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 
@@ -171,7 +171,7 @@ void				s_game_board::game_loop_tutorial()
 			NULL, NULL);
 
 		t_button *button2 = new t_button(new s_paragraph_button(
-			"Perfect ! But ... Looks like you didn't kill him... And you dont't have enough AP to cast again your " + turn_order[turn_index]->spell[0]->name + ". \n \n You should pass your turn and finaly kill him.", DARK_GREY, gui.unit.y / 2, //text info
+			"Perfect ! But ... Looks like you didn't kill him... And you dont't have enough AP to cast again your " + turn_order[turn_index]->spell[0]->name + ". \n \n You should pass your turn and finaly kill him (press \"space\" to pass your turn).", DARK_GREY, gui.unit.y / 2, //text info
 			t_vect(0.5, 0.5) * gui_tutorial[0].unit, t_vect(10, 10) * gui_tutorial[0].unit, 5, //object info
 			t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL);
 

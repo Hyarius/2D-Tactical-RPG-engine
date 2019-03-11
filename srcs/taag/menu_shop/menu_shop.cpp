@@ -116,7 +116,7 @@ void menu_shop(t_data data)
 
 		gui_tutorial[17].add(TUTORIAL_NUM, new s_tutorial_button(NULL,
 			new t_button(new s_paragraph_button(
-				"Welcome to the \"Shop\" menu !", DARK_GREY, gui.unit.y / 2, //text info
+				"Welcome to the \"Shop\" menu ! \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(9.5, 8.55) * gui_tutorial[0].unit, t_vect(10, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true
 		));
@@ -130,8 +130,8 @@ void menu_shop(t_data data)
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			menu_shop, NULL),
 			new t_button(new s_paragraph_button(
-				"Here, you can see your account level and gold", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(13, 2.2) * gui_tutorial[0].unit, t_vect(10.2, 1) * gui_tutorial[0].unit, 5, //object info
+				"Here, you can see your account level and gold \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(13, 2.2) * gui_tutorial[0].unit, t_vect(10.2, 2.5) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true
 		));
 	}
@@ -144,8 +144,8 @@ void menu_shop(t_data data)
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			menu_shop, NULL),
 			new t_button(new s_paragraph_button(
-				"There, you have the three tabs of the shop menu \n - Sprite : Here, you can find new looks for your characters \n - Spell : Here, you will find every purchasable spell \n - Map : A list of every purchasable map", DARK_GREY, gui.unit.y / 2, //text info
-				t_vect(1, 2.2) * gui_tutorial[0].unit, t_vect(9.2, 4.7) * gui_tutorial[0].unit, 5, //object info
+				"There, you have the three tabs of the shop menu \n - Sprite : Here, you can find new looks for your characters \n - Spell : Here, you will find every purchasable spell \n - Map : A list of every purchasable map \n \n Click here to continue", DARK_GREY, gui.unit.y / 2, //text info
+				t_vect(1, 2.2) * gui_tutorial[0].unit, t_vect(9.2, 5.5) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), NULL, NULL), true
 		));
 	}
@@ -158,7 +158,7 @@ void menu_shop(t_data data)
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			set_index, t_data(2, &index, 2)),
 			new t_button(new s_paragraph_button(
-				"Let's go to the map tab to buy our first map !", DARK_GREY, gui.unit.y / 2, //text info
+				"Let's go to the map tab to buy our first map ! \n \n Click on it to continue", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(1, 2.2) * gui_tutorial[0].unit, t_vect(9.2, 4.7) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));

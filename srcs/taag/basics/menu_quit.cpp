@@ -2,7 +2,7 @@
 
 vector<int>			tuto_state_list = {
 	1,
-	3,
+	2,
 	12,
 	15,
 	23,

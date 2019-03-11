@@ -97,7 +97,7 @@ void			menu_choose_map(t_data data) // 0 - &path
 			t_color(0.0, 0.0, 0.0, 0.0), t_color(0.5, 0.5, 0.5)),
 			quit_load, t_data(3, entry_path, &play, 0)),
 			new t_button(new s_paragraph_button(
-				"Select the \"tutorial-00\" map and let's play it !", DARK_GREY, gui.unit.y / 2, //text info
+				"Select the \"tutorial-00\" map and let's play it ! \n \n Click on it to continue", DARK_GREY, gui.unit.y / 2, //text info
 				t_vect(10.8, 9.3) * gui_tutorial[0].unit, t_vect(8.3, 4) * gui_tutorial[0].unit, 5, //object info
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
