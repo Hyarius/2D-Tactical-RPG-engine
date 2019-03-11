@@ -63,7 +63,11 @@ Working on it
 
 ### MacOS
 ```
-Working on it
+Requirement :
+* Brew
+
+Setup :
+Simple git clone this repot, 'make install' it than ./TAAG-game to run it
 ```
 
 ### Linux
