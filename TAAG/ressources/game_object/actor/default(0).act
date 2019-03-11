@@ -1,13 +1,13 @@
 name:default
 tileset:H00
-sprite_pos:0:0
+sprite_pos:0:4
 health:15
-action:4
-mouvement:2
+action:8
+mouvement:3
 initiative:5
-spell0:Basic attack
-spell1:NULL
-spell2:NULL
-spell3:NULL
+spell0:Basic slash
+spell1:Basic fire
+spell2:Basic heal
+spell3:Basic arrow
 spell4:NULL
 spell5:NULL

@@ -1,0 +1,21 @@
+price:0
+name:Demon call I
+description:Apply a regeneration effect that heals 4 HP(s) per turn for the next 2 turn(s)
+icon:simple_iconset
+sprite:6:6
+m_spell:1
+pa:2
+pm:0
+cooldown:1
+range:0:0:0
+type:1
+on target:0
+zone:1:0
+effect1:15:0:4:2:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:hit_explosive_02:34:13:2:2
+anim_type:0

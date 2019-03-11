@@ -28,6 +28,7 @@ bool				s_game_board::execute_gambit(t_actor *source)
 	size_t i = 0;
 	while (i < source->gambit.size())
 	{
+		check_alive();
 		int index = source->gambit[i].value[0];
 		t_ai_helper data = source->gambit[i];
 		if (index >= 0)

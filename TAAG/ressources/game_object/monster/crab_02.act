@@ -1,0 +1,21 @@
+name:Big crab
+tileset:C34
+sprite_pos:3:0
+health:24
+action:6
+mouvement:3
+initiative:5
+spell0:Stunning blow I
+spell1:Build up I
+spell2:Heavy hit I
+spell3:NULL
+spell4:NULL
+spell5:NULL
+7:0:-1:-1:0:0:0:0:0:0
+7:1:-1:-1:0:0:0:0:0:0
+7:2:-1:-1:0:0:0:0:0:0
+7:3:-1:-1:0:0:0:0:0:0
+7:4:-1:-1:0:0:0:0:0:0
+7:5:-1:-1:0:0:0:0:0:0
+-1:0:0:0:0:0:0:0:0:0
+0:1:0:0:-1:0:0:0:0:0

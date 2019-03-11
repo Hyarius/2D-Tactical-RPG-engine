@@ -508,6 +508,14 @@ bool				s_game_board::attack(t_ai_helper data)
 	else
 		calculate_vision_line();
 	size_t i = 0;
+	t_actor *target_actor = NULL;
+	while (i < turn_order.size())
+	{
+		if ((target_actor == NULL || (get_cell(turn_order[i]->coord)->v_dist < get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < target_actor->stat.hp.percent())) &&
+			turn_order[i]->team != turn_order[turn_index % turn_order.size()]->team && get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
+			target_actor = turn_order[i];
+		i++;
+	}
 
 	vector<t_vect>	target_list; //every tile hited by the spell
 	if (actor->spell[s_spell]->zone_type == Z_DIAM)
@@ -530,6 +538,7 @@ bool				s_game_board::attack(t_ai_helper data)
 
 	for (size_t i = 0; i < to_look.size(); i++)
 	{
+		int find = 0;
 		int nb_target_hit = 0;
 		int percent_target_hit = 100;
 		if (actor->spell[s_spell]->zone_type == Z_LINE)
@@ -544,6 +553,13 @@ bool				s_game_board::attack(t_ai_helper data)
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
 			if (get_cell(tmp) && get_cell(actor->coord + to_look[i]) && get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && get_cell(tmp)->actor != NULL)
 			{
+				if (get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (get_cell(tmp)->actor->team == actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team != actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.percent())
@@ -552,7 +568,7 @@ bool				s_game_board::attack(t_ai_helper data)
 				}
 			}
 		}
-		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value)
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
 		{
 			utils_value = percent_target_hit / nb_target_hit;
 			target = actor->coord + to_look[i];
@@ -632,6 +648,11 @@ bool				s_game_board::attack_weak(t_ai_helper data)
 			{
 				if (get_cell(tmp)->actor == target_actor)
 					find = 1;
+				if (get_cell(tmp)->actor->team == actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team != actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.value)
@@ -721,6 +742,11 @@ bool				s_game_board::attack_percent(t_ai_helper data)
 			{
 				if (get_cell(tmp)->actor == target_actor)
 					find = 1;
+				if (get_cell(tmp)->actor->team == actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team != actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.percent())
@@ -754,11 +780,23 @@ bool				s_game_board::help(t_ai_helper data)
 		return (false);
 	reset_board();
 	calculated = false;
+	size_t i = 0;
+	t_actor *target_actor = NULL;
+	while (i < turn_order.size())
+	{
+		if ((target_actor == NULL || (get_cell(turn_order[i]->coord)->v_dist < get_cell(target_actor->coord)->v_dist && turn_order[i]->stat.hp.percent() < target_actor->stat.hp.percent())) &&
+			turn_order[i]->team == turn_order[turn_index % turn_order.size()]->team && get_cell(turn_order[i]->coord)->cursor == t_vect(0, 2))
+			target_actor = turn_order[i];
+		i++;
+	}
+	if (target_actor == NULL)
+		return (false);
+
 	if (actor->spell[s_spell]->range_type == R_CIRCLE)
 		calculate_vision_circle();
 	else
 		calculate_vision_line();
-	size_t i = 0;
+	i = 0;
 
 	vector<t_vect>	target_list; //every tile hited by the spell
 	if (actor->spell[s_spell]->zone_type == Z_DIAM)
@@ -781,6 +819,7 @@ bool				s_game_board::help(t_ai_helper data)
 
 	for (size_t i = 0; i < to_look.size(); i++)
 	{
+		int find = 0;
 		int nb_target_hit = 0;
 		int percent_target_hit = 100;
 		if (actor->spell[s_spell]->zone_type == Z_LINE)
@@ -795,6 +834,13 @@ bool				s_game_board::help(t_ai_helper data)
 			t_vect tmp = actor->coord + to_look[i] + target_list[j];
 			if (get_cell(tmp) && get_cell(actor->coord + to_look[i]) && get_cell(actor->coord + to_look[i])->cursor == t_vect(0, 2) && get_cell(tmp)->actor != NULL)
 			{
+				if (get_cell(tmp)->actor == target_actor)
+					find = 1;
+				if (get_cell(tmp)->actor->team != actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team == actor->team)
 				{
 					if (percent_target_hit > get_cell(tmp)->actor->stat.hp.percent())
@@ -803,7 +849,7 @@ bool				s_game_board::help(t_ai_helper data)
 				}
 			}
 		}
-		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value)
+		if (nb_target_hit != 0 && percent_target_hit / nb_target_hit < utils_value && find == 1)
 		{
 			utils_value = percent_target_hit / nb_target_hit;
 			target = actor->coord + to_look[i];
@@ -883,6 +929,11 @@ bool				s_game_board::help_weak(t_ai_helper data)
 			{
 				if (get_cell(tmp)->actor == target_actor)
 					find = 1;
+				if (get_cell(tmp)->actor->team != actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team == actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.percent())
@@ -987,6 +1038,11 @@ bool				s_game_board::help_percent(t_ai_helper data)
 			{
 				if (get_cell(tmp)->actor == target_actor)
 					find = 1;
+				if (get_cell(tmp)->actor->team != actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team == actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.percent())
@@ -1092,6 +1148,11 @@ bool				s_game_board::help_caster_hp(t_ai_helper data)
 			{
 				if (get_cell(tmp)->actor == target_actor)
 					find = 1;
+				if (get_cell(tmp)->actor->team != actor->team)
+				{
+					find = 0;
+					break;
+				}
 				if (get_cell(tmp)->actor->team == actor->team)
 				{
 					if (percent_target_hit >= get_cell(tmp)->actor->stat.hp.percent())

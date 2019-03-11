@@ -178,7 +178,11 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 		if (gui.click(event) == false)
 		{
 			if (s_spell == -1)
+			{
+				if (check_anim() == false || check_visual() == false)
+					return ;
 				move_actor(player, get_mouse_pos(), 1.0);
+			}
 			else
 				cast_spell(get_mouse_pos());
 			check_alive();

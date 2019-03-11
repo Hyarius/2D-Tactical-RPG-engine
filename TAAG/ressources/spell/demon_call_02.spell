@@ -1,0 +1,21 @@
+price:0
+name:Demon call II
+description:Apply a regeneration effect that heals 6 HP(s) per turn for the next 3 turn(s) and heals the caster by 5 HP(s)
+icon:simple_iconset
+sprite:6:6
+m_spell:1
+pa:2
+pm:0
+cooldown:1
+range:0:0:0
+type:1
+on target:0
+zone:1:0
+effect1:15:0:6:3:0
+effect2:6:5:0:0:1
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:hit_explosive_02:34:14:2:2
+anim_type:0

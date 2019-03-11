@@ -1,0 +1,21 @@
+price:0
+name:Dark fire II
+description:Deals 10 true damage(s) to the target
+icon:simple_iconset
+sprite:5:1
+m_spell:1
+pa:5
+pm:0
+cooldown:1
+range:3:7:0
+type:1
+on target:1
+zone:0:2
+effect1:26:10:0:0:0
+effect2:0:0:0:0:0
+effect3:0:0:0:0:0
+effect4:0:0:0:0:0
+effect5:0:0:0:0:0
+effect6:0:0:0:0:0
+target_action:dark_red_attack:0:19:2:2
+anim_type:1

@@ -1,0 +1,13 @@
+name:default
+tileset:H21
+sprite_pos:3:4
+health:15
+action:8
+mouvement:3
+initiative:5
+spell0:Basic slash
+spell1:Basic fire
+spell2:Basic heal
+spell3:Basic arrow
+spell4:NULL
+spell5:NULL
