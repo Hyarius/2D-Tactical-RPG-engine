@@ -11,7 +11,9 @@ void				s_game_board::draw_self()
 	{
 		last_s_spell = s_spell;
 		draw_self_bool = true;
-		write_in_log("\n\n================\n");
+		write_in_log("\n");
+		write_in_log("\n");
+		write_in_log("================\n");
 		write_in_log("== NEW ACTION ==\n");
 		write_in_log("Action type : " + (s_spell == -1 ? string("Mouvement") : string("Spell")) + "\n");
 		write_in_log("Statement at start : ");
