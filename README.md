@@ -58,12 +58,17 @@ After the match, the player will win experience and gold, which he can use to bu
 
 ### Windows
 ```
+Link :
+```
+
+[TAAG-Installer.msi](https://drive.google.com/open?id=1xsZ6ITREkvIzhX4wHdFt207bGUUx6R1r)
+```
 Requirement :
 Nvidia graphical-card
 Windows drivers updated
 
 Setup :
-Download [TAAG-Installer.msi](https://drive.google.com/open?id=1xsZ6ITREkvIzhX4wHdFt207bGUUx6R1r) and use it to install the game
+Download the .msi file, and use it.
 Launch TAAG from your desktop or your start menu.
 ```
 
