@@ -1,0 +1,225 @@
+===	TAAG - 12-03-2019 16h-10m-42s -		===
+==========				===========
+[0] - user_profile = C:/Users/Hywa/documents/
+[1] - app_data = C:/Users/Hywa/AppData/Roaming/
+[2] - 
+[3] - Window inistialisation:
+[4] - SDL_Init :  Okay
+[5] - IMG_Init :  Okay
+[6] - SDL_GL_SetAttribute :  Okay
+[7] - SDL_GetDesktopDisplayMode :  Okay
+[8] - SDL_GL_CreateContext :  Okay
+[9] - 
+[10] - Graphical info :
+[11] - NVIDIA Corporation
+[12] - GeForce GTX 970/PCIe/SSE2
+[13] - 3.1.0 NVIDIA 398.36
+[14] - 1.40 NVIDIA via Cg compiler
+[15] - 
+[16] - glewInit :  Okay
+[17] - SDL set mouse status :  Okay
+[18] - glClearColor :  Okay
+[19] - 
+[20] - glGenVertexArrays :  Okay
+[21] - glBindVertexArray :  Okay
+[22] - glGenBuffers :  Okay
+[23] - glBindVertexArray :  Okay
+[24] - 
+[25] - LoadShaders :  Okay
+[26] - glGenTextures :  Okay
+[27] - glBindTexture :  Okay
+[28] - glTexParameteri :  Okay
+[29] - Setting opengl param :  Okay
+[30] - 
+[31] - Read tileset:
+[32] - Reading C:/Users/Hywa/AppData/Roaming/TAAG/ressources/tileset/tileset/folder - looking for .tls : Reading complete
+[33] - Reading C:/Users/Hywa/AppData/Roaming/TAAG/ressources/tileset/charset/folder - looking for .tls : Reading complete
+[34] - Reading C:/Users/Hywa/AppData/Roaming/TAAG/ressources/tileset/interface/folder - looking for .tls : Reading complete
+[35] - Reading C:/Users/Hywa/AppData/Roaming/TAAG/ressources/tileset/animation/folder - looking for .tls : Reading complete
+[36] - 
+[37] - Init action:
+[38] - Starting to setting various event
+[39] - Events setting done
+[40] - 
+[41] - Read spell:
+[42] - Starting reading spells function
+[43] - List every spell : DONE
+[44] - Spell map creation : DONE
+[45] - Reading spell : Done
+[46] - 
+[47] - 
+[48] -  --- Statement at menu_start begin : Everything is settle properly
+[49] - 
+[50] - Account : Creation complete
+[51] - 
+[52] - Gui button background : Creation complete
+[53] - Gui button play : Creation complete
+[54] - Gui button shop : Creation complete
+[55] - Character slot : Creation complete
+[56] - Level info : Creation complete
+[57] - Exp info : Creation complete
+[58] - Gold info : Creation complete
+[59] - Gui button monster editor : Creation complete
+[60] - Gui button map editor : Creation complete
+[61] - Gui button spell editor : Creation complete
+[62] - Gui button quit : Creation complete
+[63] - 
+[64] - Tutorial buttons : Creation complete
+[65] - 
+[66] - Tutorial set at 41
+[67] - Asking keyboard : Keyboard set
+[68] - 
+[69] - --- Starting menu_start loop ---
+[70] - Setting button text : DONE
+[71] - Prepare screen : DONE
+[72] - Drawing gui : DONE
+[73] - Render screen : DONE
+[74] - Event loop : DONE
+[75] - Check SDL/OpenGL : No error
+[76] - 
+[77] - 
+[78] -  --- Statement at menu_choose_map : Everything is settle properly
+[79] - 
+[80] - Gui background button : Creation complete
+[81] - Gui background button : Creation complete
+[82] - Gui map list button : Creation complete
+[83] - 
+[84] - Gui tutorial button : Creation complete
+[85] - 
+[86] - --- Starting menu_choose_map loop ---
+[87] - Prepare screen : DONE
+[88] - Drawing gui : DONE
+[89] - Render screen : DONE
+[90] - Event loop : DONE
+[91] - Check SDL/OpenGL : No error
+[92] - 
+[93] - 
+[94] - Starting game
+[95] - DONE
+[96] - 
+[97] - 
+[98] - 
+[99] - 
+[100] -  --- Statement at placement_phase : Everything is settle properly
+[101] - 
+[102] - Creating actor_pool : Done
+[103] - Gui background button : Creation complete
+[104] - Gui spell button : Creation complete
+[105] - 
+[106] - --- Starting placement phase loop ---
+[107] - Prepare screen : DONE
+[108] - Drawing board : Starting draw_board function : No error
+[109] - Starting draw_cell_layer function : No error
+[110] - Starting draw_placement function : No error
+[111] - Starting draw_actor_list function : No error
+[112] - Starting draw_cursor_layer function : No error
+[113] - Starting draw_mouse_cursor function : No error
+[114] - Starting draw_animation function : No error
+[115] - Starting draw_visual_info function : No error
+[116] - Drawing board -> DONE
+[117] - Drawing cell info : Drawing cell info -> DONE
+[118] - Drawing select wheel : Drawing select wheel -> DONE
+[119] - Render screen : DONE
+[120] - Event loop : DONE
+[121] - Check SDL/OpenGL : No error
+[122] - Clearing both placement list : Done
+[123] - Going into game_loop
+[124] - 
+[125] - 
+[126] -  --- Statement at game_loop : Everything is settle properly
+[127] - 
+[128] - Initiate turn order : DONE
+[129] - 
+[130] - Gui background button : Creation complete
+[131] - Gui spell button : Creation complete
+[132] - 
+[133] - --- Starting game loop loop ---
+[134] - Prepare screen : DONE
+[135] - Update_board : Checking character alive : DONE
+[136] - Moving character and setting up them direction is needed : DONE
+[137] - Calculation over Calculation over zone
+[138] - 
+[139] - Update board ended
+[140] - Drawing board : Drawind board -> DONE
+[141] - Drawing gui : DONE
+[142] - Checking enemy/ally number : DONE
+[143] - Render screen : DONE
+[144] - Event loop : DONE
+[145] - Check SDL/OpenGL : No error
+[146] - DONE
+[147] - Check SDL/OpenGL : No error
+[148] - Checking character alive : DONE
+[149] - Moving character and setting up them direction is needed : DONE
+[150] - Calculation over Calculation over zone
+[151] - 
+[152] - ================
+[153] - == NEW ACTION ==
+[154] - Action type : Spell
+[155] - Statement at start : No error
+[156] - ================
+[157] - Starting draw_board function : No error
+[158] - Starting draw_cell_layer function : No error
+[159] - Starting draw_placement function : No error
+[160] - Starting draw_path function : No error
+[161] - Starting draw_actor_list function : No error
+[162] - Starting draw_cursor_layer function : No error
+[163] - Starting draw_mouse_cursor function : No error
+[164] - Starting draw_animation function : No error
+[165] - Starting draw_visual_info function : No error
+[166] - Checking character alive : DONE
+[167] - Moving character and setting up them direction is needed : DONE
+[168] - Calculation over mouvement
+[169] - Calculation over zone
+[170] - 
+[171] - ================
+[172] - == NEW ACTION ==
+[173] - Action type : Mouvement
+[174] - Statement at start : No error
+[175] - ================
+[176] - Starting draw_board function : No error
+[177] - Starting draw_cell_layer function : No error
+[178] - Starting draw_placement function : No error
+[179] - Starting draw_path function : No error
+[180] - Starting draw_actor_list function : No error
+[181] - Starting draw_cursor_layer function : No error
+[182] - Starting draw_mouse_cursor function : No error
+[183] - Starting draw_animation function : No error
+[184] - Starting draw_visual_info function : No error
+[185] - Checking character alive : DONE
+[186] - Moving character and setting up them direction is needed : DONE
+[187] - Calculation over vision
+[188] - Calculation over zone
+[189] - 
+[190] - ================
+[191] - == NEW ACTION ==
+[192] - Action type : Spell
+[193] - Statement at start : No error
+[194] - ================
+[195] - Starting draw_board function : No error
+[196] - Starting draw_cell_layer function : No error
+[197] - Starting draw_placement function : No error
+[198] - Starting draw_path function : No error
+[199] - Starting draw_actor_list function : No error
+[200] - Starting draw_cursor_layer function : No error
+[201] - Starting draw_mouse_cursor function : No error
+[202] - Starting draw_animation function : No error
+[203] - Starting draw_visual_info function : No error
+[204] - Checking character alive : DONE
+[205] - Moving character and setting up them direction is needed : DONE
+[206] - Calculation over mouvement
+[207] - Calculation over zone
+[208] - 
+[209] - ================
+[210] - == NEW ACTION ==
+[211] - Action type : Mouvement
+[212] - Statement at start : No error
+[213] - ================
+[214] - Starting draw_board function : No error
+[215] - Starting draw_cell_layer function : No error
+[216] - Starting draw_placement function : No error
+[217] - Starting draw_path function : No error
+[218] - Starting draw_actor_list function : No error
+[219] - Starting draw_cursor_layer function : No error
+[220] - Starting draw_mouse_cursor function : No error
+[221] - Starting draw_animation function : No error
+[222] - Starting draw_visual_info function : No error

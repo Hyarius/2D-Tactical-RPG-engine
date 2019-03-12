@@ -32,6 +32,13 @@ static void	quit_select_spell(t_data data)// &actor | num spell | i | &play
 
 void		menu_choose_spell(t_data data)
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_choose_spell : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	int			spell_num = (int &)(data.data[1]);
 	t_actor		*player = (t_actor *)(data.data[2]);
@@ -39,15 +46,17 @@ void		menu_choose_spell(t_data data)
 	bool		play = true;
 	SDL_Event	event;
 
-
+	write_in_log("Gui background button : ");
 	gui.add(new t_button(new t_text_button(
-						"", BLACK,
-						gui.unit * t_vect(0.3, 0.3), gui.unit * t_vect(29.4, 19.4), 8,
-						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
-						),
-						NULL, NULL));
-	int index = 0;
+		"", BLACK,
+		gui.unit * t_vect(0.3, 0.3), gui.unit * t_vect(29.4, 19.4), 8,
+		t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
+	),
+		NULL, NULL));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Setting spell_list : ");
+	int index = 0;
 	for (int i = 0; i < 18; i++)
 	{
 		if (index + i >= (int)(account->spell_unlock.size()) || index + i < 0)
@@ -56,21 +65,31 @@ void		menu_choose_spell(t_data data)
 			spell_list[i] = &(spell_map[account->spell_unlock[(index + i) % account->spell_unlock.size()]]);
 		gui.add(new t_spell_card(&(spell_list[i]), gui.unit * t_vect(0.5 + (i % 6) * 4 + (0.2 * (i % 6)), (0.5 + (i / 6) * 6 + (0.2 * (i / 6)))), gui.unit * t_vect(4, 6), quit_select_spell, t_data(4, player, spell_num, i, &play)));// &actor | num spell | i | &play
 	}
+	write_in_log("DONE\n");
 
+	write_in_log("\n");
+
+	write_in_log("\n");
+
+	write_in_log("Gui up button : ");
 	gui.add(new t_button(new t_text_button(
 						"up", BLACK,
 						gui.unit * t_vect(26, 1), gui.unit * t_vect(3, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index, t_data(3, &index, -6, &gui)));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui down button : ");
 	gui.add(new t_button(new t_text_button(
 						"down", BLACK,
 						gui.unit * t_vect(26, 14), gui.unit * t_vect(3, 5), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index, t_data(3, &index, 6, &gui)));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui tutorial button : ");
 	if (gui_tutorial[9].object_list.size() == 0)
 	{
 		gui_tutorial[9] = t_gui(30, 20);
@@ -107,19 +126,54 @@ void		menu_choose_spell(t_data data)
 	}
 
 	((s_tutorial_button *)(gui_tutorial[11].object_list[TUTORIAL_NUM][0]))->button->button->data_left = t_data(4, player, spell_num, 0, &play);
+	write_in_log("Creation complete\n");
+
+	write_in_log("\n");
+	int a = 2;
 
 	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_choose_spell loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		gui.draw_self();
 		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
 		render_screen(true);
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 				menu_quit(t_data(2, &gui, &play));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))

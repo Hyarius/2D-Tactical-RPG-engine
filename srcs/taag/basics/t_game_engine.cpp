@@ -60,7 +60,7 @@ s_game_engine::s_game_engine()
 	ifstream		myfile;
 	myfile.open(GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT);
 	if (myfile.fail())
-		printf("can't open such file : %s\n", (GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT).c_str());
+		error_exit("can't open such file : " + GAME_ENGINE_PATH + "saved_game" + GAME_ENGINE_EXT + "\n");
 	level = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 	exp = s_value(atoi(get_strsplit(&myfile, ":", 2)[1].c_str()), calc_max_exp(level));
 	gold = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());

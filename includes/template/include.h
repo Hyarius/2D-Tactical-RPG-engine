@@ -28,7 +28,11 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# include <SDL2/SDL.h>
+#ifndef _WIN32
+#	include <SDL2/SDL.h>
+#else
+#	include <SDL.h>
+#endif
 
 #ifdef __APPLE__
 #	include <OpenGL/gl3.h>

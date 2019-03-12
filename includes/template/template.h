@@ -111,4 +111,9 @@ int					calc_text_size(string p_text, t_vect p_size);
 
 int					printOglError(const char *file, int line);
 void				check_sdl_error(const char *file, int line);
+
+void				write_in_log(string msg);
+void				charge_log_file();
+string				get_file_info(string file, int line);
+
 #endif

@@ -48,6 +48,15 @@ static void		quit_delete(t_data data)// player / entry_name / entry_path / pool 
 
 void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_choose_spell : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
+	write_in_log("Setting data value : ");
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	t_actor		*player = (t_actor *)(data.data[1]);
 	string		*entry_name = (string *)(data.data[2]);
@@ -58,6 +67,9 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 	bool		play = true;
 	SDL_Event	event;
 	int 		index = 0;
+	write_in_log("Setting complete\n");
+
+	write_in_log("Gui background button : ");
 
 	gui.add(new t_button(new t_text_button(
 						"", BLACK,
@@ -65,6 +77,9 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui question button : ");
 
 	gui.add(new t_button(new t_text_button(
 						"Which file do you want to delete ?", BLACK,
@@ -72,6 +87,9 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Setting delete file list : ");
 
 	list_file_delete_monster = list_files(MONSTER_PATH, MONSTER_EXT);
 	int i = 0;
@@ -89,20 +107,57 @@ void			menu_delete_monster(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &na
 		gui.add(button);
 		i++;
 	}
+	write_in_log("DONE\n");
+
+	write_in_log("\n");
+	int a = 2;
 
 	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_delete_actor loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		if (old_gui != NULL)
 			old_gui->draw_self();
 
 		gui.draw_self();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
 		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))

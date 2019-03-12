@@ -27,6 +27,15 @@ static void		quit_load(t_data data)// player / entry_name / entry_path / pool / 
 
 void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name / 3 - &path / 4 - &pool
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_load_actor : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
+	write_in_log("Setting data value : ");
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	t_actor		*player = (t_actor *)(data.data[1]);
 	string		*entry_name = (string *)(data.data[2]);
@@ -37,6 +46,9 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 	t_gui		gui = t_gui(15, 10);
 	bool		play = true;
 	SDL_Event	event;
+	write_in_log("Setting complete\n");
+
+	write_in_log("Gui question button : ");
 
 	s_button *button = new s_button(new s_text_button(//button did you wanna quit
 						"Do you want to load this actor again ?", DARK_GREY, //text info
@@ -45,22 +57,41 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 						NULL, NULL);
 	button->button->image_coord = button->button->image_coord - gui.unit * t_vect(0, 1);
 	gui.add(button);
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui yes button : ");
 	gui.add(new s_button(new s_text_button(//button yes
 						"YES", DARK_GREY, //text info
 						gui.unit * t_vect(4.25, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						quit_load, t_data(5, &play, player, entry_path, tile_index, &sprite_target)));
 
+	write_in_log("Creation complete\n");
+	write_in_log("Gui no button : ");
 	gui.add(new s_button(new s_text_button(//button no
 						"NO", DARK_GREY, //text info
 						gui.unit * t_vect(7.75, 5.25), gui.unit * t_vect(3, 1.5), 8, //object info
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)),
 						stand, &play));
+	write_in_log("Creation complete\n");
+
+	write_in_log("\n");
+	int a = 2;
 
 	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_load_actor loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		if (old_gui != NULL)
 			old_gui->draw_self();
@@ -69,10 +100,32 @@ void			menu_load_actor(t_data data) // 0 - t_gui * / 1 - t_actor * / 2 - &name /
 		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
 		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))

@@ -14,53 +14,148 @@ static void			tutorial_cast_spell(t_data data)
 
 void				s_game_board::game_loop()
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at game_loop : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
 	SDL_Event	event;
 	bool		play = true;
 
+	write_in_log("Initiate turn order : ");
 	initiate_turn_order();
+	write_in_log("DONE\n");
+	write_in_log("\n");
 
 	gui = t_gui(30, 20);
+	write_in_log("Gui background button : ");
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui spell button : ");
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
+	write_in_log("Creation complete\n");
 
-	while (play)
+	write_in_log("\n");
+	int a = 2;
+
+	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting game loop loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Update_board : ");
+		}
+
 		update_board();
+
+		if (a >= 2)
+		{
+			write_in_log("Update board ended\n");
+			write_in_log("Drawing board : ");
+		}
 		draw_self();
+
+		if (a >= 2)
+		{
+			write_in_log("Drawind board -> DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 		draw_gui();
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Checking enemy/ally number : ");
+		}
 
 		if (enemy_list.size() == 0 || ally_list.size() == 0)
 			ending_fight(&play);
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
+		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+		}
+
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 				menu_quit(t_data(2, &gui, &play));
 			handle_control_camera(&event);
 			handle_control_game(&event);
 		}
-		render_screen(true);
 	}
 }
 
 void				s_game_board::game_loop_tutorial()
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at game_loop_tutorial : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
 	SDL_Event	event;
 	bool		play = true;
 
+
+
+	write_in_log("Initiate turn order : ");
 	initiate_turn_order();
+	write_in_log("DONE\n");
+	write_in_log("\n");
 
 	gui = t_gui(30, 20);
+	write_in_log("Gui background button : ");
 	gui.add(new s_button(new t_image_button(t_image("ressources/assets/interface/GUI_Shortcut.png"), gui.unit * t_vect(7.5, 18), gui.unit * t_vect(15, 2)), NULL, NULL));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui spell button : ");
 	for (int i = 0; i < 6; i++)
 		gui.add(SPELL_BUTTON, new s_button(new t_text_button("", BLACK, gui.unit * t_vect((i < 3 ? 8 : 18) + ((i % 3) * 1.5), 18.5), gui.unit, 0, t_color(0.3, 0.3, 0.3, 0.0), t_color(0.6, 0.6, 0.6, 0.0)), change_s_spell, t_data(3, &s_spell, &calculated, i)));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Keyboard setting : ");
+	vector<string> text = { SDL_GetKeyName(account->keyboard[0]), SDL_GetKeyName(account->keyboard[1]) , SDL_GetKeyName(account->keyboard[2]) , SDL_GetKeyName(account->keyboard[3]) , SDL_GetKeyName(account->keyboard[4]) , SDL_GetKeyName(account->keyboard[5]) };
+	for (size_t i = 0; i < text.size(); i++)
+	{
+		if (i != 0)
+			write_in_log(" - ");
+		write_in_log(text[i]);
+	}
 
-	string text[6] = { SDL_GetKeyName(account->keyboard[0]), SDL_GetKeyName(account->keyboard[1]) , SDL_GetKeyName(account->keyboard[2]) , SDL_GetKeyName(account->keyboard[3]) , SDL_GetKeyName(account->keyboard[4]) , SDL_GetKeyName(account->keyboard[5]) };
-
+	write_in_log("\n");
+	write_in_log("Gui tutorial button : ");
 	if (gui_tutorial[26].object_list.size() == 0)
 	{
 		t_button *button = new t_button(new s_text_button(
@@ -193,14 +288,46 @@ void				s_game_board::game_loop_tutorial()
 
 		gui_tutorial[35].add(TUTORIAL_NUM, new s_tutorial_button(button, button2, false));
 	}
+	write_in_log("Creation complete\n");
 
-	while (play)
+	write_in_log("\n");
+	int a = 2;
+
+	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting game loop loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Update_board : ");
+		}
+
 		update_board();
+
+		if (a >= 2)
+		{
+			write_in_log("Update board ended\n");
+			write_in_log("Drawing board : ");
+		}
 		draw_self();
+
+		if (a >= 2)
+		{
+			write_in_log("Drawind board -> DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 		draw_gui();
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Checking and printing tutorial : ");
+		}
 
 		if (account->tuto_state < TUTO_SIZE)
 		{
@@ -213,11 +340,40 @@ void				s_game_board::game_loop_tutorial()
 			gui_tutorial[account->tuto_state].draw_self();
 		}
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Checking enemy/ally number : ");
+		}
+
 		if (enemy_list.size() == 0 || ally_list.size() == 0)
 			ending_fight(&play);
+		
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
+		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+		}
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))
 			{
 				menu_quit(t_data(2, &gui, &play));
@@ -242,6 +398,5 @@ void				s_game_board::game_loop_tutorial()
 				handle_control_game(&event);
 			}
 		}
-		render_screen(true);
 	}
 }

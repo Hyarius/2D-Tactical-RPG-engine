@@ -119,6 +119,7 @@ t_spell		read_one_spell(string path)
 
 void		read_spell()
 {
+	write_in_log("Starting reading spells function\n");
 	vector<string>	spell_file;
 	ifstream		myfile;
 	vector<string>	tab;
@@ -139,18 +140,25 @@ void		read_spell()
 	int				price;
 	vector<t_action> effect;
 
+	write_in_log("List every spell : ");
 	spell_file = list_files(SPELL_PATH, SPELL_EXT);
+	write_in_log("DONE\n");
+
+	write_in_log("Spell map creation : ");
 	spell_map.clear();
 	spell_map["NULL"] = t_spell();
 	spell_name.clear();
 	spell_heros_name.clear();
 	spell_monster_name.clear();
+	write_in_log("DONE\n");
+
 	size_t i = 0;
+	write_in_log("Reading spell : ");
 	while (i < spell_file.size())
 	{
 		myfile.open(SPELL_PATH + spell_file[i] + SPELL_EXT);
 		if (myfile.fail())
-			printf("can't open such file : %s\n", (SPELL_PATH + spell_file[i] + SPELL_EXT).c_str());
+			write_in_log("Can't open such file : "+ SPELL_PATH + spell_file[i] + SPELL_EXT + "\n");
 		price = atoi(get_strsplit(&myfile, ":", 2)[1].c_str());
 		name = get_strsplit(&myfile, ":", 2)[1];
 		desc = get_strsplit(&myfile, ":", 2)[1];
@@ -192,4 +200,5 @@ void		read_spell()
 
 		i++;
 	}
+	write_in_log("Done\n");
 }

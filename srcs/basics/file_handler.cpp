@@ -26,7 +26,7 @@ vector<string>			get_strsplit(ifstream *myfile, const string c, int size)
 	if (line == "")
 	{
 		if (size != -1)
-			error_exit("Empty line in get_strsplit when espect a size");
+			error_exit(get_file_info(__FILE__, __LINE__) + " - Empty line in get_strsplit when espect a size");
 		tab.resize(0);
 		return (tab);
 	}
@@ -38,7 +38,7 @@ vector<string>			get_strsplit(ifstream *myfile, const string c, int size)
         word = strtok_r(NULL, c.c_str(), &context);
     }
 	if (size != -1 && tab.size() != (size_t)size)
-		error_exit("Bad lenght in get_strsplit");
+		error_exit(get_file_info(__FILE__, __LINE__) + " - Bad lenght in get_strsplit");
     return tab;
 }
 
@@ -50,7 +50,7 @@ vector<string>		list_files(string path, string extension)
 	DIR				*dir = opendir(path.c_str());
 
 	if (dir == NULL)
-		error_exit("Folder " + path + " didn't exist");
+		error_exit(get_file_info(__FILE__, __LINE__) + " - Folder " + path + " didn't exist");
 	char			*context = NULL;
 
 	string			test;

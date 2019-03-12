@@ -75,11 +75,26 @@ void		buy_spell(t_data data)
 
 void create_tab_spell(t_data data)
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at create_tab_spell : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
+	write_in_log("Setting data value : ");
 	t_gui *gui = (t_gui *)(data.data[0]);
 	int		*index = (int *)(data.data[1]);
 
 	*gui = t_gui();
+	write_in_log("Setting complete\n");
+
+	write_in_log("Check spell locked : ");
 	check_spell_lock();
+	write_in_log("DONE\n");
+
+	write_in_log("Setting spell lock list : ");
 
 	for (int i = 0; i < 18; i++)
 	{
@@ -95,9 +110,15 @@ void create_tab_spell(t_data data)
 		}
 	}
 
+	write_in_log("DONE\n");
+
+	write_in_log("Setting buttons variable : ");
 	int i = 0;
 
 	t_vect size = t_vect(3.6, 5.2);
+	write_in_log("DONE\n");
+
+	write_in_log("Creation buy button : ");
 	for (int i = 0; i < 18; i++)
 	{
 		gui->add(new s_shop_spell(new t_spell_card(&(spell_list_shop[i]),
@@ -106,6 +127,9 @@ void create_tab_spell(t_data data)
 							buy_spell, t_data(2, &(spell_item_list[i]), index)),
 							&(spell_item_list[i]), gui->unit * t_vect(1.3, -0.2), gui->unit * t_vect(size.x - 1.5, 0.6)));
 	}
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui up button : ");
 
 	gui->add(new t_button(new t_text_button(
 						" up ", BLACK,
@@ -113,6 +137,9 @@ void create_tab_spell(t_data data)
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index_spell_tab, t_data(2, index, -6)));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui down button : ");
 
 	gui->add(new t_button(new t_text_button(
 						"down", BLACK,
@@ -120,4 +147,5 @@ void create_tab_spell(t_data data)
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index_spell_tab, t_data(2, index, 6)));
+	write_in_log("Creation complete\n");
 }

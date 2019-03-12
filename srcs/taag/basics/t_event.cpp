@@ -17,6 +17,7 @@ void			set_game_engine(t_game_board *new_game)
 
 void			init_actions()
 {
+	write_in_log("Starting to setting various event\n");
 	g_effects.push_back(deal_dmg); 		//0
 	g_effects.push_back(heal);			//1
 	g_effects.push_back(change_pm);		//2
@@ -46,6 +47,7 @@ void			init_actions()
 	g_effects.push_back(true_dmg);
 	g_effects.push_back(add_armor_caster);
 	g_effects.push_back(remove_armor_caster);
+	write_in_log("Events setting done\n");
 }
 
 void		deal_dmg(t_actor *source, t_actor *target, t_action_stat effect_stat)

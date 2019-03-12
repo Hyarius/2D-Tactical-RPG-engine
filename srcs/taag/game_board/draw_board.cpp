@@ -60,8 +60,8 @@ void				s_game_board::draw_cursor(t_vect coord, t_vect target, t_vect size, t_ve
 void				s_game_board::draw_board()
 {
 	t_vect size = sprite_unit * zoom;
-	//(coord + target) * size + offset, size, sprite);
-		t_tileset *tile= get_interface_tile("simple_board");
+	
+	t_tileset *tile= get_interface_tile("simple_board");
 	int i = 0;
 	while (i < board_size.x)
 	{

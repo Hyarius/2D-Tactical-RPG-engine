@@ -55,8 +55,7 @@ void check_sdl_error(const char *file, int line)
 
 void				error_exit(string error)
 {
-	printf("%s\n", error.c_str());
-	getchar();
+	write_in_log(error + "\n");
 	exit(1);
 }
 

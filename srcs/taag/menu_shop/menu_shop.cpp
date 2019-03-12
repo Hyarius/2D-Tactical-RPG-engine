@@ -46,6 +46,13 @@ void		set_index(t_data data)
 
 void menu_shop(t_data data)
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_shop : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
 	int index = 1;
 	(void)data;
 	SDL_Event	event;
@@ -55,29 +62,40 @@ void menu_shop(t_data data)
 	for (int i = 0; i < 3; i++)
 		index_part[i] = 0;
 
+	write_in_log("Gui background button : ");
 	t_button *back = new t_button(new t_image_button(t_image(t_color(0.2, 0.2, 0.2)), t_vect(0, 0), get_win_size()), NULL, NULL);
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui sprite tab button : ");
 	t_button *sprite_tabs = new t_button(new s_text_button(
 			"SPRITE", DARK_GREY,
 			t_vect(1, 1) * gui.unit, t_vect(3, 1) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			set_index, t_data(2, &index, 0));
+	write_in_log("Creation complete\n");
+	write_in_log("Gui spell tab button : ");
 	t_button *spell_tabs = new t_button(new s_text_button(
 			"SPELL", DARK_GREY,
 			t_vect(4.1, 1) * gui.unit, t_vect(3, 1) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			set_index, t_data(2, &index, 1));
+	write_in_log("Creation complete\n");
+	write_in_log("Gui map tab button : ");
 	t_button *map_tabs = new t_button(new s_text_button(
 			"MAP", DARK_GREY,
 			t_vect(7.2, 1) * gui.unit, t_vect(3, 1) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			set_index, t_data(2, &index, 2));
+	write_in_log("Creation complete\n");
+	write_in_log("Gui background button : ");
 	t_button *back_ground = new t_button(new s_text_button(
 			"", DARK_GREY,
 			t_vect(1, 2.1) * gui.unit, t_vect(28, 16.9) * gui.unit, 8,
 			t_color(0.3, 0.3, 0.3), t_color(0.5, 0.5, 0.5)),
 			NULL, NULL);
 
+	write_in_log("Creation complete\n");
+	write_in_log("Gui level iterator button : ");
 	t_iterator *level_iterator = new s_iterator(&(account->level), NULL, 0, 1, 0, 150,
 		new t_button(new s_text_button(
 				"Level : ", DARK_GREY,
@@ -89,7 +107,9 @@ void menu_shop(t_data data)
 				t_vect(15.2, 1) * gui.unit, t_vect(2, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		NULL);
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui gold iterator button : ");
 	t_iterator *gold_iterator = new s_iterator(&(account->gold), NULL, 0, 1, 0, 150,
 		new t_button(new s_text_button(
 				"Gold : ", DARK_GREY,
@@ -101,6 +121,7 @@ void menu_shop(t_data data)
 				t_vect(21.2, 1) * gui.unit, t_vect(2, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL),
 		NULL);
+	write_in_log("Creation complete\n");
 
 	gui.add(back);
 	gui.add(sprite_tabs);
@@ -110,6 +131,7 @@ void menu_shop(t_data data)
 	gui.add(level_iterator);
 	gui.add(gold_iterator);
 
+	write_in_log("Gui tutorial button : ");
 	if (gui_tutorial[17].object_list.size() == 0)
 	{
 		gui_tutorial[17] = t_gui(30, 20);
@@ -187,23 +209,59 @@ void menu_shop(t_data data)
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
 	}
+	write_in_log("Creation complete\n");
 
 	create_tab_spell(t_data(2, &(gui_part_shop[1]), &(index_part[1])));
 
-	while (play)
-	{
+	write_in_log("\n");
+	int a = 2;
 
+	while (play == true)
+	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_load_actor loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		gui.draw_self();
 		gui_part_shop[index].draw_self();
 		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
 		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 			{
 				menu_quit(t_data(2, &gui, &play));

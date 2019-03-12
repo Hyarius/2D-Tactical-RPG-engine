@@ -163,8 +163,16 @@ static void			read_texture_folder(string p_path, string p_ext, vector<string> *v
 
 void				read_tileset()
 {
+	write_in_log("Reading " + TILESET_TILESET_PATH + "folder - looking for " + TILESET_TILESET_EXT + " : ");
 	read_texture_folder(TILESET_TILESET_PATH, TILESET_TILESET_EXT, &tileset_name);
+	write_in_log("Reading complete\n");
+	write_in_log("Reading " + TILESET_CHARSET_PATH + "folder - looking for " + TILESET_CHARSET_EXT + " : ");
 	read_texture_folder(TILESET_CHARSET_PATH, TILESET_CHARSET_EXT, &sprite_name);
+	write_in_log("Reading complete\n");
+	write_in_log("Reading " + TILESET_INTERFACE_PATH + "folder - looking for " + TILESET_INTERFACE_EXT + " : ");
 	read_texture_folder(TILESET_INTERFACE_PATH, TILESET_INTERFACE_EXT, &interface_name);
+	write_in_log("Reading complete\n");
+	write_in_log("Reading " + TILESET_ANIMATION_PATH + "folder - looking for " + TILESET_ANIMATION_EXT + " : ");
 	read_texture_folder(TILESET_ANIMATION_PATH, TILESET_ANIMATION_EXT, &animation_name);
+	write_in_log("Reading complete\n");
 }

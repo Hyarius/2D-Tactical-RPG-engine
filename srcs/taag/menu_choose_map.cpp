@@ -35,26 +35,38 @@ static void		quit_load(t_data data)// entry_path / play / num
 
 void			menu_choose_map(t_data data) // 0 - &path
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_choose_map : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
 	string		*entry_path = (string *)(data.data[0]);
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
 	int 		index = 0;
 
+	write_in_log("Gui background button : ");
 	gui.add(new t_button(new t_text_button(
 						"", BLACK,
 						gui.unit * t_vect(1, 1), gui.unit * t_vect(28, 18), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui background button : ");
 	gui.add(new t_button(new t_text_button(
 						"Which map do you want to play ?", BLACK,
 						gui.unit * t_vect(1.5, 1.5), gui.unit * t_vect(27, 2), 8,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui map list button : ");
 	list_file_choose_map = account->map_unlock;
 	int i = 0;
 	while (i < 30)
@@ -71,6 +83,9 @@ void			menu_choose_map(t_data data) // 0 - &path
 		gui.add(button);
 		i++;
 	}
+	write_in_log("Creation complete\n");
+	write_in_log("\n");
+	write_in_log("Gui tutorial button : ");
 	if (gui_tutorial[15].object_list.size() == 0)
 	{
 		gui_tutorial[15] = t_gui(30, 20);
@@ -102,19 +117,55 @@ void			menu_choose_map(t_data data) // 0 - &path
 				t_color(222, 184, 135), t_color(245, 222, 179)), tmp_function, NULL), true
 		));
 	}
+	write_in_log("Creation complete\n");
 
+	write_in_log("\n");
+	int a = 2;
 	while (play == true)
 	{
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_choose_map loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		gui.draw_self();
 		if ((size_t)(account->tuto_state) < gui_tutorial.size())
 			gui_tutorial[account->tuto_state].draw_self();
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
+
 		render_screen(true);
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
 
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 			{
 				menu_quit(t_data(1, &gui));

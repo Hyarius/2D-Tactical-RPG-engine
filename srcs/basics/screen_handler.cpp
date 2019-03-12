@@ -33,13 +33,27 @@ void				window_initialisation(string window_name)
 	int				win_y;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
+
+	write_in_log("SDL_Init : ");
+	printSDLError();
+	write_in_log(" Okay\n");
+
 	IMG_Init(IMG_INIT_PNG);
+
+	write_in_log("IMG_Init : ");
+	printSDLError();
+	write_in_log(" Okay\n");
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+
+	write_in_log("SDL_GL_SetAttribute : ");
+	printSDLError();
+	write_in_log(" Okay\n");
 
 	SDL_GetDesktopDisplayMode(0, &current);
 	g_window = SDL_CreateWindow(window_name.c_str(),
@@ -47,8 +61,25 @@ void				window_initialisation(string window_name)
 		(int)(current.w * SCREEN_RATIO_X), (int)(current.h * SCREEN_RATIO_Y),
 		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	SDL_GetWindowSize(g_window, &win_x, &win_y);
+
+	write_in_log("SDL_GetDesktopDisplayMode : ");
+	printSDLError();
+	write_in_log(" Okay\n");
+
 	g_window_size = t_vect(win_x, win_y);
 	g_context = SDL_GL_CreateContext(g_window);
+
+	write_in_log("SDL_GL_CreateContext : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
+	write_in_log("\n");
+	write_in_log("Graphical info :\n");
+	write_in_log(string((char *)(glGetString(GL_VENDOR))) + "\n");
+	write_in_log(string((char *)(glGetString(GL_RENDERER))) + "\n");
+	write_in_log(string((char *)(glGetString(GL_VERSION))) + "\n");
+	write_in_log(string((char *)(glGetString(GL_SHADING_LANGUAGE_VERSION))) + "\n");
+	write_in_log("\n");
 
 	glDisable(GL_CULL_FACE);
 
@@ -56,38 +87,91 @@ void				window_initialisation(string window_name)
 		glewInit();
 	#endif
 
+	write_in_log("glewInit : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
+
 	SDL_WarpMouseInWindow(g_window, (int)(g_window_size.x / 2), (int)(g_window_size.y) / 2);
 	SDL_SetWindowGrab(g_window, SDL_FALSE);
 	SDL_ShowCursor(1);
+
+	write_in_log("SDL set mouse status : ");
+	printSDLError();
+	write_in_log(" Okay\n");
 
 	t_color color = t_color(0.1, 0.1, 0.1);
 
 	glClearColor((GLclampf)color.r, (GLclampf)color.g, (GLclampf)color.b, 0.0f);
 
+	write_in_log("glClearColor : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glGenVertexArrays(1, &vertex_array);
+
+	write_in_log("\n");
+	write_in_log("glGenVertexArrays : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glBindVertexArray(vertex_array);
+
+	write_in_log("glBindVertexArray : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glGenBuffers(1, &vertex_buffer);
 	glGenBuffers(1, &color_buffer);
 	glGenBuffers(1, &texture_buffer);
 	glGenBuffers(1, &alpha_buffer);
 
+	write_in_log("glGenBuffers : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glBindVertexArray(get_vertex_array());
+
+	write_in_log("glBindVertexArray : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
 
 	program_color = LoadShaders(	"ressources/shader/color_shader.vert",	"ressources/shader/color_shader.frag");
 	program_sprite = LoadShaders(	"ressources/shader/texture_shader.vert", "ressources/shader/texture_shader.frag");
 
+	write_in_log("\n");
+	write_in_log("LoadShaders : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glGenTextures(1, &textureID);
+
+	write_in_log("glGenTextures : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
 	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	write_in_log("glBindTexture : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 
+	write_in_log("glTexParameteri : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS);
+
+	write_in_log("Setting opengl param : ");
+	printOpenGLError();
+	write_in_log(" Okay\n");
 
 	srand(time(NULL));
 	set_color_tab();

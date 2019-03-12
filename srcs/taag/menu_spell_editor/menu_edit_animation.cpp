@@ -2,12 +2,24 @@
 
 void menu_edit_animation(t_data data)
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at menu_edit_animation : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
+	write_in_log("Setting data value : ");
 	t_gui		*old_gui = (t_gui *)(data.data[0]);
 	t_spell		*spell = (t_spell *)(data.data[1]);
 
 	t_gui		gui;
 	bool		play = true;
 	SDL_Event	event;
+	write_in_log("Setting complete\n");
+
+	write_in_log("Gui background button : ");
 
 	gui.add(new t_button(new t_text_button(
 						"", BLACK,
@@ -15,6 +27,9 @@ void menu_edit_animation(t_data data)
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
+
+	write_in_log("Gui animation name button : ");
 
 	gui.add(new t_button(new t_text_button(
 						"Which animation do you want ?", BLACK,
@@ -22,7 +37,9 @@ void menu_edit_animation(t_data data)
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						NULL, NULL));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui animation selector : ");
 	t_button *tile_name_button = new t_button(new t_text_button(
 						"", BLACK,
 						gui.unit * t_vect(8.75, 1.5), gui.unit * t_vect(7, 1), 5,
@@ -31,10 +48,12 @@ void menu_edit_animation(t_data data)
 						menu_select_anim, NULL);
 
 	string *tile_name = &(tile_name_button->button->text);
+	write_in_log("Creation complete\n");
 
 	tile_name_button->button->data_left = t_data(3, &gui, spell, tile_name); // 0 - t_gui * / 1 - t_spell * / 2 - &name
 
 	*tile_name = "NULL";
+	write_in_log("Animation detection : ");
 	for (map<string, t_tileset>::const_iterator i = tileset_map.begin(); i != tileset_map.end(); ++i)
 	{
 		if (&(i->second) == spell->target_anim.tile)
@@ -43,11 +62,13 @@ void menu_edit_animation(t_data data)
 			break;
 		}
 	}
+	write_in_log("Detection complete -> "+ *tile_name + "\n");
 
 	gui.add(tile_name_button);
 
 	int i = 1;
 
+	write_in_log("Gui animation start button : ");
 	t_iterator *start_frame = new s_iterator(&(spell->target_anim.start), NULL, 1, 1, 0, 100,
 		new t_button(new s_text_button(
 				"Starting frame : ", DARK_GREY,
@@ -66,7 +87,9 @@ void menu_edit_animation(t_data data)
 				t_vect(13, 1.5 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui animation len button : ");
 	t_iterator *len_value = new s_iterator(&(spell->target_anim.len), NULL, 1, 1, 0, 100,
 		new t_button(new s_text_button(
 				"Animation len : ", DARK_GREY,
@@ -85,7 +108,9 @@ void menu_edit_animation(t_data data)
 				t_vect(13, 1.5 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui animation size x button : ");
 	int x = spell->target_anim.anim_size.x;
 	t_iterator *size_x_value = new s_iterator(&(x), NULL, 1, 1, 1, 100,
 		new t_button(new s_text_button(
@@ -105,7 +130,9 @@ void menu_edit_animation(t_data data)
 				t_vect(13, 1.5 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui animation size y button : ");
 	int y = spell->target_anim.anim_size.y;
 
 	t_iterator *size_y_value = new s_iterator(&(y), NULL, 1, 1, 1, 100,
@@ -126,7 +153,9 @@ void menu_edit_animation(t_data data)
 				t_vect(13, 1.5 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui animation type button : ");
 	t_iterator *anim_type = new s_iterator(&(spell->anim_type), NULL, 1, 1, 0, 2,
 		new t_button(new s_text_button(
 				"Animation type : ", DARK_GREY,
@@ -145,6 +174,7 @@ void menu_edit_animation(t_data data)
 				t_vect(13, 1.5 + (1.2 * (i))) * gui.unit, t_vect(1, 1) * gui.unit, 5,
 				t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)), NULL, NULL));
 	i++;
+	write_in_log("Creation complete\n");
 
 	gui.add(start_frame);
 	gui.add(len_value);
@@ -152,15 +182,34 @@ void menu_edit_animation(t_data data)
 	gui.add(size_y_value);
 	gui.add(anim_type);
 
+	write_in_log("\n");
+	int a = 2;
+
 	while (play == true)
 	{
-		spell->target_anim.anim_size = t_vect(x, y);
+		if (a >= 2)
+		{
+			write_in_log("--- Starting menu_edit_animation loop ---\n");
+			write_in_log("Prepare screen : ");
+		}
 		prepare_screen();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Drawing gui : ");
+		}
 
 		if (old_gui != NULL)
 			old_gui->draw_self();
 
 		gui.draw_self();
+
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Render screen : ");
+		}
 
 		if (spell->target_anim.tile != NULL)
 		{
@@ -194,8 +243,24 @@ void menu_edit_animation(t_data data)
 
 		render_screen(true);
 
+		if (a >= 2)
+		{
+			write_in_log("DONE\n");
+			write_in_log("Event loop : ");
+			a--;
+		}
+
 		if (SDL_PollEvent(&event) == 1)
 		{
+			if (a >= 1)
+			{
+				write_in_log("DONE\n");
+				write_in_log("Check SDL/OpenGL : ");
+				printOpenGLError();
+				printSDLError();
+				write_in_log("No error\n");
+				a--;
+			}
 			if (event.type == SDL_QUIT)
 				menu_quit(t_data(1, &gui));
 			if ((event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE))

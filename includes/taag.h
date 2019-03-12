@@ -22,6 +22,7 @@ extern string user_profile;
 extern string app_data;
 
 #define TMP_PATH				app_data + string("TAAG/ressources/tmp/")
+#define LOG_PATH				user_profile + string("TAAG/log/")
 
 #define ACTOR_PATH 				user_profile + string("TAAG/ressources/game_object/actor/")
 #define ACTOR_EXT 				".act"

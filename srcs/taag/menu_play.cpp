@@ -17,7 +17,13 @@ void					menu_play(t_data data)
 
 	if (path != "")
 	{
+		write_in_log("\n");
+		write_in_log("\n");
+		write_in_log("Starting game\n");
 		account->start_game(MAP_PATH + path + MAP_EXT);
+		write_in_log("DONE\n");
+		write_in_log("\n");
+		write_in_log("\n");
 
 		if (account->board.board_size.x >= 5 && account->board.board_size.y >= 5)
 		{

@@ -75,12 +75,26 @@ void		buy_map(t_data data)
 
 void create_tab_map(t_data data)
 {
+	write_in_log("\n");
+	write_in_log("\n");
+	write_in_log(" --- Statement at create_tab_map : ");
+	printOpenGLError();
+	printSDLError();
+	write_in_log("Everything is settle properly\n");
+	write_in_log("\n");
+
+	write_in_log("Setting data value : ");
 	t_gui *gui = (t_gui *)(data.data[0]);
 	int		*index = (int *)(data.data[1]);
 
 	*gui = t_gui();
-	check_map_lock();
+	write_in_log("Setting complete\n");
 
+	write_in_log("Check map locked : ");
+	check_map_lock();
+	write_in_log("DONE\n");
+
+	write_in_log("Setting map lock list : ");
 	for (int i = 0; i < 18; i++)
 	{
 		if (i + (*index) < 0 || i + *index >= (int)(map_item_vector.size()))
@@ -88,9 +102,15 @@ void create_tab_map(t_data data)
 		else
 			map_item_list[i] = map_item_vector[i + (*index)];
 	}
+	write_in_log("DONE\n");
+
+	write_in_log("Setting buttons variable : ");
 	t_vect size = t_vect(3.6, 5.2);
 	t_vect icon_size = t_vect(1.2, 1.2);
 	t_vect price_size = t_vect(1.5, 0.6);
+	write_in_log("DONE\n");
+
+	write_in_log("Creation buy button : ");
 	for (int i = 0; i < 18; i++)
 	{
 		t_vect coord = t_vect(1.25 + (i % 6) * size.x + (0.2 * (i % 6)), (2.4 + (i / 6) * size.y + (0.4 * (i / 6))));
@@ -106,18 +126,23 @@ void create_tab_map(t_data data)
 				gui->unit * (coord + (t_vect((size.x - price_size.x) / 2.0, size.y - price_size.y - 0.2))),
 				gui->unit * price_size));
 	}
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui up button : ");
 	gui->add(new t_button(new t_text_button(
 						" up ", BLACK,
 						gui->unit * t_vect(26, 3), gui->unit * t_vect(2, 5), 4,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index_map_tab, t_data(2, index, -6)));
+	write_in_log("Creation complete\n");
 
+	write_in_log("Gui down button : ");
 	gui->add(new t_button(new t_text_button(
 						"down", BLACK,
 						gui->unit * t_vect(26, 13), gui->unit * t_vect(2, 5), 4,
 						t_color(0.4, 0.4, 0.4), t_color(0.6, 0.6, 0.6)
 						),
 						modify_index_map_tab, t_data(2, index, 6)));
+	write_in_log("Creation complete\n");
 }
