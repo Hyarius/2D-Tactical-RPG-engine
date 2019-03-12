@@ -67,7 +67,7 @@ void				s_game_board::placement_phase(t_actor *game_actor_list[])
 		if (a >= 2)
 		{
 			write_in_log("DONE\n");
-			write_in_log("Drawing board : ");
+			write_in_log("Drawing board :\n");
 		}
 
 		draw_self();

@@ -1,5 +1,8 @@
 #include "taag.h"
 
+extern bool	bool_checker[];
+extern bool draw_self_bool;
+
 void				s_game_board::handle_mouvement(SDL_Event *event)
 {
 	if (event->type == SDL_MOUSEMOTION && event->button.button == SDL_BUTTON_MIDDLE)
@@ -159,12 +162,57 @@ void				s_game_board::handle_actor_placement(SDL_Event *event, int *index, vecto
 			}
 		}
 	}
-	else if (event->type == SDL_KEYDOWN)
+	else if (event->type == SDL_KEYUP)
 	{
 		if (event->key.keysym.sym == SDLK_UP)
 			(*index)--;
 		else if (event->key.keysym.sym == SDLK_DOWN)
 			(*index)++;
+		if (event->key.keysym.sym == SDLK_F1)
+		{
+			bool_checker[0] = (bool_checker[0] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F2)
+		{
+			bool_checker[1] = (bool_checker[1] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F3)
+		{
+			bool_checker[2] = (bool_checker[2] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F4)
+		{
+			bool_checker[3] = (bool_checker[3] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F5)
+		{
+			bool_checker[4] = (bool_checker[4] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F6)
+		{
+			bool_checker[5] = (bool_checker[5] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F7)
+		{
+			bool_checker[6] = (bool_checker[6] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F8)
+		{
+			bool_checker[7] = (bool_checker[7] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F9)
+		{
+			bool_checker[8] = (bool_checker[8] == true ? false : true);
+			draw_self_bool = true;
+		}
 	}
 }
 
@@ -193,8 +241,53 @@ void				s_game_board::handle_control_game(SDL_Event *event)
 		s_spell = -1;
 		calculated = false;
 	}
-	if (event->type == SDL_KEYDOWN)
+	if (event->type == SDL_KEYUP)
 	{
+		if (event->key.keysym.sym == SDLK_F1)
+		{
+			bool_checker[0] = (bool_checker[0] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F2)
+		{
+			bool_checker[1] = (bool_checker[1] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F3)
+		{
+			bool_checker[2] = (bool_checker[2] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F4)
+		{
+			bool_checker[3] = (bool_checker[3] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F5)
+		{
+			bool_checker[4] = (bool_checker[4] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F6)
+		{
+			bool_checker[5] = (bool_checker[5] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F7)
+		{
+			bool_checker[6] = (bool_checker[6] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F8)
+		{
+			bool_checker[7] = (bool_checker[7] == true ? false : true);
+			draw_self_bool = true;
+		}
+		else if (event->key.keysym.sym == SDLK_F9)
+		{
+			bool_checker[8] = (bool_checker[8] == true ? false : true);
+			draw_self_bool = true;
+		}
 		if (event->key.keysym.sym == account->keyboard[0])
 		{
 			if (player->stat.pa.value >= player->spell[0]->cost_pa && player->stat.pm.value >= player->spell[0]->cost_pm &&
