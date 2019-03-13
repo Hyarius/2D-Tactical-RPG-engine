@@ -69,7 +69,7 @@ Windows drivers updated
 
 Setup :
 Download the .msi file, and use it.
-Launch TAAG from your desktop or your start menu.
+Launch TAAG from your desktop or your start menu. (Sometimes TAAG doesn't start with the proper graphical card. If you have any graphical problems, it's probably because of this. Right click on the exe and choose to launch it with your Nvidia card).
 ```
 
 ### MacOS
