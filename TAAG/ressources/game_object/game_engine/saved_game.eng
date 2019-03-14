@@ -1,9 +1,0 @@
-level:1
-exp:21
-gold:99438
-tuto_state:41
-keyboard:113:119:101:114:116:121
-char:default:default(0):default(1):default(2):default(3):default(4)
-spell::Basic attack:Basic arrow:Basic fire:Basic slash:Basic heal
-tile:H00:H04:H05:H07:H16:H17:H19:H21:H31:H37:H56:H57:H58
-map:Island - 01:Island - 02:Island - 03
