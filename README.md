@@ -22,15 +22,15 @@ I create a handmade engine 2D, multiples systems (to handle AI, player interacti
 ![Starting_menu](ressources/readme/spell_editor.png)
 
 ### Map editor
-![Starting_menu](ressources/readme/Map editor.gif)
+![Starting_menu](ressources/readme/map_editor.gif)
 
 ### Game - principal game loop
 #### Pathfinding
 ![Starting_menu](ressources/readme/Pathfinding.gif)
 #### Vision line
-![Starting_menu](ressources/readme/Vision line.gif)
+![Starting_menu](ressources/readme/vision_line.gif)
 #### Animation when casted
-![Starting_menu](ressources/readme/Animation.gif)
+![Starting_menu](ressources/readme/animation.gif)
 
 
 ## Installation :
