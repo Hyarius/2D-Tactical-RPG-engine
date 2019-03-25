@@ -5,30 +5,13 @@
 I'm Jeremy, 25 years old, 1st years student at 42 school, in Paris.
 I used to work at an engineering office from my 18 years until november 2017, when I decided to quit, and start learning c/c++/C# programmation.
 
-After finishing the mandatory project for 42, I decided to work on my own on SDL2 and OpenGl. After 2 months of testing, learning things and reading SDL2/OpenGL documentation, I started to create my first game, TAAG.
+After finishing the mandatory project for 42, I decided to work on my own on SDL2 and OpenGl. After 2 months of testing, learning things and reading SDL2/OpenGL documentation, I started to create my first graphical library (Availible here : 
+[Graphical library]()), and a demo of it by creating a small game 2D TAAG.
 
 ## The project :
-
-TAAG is a 2D tactical arena game. The idea is to fight a group of enemies over a square-tiled map. For that, the player's character have access to different spells, with multiple effect types.
-
-After the match, the player will win experience and gold, which he can use to buy new spells, maps and looks for his characters.
+I create a handmade engine 2D, multiples systems (to handle AI, player interaction with the world, a polyvalent effect system for attacks/abilities, animations, etc) and multiple editor to enabled content creation inside my project
 
 ## Screenshot :
-
-### Starting menu (Player mode)
-![Starting_menu](ressources/readme/lobby_user.png)
-
-### Starting menu (Editor mode)
-![Starting_menu](ressources/readme/lobby_editor.png)
-
-
-### Character editor
-#### Basic player editor
-![Starting_menu](ressources/readme/player_editor_1.png)
-#### Sprite selector
-![Starting_menu](ressources/readme/player_editor_2.png)
-#### Spell selector
-![Starting_menu](ressources/readme/player_editor_3.png)
 
 ### Monster editor addon to the character editor
 #### AI editor
@@ -37,22 +20,18 @@ After the match, the player will win experience and gold, which he can use to bu
 ### Spell editor
 #### Spell settings
 ![Starting_menu](ressources/readme/spell_editor.png)
-#### Animation settings
-![Starting_menu](ressources/readme/animation_settings.png)
 
 ### Map editor
-![Starting_menu](ressources/readme/map_editor.png)
+![Starting_menu](ressources/readme/Map editor.gif)
 
 ### Game - principal game loop
 #### Pathfinding
-![Starting_menu](ressources/readme/pathfinding_algorythmn.png)
+![Starting_menu](ressources/readme/Pathfinding.gif)
 #### Vision line
-![Starting_menu](ressources/readme/vision_line_algorythmn.png)
+![Starting_menu](ressources/readme/Vision line.gif)
 #### Animation when casted
-![Starting_menu](ressources/readme/animation_display.png)
+![Starting_menu](ressources/readme/Animation.gif)
 
-### Game - end game menu
-![Starting_menu](ressources/readme/end_game_menu.png)
 
 ## Installation :
 
