@@ -30,7 +30,7 @@ I create a handmade engine 2D, multiples systems (to handle AI, player interacti
 #### Vision line
 ![Starting_menu](ressources/readme/vision_line.gif)
 #### Animation when casted
-![Starting_menu](ressources/readme/animation.gif)
+![Starting_menu](ressources/readme/Animation.gif)
 
 
 ## Installation :
