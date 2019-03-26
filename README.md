@@ -11,6 +11,8 @@ After finishing the mandatory project for 42, I decided to work on my own on SDL
 ## The project :
 I created an custom 2D engine, multiple systems (to handle AI, player interaction with the world, a polyvalent effect system for attacks/abilities, animations, etc) and multiple editors to enable content creation inside my project.
 
+I'm also working on a 3D modul of this project ([3D game engine](https://github.com/Hyarius/TAAG-3D-redesign/blob/master/README.md))
+
 ## Screenshot :
 
 ### Editors
