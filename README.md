@@ -2,26 +2,25 @@
 
 ## About me :
 
-I'm Jeremy, 25 years old, 1st years student at 42 school, in Paris.
+I'm Jeremy, a 25 years old, 1st year student at 42 school, in Paris.
 I used to work at an engineering office from my 18 years until november 2017, when I decided to quit, and start learning c/c++/C# programmation.
 
 After finishing the mandatory project for 42, I decided to work on my own on SDL2 and OpenGl. After 2 months of testing, learning things and reading SDL2/OpenGL documentation, I started to create my first graphical library (Availible here : 
-[Graphical library]()), and a demo of it by creating a small game 2D TAAG.
+[Graphical library]()), and a demo of it by creating a small 2D game : TAAG.
 
 ## The project :
-I create a handmade engine 2D, multiples systems (to handle AI, player interaction with the world, a polyvalent effect system for attacks/abilities, animations, etc) and multiple editor to enabled content creation inside my project
+I created an handmade 2D engine, multiple systems (to handle AI, player interaction with the world, a polyvalent effect system for attacks/abilities, animations, etc) and multiple editors to enable content creation inside my project.
 
 ## Screenshot :
 
-### Monster editor addon to the character editor
-#### AI editor
+### Editors
+#### AI
 ![Starting_menu](ressources/readme/AI_editor.png)
 
-### Spell editor
-#### Spell settings
+#### Spell
 ![Starting_menu](ressources/readme/spell_editor.png)
 
-### Map editor
+#### Map
 ![Starting_menu](ressources/readme/map_editor.gif)
 
 ### Game - principal game loop
