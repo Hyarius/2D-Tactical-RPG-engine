@@ -1,4 +1,4 @@
-# TAAG
+# 2D Tactical RPG Engine
 
 ## About me :
 
